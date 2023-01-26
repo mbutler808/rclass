@@ -229,6 +229,7 @@ We are going to learn using Quarto. Letʻs start by getting a simple webpage up.
 ::: {.callout-tip}
 -  **Always always** `quarto render` before you push up your changes to GitHub!
 -  If your changes are not appearing, try `quarto preview` and check that your changes appear in the preview. Then `quarto render` before you use git to add, commit, and push
+-  Note: It can take a few minutes to render on GitHub before your changes appear on your website
 :::
 
 **Please see [Stephanie Hicksʻ lecture for more examples and tips](https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-01-literate-programming/#create-and-knit-your-first-r-markdown-document)**
