@@ -41,5 +41,11 @@
   },
   "posts/2023-01-24-intro-git-github/index.qmd": {
     "index.html": "49071693"
+  },
+  "posts/2023-01-26-reproducible-research/index.qmd": {
+    "index.html": "0fc5140c"
+  },
+  "posts/2023-01-26-intro-quarto/index.qmd": {
+    "index.html": "ffeba4e7"
   }
 }
