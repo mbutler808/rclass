@@ -9,10 +9,10 @@
     "listing": "/lectures.html",
     "items": [
       "/posts/2023-01-26-reproducible-research/index.html",
+      "/posts/2023-01-26-intro-quarto/index.html",
       "/posts/2023-01-24-intro-git-github/index.html",
       "/posts/2023-01-19-your-computer-filesystems/index.html",
-      "/posts/2023-01-17-the-big-picture/index.html",
-      "/posts/2023-01-26-intro-quarto/index.html"
+      "/posts/2023-01-17-the-big-picture/index.html"
     ]
   }
 ]
