@@ -510,6 +510,7 @@ Tip
 <ul>
 <li><strong>Always always</strong> <code>quarto render</code> before you push up your changes to GitHub!</li>
 <li>If your changes are not appearing, try <code>quarto preview</code> and check that your changes appear in the preview. Then <code>quarto render</code> before you use git to add, commit, and push</li>
+<li>Note: It can take a few minutes to render on GitHub before your changes appear on your website</li>
 </ul>
 </div>
 </div>
@@ -527,7 +528,7 @@ Tip
 <li><p>What is literate programming?</p></li>
 <li><p>What was the first literate statistical programming tool to weave together a statistical language (R) with a markup language (LaTeX)?</p></li>
 <li><p>What is <code>knitr</code> and how is different than other literate statistical programming tools?</p></li>
-<li><p>Where can you find a list of other commands that help make your code writing more efficient in RStudio?</p></li>
+<li><p>Where can you find a list of other commands that help make your code writing more efficient when using Quarto?</p></li>
 </ol>
 </section>
 <section id="additional-resources" class="level3">
