@@ -227,7 +227,7 @@ We are going to learn using Quarto. Letʻs start by getting a simple webpage up.
 2.  Publishing to GitHub *up to and including Render to docs* <https://quarto.org/docs/publishing/github-pages.html>
 
 ::: callout-tip
-- **Always always** `quarto render` before you push up your changes to GitHub!
+-  **Always always** `quarto render` before you push up your changes to GitHub!
 :::
 
 **Please see [Stephanie Hicksʻ lecture for more examples and tips](https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-01-literate-programming/#create-and-knit-your-first-r-markdown-document)**
