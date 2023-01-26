@@ -1,0 +1,268 @@
+[
+  {
+    "objectID": "posts/2023-01-17-the-big-picture/index.html#data-science",
+    "href": "posts/2023-01-17-the-big-picture/index.html#data-science",
+    "title": "Introduction and The Big Idea",
+    "section": "Data Science",
+    "text": "Data Science\nFrom R for Data Science 2e by Hadley Wickam, Garrett Grolemund, and Mine Çetinkaya-Rundel\n\n\n\nQuestion -> Gather Data -> Design\nObserve -> Record Data -> Data Table\nDocument -> Comment (annotate)\nProject -> Version Control -> Share"
+  },
+  {
+    "objectID": "posts/2023-01-17-the-big-picture/index.html#learning-r---a-first-session",
+    "href": "posts/2023-01-17-the-big-picture/index.html#learning-r---a-first-session",
+    "title": "Introduction and The Big Idea",
+    "section": "Learning R - A first session",
+    "text": "Learning R - A first session\n\n\nThink about how R works as you try out commands\nhttps://www.r-project.org Go to manuals, click on An Introduction to R\nFollow Section 2.1\ninput -> R -> output\nWhat came out? What does it tell you about the rules R follows?\nComputers only do Exactly what you tell them to do\nJump to Appendix A - letʻs try to understand some rules of R together"
+  },
+  {
+    "objectID": "posts/2023-01-17-the-big-picture/index.html#goals",
+    "href": "posts/2023-01-17-the-big-picture/index.html#goals",
+    "title": "Introduction and The Big Idea",
+    "section": "Goals",
+    "text": "Goals\n\nCreativity\nAccuracy\nAuthority\nRepeatability\nCommunication\n\nEase of dissemination to other researchers\nShow me, donʻt tell me"
+  },
+  {
+    "objectID": "posts/2023-01-17-the-big-picture/index.html#tools",
+    "href": "posts/2023-01-17-the-big-picture/index.html#tools",
+    "title": "Introduction and The Big Idea",
+    "section": "Tools",
+    "text": "Tools\n\n\nOur senses\nNotebooks and Pens\nExcel\nCommand Line (UNIX/ Windows/ File Commands in your operating system)\nR\nGit/GitHub\nQuarto/Rmarkdown\nand many more…"
+  },
+  {
+    "objectID": "posts/2023-01-17-the-big-picture/index.html#data-science-1",
+    "href": "posts/2023-01-17-the-big-picture/index.html#data-science-1",
+    "title": "Introduction and The Big Idea",
+    "section": "Data Science",
+    "text": "Data Science\n\n\n\n\n\nNeed\nTools\n\n\n\n\nObserve -> Record Data -> Data Table\nNotebooks\n\n\nDocument -> Comment (annotate)\nR\n\n\nProject -> Version Control -> Share\nGit/GitHub\n\n\nCommunicate\nR/ Quarto"
+  },
+  {
+    "objectID": "posts/2023-01-17-the-big-picture/index.html#software",
+    "href": "posts/2023-01-17-the-big-picture/index.html#software",
+    "title": "Introduction and The Big Idea",
+    "section": "Software",
+    "text": "Software\n\nDo you have R installed and working? (R studio is optional)\nFor a longer walk-through here is another resource: Introduction to R/Rstudio\nGit/GitHub: Please Install. Letʻs follow Introduction to Git/GitHub"
+  },
+  {
+    "objectID": "posts/2023-01-19-your-computer-filesystems/index.html",
+    "href": "posts/2023-01-19-your-computer-filesystems/index.html",
+    "title": "Introduction to your computerʻs terminal utilities",
+    "section": "",
+    "text": "Read ahead\n\n\n\nFor future lectures, Iʻll give you some reading or podcasts to prepare\n\n\n\n\n\nMaterial for this lecture was borrowed and adopted from\n\nhttps://academind.com/tutorials/terminal-zsh-basics"
+  },
+  {
+    "objectID": "posts/2023-01-19-your-computer-filesystems/index.html#the-kernel",
+    "href": "posts/2023-01-19-your-computer-filesystems/index.html#the-kernel",
+    "title": "Introduction to your computerʻs terminal utilities",
+    "section": "The kernel",
+    "text": "The kernel\nThe kernel is the part of your computerʻs operating system that loads first once you start up. It is kind of like your computerʻs autonomic nervous system. It recognizes all of the physical hardware attached to it, enables communication between components (and device drivers), and monitors maintenance functions like turning on the fan when it gets hot, manages virtual memory, gives warnings when the hard drive gets full, manages multitasking, and manages security and file permissions. In the mac this is the XNU kernel, in modern Windows machines it is the Windows NT kernel.\n\n\n\n\n\n[Source: Map of MacOS: the heart of everything is called Darwin; and within it, we have separate system utilities (the shell) and the XNU kernel, which is composed in parts by the Mach kernel and by the BSD kernel.]"
+  },
+  {
+    "objectID": "posts/2023-01-19-your-computer-filesystems/index.html#the-shell",
+    "href": "posts/2023-01-19-your-computer-filesystems/index.html#the-shell",
+    "title": "Introduction to your computerʻs terminal utilities",
+    "section": "The shell",
+    "text": "The shell\nThe shell is another key part of the core operating system (note in the diagram above it is part of the System Utilities, and the partner of the kernel). The shell is a software (an app) that allows humans to control the computer. You are already familiar with the GUI interface, or the Graphical User Interface. It is important that you are comfortable using the Command Line Interface as well.\n\n\n\n\n\n\nThere are many reasons to be proficient in the shell:\n\n\n\n\nData analysis increasingly uses many files. The shell provides a simple but very powerful means to do all kinds of operations on files: move, delete, organize, combine, rename, etc.\nUsing the shell encourages you to understand your computerʻs filesystem, and helps you to more precisely control input and output to any place along your file paths.\nShell operations are fast.\nYou can use wildcards to control matching or excluding many files.\nThe shell can be used to execute (run) software.\nThe shell is probably the oldest app, so it is very stable with lasting power.\nIt is part of the OS, so when your apps fail or you are having some issues, you would turn to the shell to kill troublesome processes (programs) or diagnose and fix the issues.\n\n\n\nMacs use the same terminal utilities as UNIX/Linux systems. On the Mac, the command line interface app is called Terminal, which you will find in your Application folder, in the Utilities subfolder (here is a screentshot of our GUI Interface).\n\n\n\n\n\nOn a PC you would use the Command Prompt otherwise known as the Windows Command Processor or CMD. If you used a pre-Windows machine, you would be familiar with MS-DOS. To open CMD:\n\nOpen the Start Menu and type “command prompt” or\nPress Win + R and type “cmd” in the run box or\nPress Win + X and select Command Prompt from the menu.\n\nNote: you may see Windows PowerShell or Windows Terminal instead, these are similar apps."
+  },
+  {
+    "objectID": "posts/2023-01-19-your-computer-filesystems/index.html#the-dots",
+    "href": "posts/2023-01-19-your-computer-filesystems/index.html#the-dots",
+    "title": "Introduction to your computerʻs terminal utilities",
+    "section": "The dots",
+    "text": "The dots\n\n“.” is the current working directory (where you are currently)\n“..” is the directory one level up\n“./foldername” will take you to the folder one level down, for example “./Data”\n\nYou can use these paths to move directories using cd or to list the contents of the directories using ls or to make new directories using mkdir\nls .\nls ./Data\nmkdir ./Data/A\nMake multiple directories:\nmkdir ./Data/B ./Data/C\nList the files one level up or two levels up:\nls ..  # for PC use dir ..\nls ../..\nUp one level, and over to another directory:\nls ../AnotherDirectory\nYou can wander anywhere along your computerʻs file directory! Just add more steps to the path."
+  },
+  {
+    "objectID": "posts/2023-01-19-your-computer-filesystems/index.html#rtistry",
+    "href": "posts/2023-01-19-your-computer-filesystems/index.html#rtistry",
+    "title": "Introduction to your computerʻs terminal utilities",
+    "section": "rtistry",
+    "text": "rtistry\n\n\n\n\n\n[‘Flametree’ from Danielle Navarro https://art.djnavarro.net]"
+  },
+  {
+    "objectID": "posts/2023-01-24-intro-git-github/index.html",
+    "href": "posts/2023-01-24-intro-git-github/index.html",
+    "title": "Introduction to git/GitHub",
+    "section": "",
+    "text": "Lecture materials\n\n\n\n\n\n\nHelpful references for this lecture\n\n\n\n\nHappy Git with R from Jenny Bryan\nChapter on git and GitHub in dsbook from Rafael Irizarry\nGitHub introduction in module 1 from Andreas Handel\n\n\n\n\nAcknowledgements\nMaterial for this lecture was borrowed and adopted from\n\nhttps://www.stephaniehicks.com/jhustatcomputing2022/\nhttps://andreashandel.github.io/MADAcourse/Tools_Github_Introduction.html\n\n\n\n\nLearning objectives\n\n\n\n\n\n\nLearning objectives\n\n\n\nLast time, you should have created and set up a GitHub account.\nAt the end of this lesson you will:\n\nKnow what Git and GitHub are.\nKnow why one might want to use them.\nHave created a repo and executed basic push/pull commands.\n\n\n\n\n\nIntroduction to git/GitHub\nThis document gives a brief explanation of GitHub and how we will use it for this course.\n\ngit\nGit is software that implements what is called a version control system for a repository of files (also known as a repo). The main idea is that as you (and your collaborators) work on a project, the git software tracks, and records any changes made by anyone.\n\n\n\n\n\nEveryone is one with the repo and all changes are tracked\n\n\n\n\n[Source: Jenny Bryan]\nGitHub is an online server and user interface that also provides powerful tools for distribution of your repository, bug tracking, collaboration, and also allows you to create easy websites for each repository.\nGit and GitHub together provide an organized way to track your projects, and all of the tools you will need in this course are free.\nIt is very well suited for collaborative work, as it was developed by Linus Torvalds (in about 10 days of coding!) for collaborative software development of the Linux kernel pretty interesting interview with Torvalds. What it did really well was distributed control, and allowing everyone to have their own copy of the repository.\nGit/GitHub is now the dominant version control system with GitHub hosting over 200 million repositories worldwide! It is used very broadly for all kinds of repos now including data science projects, book projects, courses, and anything that needs collaborative management of mostly text files.\nAnother great and fun read about Git/GitHub and why it is a great tool for data analysis is in this article by Jenny Bryan.\n\n\nWhat to (not) use Git/GitHub for\nGitHub is ideal if you have a project with (possibly many) smallish files, and most of those files are text files (such as R code, LaTeX, Quarto/(R)Markdown, etc.) and different people work on different parts of the project.\nGitHub is less useful if you have a lot of non-text files (e.g. Word or PowerPoint) and different team members might want to edit the same document at the same time. In that instance, a solution like Google Docs, Word+Dropbox, Word+Onedrive, etc. might be better.\nGitHub also has a problem with large files. Anything above around 50MB can lead to very slow syncing and sometimes outright failure. Unfortunately, once GitHub has choked on a large file, it can be quite tricky to fix the repository to work again. This is because the ENTIRE history is saved, including the addition of the huge file. Therefore keep large (>50MB) files out of your GitHub repositories. If you have to work with such files, try to reduce them first before placing into the GitHub repository. Or as alternative, place those files in another sync service (e.g. Dropbox, OneDrive, GoogleDrive) and load them from there.\nFinally, if you have data, you need to be careful since by default, GitHub repositories (the GitHub name for your projects) are public and everyone can see them. You can set the repository to private, but you need to be careful that you don’t accidentally expose confidential data to the public. It is in general not a good idea to have confidential data on GitHub. First anonymize your data enough that it is not at risk of identifiability, then you can place it in a private repository. If you put it public, be very careful that you only make things public that are ok to be made public.\n\n\n\n\n\n\nTip\n\n\n\n\nGit/GitHub has version control features like a turbo-charged version of “track changes” but more rigorous, powerful, and scaled up to multiple files\nGreat for solo or collaborative work\nSaves the entire history of every change made\nAllows for multiple verisions or “branches” to be developed and later merged\nGitHub allows distributed collaboration (potentially among complete strangers) and has greatly promoted open-source software development, collaboration, distribution, and bug/issue tracking for users to get help\nGitHub allows webpages for your projects or repositories\n\n\n\nNote that other interfaces to Git exist, e.g., Bitbucket, but GitHub is the most widely used one.\n\n\nWhy use git/GitHub?\nYou want to use GitHub to avoid this:\n\n\n\n\n\nHow not to use GitHub [image from PhD Comics]\n\n\n\n\n[Source: PhD Comics]\nTo learn a bit more about Git/GitHub and why you might want to use it, read this article by Jenny Bryan.\nNote her explanation of what’s special with the README.md file on GitHub.\n\n\nHow to use Git/GitHub\nGit/GitHub is fundamentally based on commands you type into the command line. Lots of online resources show you how to use the command line. This is the most powerful, and the way I almost always interact with git/GitHub. However, many folks find this the most confusing way to use git/GitHub. Alternatively, there are graphical interfaces.\n\nGitHub itself provides a grapical interface with basic functionality.\nRStudio also has Git/GitHub integration. Of course this only works for R project GitHub integration.\nThere are also third party GitHub clients with many advanced features, most of which you won’t need initially, but might eventually.\n\nNote: As student, you can (and should) upgrade to the Pro version of GitHub for free (i.e. access to unlimited private repositories is one benefit), see the GitHub student developer pack on how to do this.\n\n\n\nGetting Started\nOne of my favorite resources for getting started with git/GitHub is the Happy Git with R from Jenny Bryan:\n\nhttps://happygitwithr.com\n\nIt truly is one of the best resources out there for getting started with git/GitHub, especially with the integration to RStudio. Therefore, at this point, I will encourage all of you to go read through the online book.\nSome of you may only need to skim it, others will need to spend some time reading through it. Either way, I will bet that you won’t regret the time investment.\n\n\nUsing git/GitHub in our course\nIn this course, you will use git/GitHub in the following ways:\n\nProject 0 (optional) - You will create a website introducing yourself to folks in the course and deploy it on GitHub.\nProjects 1-4 - You can practice using git locally (on your compute environment) to track your changes over time and, if you wish (but highly suggested), you can practice pushing your project solutions to a private GitHub repository on your GitHub account (i.e. git add, git commit, git push, git pull, etc) .\n\nLearning these skills will be useful down the road if you ever work collaboratively on a project (i.e. writing code as a group). In this scenario, you will use the skills you have been practicing in your projects to work together as a team in a single GitHub repository.\n\n\nClone a repo to your local directory - Easy!\nCloning an existing repo from GitHub is easy. Letʻs clone the rclassdata repo to our local git folder within your Documents folder. 1. Go to https://github.com/mbutler808/rclassdata and click on the green <>Code button and copy the URL.\n\n\n\n\n\nCloning from an existing repo\n\n\n\n\n\nIn your Terminal or CMD prompt, navigate to your git folder (create one in Documents if you donʻt have one already), and clone the repo:\n\n\n\nTerminal\n\npwd  # or dir on PC\ncd ~/Documents/git  # navigate to your git folder\ngit clone https://github.com/mbutler808/rclassdata.git\n\nIf you set up your personal access token, it should appear on your computer! If not, set it up following these instructions\n\n\nMake a GitHub repo started from your local files\nSuppose you have some files on your computer and youʻd like to make them into a repo. For this example, weʻre going to make a repo called test\n\nCreate a folder Documents/git directory) called test and copy some files there.\nGo to your GitHub account and create a new repository. Click on the small black + on the top right corner\n\n\n\n\n\n\nCreate a new repo button\n\n\n\n\n\nGive your new repo a name (“test”) and choose to create a blank repo with no README.md or .gitignore. We can add them later.\n\n\n\n\n\n\nSet up a blank repo\n\n\n\n\n\nYou will see the following giving you helpful hints for linking your GitHub repo with your local repo.\n\n\n\n\n\n\nHow to connect your local repo with the remote\n\n\n\n\n\nWe will follow the first set of instructions, slightly modified. By line of code below:\n\nFirst we will create our README.md file,\ngit init - intializes the local repo (only need to to this once - it sets up the git tracking).\nAdd (. = all) our files and commit them to the repo.\nCreate a commit message.\nRenames the local branch to main.\nWe use “git remote add origin URL” to connect the remote repo (=“origin” on GitHub) to our local repo.\nFinally we push our local files (in main) up to the remote (to a parallel branch main on origin).\n\n\nBe sure to copy the appropriate URL for your own GitHub repo.\n\n\nTerminal\n\necho \"# test\" >> README.md\ngit init\ngit add .\ngit commit -m \"first commit\"\ngit branch -M main\ngit remote add origin https://github.com/mbutler808/test.git\ngit push -u origin main\n\n\nCheck your remote repo. The files from your computer should be there!\nNow try pushing up another change. Make some edit to one or more local files.\nAdd, Commit, Push:\n\n\n\nTerminal\n\ngit add .\ngit commit -m \"made a small change\"\ngit push origin main\n\nCheck your remote repo. Did it go up? Well done! 😍\nYour local files and your GitHub repository files are now synced!\n\n\n\n\n\nEveryone is one with the repo\n\n\n\n\n[Source: Jenny Bryan]\n\n\nA word\nSooner or later, you will encounter a merge conflict. That happens if the same file(s) changed both locally and on GitHub.com. That can happen if multiple people work on the same files, or if you work on multiple computers and forget to always push/pull before and after you work on a project. Donʻt get discouraged, this is solvable!\nSometimes you have to do it manually. Moving the offending files out of your local repository, then doing the merge and after that adding the updates again can help. If you know that one source is the definite one, you can force a push or pull. A more advanced approach is to use branches.\n\n\nTerminal\n\ngit push --force\n\n\n\n\n\n\n\nWarning\n\n\n\n\nThe main danger is that a force push or pull will force git to write over a conflict, and can possibly destroy someone elseʻs work. If youʻre the only one on the repo, then itʻs only your changes that youʻll lose\nJust be aware but donʻt be afraid to practice. You can always revert back.\nSee the help page for git push. See the -f or –force flag. Itʻs terse computer help, but if you make the effort it will start to make sense.\nIʻll link a more tutorial type resource later\n\n\n\n\n\nPost-lecture materials\n\nFinal Questions\nHere are some post-lecture questions to help you think about the material discussed.\n\n\n\n\n\n\nQuestions\n\n\n\n\nWhat is version control?\nWhat is the difference between git and GitHub?\nWhat are other version controls software/tools that are available besides git?\n\n\n\n\n\nAdditional Resources\n\n\n\n\n\n\nTip\n\n\n\n\ngit and GitHub in the dsbook by Rafael Irizarry"
+  },
+  {
+    "objectID": "projects/2023-01-24-project-0/index.html",
+    "href": "projects/2023-01-24-project-0/index.html",
+    "title": "Project 0 (optional)",
+    "section": "",
+    "text": "This exercise is modified from material developed by Stephanie Hicks."
+  },
+  {
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Project 0 (optional)\n\n\n\n\n\n\n\nproject 0\n\n\nprojects\n\n\n\n\nInformation for Project 0 (entirely optional, but hopefully useful and fun!)\n\n\n\n\n\n\nJan 23, 2023\n\n\nMarguerite Butler\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome to Introduction to Data Science in R for Biologists!",
+    "section": "",
+    "text": "Welcome to Data Science for Biologists at the University of Hawai`i!"
+  },
+  {
+    "objectID": "index.html#what-is-this-course",
+    "href": "index.html#what-is-this-course",
+    "title": "Welcome to Introduction to Data Science in R for Biologists!",
+    "section": "What is this course?",
+    "text": "What is this course?\nThis course covers the basics of computational and programming skills required for research in biological sciences and related disciplines. We will cover practical issues in data organization and management as well as programming in R and the tidyverse. Some of the topics will include: data ethics, best practices for coding and reproducible research, introduction to data visualizations, best practices for working with special data types (dates/times, text data, etc), best practices for storing data, basics of debugging, organizing and commenting code, basics of interacting with other computational resources from R. Topics in statistical data analysis, morphometrics, phylogenetic tree visualization, and other practical examples provide working examples."
+  },
+  {
+    "objectID": "index.html#getting-started",
+    "href": "index.html#getting-started",
+    "title": "Welcome to Introduction to Data Science in R for Biologists!",
+    "section": "Getting started",
+    "text": "Getting started\nPlease look over the Syllabus and Schedule under General Information. Lectures are provided under the course materials tab."
+  },
+  {
+    "objectID": "index.html#acknowledgements",
+    "href": "index.html#acknowledgements",
+    "title": "Welcome to Introduction to Data Science in R for Biologists!",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nThis course was developed and is maintained by Marguerite Butler.\nA big thank you to Stephanie Hicks for generously sharing the beautifully designed quarto template for this course.\nMaterials have been adapted from courses developed by the following individuals (more to come): Stephanie Hicks.\nThe course materials are licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. Linked and embedded materials are governed by their own licenses. I assume that all external materials used or embedded here are covered under the educational fair use policy. If this is not the case and any material displayed here violates copyright, please let me know and I will remove it."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "lectures.html",
+    "href": "lectures.html",
+    "title": "Lectures",
+    "section": "",
+    "text": "Introduction to git/GitHub\n\n\n\n\n\n\n\nmodule 1\n\n\nweek 2\n\n\nprogramming\n\n\nversion control\n\n\ngit\n\n\nGitHub\n\n\n\n\nVersion control is a game changer; or how I learned to love git/GitHub\n\n\n\n\n\n\nJan 24, 2023\n\n\nMarguerite Butler\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to your computerʻs terminal utilities\n\n\n\n\n\n\n\nmodule 1\n\n\nweek 1\n\n\nprogramming\n\n\nfilesystem\n\n\nshell\n\n\n\n\nSo much power; or how I got my computer to do my bidding\n\n\n\n\n\n\nJan 19, 2023\n\n\nMarguerite Butler\n\n\n\n\n\n\n  \n\n\n\n\nIntroduction and The Big Idea\n\n\n\n\n\n\n\nmodule 1\n\n\nweek 1\n\n\nintroduction\n\n\n\n\nThe big idea\n\n\n\n\n\n\nJan 17, 2023\n\n\nMarguerite Butler\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "syllabus.html",
+    "href": "syllabus.html",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "",
+    "text": "Delivery: In person\nCourse time: Tuesdays and Thursdays from 10:30-11:45am\nCourse location: BIL 319A\nAssignments: Weekly small quizzes, four projects\n\n\n\n\nTo add the course: Let me know so I can give you an override\nRegister for ZOOL710 CRN 85424 3 credits.\nAttendance is highly recommended for group work. Lectures will be recorded on request.\nPlease contact course instructor if interested in auditing.\nUndergraduates are welcome to join with approval.\n\n\n\n\n\nMarguerite A. Butler (https://butlerlab.org)\n\nOffice Location: Edmondson 318\nEmail: mbutler808 at gmail.com\nOffice Hours: After class and by appointment\n\n\n\n\n\nIn order of preference, here is a preferred list of ways to get help:\n\nI strongly encourage you to use the course SLACK channel, before joining office hours. You can get your answers faster, and other students in the class (who likely have similar questions) can also benefit from the questions and answers given. Everyone is encouraged to participate.\nYou are welcome to join office hours to get more group interactive feedback.\nIf you are not able to make the office hours, appointments can be made by email."
+  },
+  {
+    "objectID": "syllabus.html#important-links",
+    "href": "syllabus.html#important-links",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Important Links",
+    "text": "Important Links\n\nCourse website: coming soon.\nGitHub repository with all course material: coming soon."
+  },
+  {
+    "objectID": "syllabus.html#learning-objectives",
+    "href": "syllabus.html#learning-objectives",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Learning Objectives:",
+    "text": "Learning Objectives:\nUpon successfully completing this course, students will be able to:\n\nInstall and configure software necessary for a statistical programming environment\nDiscuss generic programming language concepts as they are implemented in a high-level statistical language\nWrite and debug code in base R and the tidyverse\nBuild basic data visualizations using R and the tidyverse\nDiscuss best practices for coding and reproducible research, basics of data ethics and management, basics of working with special data types, and basics of storing data"
+  },
+  {
+    "objectID": "syllabus.html#lectures",
+    "href": "syllabus.html#lectures",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Lectures",
+    "text": "Lectures\nIn Fall 2023, we will have in person lectures. If requested, I will attempt to record them and post to the website."
+  },
+  {
+    "objectID": "syllabus.html#textbook-and-other-course-material",
+    "href": "syllabus.html#textbook-and-other-course-material",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Textbook and Other Course Material",
+    "text": "Textbook and Other Course Material\nThere is no required textbook. We will make use of several freely available textbooks and other materials. All course materials will be provided. We will use the R software for data analysis, and git for version control and data sharing, all of which is freely available for download."
+  },
+  {
+    "objectID": "syllabus.html#software",
+    "href": "syllabus.html#software",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Software",
+    "text": "Software\nPlease install R onto your laptop. You can obtain R from the Comprehensive R Archive Network. There are versions available for Mac, Windows, and Unix/Linux. This software is required for this course.\nIt is important that you have the latest version of R installed. For this course we will be using R version 4.2.1 or higher. You can determine what version of R you have by starting up R and typing into the console R.version.string and hitting the return/enter key. If you do not have the proper version of R installed, go to CRAN and download and install the latest version.\nSome students like to use the Rstudio interface, but this is optional. The RStudio interactive development environment (IDE) requires that R be installed, and so is an “add-on” to R. You can obtain the RStudio Desktop for free from the RStudio web site. You can determine the version of RStudio by looking at menu item Help > About RStudio. You should be using RStudio version 1.4.1106 or higher."
+  },
+  {
+    "objectID": "syllabus.html#quizzes",
+    "href": "syllabus.html#quizzes",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Quizzes",
+    "text": "Quizzes\nThere will be weekly (short) quizzes on Laulima. These are intended to be low-stakes to assist you in checking your understanding."
+  },
+  {
+    "objectID": "syllabus.html#projects",
+    "href": "syllabus.html#projects",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Projects",
+    "text": "Projects\nThere will be one optional assignment and 4 graded assignments, due every 2–3 weeks. Projects will be submitted electronically via GitHub (more on this later).\nThe project assignments will be due on\n\nProject 0: February 3, 11:59pm (optional and not graded but hopefully useful and fun)\nProject 1: February 17, 11:59pm\nProject 2: March 10, 11:59pm\nProject 3: April 7, 11:59pm\nProject 4: May 5, 11:59pm\n\n\nProject collaboration\nPlease feel free to study together and talk to one another about project assignments. The mutual instruction that students give each other is among the most valuable that can be achieved.\nHowever, it is expected that project assignments will be implemented and written up independently unless otherwise specified. Specifically, please do not share analytic code or output. Please do not collaborate on write-up and interpretation. Please do not access or use solutions from any source before your project assignment is submitted for grading."
+  },
+  {
+    "objectID": "syllabus.html#discussion-forum",
+    "href": "syllabus.html#discussion-forum",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Discussion Forum",
+    "text": "Discussion Forum\nThe course will make use of SLACK to ask and answer questions and discuss any of the course materials. Please engage and provide answers as well as questions. The Instructor will monitor SLACK and answer questions when appropriate."
+  },
+  {
+    "objectID": "syllabus.html#exams",
+    "href": "syllabus.html#exams",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Exams",
+    "text": "Exams\nThere are no exams in this course."
+  },
+  {
+    "objectID": "syllabus.html#grading",
+    "href": "syllabus.html#grading",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Grading",
+    "text": "Grading\nGrades in the course will be based on weekly quizzes (20%), participation (10%) and projects (70%). Each of Projects 1–3 counts approximately equally in the final grade. Grades will be posted on Laulima."
+  },
+  {
+    "objectID": "syllabus.html#policy-for-submitted-projects-late",
+    "href": "syllabus.html#policy-for-submitted-projects-late",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Policy for submitted projects late",
+    "text": "Policy for submitted projects late\nThe policy for late submissions is as follows:\n\nEach student will be given two free “late days” for the rest of the course.\nA late day extends the individual project deadline by 24 hours without penalty.\nThe late days can be applied to just one project (e.g. two late days for Project 2), or they can be split across the two projects (one late day for Project 2 and one late day for Project 3). This is entirely left up to the discretion of the student.\nLate days are intended to give you flexibility: you can use them for any reason no questions asked.\nYou do not get any bonus points for not using your late days, and they are not transferrable.\n\nFor students who exceed their free late days:\n\nI will be deducting 5% for each extra late day. For example, if you have already used all of your late days for the term, we will deduct 5% for the assignment that is <24 hours late, 10% points for the assignment that is 24-48 hours late, and 15% points for the assignment that is 48-72 hours late, etc.\nI will not grade assignments that are more than 3 days past the original due date.\n\n\nRegrading Policy\nIt is very important to me that all assignments are properly graded. If you believe there is an error in your assignment grading, please send an email within 7 days of receiving the grade explaining the issue. No re-grade requests will be accepted orally, and no regrade requests will be accepted more than 7 days after you receive the grade for the assignment."
+  },
+  {
+    "objectID": "syllabus.html#academic-ethics-and-student-conduct-code",
+    "href": "syllabus.html#academic-ethics-and-student-conduct-code",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Academic Ethics and Student Conduct Code",
+    "text": "Academic Ethics and Student Conduct Code\nThe faculty, staff, and students participating in courses of the School of Life Sciences assume a responsibility to uphold the Universityʻs missions of academic excellence and social responsibility as appropriate for an institute of higher education. Violations of the UH Systemwide Student Conduct Code includes but is not limited to: cheating; plagiarism; providing copies of your work to other students which is submitted as their own; obtaining copies of said work by others; using copies of said work or representing any portion of another person’s work as your own (i.e., plagiarism); misconduct. While we encourage you to discuss strategies for problem solving, and even collaborate by working through the problems/strategies together, giving someone all the answers is cheating. If you are unsure please ask.\nPlagiarism is when you use information or present ideas, whether by paraphrase or direct quote, from a source (be it published or a classmate) without giving proper credit to that source. Cheating in any way will be reported to the attention of UH Office of Judicial Affairs, and result in an F in this course. Students should be familiar with the policies and procedures specified under the Systemwide Student Conduct Code portal."
+  },
+  {
+    "objectID": "syllabus.html#disability-support-service",
+    "href": "syllabus.html#disability-support-service",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Disability Support Service",
+    "text": "Disability Support Service\nStudents requiring accommodations for disabilities should register with the Kokua program at Student Disability Services. It is the responsibility of the student to register for accommodations. The Kokua office will send me a notification once you are registered, however, they often do not share information regarding the specifics. If the accommodations are not sufficient to ensure your success, please contact me as soon as possible so that we may work together on providing for an effective learning environment."
+  },
+  {
+    "objectID": "syllabus.html#prerequisites",
+    "href": "syllabus.html#prerequisites",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nThis is an applied quantitative course. I will not discuss the mathematical details of specific data analysis approaches, however some statistical background and being comfortable with quantitative thinking is useful. Previous experience with writing computer programs in general and R in particular is also helpful, but not necessary. If you have no programming experience, expect to spend extra time getting yourself familiar with R. As long as you are willing to invest the time to learn the programming and you do not mind thinking quantitatively, you should be able to take the course, independent of your background.\n\nGetting set up\nYou must install R and RStudio on your computer in order to complete this course. These are two different applications that must be installed separately before they can be used together:\n\nR is the core underlying programming language and computing engine that we will be learning in this course\nRStudio is an interface into R that makes many aspects of using and programming R simpler\n\nBoth R and RStudio are available for Windows, macOS, and most flavors of Unix and Linux. Please download the version that is suitable for your computing setup.\nThroughout the course, we will make use of numerous R add-on packages that must be installed over the Internet. Packages can be installed using the install.packages() function in R. For example, to install the tidyverse package, you can run\n\ninstall.packages(\"tidyverse\")\n\nin the R console.\n\nHow to Download R for Windows\nGo to https://cran.r-project.org and\n\nClick the link to “Download R for Windows”\nClick on “base”\nClick on “Download R 4.2.1 for Windows”\n\n\n\n\n\n\n\nWarning\n\n\n\nFor all software, please download the latest version.\n\n\n\n\nHow to Download R for the Mac\nGoto https://cran.r-project.org and\n\nClick the link to “Download R for (Mac) OS X”.\nClick on “R-4.2.1.pkg” (or the latest version)\n\n\n\nHow to Download RStudio\nGoto https://rstudio.com and\n\nClick on “Products” in the top menu\nThen click on “RStudio” in the drop down menu\nClick on “RStudio Desktop”\nClick the button that says “DOWNLOAD RSTUDIO DESKTOP”\nClick the button under “RStudio Desktop” Free\nUnder the section “All Installers” choose the file that is appropriate for your operating system."
+  },
+  {
+    "objectID": "syllabus.html#general-disclaimers",
+    "href": "syllabus.html#general-disclaimers",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "General Disclaimers",
+    "text": "General Disclaimers\n\nThis syllabus is a general plan, deviations announced to the class by the instructor may be necessary."
+  },
+  {
+    "objectID": "resources.html",
+    "href": "resources.html",
+    "title": "Resources",
+    "section": "",
+    "text": "Learning R\n\nBig Book of R: https://www.bigbookofr.com\nList of resources to learn R (but also Python, SQL, Javascript): https://github.com/delabj/datacamp_alternatives/blob/master/index.md\nlearnr4free. Resources (books, videos, interactive websites, papers) to learn R. Some of the resources are beginner-friendly and start with the installation process: https://www.learnr4free.com/en\nData Science with R by Danielle Navarro: https://robust-tools.djnavarro.net"
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "For Qmd files (markdown document with Quarto which are cross-language executable code), go to the course GitHub repository and navigate the directories, or best of all clone the repo and navigate within RStudio or your text browser and R console.\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDates\nTopics\nProjects\n\n\n\n\n\nModule 1\n\nComputational Tools for Data Science\n\n\n\n\n\n\n\n\n\n\n\nWeek 1\nJan 17\n👋 Installing R/RStudio, GitHub [html] [Qmd]\n\n\n\n\n\nJan 19\n👩‍💻 Shell scripts, File Organization [html] [Qmd]\n\n\n\n\n\n\n\n\n\n\n\nModule 2\n\nData Analysis in R \n\n\n\n\n\n\n\n\n\n\n\nWeek 2\nJan 24\n🐙 Intro to Git and GitHub [html] [Qmd]\n🌴 Project 0 [html] [Qmd]\n\n\n\n\nJan 24\n🐙 Reproducible Research and Literate Programming / Intro to Quarto\n\n\n\n\n\nJan 26\n🔬 What is the Question? Data management and workflow\n\n\n\n\n\n\n\n\n\n\n\nWeek 3\nJan 31\n👓 Reading/Writing data\n\n\n\n\n\nFeb 2\n🔪 Tidying Data\n🍂 Project 0 due\n\n\n\n\n\n\n\n\n\n\nModule 3\n\nData Visulization in R\n\n\n\n\n\n\n\n\n\n\n\nWeek 4\nFeb 7\n📊 Plotting Systems (Base R)\n\n\n\n\n\nFeb 9\n📊 ggplot2\n\n\n\n\n\n\n\n\n\n\n\nModule 4\n\nNuts and Bolts of R\n\n\n\n\n\n\n\n\n\n\n\nWeek 5\nFeb 14\n🔩 R Nuts and Bolts (Objects)\n\n\n\n\n\nFeb 16\n🤝 Reshaping objects\n🍂 Project 1 due\n\n\n\n\n\n\n\n\n\n\nWeek 6\nFeb 21\n📝 Control Structures\n\n\n\n\n\nFeb 23\n📋 Functions\n\n\n\n\n\n\n\n\n\n\n\nWeek 7\nFeb 28\n🐒 Loop Functions\n\n\n\n\n\n\n\n\n\n\n\n\nMar 2\n🐛 Debugging and Error Handling\n\n\n\n\n\n\n\n\n\n\n\nModule 5\n\nSpecial Data Types\n\n\n\n\n\n\n\n\n\n\n\nWeek 8\nMar 7\n📆 Dates and Times\n\n\n\n\n\nMar 9\n🐎 Regular Expressions\n🍂 Project 2 due\n\n\n\n\n\n\n\n\n\n\nWeek 9\nMar 14\n☀️ Spring Break\n\n\n\n\n\nMar 16\n☀️ Spring Break\n\n\n\n\n\n\n\n\n\n\n\nWeek 10\nMar 21\n🍄 Factors\n\n\n\n\n\n\n\n\n\n\n\n\nMar 23\n🌵 Text Data and Strings\n\n\n\n\n\n\n\n\n\n\n\nModule 6\n\nIntro to Morphometrics\n\n\n\n\n\n\n\n\n\n\n\nWeek 11\nMar 28\n📏 Linear Morphometrics, Size, Shape\n\n\n\n\n\n\n\n\n\n\n\n\nMar 30\n📐 Landmark-based Morphometrics\n\n\n\n\n\n\n\n\n\n\n\nWeek 12\nApr 4\n💀 3D Morphometrics\n\n\n\n\n\nApr 6\n🐾 3D Morphometrics\n\n\n\n\n\n\n\n\n\n\n\nModule 7\n\nPhylogenetic Trees\n\n\n\n\n\n\n\n\n\n\n\nWeek 13\nApr 11\n🌱 Trees as Data Objects\n🍂 Project 3 due\n\n\n\n\nApr 13\n🌴 Reading and writing trees, ape, ggtree, treeio\n\n\n\n\n\n\n\n\n\n\n\nWeek 14\nApr 18\n🌳 Reshaping Trees\n\n\n\n\n\n\n\n\n\n\n\n\nApr 20\n🌺 Annotating Tree Plots\n\n\n\n\n\n\n\n\n\n\n\nModule 8\n\nOther Topics\n\n\n\n\n\n\n\n\n\n\n\nWeek 15\nApr 25\n🐍 Parsing Data from any Format\n\n\n\n\n\n\n\n\n\n\n\n\nApr 27\n🌰 Student choice topic\n\n\n\n\n\n\n\n\n\n\n\nWeek 16\nMay 2\n🏆 Final Presentations\n🎊 Project 4 due"
+  }
+]

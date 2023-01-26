@@ -1,0 +1,16 @@
+[
+  {
+    "listing": "/projects.html",
+    "items": [
+      "/projects/2023-01-24-project-0/index.html"
+    ]
+  },
+  {
+    "listing": "/lectures.html",
+    "items": [
+      "/posts/2023-01-24-intro-git-github/index.html",
+      "/posts/2023-01-19-your-computer-filesystems/index.html",
+      "/posts/2023-01-17-the-big-picture/index.html"
+    ]
+  }
+]

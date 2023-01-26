@@ -1,0 +1,81 @@
+---
+title: "Introduction and The Big Idea"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "The big idea"
+date: 2023-01-17
+# image: "../../images/happygitwithr.png"
+format: revealjs
+categories: [module 1, week 1, introduction]
+---
+
+## Data Science
+#### From [R for Data Science 2e](https://r4ds.hadley.nz/) by Hadley Wickam, Garrett Grolemund, and Mine Çetinkaya-Rundel
+[![](whole-game.png){fig-alt="R for Data Science"}](https://r4ds.hadley.nz/whole-game.html)
+
+::: {.incremental}
+
+- Question -> Gather Data -> Design
+- Observe -> Record Data -> Data Table
+- Document -> Comment (annotate)
+- Project -> Version Control -> Share
+
+:::
+
+## Learning R - A first session
+
+::: {.incremental}
+- Think about how R works as you try out commands
+- <https://www.r-project.org>  Go to manuals, click on **An Introduction to R**
+- Follow Section 2.1
+- input -> R -> output
+- What came out? What does it tell you about the rules R follows?
+- Computers only do **Exactly** what you tell them to do
+- Jump to Appendix A - letʻs try to understand some rules of R together
+:::
+
+## Goals
+
+- Creativity
+- Accuracy
+- Authority
+- Repeatability
+- Communication
+  + Ease of dissemination to other researchers
+  + Show me, donʻt tell me
+
+## Tools
+
+::: {.incremental}
+- Our senses
+- Notebooks and Pens
+- Excel
+- Command Line (UNIX/ Windows/ File Commands in your operating system)
+- R
+- Git/GitHub
+- Quarto/Rmarkdown
+- and many more...
+:::
+
+## Data Science
+[![](whole-game.png){fig-alt="R for Data Science"}](https://r4ds.hadley.nz/whole-game.html)
+
+::: {.nonincremental}
+
+| Need | Tools |
+|------|-------|
+| Observe -> Record Data -> Data Table  | *Notebooks* |
+| Document -> Comment (annotate) | *R* |
+| Project -> Version Control -> Share | *Git/GitHub* |
+| Communicate |  *R/ Quarto* |
+
+:::
+
+## Software
+
+- Do you have R installed and working? (R studio is optional)
+- For a longer walk-through here is another resource: [Introduction to R/Rstudio](https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-08-30-introduction-to-r-and-rstudio/)
+- Git/GitHub: Please Install. Letʻs follow [Introduction to Git/GitHub](https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-08-30-introduction-to-gitgithub/)
