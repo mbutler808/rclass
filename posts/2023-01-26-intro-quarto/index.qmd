@@ -162,7 +162,7 @@ plot(airquality$Ozone ~ airquality$Wind)
 
 Before we leave this section, I find that there is quite a bit of terminology to understand the magic behind `rmarkdown` that can be confusing, so let's break it down:
 
--   [Pandoc](https://pandoc.org). Pandoc is a command line tool with no GUI that converts documents (e.g. from number of different markup formats to many other formats, such as .doc, .pdf etc). It is completely independent from R (but does come bundled with RStudio).
+-   [Pandoc](https://pandoc.org). Pandoc is a command line tool with no GUI that converts documents (e.g. from number of different markup formats to many other formats, such as .doc, .pdf etc). It is completely independent from R (but does come bundled with RStudio). If you donʻt have Rstudio installed, you will have to install `pandoc`.
 -   [Markdown](https://en.wikipedia.org/wiki/Markdown) (**markup language**). Markdown is a lightweight [markup language](https://en.wikipedia.org/wiki/Markup_language) with plain text formatting syntax designed so that it can be converted to HTML and many other formats. A markdown file is a plain text file that is typically given the extension `.md.` It is completely independent from R.
 -   [`markdown`](https://CRAN.R-project.org/package=markdown) (**R package**). `markdown` is an R package which converts `.md` files into HTML. It is no longer recommended for use has been surpassed by [`rmarkdown`](https://CRAN.R-project.org/package=rmarkdown) (discussed below).
 -   R Markdown (**markup language**). R Markdown is an extension of the markdown syntax. R Markdown files are plain text files that typically have the file extension `.Rmd`.
