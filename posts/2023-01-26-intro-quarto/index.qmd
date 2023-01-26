@@ -249,7 +249,7 @@ Here are some post-lecture questions to help you think about the material discus
 
 3.  What is `knitr` and how is different than other literate statistical programming tools?
 
-4.  Where can you find a list of other commands that help make your code writing more efficient in RStudio?
+4.  Where can you find a list of other commands that help make your code writing more efficient when using Quarto?
 :::
 
 ### Additional Resources
