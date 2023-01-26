@@ -279,6 +279,16 @@ git push --force
 :::
 
 
+# Forking a repo
+
+When you want to build on someone elseʻs repo, that is a great time to **fork** a repo.  This happens when you donʻt have write permission to the repo, but you want provide suggestions (for example if you want to fix a bug). Or if you want to use that repo as a template or a launching off point for your own project.
+
+After you fork and clone the repo to your computer, you can edit, add, and commit the changes. When you are ready to submit the suggestions to the repo owner, start a **pull request**. They will then read over your suggested edits, and if they approve they can merge the changes into the working repo.
+
+**Forks** are nice because they remain connected to the parent repo in GitHub. So you can seamlessly work on your own private copy and send it back to the original project when you are ready.
+
+**Branches** work in a similar way. The idea is simple. If you have a working repo, you donʻt want to made edits or experimental changes to **main** that may break the functionality. Branches are a way to make a "development branch" where you can work on your ideas in private without breaking anything. When youʻre sure you have everything ironed out and working, you can merge your branch back to **main**, and delete your branch.  They are meant to be an ephemeral scratch copy to keep the project clean, organized, and working perfectly. 
+
 # Post-lecture materials
 
 ### Final Questions
