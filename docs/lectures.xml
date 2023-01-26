@@ -417,7 +417,7 @@ Questions
 </div>
 <p>Before we leave this section, I find that there is quite a bit of terminology to understand the magic behind <code>rmarkdown</code> that can be confusing, so let’s break it down:</p>
 <ul>
-<li><a href="https://pandoc.org">Pandoc</a>. Pandoc is a command line tool with no GUI that converts documents (e.g.&nbsp;from number of different markup formats to many other formats, such as .doc, .pdf etc). It is completely independent from R (but does come bundled with RStudio).</li>
+<li><a href="https://pandoc.org">Pandoc</a>. Pandoc is a command line tool with no GUI that converts documents (e.g.&nbsp;from number of different markup formats to many other formats, such as .doc, .pdf etc). It is completely independent from R (but does come bundled with RStudio). If you donʻt have Rstudio installed, you will have to install <code>pandoc</code>.</li>
 <li><a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> (<strong>markup language</strong>). Markdown is a lightweight <a href="https://en.wikipedia.org/wiki/Markup_language">markup language</a> with plain text formatting syntax designed so that it can be converted to HTML and many other formats. A markdown file is a plain text file that is typically given the extension <code>.md.</code> It is completely independent from R.</li>
 <li><a href="https://CRAN.R-project.org/package=markdown"><code>markdown</code></a> (<strong>R package</strong>). <code>markdown</code> is an R package which converts <code>.md</code> files into HTML. It is no longer recommended for use has been surpassed by <a href="https://CRAN.R-project.org/package=rmarkdown"><code>rmarkdown</code></a> (discussed below).</li>
 <li>R Markdown (<strong>markup language</strong>). R Markdown is an extension of the markdown syntax. R Markdown files are plain text files that typically have the file extension <code>.Rmd</code>.</li>
@@ -497,6 +497,22 @@ Tip
 <li>Create a Website in Quarto quickstart <em>up to and including Render</em> <a href="https://quarto.org/docs/websites/" class="uri">https://quarto.org/docs/websites/</a></li>
 <li>Publishing to GitHub <em>up to and including Render to docs</em> <a href="https://quarto.org/docs/publishing/github-pages.html" class="uri">https://quarto.org/docs/publishing/github-pages.html</a></li>
 </ol>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Always always</strong> <code>quarto render</code> before you push up your changes to GitHub!</li>
+<li>If your changes are not appearing, try <code>quarto preview</code> and check that your changes appear in the preview. Then <code>quarto render</code> before you use git to add, commit, and push</li>
+</ul>
+</div>
+</div>
 <p><strong>Please see <a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-01-literate-programming/#create-and-knit-your-first-r-markdown-document">Stephanie Hicksʻ lecture for more examples and tips</a></strong></p>
 </section>
 <section id="post-lecture-materials" class="level1">
