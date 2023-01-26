@@ -74,9 +74,11 @@ Learning objectives
 <section id="introduction-to-gitgithub" class="level1">
 <h1>Introduction to git/GitHub</h1>
 <p>This document gives a brief explanation of GitHub and how we will use it for this course.</p>
-<section id="git" class="level3">
-<h3 class="anchored" data-anchor-id="git">git</h3>
+<section id="git" class="level2">
+<h2 class="anchored" data-anchor-id="git">git</h2>
 <p><strong>Git</strong> is software that implements what is called a <em>version control system</em> for a repository of files (also known as a <em>repo</em>). The main idea is that as you (and your collaborators) work on a project, the git software tracks, and records any changes made by anyone.</p>
+<p><strong>GitHub</strong> is an online server and user interface that also provides powerful tools for distribution of your repository, bug tracking, collaboration, and also allows you to create easy websites for each repository.</p>
+<p><strong>Git</strong> and <strong>GitHub</strong> together provide an organized way to track your projects, and all of the tools you will need in this course are free.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -88,14 +90,12 @@ Learning objectives
 </div>
 </div>
 <p>[<a href="https://peerj.com/preprints/3159/">Source: Jenny Bryan</a>]</p>
-<p><strong>GitHub</strong> is an online server and user interface that also provides powerful tools for distribution of your repository, bug tracking, collaboration, and also allows you to create easy websites for each repository.</p>
-<p><em>Git</em> and <em>GitHub</em> together provide an organized way to track your projects, and all of the tools you will need in this course are free.</p>
 <p>It is very well suited for collaborative work, as it was developed by Linus Torvalds (in about 10 days of coding!) for collaborative software development of the Linux kernel <a href="https://www.linuxfoundation.org/blog/blog/10-years-of-git-an-interview-with-git-creator-linus-torvalds">pretty interesting interview with Torvalds</a>. What it did really well was <em>distributed control</em>, and allowing everyone to have their <em>own copy of the repository</em>.</p>
 <p><em>Git</em>/<em>GitHub</em> is now the dominant version control system with <em>GitHub</em> hosting over 200 million repositories worldwide! It is used very broadly for all kinds of repos now including data science projects, book projects, courses, and anything that needs collaborative management of mostly text files.</p>
 <p>Another great and fun read about Git/GitHub and why it is a great tool for data analysis is in this article by <a href="https://peerj.com/preprints/3159/">Jenny Bryan</a>.</p>
 </section>
-<section id="what-to-not-use-gitgithub-for" class="level3">
-<h3 class="anchored" data-anchor-id="what-to-not-use-gitgithub-for">What to (not) use Git/GitHub for</h3>
+<section id="what-to-not-use-gitgithub-for" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-not-use-gitgithub-for">What to (not) use Git/GitHub for</h2>
 <p><strong>GitHub is ideal if</strong> you have a project with (possibly many) smallish files, and most of those files are text files (such as R code, LaTeX, Quarto/(R)Markdown, etc.) and different people work on different parts of the project.</p>
 <p><strong>GitHub is less useful if</strong> you have a lot of non-text files (e.g.&nbsp;Word or PowerPoint) and different team members might want to edit the same document at the same time. In that instance, a solution like Google Docs, Word+Dropbox, Word+Onedrive, etc. might be better.</p>
 <p><strong>GitHub also has a problem with <em>large files</em></strong>. Anything above around 50MB can lead to very slow syncing and sometimes outright failure. Unfortunately, once GitHub has choked on a large file, it can be quite tricky to fix the repository to work again. <em>This is because the ENTIRE history is saved, including the addition of the huge file.</em> Therefore keep large (&gt;50MB) files out of your GitHub repositories. If you have to work with such files, try to reduce them first before placing into the GitHub repository. Or as alternative, place those files in another sync service (e.g.&nbsp;Dropbox, OneDrive, GoogleDrive) and load them from there.</p>
@@ -122,8 +122,8 @@ Tip
 </div>
 <p>Note that other interfaces to <em>Git</em> exist, e.g., <em>Bitbucket</em>, but <em>GitHub</em> is the most widely used one.</p>
 </section>
-<section id="why-use-gitgithub" class="level3">
-<h3 class="anchored" data-anchor-id="why-use-gitgithub">Why use git/GitHub?</h3>
+<section id="why-use-gitgithub" class="level2">
+<h2 class="anchored" data-anchor-id="why-use-gitgithub">Why use git/GitHub?</h2>
 <p>You want to use <em>GitHub</em> to avoid this:</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -139,8 +139,8 @@ Tip
 <p>To learn a bit more about Git/GitHub and why you might want to use it, <a href="https://peerj.com/preprints/3159/">read this article by Jenny Bryan</a>.</p>
 <p><strong>Note her explanation of what’s special with the <code>README.md</code> file on GitHub.</strong></p>
 </section>
-<section id="how-to-use-gitgithub" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-use-gitgithub">How to use Git/GitHub</h3>
+<section id="how-to-use-gitgithub" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-use-gitgithub">How to use Git/GitHub</h2>
 <p>Git/GitHub is fundamentally <strong>based on commands you type into the command line</strong>. Lots of online resources show you how to use the command line. This is the most powerful, and the way I almost always interact with git/GitHub. However, many folks find this the most confusing way to use git/GitHub. Alternatively, there are graphical interfaces.</p>
 <ul>
 <li><a href="https://desktop.github.com/">GitHub itself</a> provides a grapical interface with basic functionality.</li>
@@ -150,14 +150,24 @@ Tip
 <p><strong>Note</strong>: As student, you can (and should) upgrade to the Pro version of GitHub for free (i.e.&nbsp;access to unlimited private repositories is one benefit), see the <a href="https://education.github.com/pack">GitHub student developer pack</a> on how to do this.</p>
 </section>
 </section>
-<section id="getting-started" class="level1">
-<h1>Getting Started</h1>
+<section id="getting-started-with-git" class="level1">
+<h1>Getting Started with git</h1>
 <p>One of my favorite resources for getting started with git/GitHub is the Happy Git with R from Jenny Bryan:</p>
 <ul>
 <li><a href="https://happygitwithr.com" class="uri">https://happygitwithr.com</a></li>
 </ul>
 <p>It truly is one of the <strong>best resources</strong> out there for getting started with git/GitHub, especially with the integration to RStudio. Therefore, at this point, I will encourage all of you to go read through the online book.</p>
 <p>Some of you may only need to skim it, others will need to spend some time reading through it. Either way, I will bet that you won’t regret the time investment.</p>
+<section id="set-up-your-profile-in-git-on-your-computer" class="level2">
+<h2 class="anchored" data-anchor-id="set-up-your-profile-in-git-on-your-computer">Set up your profile in git on your computer</h2>
+<p>At some point you may want to make changes to your repository. Of course before GitHub allows anyone to make changes to your data, they will want to verify your identity (of course!)</p>
+<p>In order for your computer to talk to GitHub smoothly, you will need to set up your username and email in the git profile stored on your computer. <strong>Be sure to match</strong> whatever username and email you used to setup your GitHub account. Easy directions are provided here <a href="https://happygitwithr.com/hello-git.html" class="uri">https://happygitwithr.com/hello-git.html</a></p>
+</section>
+<section id="set-up-your-personal-authentication-token-on-your-computer" class="level2">
+<h2 class="anchored" data-anchor-id="set-up-your-personal-authentication-token-on-your-computer">Set up your Personal Authentication Token on your computer</h2>
+<p>In addition to GitHub knowing who you are, they will want some credentials to authenticate you are really you. There are several ways to do this, but the easiest is the protocol for HTTP authentication. You will generate a personal access token for HTTPS from your GitHub account which will be stored on your personal machine. It is explained nicely here <a href="https://happygitwithr.com/https-pat.html" class="uri">https://happygitwithr.com/https-pat.html</a></p>
+<p>You only have to do it once for each computer, then you can push and pull from GitHub to your heartʻs content. It really is a nice way to do things securely.</p>
+</section>
 </section>
 <section id="using-gitgithub-in-our-course" class="level1">
 <h1>Using git/GitHub in our course</h1>
@@ -198,7 +208,7 @@ Tip
 <h1>Make a GitHub repo started from your local files</h1>
 <p>Suppose you have some files on your computer and youʻd like to make them into a repo. For this example, weʻre going to make a repo called <strong>test</strong></p>
 <ol type="1">
-<li>Create a folder Documents/git directory) called <strong>test</strong> and copy some files there.</li>
+<li>Create a folder in your <code>Documents/git</code> directory called <code>test</code> and copy some files there.</li>
 <li>Go to your GitHub account and create a new repository. Click on the small black + on the top right corner</li>
 </ol>
 <div class="cell">
@@ -225,31 +235,23 @@ Tip
 </div>
 </div>
 <ol start="4" type="1">
-<li>You will see the following giving you helpful hints for linking your GitHub repo with your local repo.</li>
+<li>You will see the following page giving you helpful hints for linking your GitHub repo with your local repo. We will follow the first set of instructions, slightly modified.</li>
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://mbutler808.github.io/images/github_quicksetup.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">How to connect your local repo with the remote</figcaption><p></p>
-</figure>
+<p><img src="https://mbutler808.github.io/images/github_quicksetup.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 </div>
-</div>
-<ol start="5" type="1">
-<li><p>We will follow the first set of instructions, slightly modified. By line of code below:</p>
-<ol type="a">
-<li>First we will create our README.md file,</li>
-<li>git init - intializes the local repo (only need to to this once - it sets up the git tracking).</li>
-<li>Add (. = all) our files and commit them to the repo.</li>
-<li>Create a commit message.</li>
-<li>Renames the local branch to main.</li>
-<li>We use “git remote add origin URL” to connect the remote repo (=“origin” on GitHub) to our local repo.</li>
-<li>Finally we push our local files (in main) up to the remote (to a parallel branch main on origin).</li>
-</ol></li>
-</ol>
-<p>Be sure to copy the appropriate URL for your own GitHub repo.</p>
+<p>Explantations for each line of code:</p>
+<ul>
+<li><code>echo "# test" &gt;&gt; README.md</code> Write <code># test</code> to <code>README.md</code> which will be created since it doesnʻt already exist</li>
+<li><code>git init</code> Intializes the local repo to set up git tracking (only need to to this once)</li>
+<li><code>git add .</code> Adds (. = all) our files and commits any changes to the repo</li>
+<li><code>git commit -m "first commit"</code> Commit message</li>
+<li><code>git branch -M main</code> Renames the local branch to main</li>
+<li><code>git remote add origin URL</code> Connect the remote repo (=“origin” on GitHub) to our local repo. Be sure to copy the appropriate URL for your own GitHub repo.</li>
+<li><code>git push -u origin main</code> Push our local changes (in main) up to the remote (to a parallel branch main on origin).</li>
+</ul>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
@@ -262,7 +264,27 @@ Tip
 <span id="cb2-6"><span class="fu" style="color: #4758AB;">git</span> remote add origin https://github.com/mbutler808/test.git</span>
 <span id="cb2-7"><span class="fu" style="color: #4758AB;">git</span> push <span class="at" style="color: #657422;">-u</span> origin main</span></code></pre></div>
 </div>
-<ol start="6" type="1">
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+GitHub requires authentication to overwrite your repository (this is a good thing 😃👍)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Did <em>GitHub</em> complain that it doesnʻt know your <strong>username</strong> or <strong>email</strong>?</li>
+</ul>
+<p>This might be because the default info on your computer doesnʻt match what you used to register for your GitHub account. Not to worry, just set it to match your GitHub account here: <a href="https://happygitwithr.com/hello-git.html" class="uri">https://happygitwithr.com/hello-git.html</a></p>
+<ul>
+<li>Did <em>GitHub</em> complain that your <strong>authentication</strong> failed?</li>
+</ul>
+<p>Donʻt worry, you can set up your personal access token (I recommend the HTTPS protocol): <a href="https://happygitwithr.com/https-pat.html" class="uri">https://happygitwithr.com/https-pat.html</a> Nice bonus, you only have to do it once for each computer.</p>
+</div>
+</div>
+<ol start="5" type="1">
 <li>Check your remote repo. The files from your computer should be there!</li>
 <li>Now try pushing up another change. Make some edit to one or more local files.</li>
 <li>Add, Commit, Push:</li>
@@ -289,8 +311,8 @@ Tip
 </div>
 <p>[<a href="https://peerj.com/preprints/3159/">Source: Jenny Bryan</a>]</p>
 </section>
-<section id="a-word" class="level1">
-<h1>A word</h1>
+<section id="a-word-about-merge-conflicts" class="level1">
+<h1>A word about merge conflicts</h1>
 <p>Sooner or later, you will encounter a merge conflict. That happens if the same file(s) changed both locally and on GitHub.com. That can happen if multiple people work on the same files, or if you work on multiple computers and forget to always push/pull before and after you work on a project. Donʻt get discouraged, this is solvable!</p>
 <p>Sometimes you have to do it manually. Moving the offending files out of your local repository, then doing the merge and after that adding the updates again can help. If you know that one source is the definite one, you can force a push or pull. A more advanced approach is to use branches.</p>
 <div class="code-with-filename">
