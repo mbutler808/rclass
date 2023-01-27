@@ -5,6 +5,7 @@ author:
     url: https://butlerlab.org
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
+# number-sections: true
 header-includes:
   - \usepackage[font={small}]{caption}
 description: "Version control is a game changer; or how I learned to love git/GitHub"
@@ -24,7 +25,7 @@ categories: [module 1, week 2, programming, version control, git, GitHub]
 3.  [GitHub introduction in module 1](https://andreashandel.github.io/MADAcourse) from Andreas Handel
 :::
 
-### Acknowledgements
+## Acknowledgements
 
 Material for this lecture was borrowed and adopted from
 
@@ -102,12 +103,11 @@ You want to use *GitHub* to avoid this:
 ```{r}
 #| label: versioncontrol
 #| echo: false
-#| fig-cap: 'How not to use GitHub [image from PhD Comics]'
-#| out-width: '80%'
+#| fig-cap: 'How not to use GitHub [image from PhD Comics](http://phdcomics.com/comics/archive_print.php?comicid=1531)'
+#| out-width: '50%'
 knitr::include_graphics("../../images/phdversioncontrol.gif")
 ```
 
-\[[Source: PhD Comics](http://phdcomics.com/comics/archive_print.php?comicid=1531)\]
 
 To learn a bit more about Git/GitHub and why you might want to use it, [read this article by Jenny Bryan](https://peerj.com/preprints/3159/).
 
@@ -125,26 +125,69 @@ Git/GitHub is fundamentally **based on commands you type into the command line**
 
 # Getting Started with git
 
-One of my favorite resources for getting started with git/GitHub is the Happy Git with R from Jenny Bryan:
+One of my favorite resources for getting started with git/GitHub is the Happy Git with R from Jenny Bryan (especially for Rstudio users):
 
 -   <https://happygitwithr.com>
 
-It truly is one of the **best resources** out there for getting started with git/GitHub, especially with the integration to RStudio. Therefore, at this point, I will encourage all of you to go read through the online book.
+It is one of the **most comprehensive resources** out there for getting started with git/GitHub.  I will encourage all of you to go read through the online book. Some of you may only need to skim it, others will need to spend some time reading through it. Either way, I hope you will agree it is a worthwhile investment to understand the basics as well as to know you can get help.
 
-Some of you may only need to skim it, others will need to spend some time reading through it. Either way, I will bet that you won't regret the time investment.
+## Set up your profile in git on your computer {#sec-profile}
 
-## Set up your profile in git on your computer
+Before making changes to your repository, GitHub will want to verify your identity.
 
-At some point you may want to make changes to your repository. Of course before GitHub allows anyone to make changes to your data, they will want to verify your identity (of course!)
+In order for your computer to talk to GitHub smoothly, you will need to set up your **username** and **email** in the **git profile** stored on your computer.
 
-In order for your computer to talk to GitHub smoothly, you will need to set up your username and email in the git profile stored on your computer. **Be sure to match** whatever username and email you used to setup your GitHub account. Easy directions are provided here <https://happygitwithr.com/hello-git.html>
+:::{.callout-warning}
+**Be sure to match** your GitHub account `username` and `email`! Otherwise *GitHub* wonʻt know who you are
+:::
 
-## Set up your Personal Authentication Token on your computer
+```{.bash filename=Terminal}
+git config --global user.name 'GitHubUsername'
+git config --global user.email 'GitHub_email@example.com'
+git config --global --list
+```
 
-In addition to GitHub knowing who you are, they will want some credentials to authenticate you are really you. There are several ways to do this, but the easiest is the protocol for HTTP authentication. You will generate a personal access token for HTTPS from your GitHub account which will be stored on your personal machine. It is explained nicely here <https://happygitwithr.com/https-pat.html>
+That last line will show all of your current `git config` settings.
 
- You only have to do it once for each computer, then you can push and pull from GitHub to your heartʻs content. It really is a nice way to do things securely.
+If you are using Rstudio, easy directions are provided here <https://happygitwithr.com/hello-git.html>
 
+## Set up your Personal Authentication Token on your computer {#sec-token}
+
+GitHub will also want to check your credentials to authenticate you are really you before writing changes to your repo.
+
+There are several ways to do this, but the easiest is the protocol for HTTP authentication. You will generate a *Personal Access Token* for HTTPS from your GitHub account which will be stored on your personal machine.
+
+I prefer the GithHub command line interface or `gh` to do this. To install the CLI, follow [the instructions here for your operating system](https://github.com/cli/cli#installation).  For Mac users, I suggest that you install `homebrew`, it is a command-line general software manager for many different software packages.
+
+::: {.callout-tip}
+## Storing your Personal Access Token
+1.  From GitHub: Generate your personal access token  [instructions](https://happygitwithr.com/https-pat.html#get-a-pat)
+    a.  Find the token generator on GitHub under your *User Icon > settings > developer settings (left side bar) > Personal access tokens > Tokens (classic) > Generate new Token > classic* **note this menu may change**
+    b.  Select at least these scopes: "admin:org","repo", "user", "gist", and "workflow"
+2.  From your Command Line: Use `gh auth login` to store your token and follow the prompts.
+    a.  select `HTTPS` for your preferred protocol
+    b.  select `Y` for authenticate with GitHub credentials
+    c.  Alternatively if you want to do this all from the command line you can run the following line (if your token is saved in `mytoken.txt`):
+```{.bash filename=Terminal}
+gh auth login --with-token < mytoken.txt
+```
+:::
+
+Many more details are explained nicely here <https://happygitwithr.com/https-pat.html>
+
+You only have to store your credentials  once for each computer (or PAT expiration date), then you can push and pull from GitHub to your heartʻs content. It really is a nice way to do things securely.
+
+## Configuring your default git editor
+
+You may want to set your default git editor to something you know how to use (it will come up when you have a merge conflict).
+
+For example the nano editor is easy to use on the command line for a Unix shell:
+
+```{.bash filename=Mac/Linux}
+$ git config --global core.editor "nano -w"
+```
+
+*The Carpentries* provide a [full list of editors](https://swcarpentry.github.io/git-novice/02-setup/#line-endings) by operating system, a great resource.
 
 # Using git/GitHub in our course
 
@@ -168,12 +211,17 @@ knitr::include_graphics("../../images/github_cloning.png")
 ```
 
 2. In your Terminal or CMD prompt, navigate to your git folder (create one in Documents if you donʻt have one already), and clone the repo:
-```{.bash filename=Terminal}
-pwd  # or dir on PC
+```{.bash filename=Terminal(Mac/Linux)}
+pwd
 cd ~/Documents/git  # navigate to your git folder
 git clone https://github.com/mbutler808/rclassdata.git
 ```
-If you set up your personal access token, it should appear on your computer! [If not, set it up following these instructions](https://happygitwithr.com/https-pat.html)
+```{.bash filename=CMD(Windows)}
+dir
+cd ~/Documents/git  # navigate to your git folder
+git clone https://github.com/mbutler808/rclassdata.git
+```
+If you set up your personal access token, it should appear on your computer! If not, go back to @sec-token and try again.
 
 # Make a GitHub repo started from your local files
 
@@ -232,17 +280,17 @@ git push -u origin main
 
 - Did *GitHub* complain that it doesnʻt know your **username** or **email**?
 
-This might be because the default info on your computer doesnʻt match what you used to register for your GitHub account. Not to worry, just set it to match your GitHub account here: <https://happygitwithr.com/hello-git.html>
+This might be because the defaults on your computer donʻt match what you used to register for your GitHub account. Not to worry, just set it to match your GitHub account here: @sec-profile
 
 - Did *GitHub* complain that your **authentication** failed?
 
-Donʻt worry, you can set up your personal access token (I recommend the HTTPS protocol): <https://happygitwithr.com/https-pat.html> Nice bonus, you only have to do it once for each computer.
+Donʻt worry, just try it again: @sec-token. Nice bonus, you only have to do it once for each computer.
 
 :::
 
 
 5. Check your remote repo. The files from your computer should be there!
-6. Now try pushing up another change. Make some edit to one or more local files.
+6. Now try pushing up another change. Make some edits to one or more local files.
 7. Add, Commit, Push:
 ```{.bash filename=Terminal}
 git add .
@@ -304,7 +352,7 @@ Here are some post-lecture questions to help you think about the material discus
 
 2.  What is the difference between git and GitHub?
 
-3.  What are other version controls software/tools that are available besides git?
+3.  What are some benefits and case uses for repositories with version control using git and GitHub?
 :::
 
 ### Additional Resources

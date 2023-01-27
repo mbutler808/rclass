@@ -23,10 +23,10 @@
 <blockquote class="blockquote">
 <p>The shocking assertion will be that most statistics in most scientific papers has errors. —<em>Charles Geyer</em></p>
 </blockquote>
-<section id="pre-lecture-materials" class="level1">
-<h1>Pre-lecture materials</h1>
-<section id="read-ahead" class="level3">
-<h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
+<section id="pre-lecture-materials" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Pre-lecture materials</h1>
+<section id="read-ahead" class="level3" data-number="1.0.1">
+<h3 data-number="1.0.1" class="anchored" data-anchor-id="read-ahead"><span class="header-section-number">1.0.1</span> Read ahead</h3>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -45,8 +45,8 @@ Read ahead
 </div>
 </div>
 </section>
-<section id="acknowledgements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<section id="acknowledgements" class="level3" data-number="1.0.2">
+<h3 data-number="1.0.2" class="anchored" data-anchor-id="acknowledgements"><span class="header-section-number">1.0.2</span> Acknowledgements</h3>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
 <li><a href="http://users.stat.umn.edu/~geyer/Sweave/" class="uri">http://users.stat.umn.edu/~geyer/Sweave/</a></li>
@@ -56,8 +56,8 @@ Read ahead
 </ul>
 </section>
 </section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
+<section id="learning-objectives" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Learning objectives</h1>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -78,8 +78,8 @@ Learning objectives
 </div>
 </div>
 </section>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
+<section id="introduction" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Introduction</h1>
 <p>From a young age, we have learned that scientific conclusions should be <strong>reproducible</strong>. After all, isnʻt that what the methods section is for? We are taught to write methods sections so that any scientist could, in theory, repeat the experiment with the idea that if the phenomenon is true, they should obtain comparable results and more often than not should come to the same conclusions.</p>
 <p><em>But how repeatable is modern science?</em> Many experiments are now so complex and so expensive that repeating them is not practical. However, it is even worse than that. As datasets get larger and analyses become ever more complex, there is a growing concern that even given the data, we still cannot necessarily repeat the analysis. This is called <strong>“the reproducbility crisis”</strong>.</p>
 <p>Recently, there has been a lot of discussion of reproducibility in the media and in the scientific literature. The journal <em>Science</em> had a special issue on reproducibility and data replication.</p>
@@ -102,8 +102,8 @@ Learning objectives
 <p><a href="https://www.pnas.org/doi/10.1073/pnas.2203150119">Source: Breznau et al., 2022</a></p>
 <p>This should be very disturbing. It was very disturbing to me! <a href="http://users.stat.umn.edu/~geyer/repro-paper.pdf">Greyer</a> notes that the meta-analysis did not investigate how much of the variability of results was due to outright error. He furthermore notes that while the meta-analysis was done in a reproducibly, the original 73 analyses were not. What does he mean?</p>
 </section>
-<section id="some-of-the-issues-from-a-statisticianʻs-perspective" class="level1">
-<h1>Some of the issues from a statisticianʻs perspective</h1>
+<section id="some-of-the-issues-from-a-statisticianʻs-perspective" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Some of the issues from a statisticianʻs perspective</h1>
 <p>Greyer provides nine ideas worth considering:</p>
 <ol type="1">
 <li>Most scientific papers that need statistics have conclusions that are not actually supported by the statistical calculations done, because of
@@ -126,11 +126,11 @@ Learning objectives
 <li><a href="https://jasa-acs.github.io/repro-guide" class="uri">https://jasa-acs.github.io/repro-guide</a></li>
 </ul>
 </section>
-<section id="recommendations" class="level1">
-<h1>Recommendations</h1>
+<section id="recommendations" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Recommendations</h1>
 <p><a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522">Discuss Table 1</a></p>
-<section id="authors-and-readers" class="level3">
-<h3 class="anchored" data-anchor-id="authors-and-readers">Authors and Readers</h3>
+<section id="authors-and-readers" class="level3" data-number="5.0.1">
+<h3 data-number="5.0.1" class="anchored" data-anchor-id="authors-and-readers"><span class="header-section-number">5.0.1</span> Authors and Readers</h3>
 <p>It is important to realize that there are multiple players when you talk about reproducibility–there are different types of parties that have different types of interests. There are <strong>authors</strong> who produce research and they want to make their research reproducible. There are also <strong>readers</strong> of research and they want to reproduce that work. Everyone needs tools to make their lives easier.</p>
 <p>One current <strong>challenge is that authors of research have to undergo considerable effort to make their results available to a wide audience</strong>.</p>
 <ul>
@@ -166,10 +166,10 @@ Summary
 </div>
 </section>
 </section>
-<section id="post-lecture-materials" class="level1">
-<h1>Post-lecture materials</h1>
-<section id="final-questions" class="level3">
-<h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
+<section id="post-lecture-materials" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Post-lecture materials</h1>
+<section id="final-questions" class="level3" data-number="6.0.1">
+<h3 data-number="6.0.1" class="anchored" data-anchor-id="final-questions"><span class="header-section-number">6.0.1</span> Final Questions</h3>
 <p>Here are some post-lecture questions to help you think about the material discussed.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -188,8 +188,8 @@ Questions
 </div>
 </div>
 </section>
-<section id="additional-resources" class="level3">
-<h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
+<section id="additional-resources" class="level3" data-number="6.0.2">
+<h3 data-number="6.0.2" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">6.0.2</span> Additional Resources</h3>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -228,10 +228,10 @@ Tip
 
 
 <!-- Add interesting quote -->
-<section id="pre-lecture-materials" class="level1">
-<h1>Pre-lecture materials</h1>
-<section id="read-ahead" class="level3">
-<h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
+<section id="pre-lecture-materials" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Pre-lecture materials</h1>
+<section id="read-ahead" class="level3" data-number="1.0.1">
+<h3 data-number="1.0.1" class="anchored" data-anchor-id="read-ahead"><span class="header-section-number">1.0.1</span> Read ahead</h3>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -251,8 +251,8 @@ Read ahead
 </div>
 </div>
 </section>
-<section id="acknowledgements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<section id="acknowledgements" class="level3" data-number="1.0.2">
+<h3 data-number="1.0.2" class="anchored" data-anchor-id="acknowledgements"><span class="header-section-number">1.0.2</span> Acknowledgements</h3>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
 <li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-01-literate-programming/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-01-literate-programming/</a></li>
@@ -262,8 +262,8 @@ Read ahead
 </ul>
 </section>
 </section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
+<section id="learning-objectives" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Learning objectives</h1>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -283,8 +283,8 @@ Learning objectives
 </div>
 </div>
 </section>
-<section id="literate-programming" class="level1">
-<h1>Literate Programming</h1>
+<section id="literate-programming" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Literate Programming</h1>
 <p>Before there was widespread concern about “Reproducible Research”, the term <strong>literate programming</strong> was coined by <a href="https://www-cs-faculty.stanford.edu/~knuth/">Donald Knuth</a>, one of the true geniuses of computing, the author/inventor of TeX, and the notion of structured programming, among other things. He wrote a book about it in 1984!</p>
 <blockquote class="blockquote">
 <p>Literate programming is a methodology that combines a programming language with a documentation language, thereby making programs more robust, more portable, more easily maintained, and arguably more fun to write than programs that are written only in a high-level language.</p>
@@ -315,8 +315,8 @@ Additional Reading
 </div>
 </div>
 </section>
-<section id="the-data-science-pipeline" class="level1">
-<h1>The Data Science Pipeline</h1>
+<section id="the-data-science-pipeline" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> The Data Science Pipeline</h1>
 <p>The basic issue is when you read a description of a data analysis, such as in an article or a technical report, for the most part, what you get is the report and nothing else.</p>
 <p>Of course, everyone knows that behind the scenes <strong>there’s a lot that went into this article</strong> and that is what I call the <strong>data science pipeline</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -326,8 +326,8 @@ Additional Reading
 </figure>
 </div>
 </section>
-<section id="literate-programming-in-practice" class="level1">
-<h1>Literate Programming in Practice</h1>
+<section id="literate-programming-in-practice" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Literate Programming in Practice</h1>
 <p>One basic idea to make writing reproducible reports easier is what’s known as <em>literate statistical programming</em>. The idea is to <strong>think of a report or a publication as a stream of text and code</strong>.</p>
 <ul>
 <li><p>The text is readable by people and the code is readable by computers.</p></li>
@@ -337,14 +337,14 @@ Additional Reading
 <li><p><strong>The code and text remain together</strong> in a single source document. No more separate analysis files and word processing files. When code is edited, the report is automatically generated and updated.</p></li>
 </ul>
 <p>There might also be <strong>presentation code</strong> that formats tables and figures and there’s article text that explains what’s going on around all this code. This stream of text and code is a literate statistical program or a literate statistical analysis.</p>
-<section id="weaving-and-tangling" class="level3">
-<h3 class="anchored" data-anchor-id="weaving-and-tangling">Weaving and Tangling</h3>
+<section id="weaving-and-tangling" class="level3" data-number="5.0.1">
+<h3 data-number="5.0.1" class="anchored" data-anchor-id="weaving-and-tangling"><span class="header-section-number">5.0.1</span> Weaving and Tangling</h3>
 <p>Literate programs by themselves are a bit difficult to work with, but they can be processed in two important ways.</p>
 <p>Literate programs can be <strong>weaved</strong> to produce human readable documents like PDFs or HTML web pages, and they can <strong>tangled</strong> to produce machine-readable “documents”, or in other words, machine readable code.</p>
 <p>In order to use a system like this you need a documentational language, that’s human readable, and you need a programming language that’s machine readable (or can be compiled/interpreted into something that’s machine readable).</p>
 </section>
-<section id="sweave" class="level3">
-<h3 class="anchored" data-anchor-id="sweave">Sweave</h3>
+<section id="sweave" class="level3" data-number="5.0.2">
+<h3 data-number="5.0.2" class="anchored" data-anchor-id="sweave"><span class="header-section-number">5.0.2</span> Sweave</h3>
 <p>One of the original literate programming systems in R that was designed to do this was called Sweave written by <a href="https://documents.uow.edu.au/content/groups/public/@web/@commerce/documents/doc/uow012868.pdf">Friedrich Leisch</a>. Sweave enables users to combine R code with a documentation program called LaTeX. Sweave revolutionized coding, and has become part of the R base code. Leisch is on the R Core Development Team and the BioConductor Project.</p>
 <p><strong>Sweave files ends a <code>.Rnw</code></strong> and have R code weaved through the document:</p>
 <pre><code>&lt;&lt;plot1, height=4, width=5, eval=FALSE&gt;&gt;=
@@ -360,8 +360,8 @@ plot(airquality$Ozone ~ airquality$Wind)
 </ul>
 <p>Instead, folks have moved towards using something called <strong>knitr</strong>, which offers everything Sweave does, plus it extends it to much simpler Markdown documents.</p>
 </section>
-<section id="rmarkdown" class="level3">
-<h3 class="anchored" data-anchor-id="rmarkdown">rmarkdown</h3>
+<section id="rmarkdown" class="level3" data-number="5.0.3">
+<h3 data-number="5.0.3" class="anchored" data-anchor-id="rmarkdown"><span class="header-section-number">5.0.3</span> rmarkdown</h3>
 <p>Another choice for literate programming is to build documents based on <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> language. A markdown file is a plain text file that is typically given the extension <code>.md.</code>. The <a href="https://CRAN.R-project.org/package=rmarkdown"><code>rmarkdown</code></a> R package takes a R Markdown file (<code>.Rmd</code>) and weaves together R code chunks like this:</p>
 <pre><code>```{r plot1, height=4, width=5, eval=FALSE, echo=TRUE}
 data(airquality)
@@ -446,8 +446,8 @@ Tip
 </figure>
 </div>
 </section>
-<section id="knitr" class="level3">
-<h3 class="anchored" data-anchor-id="knitr">knitr</h3>
+<section id="knitr" class="level3" data-number="5.0.4">
+<h3 data-number="5.0.4" class="anchored" data-anchor-id="knitr"><span class="header-section-number">5.0.4</span> knitr</h3>
 <p>One of the alternative that has come up in recent times is something called <code>knitr</code>.</p>
 <ul>
 <li>The <code>knitr</code> package for R takes a lot of these ideas of literate programming and updates and improves upon them.</li>
@@ -488,8 +488,8 @@ Tip
 <p>[<a href="https://bookdown.org/yihui/rmarkdown/">Source</a>]</p>
 </section>
 </section>
-<section id="in-comes-quarto" class="level1">
-<h1>In comes Quarto</h1>
+<section id="in-comes-quarto" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> In comes Quarto</h1>
 <p>The folks who developed R Markdown have moved on to a new package called <a href="https://quarto.org">Quarto</a>. Quarto contains many of the features of R Markdown, but importantly, is now separate from Rstudio. It is intentionally developed as a cross-platform, cross-language markup language. It works with R, Python, Julia, and Observable. And is rapidly catching on with the statistical coding community.</p>
 <p>Quarto can render output to many formats of documents including html, pdf, docx, md. It can also layout websites, presentations, or even books. It supports interactive apps such as Rshiny among other things.</p>
 <p>We are going to learn using Quarto. Letʻs start by getting a simple webpage up.</p>
@@ -516,14 +516,14 @@ Tip
 </div>
 <p><strong>Please see <a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-01-literate-programming/#create-and-knit-your-first-r-markdown-document">Stephanie Hicksʻ lecture for more examples and tips</a></strong></p>
 </section>
-<section id="post-lecture-materials" class="level1">
-<h1>Post-lecture materials</h1>
-<section id="final-questions" class="level3">
-<h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
+<section id="post-lecture-materials" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Post-lecture materials</h1>
+<section id="final-questions" class="level3" data-number="7.0.1">
+<h3 data-number="7.0.1" class="anchored" data-anchor-id="final-questions"><span class="header-section-number">7.0.1</span> Final Questions</h3>
 <p>Here are some post-lecture questions to help you think about the material discussed.</p>
 </section>
-<section id="questions-1" class="level3 questions">
-<h3 class="anchored" data-anchor-id="questions-1">Questions</h3>
+<section id="questions-1" class="level3 questions" data-number="7.0.2">
+<h3 data-number="7.0.2" class="anchored" data-anchor-id="questions-1"><span class="header-section-number">7.0.2</span> Questions</h3>
 <ol type="1">
 <li><p>What is literate programming?</p></li>
 <li><p>What was the first literate statistical programming tool to weave together a statistical language (R) with a markup language (LaTeX)?</p></li>
@@ -531,8 +531,8 @@ Tip
 <li><p>Where can you find a list of other commands that help make your code writing more efficient when using Quarto?</p></li>
 </ol>
 </section>
-<section id="additional-resources" class="level3">
-<h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
+<section id="additional-resources" class="level3" data-number="7.0.3">
+<h3 data-number="7.0.3" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">7.0.3</span> Additional Resources</h3>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -577,8 +577,8 @@ Tip
 
 
 <!-- Add interesting quote -->
-<section id="lecture-materials" class="level1">
-<h1>Lecture materials</h1>
+<section id="lecture-materials" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Lecture materials</h1>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -596,8 +596,8 @@ Helpful references for this lecture
 </ol>
 </div>
 </div>
-<section id="acknowledgements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<section id="acknowledgements" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="acknowledgements"><span class="header-section-number">1.1</span> Acknowledgements</h2>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
 <li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/</a></li>
@@ -605,8 +605,8 @@ Helpful references for this lecture
 </ul>
 </section>
 </section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
+<section id="learning-objectives" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Learning objectives</h1>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -627,11 +627,11 @@ Learning objectives
 </div>
 </div>
 </section>
-<section id="introduction-to-gitgithub" class="level1">
-<h1>Introduction to git/GitHub</h1>
+<section id="introduction-to-gitgithub" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Introduction to git/GitHub</h1>
 <p>This document gives a brief explanation of GitHub and how we will use it for this course.</p>
-<section id="git" class="level2">
-<h2 class="anchored" data-anchor-id="git">git</h2>
+<section id="git" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="git"><span class="header-section-number">3.1</span> git</h2>
 <p><strong>Git</strong> is software that implements what is called a <em>version control system</em> for a repository of files (also known as a <em>repo</em>). The main idea is that as you (and your collaborators) work on a project, the git software tracks, and records any changes made by anyone.</p>
 <p><strong>GitHub</strong> is an online server and user interface that provides powerful tools for distribution of your repository, bug tracking, collaboration, and also allows you to create easy websites for each repository.</p>
 <p><strong>Git</strong> and <strong>GitHub</strong> together provide an organized way to track your projects, and all of the tools you will need in this course are free.</p>
@@ -650,12 +650,12 @@ Learning objectives
 <p><em>Git</em>/<em>GitHub</em> is now the dominant version control system with <em>GitHub</em> hosting over 200 million repositories worldwide! It is used very broadly for all kinds of repos now including data science projects, book projects, courses, and anything that needs collaborative management of mostly text files.</p>
 <p>Another great and fun read about Git/GitHub and why it is a great tool for data analysis is in this article by <a href="https://peerj.com/preprints/3159/">Jenny Bryan</a>.</p>
 </section>
-<section id="what-to-not-use-gitgithub-for" class="level2">
-<h2 class="anchored" data-anchor-id="what-to-not-use-gitgithub-for">What to (not) use Git/GitHub for</h2>
+<section id="what-to-not-use-gitgithub-for" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="what-to-not-use-gitgithub-for"><span class="header-section-number">3.2</span> What to (not) use Git/GitHub for</h2>
 <p><strong>GitHub is ideal if</strong> you have a project with (possibly many) smallish files, and most of those files are text files (such as R code, LaTeX, Quarto/(R)Markdown, etc.) and different people work on different parts of the project.</p>
 <p><strong>GitHub is less useful if</strong> you have a lot of non-text files (e.g.&nbsp;Word or PowerPoint) and different team members might want to edit the same document at the same time. In that instance, a solution like Google Docs, Word+Dropbox, Word+Onedrive, etc. might be better.</p>
 <p><strong>GitHub also has a problem with <em>large files</em></strong>. Anything above around 50MB can lead to very slow syncing and sometimes outright failure. Unfortunately, once GitHub has choked on a large file, it can be quite tricky to fix the repository to work again. <em>This is because the ENTIRE history is saved, including the addition of the huge file.</em> Therefore keep large (&gt;50MB) files out of your GitHub repositories. If you have to work with such files, try to reduce them first before placing into the GitHub repository. Or as alternative, place those files in another sync service (e.g.&nbsp;Dropbox, OneDrive, GoogleDrive) and load them from there.</p>
-<p><strong>Finally, if you have <em>data</em></strong>, you need to be careful since by default, GitHub repositories (the GitHub name for your projects) are public and everyone can see them. You can set the repository to private, but you need to be careful that you don’t accidentally expose confidential data to the public. It is in general not a good idea to have confidential data on GitHub. First anonymize your data enough that it is not at risk of identifiability, then you can place it in a private repository. If you put it public, be very careful that you only make things public that are ok to be made public.</p>
+<p><strong>Finally, if you have <em>data</em></strong>, you need to be careful since by default, GitHub repositories are public. You can set the repository to private, but you need to be careful that you don’t accidentally expose confidential data to the public. It is in general not a good idea to have confidential data on GitHub. First anonymize your data (ensure that it is not at risk of identifiability), then you can place it in a private repository. If you put it in a public repo, be very careful!! (And you may need IRB approval, check with your institutional research office.)</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -678,25 +678,24 @@ Tip
 </div>
 <p>Note that other interfaces to <em>Git</em> exist, e.g., <em>Bitbucket</em>, but <em>GitHub</em> is the most widely used one.</p>
 </section>
-<section id="why-use-gitgithub" class="level2">
-<h2 class="anchored" data-anchor-id="why-use-gitgithub">Why use git/GitHub?</h2>
+<section id="why-use-gitgithub" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="why-use-gitgithub"><span class="header-section-number">3.3</span> Why use git/GitHub?</h2>
 <p>You want to use <em>GitHub</em> to avoid this:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://mbutler808.github.io/images/phdversioncontrol.gif" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">How not to use GitHub [image from PhD Comics]</figcaption><p></p>
+<p><img src="https://mbutler808.github.io/images/phdversioncontrol.gif" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">How not to use GitHub <a href="http://phdcomics.com/comics/archive_print.php?comicid=1531">image from PhD Comics</a></figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>[<a href="http://phdcomics.com/comics/archive_print.php?comicid=1531">Source: PhD Comics</a>]</p>
 <p>To learn a bit more about Git/GitHub and why you might want to use it, <a href="https://peerj.com/preprints/3159/">read this article by Jenny Bryan</a>.</p>
 <p><strong>Note her explanation of what’s special with the <code>README.md</code> file on GitHub.</strong></p>
 </section>
-<section id="how-to-use-gitgithub" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-use-gitgithub">How to use Git/GitHub</h2>
+<section id="how-to-use-gitgithub" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="how-to-use-gitgithub"><span class="header-section-number">3.4</span> How to use Git/GitHub</h2>
 <p>Git/GitHub is fundamentally <strong>based on commands you type into the command line</strong>. Lots of online resources show you how to use the command line. This is the most powerful, and the way I almost always interact with git/GitHub. However, many folks find this the most confusing way to use git/GitHub. Alternatively, there are graphical interfaces.</p>
 <ul>
 <li><a href="https://desktop.github.com/">GitHub itself</a> provides a grapical interface with basic functionality.</li>
@@ -706,27 +705,95 @@ Tip
 <p><strong>Note</strong>: As student, you can (and should) upgrade to the Pro version of GitHub for free (i.e.&nbsp;access to unlimited private repositories is one benefit), see the <a href="https://education.github.com/pack">GitHub student developer pack</a> on how to do this.</p>
 </section>
 </section>
-<section id="getting-started-with-git" class="level1">
-<h1>Getting Started with git</h1>
-<p>One of my favorite resources for getting started with git/GitHub is the Happy Git with R from Jenny Bryan:</p>
+<section id="getting-started-with-git" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Getting Started with git</h1>
+<p>One of my favorite resources for getting started with git/GitHub is the Happy Git with R from Jenny Bryan (especially for Rstudio users):</p>
 <ul>
 <li><a href="https://happygitwithr.com" class="uri">https://happygitwithr.com</a></li>
 </ul>
-<p>It truly is one of the <strong>best resources</strong> out there for getting started with git/GitHub, especially with the integration to RStudio. Therefore, at this point, I will encourage all of you to go read through the online book.</p>
-<p>Some of you may only need to skim it, others will need to spend some time reading through it. Either way, I will bet that you won’t regret the time investment.</p>
-<section id="set-up-your-profile-in-git-on-your-computer" class="level2">
-<h2 class="anchored" data-anchor-id="set-up-your-profile-in-git-on-your-computer">Set up your profile in git on your computer</h2>
-<p>At some point you may want to make changes to your repository. Of course before GitHub allows anyone to make changes to your data, they will want to verify your identity (of course!)</p>
-<p>In order for your computer to talk to GitHub smoothly, you will need to set up your username and email in the git profile stored on your computer. <strong>Be sure to match</strong> whatever username and email you used to setup your GitHub account. Easy directions are provided here <a href="https://happygitwithr.com/hello-git.html" class="uri">https://happygitwithr.com/hello-git.html</a></p>
+<p>It is one of the <strong>most comprehensive resources</strong> out there for getting started with git/GitHub. I will encourage all of you to go read through the online book. Some of you may only need to skim it, others will need to spend some time reading through it. Either way, I hope you will agree it is a worthwhile investment to understand the basics as well as to know you can get help.</p>
+<section id="sec-profile" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-profile"><span class="header-section-number">4.1</span> Set up your profile in git on your computer</h2>
+<p>Before making changes to your repository, GitHub will want to verify your identity.</p>
+<p>In order for your computer to talk to GitHub smoothly, you will need to set up your <strong>username</strong> and <strong>email</strong> in the <strong>git profile</strong> stored on your computer.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Be sure to match</strong> your GitHub account <code>username</code> and <code>email</code>! Otherwise <em>GitHub</em> wonʻt know who you are</p>
+</div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="fu" style="color: #4758AB;">git</span> config <span class="at" style="color: #657422;">--global</span> user.name <span class="st" style="color: #20794D;">'GitHubUsername'</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;">git</span> config <span class="at" style="color: #657422;">--global</span> user.email <span class="st" style="color: #20794D;">'GitHub_email@example.com'</span></span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">git</span> config <span class="at" style="color: #657422;">--global</span> <span class="at" style="color: #657422;">--list</span></span></code></pre></div>
+</div>
+<p>That last line will show all of your current <code>git config</code> settings.</p>
+<p>If you are using Rstudio, easy directions are provided here <a href="https://happygitwithr.com/hello-git.html" class="uri">https://happygitwithr.com/hello-git.html</a></p>
 </section>
-<section id="set-up-your-personal-authentication-token-on-your-computer" class="level2">
-<h2 class="anchored" data-anchor-id="set-up-your-personal-authentication-token-on-your-computer">Set up your Personal Authentication Token on your computer</h2>
-<p>In addition to GitHub knowing who you are, they will want some credentials to authenticate you are really you. There are several ways to do this, but the easiest is the protocol for HTTP authentication. You will generate a personal access token for HTTPS from your GitHub account which will be stored on your personal machine. It is explained nicely here <a href="https://happygitwithr.com/https-pat.html" class="uri">https://happygitwithr.com/https-pat.html</a></p>
-<p>You only have to do it once for each computer, then you can push and pull from GitHub to your heartʻs content. It really is a nice way to do things securely.</p>
+<section id="sec-token" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sec-token"><span class="header-section-number">4.2</span> Set up your Personal Authentication Token on your computer</h2>
+<p>GitHub will also want to check your credentials to authenticate you are really you before writing changes to your repo.</p>
+<p>There are several ways to do this, but the easiest is the protocol for HTTP authentication. You will generate a <em>Personal Access Token</em> for HTTPS from your GitHub account which will be stored on your personal machine.</p>
+<p>I prefer the GithHub command line interface or <code>gh</code> to do this. To install the CLI, follow <a href="https://github.com/cli/cli#installation">the instructions here for your operating system</a>. For Mac users, I suggest that you install <code>homebrew</code>, it is a command-line general software manager for many different software packages.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Storing your Personal Access Token
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>From GitHub: Generate your personal access token <a href="https://happygitwithr.com/https-pat.html#get-a-pat">instructions</a>
+<ol type="a">
+<li>Find the token generator on GitHub under your <em>User Icon &gt; settings &gt; developer settings (left side bar) &gt; Personal access tokens &gt; Tokens (classic) &gt; Generate new Token &gt; classic</em> <strong>note this menu may change</strong></li>
+<li>Select at least these scopes: “admin:org”,“repo”, “user”, “gist”, and “workflow”</li>
+</ol></li>
+<li>From your Command Line: Use <code>gh auth login</code> to store your token and follow the prompts.
+<ol type="a">
+<li>select <code>HTTPS</code> for your preferred protocol</li>
+<li>select <code>Y</code> for authenticate with GitHub credentials</li>
+<li>Alternatively if you want to do this all from the command line you can run the following line (if your token is saved in <code>mytoken.txt</code>):</li>
+</ol>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;">gh</span> auth login <span class="at" style="color: #657422;">--with-token</span> <span class="op" style="color: #5E5E5E;">&lt;</span> mytoken.txt</span></code></pre></div>
+</div></li>
+</ol>
+</div>
+</div>
+<p>Many more details are explained nicely here <a href="https://happygitwithr.com/https-pat.html" class="uri">https://happygitwithr.com/https-pat.html</a></p>
+<p>You only have to store your credentials once for each computer (or PAT expiration date), then you can push and pull from GitHub to your heartʻs content. It really is a nice way to do things securely.</p>
+</section>
+<section id="configuring-your-default-git-editor" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="configuring-your-default-git-editor"><span class="header-section-number">4.3</span> Configuring your default git editor</h2>
+<p>You may want to set your default git editor to something you know how to use (it will come up when you have a merge conflict).</p>
+<p>For example the nano editor is easy to use on the command line for a Unix shell:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Mac/Linux</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;">$</span> git config <span class="at" style="color: #657422;">--global</span> core.editor <span class="st" style="color: #20794D;">"nano -w"</span></span></code></pre></div>
+</div>
+<p><em>The Carpentries</em> provide a <a href="https://swcarpentry.github.io/git-novice/02-setup/#line-endings">full list of editors</a> by operating system, a great resource.</p>
 </section>
 </section>
-<section id="using-gitgithub-in-our-course" class="level1">
-<h1>Using git/GitHub in our course</h1>
+<section id="using-gitgithub-in-our-course" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Using git/GitHub in our course</h1>
 <p>In this course, you will use git/GitHub in the following ways:</p>
 <ol type="1">
 <li>Project 0 (optional) - You will create a website introducing yourself to folks in the course and deploy it on GitHub.</li>
@@ -734,8 +801,8 @@ Tip
 </ol>
 <p>Learning these skills will be useful down the road if you ever work collaboratively on a project (i.e.&nbsp;writing code as a group). In this scenario, you will use the skills you have been practicing in your projects to work together as a team in a single GitHub repository.</p>
 </section>
-<section id="clone-a-repo-to-your-local-directory---easy" class="level1">
-<h1>Clone a repo to your local directory - Easy!</h1>
+<section id="clone-a-repo-to-your-local-directory---easy" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Clone a repo to your local directory - Easy!</h1>
 <p>Cloning an existing repo from GitHub is easy. Letʻs clone the <strong>rclassdata</strong> repo to our local git folder within your Documents folder. 1. Go to <a href="https://github.com/mbutler808/rclassdata" class="uri">https://github.com/mbutler808/rclassdata</a> and click on the green <strong>&lt;&gt;Code</strong> button and copy the URL.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -752,16 +819,24 @@ Tip
 </ol>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
+<pre><strong>Terminal(Mac/Linux)</strong></pre>
 </div>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="bu" style="color: null;">pwd</span>  <span class="co" style="color: #5E5E5E;"># or dir on PC</span></span>
-<span id="cb1-2"><span class="bu" style="color: null;">cd</span> ~/Documents/git  <span class="co" style="color: #5E5E5E;"># navigate to your git folder</span></span>
-<span id="cb1-3"><span class="fu" style="color: #4758AB;">git</span> clone https://github.com/mbutler808/rclassdata.git</span></code></pre></div>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="bu" style="color: null;">pwd</span></span>
+<span id="cb4-2"><span class="bu" style="color: null;">cd</span> ~/Documents/git  <span class="co" style="color: #5E5E5E;"># navigate to your git folder</span></span>
+<span id="cb4-3"><span class="fu" style="color: #4758AB;">git</span> clone https://github.com/mbutler808/rclassdata.git</span></code></pre></div>
 </div>
-<p>If you set up your personal access token, it should appear on your computer! <a href="https://happygitwithr.com/https-pat.html">If not, set it up following these instructions</a></p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>CMD(Windows)</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;">dir</span></span>
+<span id="cb5-2"><span class="bu" style="color: null;">cd</span> ~/Documents/git  <span class="co" style="color: #5E5E5E;"># navigate to your git folder</span></span>
+<span id="cb5-3"><span class="fu" style="color: #4758AB;">git</span> clone https://github.com/mbutler808/rclassdata.git</span></code></pre></div>
+</div>
+<p>If you set up your personal access token, it should appear on your computer! If not, go back to Section&nbsp;4.2 and try again.</p>
 </section>
-<section id="make-a-github-repo-started-from-your-local-files" class="level1">
-<h1>Make a GitHub repo started from your local files</h1>
+<section id="make-a-github-repo-started-from-your-local-files" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Make a GitHub repo started from your local files</h1>
 <p>Suppose you have some files on your computer and youʻd like to make them into a repo. For this example, weʻre going to make a repo called <strong>test</strong></p>
 <ol type="1">
 <li>Create a folder in your <code>Documents/git</code> directory called <code>test</code> and copy some files there.</li>
@@ -812,13 +887,13 @@ Tip
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="bu" style="color: null;">echo</span> <span class="st" style="color: #20794D;">"# test"</span> <span class="op" style="color: #5E5E5E;">&gt;&gt;</span> README.md</span>
-<span id="cb2-2"><span class="fu" style="color: #4758AB;">git</span> init</span>
-<span id="cb2-3"><span class="fu" style="color: #4758AB;">git</span> add .</span>
-<span id="cb2-4"><span class="fu" style="color: #4758AB;">git</span> commit <span class="at" style="color: #657422;">-m</span> <span class="st" style="color: #20794D;">"first commit"</span></span>
-<span id="cb2-5"><span class="fu" style="color: #4758AB;">git</span> branch <span class="at" style="color: #657422;">-M</span> main</span>
-<span id="cb2-6"><span class="fu" style="color: #4758AB;">git</span> remote add origin https://github.com/mbutler808/test.git</span>
-<span id="cb2-7"><span class="fu" style="color: #4758AB;">git</span> push <span class="at" style="color: #657422;">-u</span> origin main</span></code></pre></div>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="bu" style="color: null;">echo</span> <span class="st" style="color: #20794D;">"# test"</span> <span class="op" style="color: #5E5E5E;">&gt;&gt;</span> README.md</span>
+<span id="cb6-2"><span class="fu" style="color: #4758AB;">git</span> init</span>
+<span id="cb6-3"><span class="fu" style="color: #4758AB;">git</span> add .</span>
+<span id="cb6-4"><span class="fu" style="color: #4758AB;">git</span> commit <span class="at" style="color: #657422;">-m</span> <span class="st" style="color: #20794D;">"first commit"</span></span>
+<span id="cb6-5"><span class="fu" style="color: #4758AB;">git</span> branch <span class="at" style="color: #657422;">-M</span> main</span>
+<span id="cb6-6"><span class="fu" style="color: #4758AB;">git</span> remote add origin https://github.com/mbutler808/test.git</span>
+<span id="cb6-7"><span class="fu" style="color: #4758AB;">git</span> push <span class="at" style="color: #657422;">-u</span> origin main</span></code></pre></div>
 </div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -833,25 +908,25 @@ GitHub requires authentication to overwrite your repository (this is a good thin
 <ul>
 <li>Did <em>GitHub</em> complain that it doesnʻt know your <strong>username</strong> or <strong>email</strong>?</li>
 </ul>
-<p>This might be because the default info on your computer doesnʻt match what you used to register for your GitHub account. Not to worry, just set it to match your GitHub account here: <a href="https://happygitwithr.com/hello-git.html" class="uri">https://happygitwithr.com/hello-git.html</a></p>
+<p>This might be because the defaults on your computer donʻt match what you used to register for your GitHub account. Not to worry, just set it to match your GitHub account here: Section&nbsp;4.1</p>
 <ul>
 <li>Did <em>GitHub</em> complain that your <strong>authentication</strong> failed?</li>
 </ul>
-<p>Donʻt worry, you can set up your personal access token (I recommend the HTTPS protocol): <a href="https://happygitwithr.com/https-pat.html" class="uri">https://happygitwithr.com/https-pat.html</a> Nice bonus, you only have to do it once for each computer.</p>
+<p>Donʻt worry, just try it again: Section&nbsp;4.2. Nice bonus, you only have to do it once for each computer.</p>
 </div>
 </div>
 <ol start="5" type="1">
 <li>Check your remote repo. The files from your computer should be there!</li>
-<li>Now try pushing up another change. Make some edit to one or more local files.</li>
+<li>Now try pushing up another change. Make some edits to one or more local files.</li>
 <li>Add, Commit, Push:</li>
 </ol>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;">git</span> add .</span>
-<span id="cb3-2"><span class="fu" style="color: #4758AB;">git</span> commit <span class="at" style="color: #657422;">-m</span> <span class="st" style="color: #20794D;">"made a small change"</span></span>
-<span id="cb3-3"><span class="fu" style="color: #4758AB;">git</span> push origin main</span></code></pre></div>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;">git</span> add .</span>
+<span id="cb7-2"><span class="fu" style="color: #4758AB;">git</span> commit <span class="at" style="color: #657422;">-m</span> <span class="st" style="color: #20794D;">"made a small change"</span></span>
+<span id="cb7-3"><span class="fu" style="color: #4758AB;">git</span> push origin main</span></code></pre></div>
 </div>
 <p>Check your remote repo. Did it go up? Well done! 😍</p>
 <p>Your local files and your GitHub repository files are now synced!</p>
@@ -867,15 +942,15 @@ GitHub requires authentication to overwrite your repository (this is a good thin
 </div>
 <p>[<a href="https://peerj.com/preprints/3159/">Source: Jenny Bryan</a>]</p>
 </section>
-<section id="a-word-about-merge-conflicts" class="level1">
-<h1>A word about merge conflicts</h1>
+<section id="a-word-about-merge-conflicts" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> A word about merge conflicts</h1>
 <p>Sooner or later, you will encounter a merge conflict. That happens if the same file(s) changed both locally and on GitHub.com. That can happen if multiple people work on the same files, or if you work on multiple computers and forget to always push/pull before and after you work on a project. Donʻt get discouraged, this is solvable!</p>
 <p>Sometimes you have to do it manually. Moving the offending files out of your local repository, then doing the merge and after that adding the updates again can help. If you know that one source is the definite one, you can force a push or pull. A more advanced approach is to use branches.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;">git</span> push <span class="at" style="color: #657422;">--force</span></span></code></pre></div>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="fu" style="color: #4758AB;">git</span> push <span class="at" style="color: #657422;">--force</span></span></code></pre></div>
 </div>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -896,17 +971,17 @@ Warning
 </div>
 </div>
 </section>
-<section id="forking-a-repo" class="level1">
-<h1>Forking a repo</h1>
+<section id="forking-a-repo" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Forking a repo</h1>
 <p>When you want to build on someone elseʻs repo, that is a great time to <strong>fork</strong> a repo. This happens when you donʻt have write permission to the repo, but you want provide suggestions (for example if you want to fix a bug). Or if you want to use that repo as a template or a launching off point for your own project.</p>
 <p>After you fork and clone the repo to your computer, you can edit, add, and commit the changes. When you are ready to submit the suggestions to the repo owner, start a <strong>pull request</strong>. They will then read over your suggested edits, and if they approve they can merge the changes into the working repo.</p>
 <p><strong>Forks</strong> are nice because they remain connected to the parent repo in GitHub. So you can seamlessly work on your own private copy and send it back to the original project when you are ready.</p>
 <p><strong>Branches</strong> work in a similar way. The idea is simple. If you have a working repo, you donʻt want to made edits or experimental changes to <strong>main</strong> that may break the functionality. Branches are a way to make a “development branch” where you can work on your ideas in private without breaking anything. When youʻre sure you have everything ironed out and working, you can merge your branch back to <strong>main</strong>, and delete your branch. They are meant to be an ephemeral scratch copy to keep the project clean, organized, and working perfectly.</p>
 </section>
-<section id="post-lecture-materials" class="level1">
-<h1>Post-lecture materials</h1>
-<section id="final-questions" class="level3">
-<h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
+<section id="post-lecture-materials" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Post-lecture materials</h1>
+<section id="final-questions" class="level3" data-number="10.0.1">
+<h3 data-number="10.0.1" class="anchored" data-anchor-id="final-questions"><span class="header-section-number">10.0.1</span> Final Questions</h3>
 <p>Here are some post-lecture questions to help you think about the material discussed.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -921,13 +996,13 @@ Questions
 <ol type="1">
 <li><p>What is version control?</p></li>
 <li><p>What is the difference between git and GitHub?</p></li>
-<li><p>What are other version controls software/tools that are available besides git?</p></li>
+<li><p>What are some benefits and case uses for repositories with version control using git and GitHub?</p></li>
 </ol>
 </div>
 </div>
 </section>
-<section id="additional-resources" class="level3">
-<h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
+<section id="additional-resources" class="level3" data-number="10.0.2">
+<h3 data-number="10.0.2" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">10.0.2</span> Additional Resources</h3>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -968,10 +1043,10 @@ Tip
 
 
 <!-- Add interesting quote -->
-<section id="pre-lecture-materials" class="level1">
-<h1>Pre-lecture materials</h1>
-<section id="read-ahead" class="level3">
-<h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
+<section id="pre-lecture-materials" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Pre-lecture materials</h1>
+<section id="read-ahead" class="level3" data-number="1.0.1">
+<h3 data-number="1.0.1" class="anchored" data-anchor-id="read-ahead"><span class="header-section-number">1.0.1</span> Read ahead</h3>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -986,16 +1061,16 @@ Read ahead
 </div>
 </div>
 </section>
-<section id="acknowledgements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<section id="acknowledgements" class="level3" data-number="1.0.2">
+<h3 data-number="1.0.2" class="anchored" data-anchor-id="acknowledgements"><span class="header-section-number">1.0.2</span> Acknowledgements</h3>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
 <li><a href="https://academind.com/tutorials/terminal-zsh-basics" class="uri">https://academind.com/tutorials/terminal-zsh-basics</a></li>
 </ul>
 </section>
 </section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
+<section id="learning-objectives" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Learning objectives</h1>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1017,11 +1092,11 @@ Learning objectives
 </div>
 </div>
 </section>
-<section id="introduction-to-the-shell" class="level1">
-<h1>Introduction to the shell</h1>
+<section id="introduction-to-the-shell" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Introduction to the shell</h1>
 <p>This document gives a brief explanation of your computerʻs filesystems and how we will use the command line for this course.</p>
-<section id="the-kernel" class="level2">
-<h2 class="anchored" data-anchor-id="the-kernel">The kernel</h2>
+<section id="the-kernel" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="the-kernel"><span class="header-section-number">3.1</span> The kernel</h2>
 <p>The <em>kernel</em> is the part of your computerʻs operating system that loads first once you start up. It is kind of like your computerʻs autonomic nervous system. It recognizes all of the physical hardware attached to it, enables communication between components (and device drivers), and monitors maintenance functions like turning on the fan when it gets hot, manages virtual memory, gives warnings when the hard drive gets full, manages multitasking, and manages security and file permissions. In the mac this is the XNU kernel, in modern Windows machines it is the Windows NT kernel.</p>
 <div class="cell fig-cap-location-top">
 <div class="cell-output-display">
@@ -1030,8 +1105,8 @@ Learning objectives
 </div>
 <p>[<a href="https://www.linuxandubuntu.com/home/difference-between-linux-kernel-mac-kernel">Source: Map of MacOS: the heart of everything is called Darwin; and within it, we have separate system utilities (the shell) and the XNU kernel, which is composed in parts by the Mach kernel and by the BSD kernel.</a>]</p>
 </section>
-<section id="the-shell" class="level2">
-<h2 class="anchored" data-anchor-id="the-shell">The shell</h2>
+<section id="the-shell" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="the-shell"><span class="header-section-number">3.2</span> The shell</h2>
 <p>The <strong>shell</strong> is another key part of the core operating system (note in the diagram above it is part of the <strong>System Utilities</strong>, and the partner of the kernel). The shell is a software (an app) that allows humans to control the computer. You are already familiar with the <em>GUI</em> interface, or the <em>Graphical User Interface</em>. It is important that you are comfortable using the <em>Command Line Interface</em> as well.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -1069,8 +1144,8 @@ There are many reasons to be proficient in the shell:
 <p>Note: you may see <em>Windows PowerShell</em> or <em>Windows Terminal</em> instead, these are similar apps.</p>
 </section>
 </section>
-<section id="the-working-directory" class="level1">
-<h1>The Working Directory</h1>
+<section id="the-working-directory" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> The Working Directory</h1>
 <p>By default, the working directory on a Mac and UNIX/Linux systems is your home user directory “~”. On a PC the default working directory may looks something like a subdirectory of your C drive “C:[Username]".</p>
 <p>This is where you currently are in your computerʻs file structure.</p>
 <p>First, lets check where we are by listing the files in our current directory. Note that some shell commands differ between different shells (i.e.&nbsp;UNIX vs.&nbsp;PC). Listing the contents of a directory is done with <strong>ls</strong> in UNIX and <strong>dir</strong> in PC:</p>
@@ -1106,8 +1181,8 @@ An important principle of programming is <strong>VERIFICATION</strong>
 <p>Please make a folder for your work in a convenient place and call it “Rclass”. On a Mac you may want to put it in “Documents”. Start by navigating into your Documents folder or other such folder where you want your Rclass work to be saved. <strong>cd</strong> is for <em>change directory</em>, and the syntax is <strong>cd Foldername</strong>:</p>
 <div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb3-1"><span class="bu" style="color: null;">cd</span> Documents</span></code></pre></div>
 </section>
-<section id="making-a-new-folder-from-the-command-line" class="level1">
-<h1>Making a new folder from the command Line</h1>
+<section id="making-a-new-folder-from-the-command-line" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Making a new folder from the command Line</h1>
 <p>In both systems, the <strong>mkdir</strong> command for <em>make directory</em> will create a new folder, and <strong>cd</strong> will change directories. :</p>
 <div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb4-1"><span class="fu" style="color: #4758AB;">mkdir</span> Rclass</span>
 <span id="cb4-2"><span class="bu" style="color: null;">cd</span> Rclass</span>
@@ -1166,8 +1241,8 @@ Exercise:
 </div>
 </div>
 </section>
-<section id="more-useful-commands-move-copy-remove-and-friends" class="level1">
-<h1>More useful commands <strong>move</strong> <strong>copy</strong> <strong>remove</strong> and friends</h1>
+<section id="more-useful-commands-move-copy-remove-and-friends" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> More useful commands <strong>move</strong> <strong>copy</strong> <strong>remove</strong> and friends</h1>
 <p>Some additional very useful commands are those for moving, copying, and removing (deleting) files. These can operate on your current directory, or you can add the <em>path</em> to your file. For example, to move your file into the Data subdirectory:</p>
 <div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb11-1"><span class="fu" style="color: #4758AB;">mv</span> dat1.txt Data/dat1.txt</span>
 <span id="cb11-2"><span class="fu" style="color: #4758AB;">ls</span></span>
@@ -1241,8 +1316,8 @@ Exercise:
 </table>
 <p><em>Note: UNIX commands are case-sensitive, Windows commands are not.</em> <em>Apologies in advance for any Windows command errors - Iʻm really not an expert. Please let me know so I can fix it. Thank you!</em></p>
 </section>
-<section id="wildcards" class="level1">
-<h1>Wildcards</h1>
+<section id="wildcards" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Wildcards</h1>
 <p>You can also select multiple files at once using wildcards. If you want to grab all of the .txt files, for example, you can do:</p>
 <div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb12-1"><span class="fu" style="color: #4758AB;">cp</span> <span class="pp" style="color: #AD0000;">*</span>.txt Data</span>
 <span id="cb12-2"><span class="fu" style="color: #4758AB;">ls</span>  <span class="co" style="color: #5E5E5E;"># PC: use dir</span></span>
@@ -1267,8 +1342,8 @@ Exercise:
 </div>
 </div>
 </section>
-<section id="relative-paths-vs.-absolute-paths" class="level1">
-<h1>Relative paths vs.&nbsp;Absolute paths</h1>
+<section id="relative-paths-vs.-absolute-paths" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Relative paths vs.&nbsp;Absolute paths</h1>
 <p>In the Mac, there are two important <em>shortcuts</em>:</p>
 <ul>
 <li>“/” : The root directory of your entire computer, indicated by “/”.</li>
@@ -1319,10 +1394,10 @@ Note:
 <div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb17-1"><span class="fu" style="color: #4758AB;">ls</span> <span class="pp" style="color: #AD0000;">~</span><span class="dt" style="color: #AD0000;">\D</span>ocuments <span class="co" style="color: #5E5E5E;"># this is an absolute path because ~ = "\Users\marguerite"</span></span></code></pre></div>
 <p>On the Mac, an asbolute path will start with “" (or a shortcut that contains a starting”"), whereas on a PC an absolute path will start with “C:”</p>
 </section>
-<section id="navigating-your-filedirectories" class="level1">
-<h1>Navigating your filedirectories</h1>
-<section id="the-dots" class="level2">
-<h2 class="anchored" data-anchor-id="the-dots">The dots</h2>
+<section id="navigating-your-filedirectories" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Navigating your filedirectories</h1>
+<section id="the-dots" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="the-dots"><span class="header-section-number">9.1</span> The dots</h2>
 <ul>
 <li>“.” is the current working directory (where you are currently)</li>
 <li>“..” is the directory one level up</li>
@@ -1342,12 +1417,12 @@ Note:
 <p>You can wander anywhere along your computerʻs file directory! Just add more steps to the path.</p>
 </section>
 </section>
-<section id="executing-software-from-the-command-line" class="level1">
-<h1>Executing software from the command Line</h1>
+<section id="executing-software-from-the-command-line" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Executing software from the command Line</h1>
 <p>coming soon</p>
 </section>
-<section id="piping-commands" class="level1">
-<h1>Piping commands</h1>
+<section id="piping-commands" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Piping commands</h1>
 <p>You can redirect output using <em>&gt;</em> and <em>&lt;</em> with the point indicating the direction. Here is an example. First letʻs put some contents into the files, and check the contents with the command “less” (there is also “more”):</p>
 <div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb22-1"><span class="bu" style="color: null;">echo</span> <span class="st" style="color: #20794D;">"A"</span> <span class="op" style="color: #5E5E5E;">&gt;</span> dat1.txt</span>
 <span id="cb22-2"><span class="fu" style="color: #4758AB;">less</span> dat1.txt</span></code></pre></div>
@@ -1364,10 +1439,10 @@ Note:
 <span id="cb25-2"><span class="fu" style="color: #4758AB;">cat</span> dat1.txt dat2.txt dat3.txt <span class="op" style="color: #5E5E5E;">&gt;</span>all.txt</span>
 <span id="cb25-3"><span class="fu" style="color: #4758AB;">less</span> all.txt</span></code></pre></div>
 </section>
-<section id="post-lecture-materials" class="level1">
-<h1>Post-lecture materials</h1>
-<section id="final-questions" class="level3">
-<h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
+<section id="post-lecture-materials" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> Post-lecture materials</h1>
+<section id="final-questions" class="level3" data-number="12.0.1">
+<h3 data-number="12.0.1" class="anchored" data-anchor-id="final-questions"><span class="header-section-number">12.0.1</span> Final Questions</h3>
 <p>Here are some post-lecture questions to help you think about the material discussed.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -1405,8 +1480,8 @@ For additional practice:
 </div>
 </div>
 </section>
-<section id="additional-resources" class="level3">
-<h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
+<section id="additional-resources" class="level3" data-number="12.0.2">
+<h3 data-number="12.0.2" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">12.0.2</span> Additional Resources</h3>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1426,8 +1501,8 @@ Tip
 </div>
 </div>
 </section>
-<section id="rtistry" class="level2">
-<h2 class="anchored" data-anchor-id="rtistry">rtistry</h2>
+<section id="rtistry" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="rtistry"><span class="header-section-number">12.1</span> rtistry</h2>
 <div class="cell fig-cap-location-top">
 <div class="cell-output-display">
 <p><img src="https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/https:/github.com/djnavarro/art/raw/master/static/gallery/flametree/extra/001_flametree_20_13.jpg" class="img-fluid"></p>

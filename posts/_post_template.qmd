@@ -25,6 +25,30 @@ categories: [add here]
 2.  Add here.
 :::
 
+:::{.callout-note}
+Note that there are five types of callouts, including:
+`note`, `tip`, `warning`, `caution`, and `important`.
+:::
+
+::: {.callout-tip}
+## Tip With Caption
+
+This is an example of a callout with a caption.
+:::
+
+::: {.callout-caution collapse="true"}
+
+
+```{.bash filename=Terminal}
+
+```
+
+
+## Expand To Learn About Collapse
+
+This is an example of a 'folded' caution callout that can be expanded by the user. You can use `collapse="true"` to collapse it by default or `collapse="false"` to make a collapsible callout that is expanded by default.
+:::
+
 ### Acknowledgements
 
 Material for this lecture was borrowed and adopted from

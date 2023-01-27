@@ -35,6 +35,7 @@ format:
     css: styles.css
     theme: simplex
     toc: true
+    number-sections: true
 
 editor: visual
 

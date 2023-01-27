@@ -5,6 +5,7 @@ author:
     url: https://butlerlab.org
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
+# number-sections: true
 description: "Introduction to literate statistical programming tools including  Quarto Markdown"
 date: 2023-01-26
 categories: [module 1, week 2, Markdown, Quarto, programming]
