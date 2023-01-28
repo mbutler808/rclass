@@ -310,6 +310,21 @@ knitr::include_graphics("../../images/With-Git-all-contributors-have-a-copy-of-t
 ```
 \[[Source: Jenny Bryan](https://peerj.com/preprints/3159/)]
 
+8.  The nuclear option
+
+If you need to start over you can delete and remake your repos. (For example if you canʻt get your local and remote repos to communicate and you canʻt figure out why.)
+
+Since your GitHub repo is empty and youʻre just getting started, there is really no harm in deleting it and starting over. From your repo on github.com, go to `settings`, then scrolll all the way down until you reach `The Danger Zone` where you will find the `Delete this repository` button.
+
+If you just want to delete your local git tracking without deleting all of the files you created, you can just delete your local hidden `.git` directory, leaving the rest of the files and directories in place. From your command line:
+
+::: {.callout-caution}
+# NOTE: This will delete your local git history, and is not reversible.
+
+```{.bash filename=Terminal}
+rm -rf .git
+```
+:::
 
 # A word about merge conflicts
 

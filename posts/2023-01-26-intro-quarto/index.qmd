@@ -16,7 +16,7 @@ bibliography: my-refs.bib
 
 # Pre-lecture materials
 
-### Read ahead
+## Read ahead
 
 ::: callout-note
 ### Read ahead
@@ -28,7 +28,7 @@ bibliography: my-refs.bib
 3.  Publishing to GitHub *up to and including Render to docs* <https://quarto.org/docs/publishing/github-pages.html>
 :::
 
-### Acknowledgements
+## Acknowledgements
 
 Material for this lecture was borrowed and adopted from
 
@@ -95,7 +95,7 @@ One basic idea to make writing reproducible reports easier is what's known as *l
 
 There might also be **presentation code** that formats tables and figures and there's article text that explains what's going on around all this code. This stream of text and code is a literate statistical program or a literate statistical analysis.
 
-### Weaving and Tangling
+## Weaving and Tangling
 
 Literate programs by themselves are a bit difficult to work with, but they can be processed in two important ways.
 
@@ -103,7 +103,7 @@ Literate programs can be **weaved** to produce human readable documents like PDF
 
 In order to use a system like this you need a documentational language, that's human readable, and you need a programming language that's machine readable (or can be compiled/interpreted into something that's machine readable).
 
-### Sweave
+## Sweave
 
 One of the original literate programming systems in R that was designed to do this was called Sweave written by [Friedrich Leisch](https://documents.uow.edu.au/content/groups/public/@web/@commerce/documents/doc/uow012868.pdf). Sweave enables users to combine R code with a documentation program called LaTeX.  Sweave revolutionized coding, and has become part of the R base code. Leisch is on the R Core Development Team and the BioConductor Project.
 
@@ -124,9 +124,14 @@ Sweaveʻs main limitation is that it requires knowledge of LaTeX
 
 Instead, folks have moved towards using something called **knitr**, which offers everything Sweave does, plus it extends it to much simpler Markdown documents.
 
-### rmarkdown
+## rmarkdown
 
-Another choice for literate programming is to build documents based on [Markdown](https://en.wikipedia.org/wiki/Markdown) language. A markdown file is a plain text file that is typically given the extension `.md.`. The [`rmarkdown`](https://CRAN.R-project.org/package=rmarkdown) R package takes a R Markdown file (`.Rmd`) and weaves together R code chunks like this:
+Another choice for literate programming is to build documents based on [Markdown](https://en.wikipedia.org/wiki/Markdown) language. A markdown file is a plain text file that is typically given the extension `.md`. The [`rmarkdown`](https://CRAN.R-project.org/package=rmarkdown) R package takes a R Markdown file (`.Rmd`) and weaves together R code chunks @fig-rmarkdown, producing a large number of user-specified outputs.
+
+![R markdown translates text and code to many different formats](../../images/Rmarkdown.png){width=80% #fig-rmarkdown}
+
+R chunks surrounded by text looks like this:
+
 
     ```{r plot1, height=4, width=5, eval=FALSE, echo=TRUE}`r ''`
     data(airquality)
@@ -165,9 +170,8 @@ Before we leave this section, I find that there is quite a bit of terminology to
 
 -   [Pandoc](https://pandoc.org). Pandoc is a command line tool with no GUI that converts documents (e.g. from number of different markup formats to many other formats, such as .doc, .pdf etc). It is completely independent from R (but does come bundled with RStudio). If you donʻt have Rstudio installed, you will have to install `pandoc`.
 -   [Markdown](https://en.wikipedia.org/wiki/Markdown) (**markup language**). Markdown is a lightweight [markup language](https://en.wikipedia.org/wiki/Markup_language) with plain text formatting syntax designed so that it can be converted to HTML and many other formats. A markdown file is a plain text file that is typically given the extension `.md.` It is completely independent from R.
--   [`markdown`](https://CRAN.R-project.org/package=markdown) (**R package**). `markdown` is an R package which converts `.md` files into HTML. It is no longer recommended for use has been surpassed by [`rmarkdown`](https://CRAN.R-project.org/package=rmarkdown) (discussed below).
--   R Markdown (**markup language**). R Markdown is an extension of the markdown syntax. R Markdown files are plain text files that typically have the file extension `.Rmd`.
--   [`rmarkdown`](https://CRAN.R-project.org/package=rmarkdown) (**R package**). The R package `rmarkdown` is a library that uses pandoc to process and convert `.Rmd` files into a number of different formats. This core function is `rmarkdown::render()`. **Note**: this package only deals with the markdown language. If the input file is e.g. `.Rhtml` or `.Rnw`, then you need to use `knitr` prior to calling pandoc (see below).
+-   R Markdown (**markup language**). R Markdown is an extension of the markdown syntax for weaving together text with R code. R Markdown files are plain text files that typically have the file extension `.Rmd`.
+-   [`rmarkdown`](https://CRAN.R-project.org/package=rmarkdown) (**R package**). The R package `rmarkdown` is a library that uses pandoc to process and convert text and R code written in `.Rmd` files into a number of different formats. This core function is `rmarkdown::render()`. **Note**: this package only deals with the markdown language. If the input file is e.g. `.Rhtml` or `.Rnw`, then you need to use `knitr` prior to calling pandoc (see below).
 
 ::: callout-tip
 Check out the R Markdown Quick Tour for more:
@@ -222,10 +226,220 @@ The folks who developed R Markdown have moved on to a new package called [Quarto
 
 Quarto can render output to many formats of documents including html, pdf, docx, md. It can also layout websites, presentations, or even books. It supports interactive apps such as Rshiny among other things.
 
-We are going to learn using Quarto. Letʻs start by getting a simple webpage up.
+We are going to learn using Quarto. Letʻs start by getting a simple webpage up. Conceptually, there are three tasks:
 
-1.  Create a Website in Quarto quickstart *up to and including Render* <https://quarto.org/docs/websites/>
-2.  Publishing to GitHub *up to and including Render to docs* <https://quarto.org/docs/publishing/github-pages.html>
+1.  Create your quarto website on your computer
+2.  Make your website folder into a GitHub repo
+3.  Publish your website via GitHub
+
+## Create your website locally with Quarto
+
+In this section, I am adding a bit more explanation to the Quarto quickstart guide  *up to and including Render*. If something is not clear, please consult <https://quarto.org/docs/websites/>
+
+There are three main quarto commands we will use:
+
+-  `quarto create-project`: Make a website project template
+-  `quarto preview`: Take a look at what the webite will look like
+-  `quarto render`: Render your `qmd` to `html`
+
+
+### Make your website directory and template
+
+Create your website (here called `mysite`) using the following command. It will make a directory of the same name and put the website contents within it.
+
+```{.bash filename=Terminal}
+quarto create-project mysite --type website
+```
+
+You should now see the following files in your `mysite` directory (@fig-webshell):
+
+![Website files from the Terminal view](../../images/quarto_web_shell_terminal.png){#fig-webshell}
+
+This is the bare-bones version of your website. Check that the code is functional by looking at a preview:
+
+```{.bash filename=Terminal}
+quarto preview
+```
+
+This should open up a browser window showing a temporary file made by quarto by rendering your website files.
+
+::: callout-tip
+- `quarto preview` will refresh the preview every time you save your `index.qmd` (or any) website files. So itʻs a good idea to keep the preview open as you make edits and saves.
+- Check every edit, it is easier to debug in small steps.
+- Terminate `quarto preview` with `Control-c`
+:::
+
+### Render your website to html
+
+Use quarto to render your content to html, the format used by browsers.  First navigate into your website directory then render:
+
+```{.bash filename=Terminal}
+cd mysite
+quarto render
+```
+Take a look at the `mysite` contents after rendering, you should see a new directory `_site` (@fig-afterrender).  The html was rendered and put in there (go ahead, open up the files and check it out):
+
+![Website files after rendering](../../images/quarto_web_rendered.png){#fig-afterrender}
+
+### Personalize your content
+
+What is really nice is that you can personalize your website by simply editing the quarto markdown and yaml files.
+
+#### Web content goes in `.qmd`
+
+Using any text editor, edit the `index.qmd` to personalize your website.
+
+The first section of your `index.qmd` is the header. You can change the title and add additional header information, including any cover images and website templates.
+
+For example this is what I have in my course website `index.qmd` header. Note that my cover image is in a folder called `images` within at the top level of my website directory. If you want to try this out substitute or remove the image line and change the twitter/github handles.
+
+```{.bash filename=index.qmd}
+---
+title: "Welcome to Introduction to Data Science in R for Biologists!"
+image: images/mycoolimage.png
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/mbutler808
+    - icon: github
+      text: Github
+      href: https://github.com/mbutler808
+---
+```
+
+You should edit the body of your website as well. You simply edit the text.
+
+The [quarto markdown page](https://quarto.org/docs/authoring/markdown-basics.html) has great examples showing how to format your content. Take a look at how to specify header sizes, lists, figures and tables.
+
+Try editing the `about.qmd` file as well. You will notice that this is another tab in your website. YOu can add more tabs by adding `.qmd` files.
+
+With each addition, be sure to `quarto preview` your changes to make sure it works. When you are satisfied with your website, `quarto render` to render to html.
+
+::: {.callout-tip}
+-  When editing markdown, take care to note spaces and indents as they are interpreted for formatting.
+-  Indentations are really important for formatting lists.
+-  For example in a hyperlink, there is no space between the square brackets and parentheses. `[This is a cool link](http://mycoollink.com)`
+:::
+
+#### Website-wide settings go in `_quarto.yml`
+
+All Quarto projects include a `_quarto.yml` configuration file that sets the global options that apply across the entire website.
+
+`YAML` started off as "Yet Another Markup Language" `r emojifont::emoji('stuck_out_tongue_winking_eye')`. It is clean, clear, and widely used. You can edit your YAML to add options or change the format of your website. Take a look at your `_quarto.yml`.
+
+Here is an example for a simple website. `title:` is the parameter to set the websiteʻs title. `navbar:` sets the menu, in this case on the left sidebar. By default tabs will be named based on the names of the `.qmd` files, but you can set them manually. There are many [themes](https://quarto.org/docs/output-formats/html-themes.html) you can choose from too, check them out. For something different try `cyborg`.
+
+```{.bask filename=_quarto.yml}
+project:
+  type: website
+
+website:
+  title: "today"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme: minty
+    css: styles.css
+    toc: true
+```
+
+Again, after saving your edits, `quarto preview` to see the effects.  When you are satisfied with your website, `quarto render` to render to html.
+
+```{.bash filename=Terminal}
+quarto render
+```
+
+##  Publishing your website to GitHub
+
+You can publish your website for free on GitHub, which is a very cool feature. In his section I am adding a bit more explanation to the Quarto quickstart guide *up to and including Render to docs* <https://quarto.org/docs/publishing/github-pages.html>. I describe the most important stpes below:
+
+1.  Render your html to a `docs` directory
+2.  Supress GitHub `jekyll` html processing by creating a `.nojekyll` file
+3.  Make your website directory into a repo, and link it to a GitHub repo
+4.  Edit the GitHub repo settings to publish your website
+
+### Render your html to `docs`
+
+Edit the `_quarto.yml` file at the top level of your website to send output to `docs`.  This will also create the `docs` folder.
+
+```{.bash filename=_quarto.yml}
+project:
+  type: website
+  output-dir: docs
+```
+
+The next time you `quarto render` it will create `docs` and all of its contents.
+
+### Supress GitHub `jekyll` html processing
+
+GitHub uses a sofware called `jekyll` to render html from markdown. Since weʻre using `quarto`, we want to supress that.  Create an empty file named `.nojekyll` at the top level of your website directory to supress default `jekyll` processing.
+
++-----------+---------------------------------+
+| Mac/Linux | ``` {.bash filename="Terminal"} |
+|           | touch .nojekyll                 |
+|           | ```                             |
++-----------+---------------------------------+
+| Windows   | ``` {.bash filename="Terminal"} |
+|           | copy NUL .nojekyll              |
+|           | ```                             |
++-----------+---------------------------------+
+
+### Setup a GitHub repo for your website
+
+1.  Turn your website directory into a git repo:
+
+```{.bash filename=Terminal}
+git init
+git add .
+git commit -m "first commit"
+```
+
+2.  Create a GitHub repo by the same name
+
+For example, mine might be `github.com/mbutler808/mysite`.
+
+3.  Link your local repo and GitHub repo together
+
+If you forgot how to do this, [go back here](https://mbutler808.github.io/rclass/posts/2023-01-24-intro-git-github/#make-a-github-repo-started-from-your-local-files)
+
+4.  Check your GitHub repo. Are your files there?
+
+### GitHub settings to serve your webpage
+
+Almost there! A couple more steps.
+
+From your GitHub repo, click on `Settings` in the top menu, and `Pages` on the left menu.
+
+Your website should deploy from branch.  Under `Select branch` choose `main` and under `Select folder` choose `docs`.
+
+After clicking `save` GitHub will trigger a deployment of your website. After a few minutes, your URL will appear near the top at `Your site is live at...`:
+
+![](../../images/github_pages.png)
+
+Congratulations! `r emojifont::emoji('zap')` Your website is now live `r emojifont::emoji('tada')``r emojifont::emoji('confetti_ball')``r emojifont::emoji('heart_eyes')`
+
+## Now make more changes!
+
+::: {.callout-tip}
+# The Quarto Workflow is
+-  Edit the content in .qmd
+-  From the Command line:
+    -  `quarto preview` to check that edits are correct
+    -  `quarto render` to render `.qmd` to `.html`
+    -   `git add .`
+    -   `git commit -m "message"`
+    -   `git push origin main`
+-  Check your website
+:::
+
+## Final tips
 
 ::: {.callout-tip}
 -  **Always always** `quarto render` before you push up your changes to GitHub!
@@ -233,7 +447,8 @@ We are going to learn using Quarto. Letʻs start by getting a simple webpage up.
 -  Note: It can take a few minutes to render on GitHub before your changes appear on your website
 :::
 
-**Please see [Stephanie Hicksʻ lecture for more examples and tips](https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-01-literate-programming/#create-and-knit-your-first-r-markdown-document)**
+**Please see [Stephanie Hicksʻ lecture](https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-01-literate-programming/#create-and-knit-your-first-r-markdown-document)** for more literate programming examples and tips.
+
 
 # Post-lecture materials
 

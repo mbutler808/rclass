@@ -14,6 +14,9 @@ categories: [add here]
 
 # Pre-lecture materials
 
+<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
+`r emojifont::emoji('palm_tree')`
+
 ### Read ahead
 
 ::: callout-note
