@@ -766,7 +766,7 @@ The Quarto Workflow is
 <li><code>git commit -m "message"</code></li>
 <li><code>git push origin main</code></li>
 </ul></li>
-<li>Check your website</li>
+<li>Check your website (this may take a beat)</li>
 </ul>
 </div>
 </div>

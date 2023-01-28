@@ -95,7 +95,7 @@
     "href": "posts/2023-01-26-intro-quarto/index.html#now-make-more-changes",
     "title": "Literate Statistical Programming and Quarto",
     "section": "Now make more changes!",
-    "text": "Now make more changes!\n\n\n\n\n\n\nThe Quarto Workflow is\n\n\n\n\nEdit the content in .qmd\nFrom the Command line:\n\nquarto preview to check that edits are correct\nquarto render to render .qmd to .html\ngit add .\ngit commit -m \"message\"\ngit push origin main\n\nCheck your website"
+    "text": "Now make more changes!\n\n\n\n\n\n\nThe Quarto Workflow is\n\n\n\n\nEdit the content in .qmd\nFrom the Command line:\n\nquarto preview to check that edits are correct\nquarto render to render .qmd to .html\ngit add .\ngit commit -m \"message\"\ngit push origin main\n\nCheck your website (this may take a beat)"
   },
   {
     "objectID": "posts/2023-01-26-intro-quarto/index.html#final-tips",
