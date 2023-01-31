@@ -16,7 +16,7 @@ categories: [module 2, week 3, data, questions, data mining]
 
 ## Read ahead
 
--  [Winchell et. al, (2023)](https://doi.org/10.1073/pnas.2216789120) Genome-wide parallelism underlies contemporary adaptation in urban lizards. PNAS 120 (3) e2216789120 **Check SLACK channel for pdf**
+-  Take a look at the data in this recent paper: [Winchell et. al, (2023)](https://doi.org/10.1073/pnas.2216789120) Genome-wide parallelism underlies contemporary adaptation in urban lizards. PNAS 120 (3) e2216789120 **Check SLACK channel for pdf**
 
 ## Watch ahead: A Motivating Example for the whole endeavor of data analysis
 
