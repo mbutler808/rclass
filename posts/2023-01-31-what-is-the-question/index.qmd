@@ -5,14 +5,12 @@ author:
     url: https://butlerlab.org
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
-description: "Letʻs talk about scientific excellence & data can and cannot do"
+description: "Letʻs talk about scientific excellence & what data can and cannot do"
 date: 2023-01-31
 categories: [module 2, week 3, data, questions, data mining]
 ---
 
 <!-- Add interesting quote -->
-
-
 
 # Pre-lecture materials
 
@@ -24,7 +22,52 @@ categories: [module 2, week 3, data, questions, data mining]
 
 <!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
 
-In the age of AI, we have many tools to analyze data. But can we just throw more data at a problem to get better outcomes? Please watch this thought provoking short talk by [Sebastian Wernicke](https://www.ted.com/speakers/sebastian_wernicke) "How to use data to make a hit TV show"... What goes wrong when we look for decisions in the wrong places `r emojifont::emoji('palm_tree')`
+In the age of Artificial Intelligence (AI), we have many data-intensive tools available. But can we just throw more data at a problem to get better outcomes? Please watch this thought provoking short talk by [Sebastian Wernicke](https://www.ted.com/speakers/sebastian_wernicke) "How to use data to make a hit TV show"... What goes wrong when we look for decisions in the wrong places `r emojifont::emoji('palm_tree')`
 
 
 <div style="position:relative;height:0;padding-bottom:56.25%"><iframe src="https://embed.ted.com/talks/lang/en/sebastian_wernicke_how_to_use_data_to_make_a_hit_tv_show" width="854" height="480" style="position:absolute;left:0;top:0;width:100%;height:100%" frameborder="0" scrolling="no" allowfullscreen></iframe></div>
+
+# Can we design a hit TV show (or anything of importance) with data?
+
+The Wizard of Oz (1939) starring Judy Garland was the first major motion picture in color via the complex Technicolor process. It was a tremendous success. I remember my father telling me about what a huge event it was when it came to his small town. Yet, would it have been an inevitable success? Even at that time, there were many other movies, and there were a lot of doubts about whether the American audience would accept the fantasy story, the length, the musical choices, the actors, and so many other variables. Even though the movie landscape was much simpler then, it was still multivariate.
+
+![](http://www.posterwire.com/wp-content/images/wizard_of_oz.jpg){width=300}
+[Wizard of Oz, MGM 1939](https://en.wikipedia.org/wiki/The_Wizard_of_Oz_(1939_film))
+
+
+Yet there must be something to the analysis of data into human behavior. Internet companies sell our web browsing history, there are still opinion polls, demographic surveys, and the like.  Do these types of data differ? Can we do better?
+
+::: callout-tip
+# Questions for "How to use data to make a hit TV show"
+
+-   The first study produced a TV show that was perfectly average. How do you imagine they approached the data, and what might have been the difference with the study that led to the hit show?
+-   How do shows become hits? Is the underlying mechanim complex? Or is the predictive data complex? or both? What contributes to complexity?
+-   What is a good role for data analysis in this type of question?
+-   Can we really "let the data tell us the answer"? What does such a statement leave unstated?
+:::
+
+
+# Genome-wide parallelism underlies contemporary adaptation in urban lizards
+
+This is a hot-off-the-presses study into a hot topic.
+
+::: callout-tip
+# Discussion Questions
+
+-   What are the questions in this study?
+-   What are the types of data?
+-   At the most basic level, what are the questions in the data analysis?
+:::
+
+
+When we break it down, what can we do with data?
+
+-   Same vs. different
+    -   Similar vs. less similar
+-   Moving in the same direction
+-   Are groupings real?
+-   Larger vs. smaller
+    -   Predictive order
+
+
+Can we identify these data comparisons in [Winchell et. al, (2023)](https://doi.org/10.1073/pnas.2216789120)? 

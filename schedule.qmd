@@ -23,8 +23,8 @@ For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring
 | Week 2       | Jan 24 | `r emojifont::emoji('octopus')`  Intro to Git and GitHub \[[html](posts/2023-01-24-intro-git-github/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/tree/main/posts/2023-01-24-intro-git-github/index.qmd)\] |  `r emojifont::emoji('palm_tree')` Project 0 \[[html](projects/2023-01-24-project-0/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/blob/main/projects/2023-01-24-project-0/index.qmd)\]  | |
 |        | Jan 26 | `r emojifont::emoji('octopus')` Reproducible Research \[[html](posts/2023-01-26-reproducible-research/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/tree/main/posts/2023-01-26-reproducible-research/index.qmd)\]  |||
 |        | Jan 26 | `r emojifont::emoji('octopus')` Literate Programming / Intro to Quarto \[[html](posts/2023-01-26-intro-quarto/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/tree/main/posts/2023-01-26-intro-quarto/index.qmd)\]|||
-| Week 3       | Jan 31  | `r emojifont::emoji('microscope')` What is the Question? Data management and workflow  | | |
 ||||||
+| Week 3       | Jan 31  | `r emojifont::emoji('microscope')` What is the Question? Data management and workflow  | | |
 |              | Jan 31 | `r emojifont::emoji('eyeglasses')` Reading/Writing data | | |
 |              | Feb 2 | `r emojifont::emoji('hocho')` Tidying Data  | `r emojifont::emoji('fallen_leaf')` Project 0 due ||
 ||||||

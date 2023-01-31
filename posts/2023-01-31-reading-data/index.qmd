@@ -1,0 +1,194 @@
+---
+title: "Data IO"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "So many ways to get data into R"
+date: 2023-01-31
+categories: [module 2, week 3, data, input, output, formats]
+---
+<!-- Add interesting quote -->
+
+So far, we have been working within R, either typing data in directly or using R's functions to generate data. In order to analyze your own data, you have to load data from an external file into R.  Similarly, to save your work, you'll probably want to write files from R to your hard drive. Both of these require interacting with your computer's operating system. In this chapter, we're just going to do it. We'll talk more about what's going on in a later section on the R Environment.
+
+::: callout-note
+## There are many different ways to access data in R
+
+1.  Built-in datasets - useful for practice
+2.  Text files, importing from .csv is especially easy
+3.  Files in other formats, e.g., .xls
+4.  readline  when the text format is irregular
+5.  Data not on your local computer, e.g., piped via a url
+6.  Special connections, e.g., google sheets
+7.  readLines from a connection
+:::
+
+# Build-in datasets
+
+R has many built-in datasets that come distributed with R. They are very useful for demonstrating Rʻs many functions for statistics, plotting, and other uses.
+
+To see a list of them, you can type `data()` at the command line. To see the contents, type the name of the dataset. To see the help page type a ? in front of the name:
+
+```{r}
+#| eval: true
+#| echo: true
+data()
+cars
+?cars
+```
+
+Then you can use the data in R by referring to the names of the objects.
+
+```{r}
+#| eval: true
+#| echo: true
+head(cars)
+plot(cars)
+```
+
+# Reading in Text Files
+
+The most convenient way to read data into R is using the `read.csv()` function. This requires that your data is saved in `.csv` format, which is possible from Microsoft Excel (save as... csv) or any spreadsheet format. It is a text format with data separated by commas. (Open it in a plain text editor and take a look).
+
+It is very nice because it is unambiguous, not easily corruptible, and non-proprietary. Thus it is readable by nearly every program that reads in data.
+
+First, within your ``Rclass" folder, create a folder named ``Data". Copy the file ``anolis.csv" and ``Iguanamass.csv" into this folder.
+
+## Get the files onto your computer
+Next, from within R, check which working directory you are in. You should be in your Rclass folder. If you are not, use \code{setwd()} to get there.
+
+<<eval=F>>=
+getwd()
+setwd("~/Rclass")  # my folder is at the top level of my user directory
+@
+
+\subsection{read.csv}
+
+Getting the file in is easy. If it is in csv format, you just use:
+
+<<eval=F>>=
+read.csv("Data/anolis.csv")  # look for the file in the Data directory
+@
+
+This is an \emph{Anolis} lizard sexual size dimorphism dataset. It has values of dimorphism by species for different ecomorphs, or microhabitat specialists.
+
+To save the data, give it a name and save it:
+
+<<>>=
+anolis <- read.csv("Data/anolis.csv")
+@
+
+It is a good practice to \emph{always} check that the data were read in properly. If it is a large file, you'll want to at least check the beginning and end were read in properly:
+
+<<>>=
+head(anolis)
+tail(anolis)
+@
+
+Voila! Now you can plot, take the mean, etc.
+Which prints out the first six and last six lines of the file.
+
+R can read in many other formats as well, including database formats, excel native format (although it is easier in practice to save as .csv), fixed width formats, and scanning lines. For more information see the R manual "R Data Import/Export" which you can get from \code{help.start()} or at http://www.r-project.org.
+
+# Pre-lecture materials
+
+<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
+`r emojifont::emoji('palm_tree')`
+
+### Read ahead
+
+::: callout-note
+## Read ahead
+
+**Before class, you can prepare by reading the following materials:**
+
+1.  Add here.
+2.  Add here.
+:::
+
+:::{.callout-note}
+Note that there are five types of callouts, including:
+`note`, `tip`, `warning`, `caution`, and `important`.
+:::
+
+::: {.callout-tip}
+## Tip With Caption
+
+This is an example of a callout with a caption.
+:::
+
+::: {.callout-caution collapse="true"}
+
+
+```{.bash filename=Terminal}
+
+```
+
+
+## Expand To Learn About Collapse
+
+This is an example of a 'folded' caution callout that can be expanded by the user. You can use `collapse="true"` to collapse it by default or `collapse="false"` to make a collapsible callout that is expanded by default.
+:::
+
+### Acknowledgements
+
+Material for this lecture was borrowed and adopted from
+
+-   Add here.
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Add here.
+:::
+
+# Add lecture here
+
+
+::: {.panel-tabset}
+
+## Mac/UNIX
+
+```zsh
+```
+
+## PC
+
+```zsh
+```
+:::
+
+# Post-lecture materials
+
+### Final Questions
+
+Here are some post-lecture questions to help you think about the material discussed.
+
+::: callout-note
+### Questions
+
+1.  Add here.
+:::
+
+### Additional Resources
+
+::: callout-tip
+-   Add here.
+:::
+
+## rtistry
+
+```{r}
+#| label: flametree
+#| echo: false
+#| fig-cap-location: "top"
+
+```
+
+\[Add here.\]

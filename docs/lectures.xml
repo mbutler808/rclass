@@ -32,14 +32,73 @@
 <section id="watch-ahead-a-motivating-example-for-the-whole-endeavor-of-data-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="watch-ahead-a-motivating-example-for-the-whole-endeavor-of-data-analysis">Watch ahead: A Motivating Example for the whole endeavor of data analysis</h2>
 <!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
-<p>In the age of AI, we have many tools to analyze data. But can we just throw more data at a problem to get better outcomes? Please watch this thought provoking short talk by <a href="https://www.ted.com/speakers/sebastian_wernicke">Sebastian Wernicke</a> “How to use data to make a hit TV show”… What goes wrong when we look for decisions in the wrong places 🌴</p>
+<p>In the age of Artificial Intelligence (AI), we have many data-intensive tools available. But can we just throw more data at a problem to get better outcomes? Please watch this thought provoking short talk by <a href="https://www.ted.com/speakers/sebastian_wernicke">Sebastian Wernicke</a> “How to use data to make a hit TV show”… What goes wrong when we look for decisions in the wrong places 🌴</p>
 <div style="position:relative;height:0;padding-bottom:56.25%">
 <iframe src="https://embed.ted.com/talks/lang/en/sebastian_wernicke_how_to_use_data_to_make_a_hit_tv_show" width="854" height="480" style="position:absolute;left:0;top:0;width:100%;height:100%" frameborder="0" scrolling="no" allowfullscreen="">
 </iframe>
 </div>
-
-
 </section>
+</section>
+<section id="can-we-design-a-hit-tv-show-or-anything-of-importance-with-data" class="level1">
+<h1>Can we design a hit TV show (or anything of importance) with data?</h1>
+<p>The Wizard of Oz (1939) starring Judy Garland was the first major motion picture in color via the complex Technicolor process. It was a tremendous success. I remember my father telling me about what a huge event it was when it came to his small town. Yet, would it have been an inevitable success? Even at that time, there were many other movies, and there were a lot of doubts about whether the American audience would accept the fantasy story, the length, the musical choices, the actors, and so many other variables. Even though the movie landscape was much simpler then, it was still multivariate.</p>
+<p><img src="https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/http:/www.posterwire.com/wp-content/images/wizard_of_oz.jpg" class="img-fluid" width="300"> <a href="https://en.wikipedia.org/wiki/The_Wizard_of_Oz_(1939_film)">Wizard of Oz, MGM 1939</a></p>
+<p>Yet there must be something to the analysis of data into human behavior. Internet companies sell our web browsing history, there are still opinion polls, demographic surveys, and the like. Do these types of data differ? Can we do better?</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Questions for “How to use data to make a hit TV show”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The first study produced a TV show that was perfectly average. How do you imagine they approached the data, and what might have been the difference with the study that led to the hit show?</li>
+<li>How do shows become hits? Is the underlying mechanim complex? Or is the predictive data complex? or both? What contributes to complexity?</li>
+<li>What is a good role for data analysis in this type of question?</li>
+<li>Can we really “let the data tell us the answer”? What does such a statement leave unstated?</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="genome-wide-parallelism-underlies-contemporary-adaptation-in-urban-lizards" class="level1">
+<h1>Genome-wide parallelism underlies contemporary adaptation in urban lizards</h1>
+<p>This is a hot-off-the-presses study into a hot topic.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Discussion Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>What are the questions in this study?</li>
+<li>What are the types of data?</li>
+<li>At the most basic level, what are the questions in the data analysis?</li>
+</ul>
+</div>
+</div>
+<p>When we break it down, what can we do with data?</p>
+<ul>
+<li>Same vs.&nbsp;different
+<ul>
+<li>Similar vs.&nbsp;less similar</li>
+</ul></li>
+<li>Moving in the same direction</li>
+<li>Are groupings real?</li>
+<li>Larger vs.&nbsp;smaller
+<ul>
+<li>Predictive order</li>
+</ul></li>
+</ul>
+<p>Can we identify these data comparisons in <a href="https://doi.org/10.1073/pnas.2216789120">Winchell et. al, (2023)</a>?</p>
+
+
 </section>
 
  ]]></description>
@@ -49,6 +108,315 @@
   <category>questions</category>
   <category>data mining</category>
   <guid>https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/index.html</guid>
+  <pubDate>Tue, 31 Jan 2023 10:00:00 GMT</pubDate>
+  <media:content url="http://www.posterwire.com/wp-content/images/wizard_of_oz.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Data IO</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2023-01-31-reading-data/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<!-- Add interesting quote -->
+<p>So far, we have been working within R, either typing data in directly or using R’s functions to generate data. In order to analyze your own data, you have to load data from an external file into R. Similarly, to save your work, you’ll probably want to write files from R to your hard drive. Both of these require interacting with your computer’s operating system. In this chapter, we’re just going to do it. We’ll talk more about what’s going on in a later section on the R Environment.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+There are many different ways to access data in R
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Built-in datasets - useful for practice</li>
+<li>Text files, importing from .csv is especially easy</li>
+<li>Files in other formats, e.g., .xls</li>
+<li>readline when the text format is irregular</li>
+<li>Data not on your local computer, e.g., piped via a url</li>
+<li>Special connections, e.g., google sheets</li>
+<li>readLines from a connection</li>
+</ol>
+</div>
+</div>
+<section id="build-in-datasets" class="level1">
+<h1>Build-in datasets</h1>
+<p>R has many built-in datasets that come distributed with R. They are very useful for demonstrating Rʻs many functions for statistics, plotting, and other uses.</p>
+<p>To see a list of them, you can type <code>data()</code> at the command line. To see the contents, type the name of the dataset. To see the help page type a ? in front of the name:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">data</span>()</span>
+<span id="cb1-2">cars</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   speed dist
+1      4    2
+2      4   10
+3      7    4
+4      7   22
+5      8   16
+6      9   10
+7     10   18
+8     10   26
+9     10   34
+10    11   17
+11    11   28
+12    12   14
+13    12   20
+14    12   24
+15    12   28
+16    13   26
+17    13   34
+18    13   34
+19    13   46
+20    14   26
+21    14   36
+22    14   60
+23    14   80
+24    15   20
+25    15   26
+26    15   54
+27    16   32
+28    16   40
+29    17   32
+30    17   40
+31    17   50
+32    18   42
+33    18   56
+34    18   76
+35    18   84
+36    19   36
+37    19   46
+38    19   68
+39    20   32
+40    20   48
+41    20   52
+42    20   56
+43    20   64
+44    22   66
+45    23   54
+46    24   70
+47    24   92
+48    24   93
+49    24  120
+50    25   85</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">?cars</span></code></pre></div>
+</div>
+<p>Then you can use the data in R by referring to the names of the objects.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;">head</span>(cars)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  speed dist
+1     4    2
+2     4   10
+3     7    4
+4     7   22
+5     8   16
+6     9   10</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">plot</span>(cars)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-01-31-reading-data/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="reading-in-text-files" class="level1">
+<h1>Reading in Text Files</h1>
+<p>The most convenient way to read data into R is using the <code>read.csv()</code> function. This requires that your data is saved in <code>.csv</code> format, which is possible from Microsoft Excel (save as… csv) or any spreadsheet format. It is a text format with data separated by commas. (Open it in a plain text editor and take a look).</p>
+<p>It is very nice because it is unambiguous, not easily corruptible, and non-proprietary. Thus it is readable by nearly every program that reads in data.</p>
+<p>First, within your <code>Rclass" folder, create a folder named</code>Data”. Copy the file <code>anolis.csv" and</code>Iguanamass.csv” into this folder.</p>
+<section id="get-the-files-onto-your-computer" class="level2">
+<h2 class="anchored" data-anchor-id="get-the-files-onto-your-computer">Get the files onto your computer</h2>
+<p>Next, from within R, check which working directory you are in. You should be in your Rclass folder. If you are not, use to get there.</p>
+<p>&lt;&lt;eval=F&gt;&gt;= getwd() setwd(“~/Rclass”) # my folder is at the top level of my user directory @</p>
+<p>Getting the file in is easy. If it is in csv format, you just use:</p>
+<p>&lt;&lt;eval=F&gt;&gt;= read.csv(“Data/anolis.csv”) # look for the file in the Data directory @</p>
+<p>This is an lizard sexual size dimorphism dataset. It has values of dimorphism by species for different ecomorphs, or microhabitat specialists.</p>
+<p>To save the data, give it a name and save it:</p>
+<p>&lt;&lt;&gt;&gt;= anolis &lt;- read.csv(“Data/anolis.csv”) @</p>
+<p>It is a good practice to check that the data were read in properly. If it is a large file, you’ll want to at least check the beginning and end were read in properly:</p>
+<p>&lt;&lt;&gt;&gt;= head(anolis) tail(anolis) @</p>
+<p>Voila! Now you can plot, take the mean, etc. Which prints out the first six and last six lines of the file.</p>
+<p>R can read in many other formats as well, including database formats, excel native format (although it is easier in practice to save as .csv), fixed width formats, and scanning lines. For more information see the R manual “R Data Import/Export” which you can get from or at http://www.r-project.org.</p>
+</section>
+</section>
+<section id="pre-lecture-materials" class="level1">
+<h1>Pre-lecture materials</h1>
+<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
+<p>🌴</p>
+<section id="read-ahead" class="level3">
+<h3 class="anchored">Read ahead</h3>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Read ahead
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before class, you can prepare by reading the following materials:</strong></p>
+<ol type="1">
+<li>Add here.</li>
+<li>Add here.</li>
+</ol>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that there are five types of callouts, including: <code>note</code>, <code>tip</code>, <code>warning</code>, <code>caution</code>, and <code>important</code>.</p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip With Caption
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is an example of a callout with a caption.</p>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Danger
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"></code></pre></div>
+</div>
+<section id="expand-to-learn-about-collapse" class="level2">
+<h2 class="anchored" data-anchor-id="expand-to-learn-about-collapse">Expand To Learn About Collapse</h2>
+<p>This is an example of a ‘folded’ caution callout that can be expanded by the user. You can use <code>collapse="true"</code> to collapse it by default or <code>collapse="false"</code> to make a collapsible callout that is expanded by default.</p>
+</section>
+</div>
+</div>
+</div>
+</section>
+<section id="acknowledgements" class="level3">
+<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li>Add here.</li>
+</ul>
+</section>
+</section>
+<section id="learning-objectives" class="level1">
+<h1>Learning objectives</h1>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Add here.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="add-lecture-here" class="level1">
+<h1>Add lecture here</h1>
+<div class="panel-tabset">
+<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" aria-controls="tabset-1-1" aria-selected="true">Mac/UNIX</a></li><li class="nav-item"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" aria-controls="tabset-1-2" aria-selected="false">PC</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"></code></pre></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"></code></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="post-lecture-materials" class="level1">
+<h1>Post-lecture materials</h1>
+<section id="final-questions" class="level3">
+<h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
+<p>Here are some post-lecture questions to help you think about the material discussed.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Add here.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="additional-resources" class="level3">
+<h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Add here.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="rtistry" class="level2">
+<h2 class="anchored" data-anchor-id="rtistry">rtistry</h2>
+<div class="cell fig-cap-location-top">
+
+</div>
+<p>[Add here.]</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>module 2</category>
+  <category>week 3</category>
+  <category>data</category>
+  <category>input</category>
+  <category>output</category>
+  <category>formats</category>
+  <guid>https://mbutler808.github.io/posts/2023-01-31-reading-data/index.html</guid>
   <pubDate>Tue, 31 Jan 2023 10:00:00 GMT</pubDate>
 </item>
 <item>
@@ -1474,7 +1842,7 @@ There are many reasons to be proficient in the shell:
 <p>Macs use the same terminal utilities as UNIX/Linux systems. On the Mac, the command line interface app is called <em>Terminal</em>, which you will find in your <em>Application</em> folder, in the <em>Utilities</em> subfolder (here is a screentshot of our GUI Interface).</p>
 <div class="cell fig-cap-location-top">
 <div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/terminal.png" class="img-fluid" width="986"></p>
+<p><img src="https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/terminal.png" class="img-fluid"></p>
 </div>
 </div>
 <p>On a PC you would use the <em>Command Prompt</em> otherwise known as the <em>Windows Command Processor</em> or <em>CMD</em>. If you used a pre-Windows machine, you would be familiar with MS-DOS. To open CMD:</p>
