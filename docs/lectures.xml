@@ -149,65 +149,12 @@ There are many different ways to access data in R
 <p>To see a list of them, you can type <code>data()</code> at the command line. To see the contents, type the name of the dataset. To see the help page type a ? in front of the name:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">data</span>()</span>
-<span id="cb1-2">cars</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   speed dist
-1      4    2
-2      4   10
-3      7    4
-4      7   22
-5      8   16
-6      9   10
-7     10   18
-8     10   26
-9     10   34
-10    11   17
-11    11   28
-12    12   14
-13    12   20
-14    12   24
-15    12   28
-16    13   26
-17    13   34
-18    13   34
-19    13   46
-20    14   26
-21    14   36
-22    14   60
-23    14   80
-24    15   20
-25    15   26
-26    15   54
-27    16   32
-28    16   40
-29    17   32
-30    17   40
-31    17   50
-32    18   42
-33    18   56
-34    18   76
-35    18   84
-36    19   36
-37    19   46
-38    19   68
-39    20   32
-40    20   48
-41    20   52
-42    20   56
-43    20   64
-44    22   66
-45    23   54
-46    24   70
-47    24   92
-48    24   93
-49    24  120
-50    25   85</code></pre>
+<span id="cb1-2">cars</span>
+<span id="cb1-3">?cars</span></code></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">?cars</span></code></pre></div>
-</div>
-<p>Then you can use the data in R by referring to the names of the objects.</p>
+<p>You can use built-in data in R by referring to the names of the objects.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;">head</span>(cars)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;">head</span>(cars)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  speed dist
 1     4    2
@@ -217,196 +164,230 @@ There are many different ways to access data in R
 5     8   16
 6     9   10</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">plot</span>(cars)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;">plot</span>(cars)</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="https://mbutler808.github.io/posts/2023-01-31-reading-data/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
+<section id="the-biggest-issue-for-fairly-new-users" class="level1">
+<h1>The biggest issue for fairly new users</h1>
+<p>In order for R to read in data, it needs to know (1) where it the data stream, and (2) what in the datastream it is looking for. In the case of built-in datasets, both problems are solved as it is already imported into R.</p>
+<p>The biggest issue most new-ish users experience when the path or filename is incorrect. For example, I donʻt have a file called “dat.csv” here, so this is a common error:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="op" style="color: #5E5E5E;">&gt;</span> read.csv<span class="kw" style="color: #003B4F;">(</span><span class="st" style="color: #20794D;">"dat.csv"</span><span class="kw" style="color: #003B4F;">)</span></span>
+<span id="cb5-2"><span class="ex" style="color: null;">Error</span> in file<span class="er" style="color: #AD0000;">(</span><span class="fu" style="color: #4758AB;">file</span>, <span class="st" style="color: #20794D;">"rt"</span><span class="kw" style="color: #003B4F;">)</span> <span class="bu" style="color: null;">:</span> cannot open the connection</span>
+<span id="cb5-3"><span class="ex" style="color: null;">In</span> addition: Warning message:</span>
+<span id="cb5-4"><span class="ex" style="color: null;">In</span> file<span class="er" style="color: #AD0000;">(</span><span class="fu" style="color: #4758AB;">file</span>, <span class="st" style="color: #20794D;">"rt"</span><span class="kw" style="color: #003B4F;">)</span> <span class="bu" style="color: null;">:</span> cannot open file <span class="st" style="color: #20794D;">'dat.csv'</span>: No such file or directory</span></code></pre></div>
+</div>
+<p>The <code>cannot open the conection</code> is a pipe or path error. It cannot open a pipe or a connection to the file. <code>No such file or directory</code> is just that. R doesnʻt know where the file is. Is there a typo? Is it the correct path?</p>
+<p>Once we are in the correct working directory and fixed all typos, most of the time we are good, but we may have some surprises in the file format which weʻll go into below.</p>
+<p>The issue is basically that R is parsing the information stream as it reads the file and filtering what counts as data, and what is not data (also called “delimeters” or the things that separate your data). Once you understnad how to specify delimeters, you are in great shape!</p>
+</section>
 <section id="reading-in-text-files" class="level1">
 <h1>Reading in Text Files</h1>
 <p>The most convenient way to read data into R is using the <code>read.csv()</code> function. This requires that your data is saved in <code>.csv</code> format, which is possible from Microsoft Excel (save as… csv) or any spreadsheet format. It is a text format with data separated by commas. (Open it in a plain text editor and take a look).</p>
 <p>It is very nice because it is unambiguous, not easily corruptible, and non-proprietary. Thus it is readable by nearly every program that reads in data.</p>
-<p>First, within your <code>Rclass" folder, create a folder named</code>Data”. Copy the file <code>anolis.csv" and</code>Iguanamass.csv” into this folder.</p>
 <section id="get-the-files-onto-your-computer" class="level2">
 <h2 class="anchored" data-anchor-id="get-the-files-onto-your-computer">Get the files onto your computer</h2>
-<p>Next, from within R, check which working directory you are in. You should be in your Rclass folder. If you are not, use to get there.</p>
-<p>&lt;&lt;eval=F&gt;&gt;= getwd() setwd(“~/Rclass”) # my folder is at the top level of my user directory @</p>
-<p>Getting the file in is easy. If it is in csv format, you just use:</p>
-<p>&lt;&lt;eval=F&gt;&gt;= read.csv(“Data/anolis.csv”) # look for the file in the Data directory @</p>
-<p>This is an lizard sexual size dimorphism dataset. It has values of dimorphism by species for different ecomorphs, or microhabitat specialists.</p>
-<p>To save the data, give it a name and save it:</p>
-<p>&lt;&lt;&gt;&gt;= anolis &lt;- read.csv(“Data/anolis.csv”) @</p>
-<p>It is a good practice to check that the data were read in properly. If it is a large file, you’ll want to at least check the beginning and end were read in properly:</p>
-<p>&lt;&lt;&gt;&gt;= head(anolis) tail(anolis) @</p>
-<p>Voila! Now you can plot, take the mean, etc. Which prints out the first six and last six lines of the file.</p>
-<p>R can read in many other formats as well, including database formats, excel native format (although it is easier in practice to save as .csv), fixed width formats, and scanning lines. For more information see the R manual “R Data Import/Export” which you can get from or at http://www.r-project.org.</p>
-</section>
-</section>
-<section id="pre-lecture-materials" class="level1">
-<h1>Pre-lecture materials</h1>
-<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
-<p>🌴</p>
-<section id="read-ahead" class="level3">
-<h3 class="anchored">Read ahead</h3>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Read ahead
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Before class, you can prepare by reading the following materials:</strong></p>
-<ol type="1">
-<li>Add here.</li>
-<li>Add here.</li>
-</ol>
-</div>
-</div>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Note that there are five types of callouts, including: <code>note</code>, <code>tip</code>, <code>warning</code>, <code>caution</code>, and <code>important</code>.</p>
-</div>
-</div>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Tip With Caption
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This is an example of a callout with a caption.</p>
-</div>
-</div>
-<div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Danger
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+<p>First, get the data files from the <code>data</code> GitHub repo. Navigate to within the rclassdata folder on your computer and execute:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"></code></pre></div>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="fu" style="color: #4758AB;">git</span> pull origin main</span></code></pre></div>
 </div>
-<section id="expand-to-learn-about-collapse" class="level2">
-<h2 class="anchored" data-anchor-id="expand-to-learn-about-collapse">Expand To Learn About Collapse</h2>
-<p>This is an example of a ‘folded’ caution callout that can be expanded by the user. You can use <code>collapse="true"</code> to collapse it by default or <code>collapse="false"</code> to make a collapsible callout that is expanded by default.</p>
+<p>You should probably make a R working directory for your class work. Maybe call it <code>Rclass</code>? Then move or drag <code>rclassdata</code> within it.</p>
+<p>Next, from within R, check which working directory you are in. You should be in your Rclass folder. If you are not, use <code>setwd()</code> to get there.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;">getwd</span>()</span>
+<span id="cb7-2"><span class="fu" style="color: #4758AB;">setwd</span>(<span class="st" style="color: #20794D;">"~/Rclass"</span>)  <span class="co" style="color: #5E5E5E;"># my folder is at the top level of my user directory</span></span></code></pre></div>
+</div>
+<p>Copy the <code>2023-01-31-DataIO</code> folder into Rclass to work for today.</p>
 </section>
+<section id="read.csv" class="level2">
+<h2 class="anchored" data-anchor-id="read.csv">read.csv</h2>
+<p>Getting the file in is easy. If it is in csv format, you just use:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">"anolisSSD.csv"</span>)  <span class="co" style="color: #5E5E5E;"># look for the file in the Data directory</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   species   logSSD     ecomorph
+1       oc -0.00512         twig
+2       eq  0.08454  crown-giant
+3       co  0.24703  trunk-crown
+4      aln  0.24837  trunk-crown
+5       ol  0.09844   grass-bush
+6       in  0.06137         twig
+7       cu  0.09501  crown-giant
+8       ri  0.08947  crown-giant
+9       sa  0.28893 trunk-ground
+10      op  0.15963   grass-bush
+11      va  0.14766         twig
+12      li  0.38873 trunk-ground
+13      ga  0.28768  crown-giant
+14      gr  0.39786  trunk-crown
+15      br  0.17106        trunk
+16      di  0.13801        trunk
+17      kr  0.23478   grass-bush
+18      cr  0.39796 trunk-ground
+19      st  0.15737  trunk-crown
+20      cy  0.26024 trunk-ground
+21     alu  0.08216   grass-bush
+22      lo  0.13108        trunk
+23      an  0.13547         twig</code></pre>
 </div>
 </div>
+<p>This is an <em>Anolis</em> lizard sexual size dimorphism dataset. It has values of dimorphism by species for different ecomorphs, or microhabitat specialists.</p>
+<p>To save the data, give it a name and save it:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">anolis <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">"anolisSSD.csv"</span>)</span></code></pre></div>
+</div>
+<p>It is a good practice to <em>always</em> check that the data were read in properly. If it is a large file, you’ll want to at least check the beginning and end were read in properly:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;">head</span>(anolis)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  species   logSSD    ecomorph
+1      oc -0.00512        twig
+2      eq  0.08454 crown-giant
+3      co  0.24703 trunk-crown
+4     aln  0.24837 trunk-crown
+5      ol  0.09844  grass-bush
+6      in  0.06137        twig</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;">tail</span>(anolis)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   species  logSSD     ecomorph
+18      cr 0.39796 trunk-ground
+19      st 0.15737  trunk-crown
+20      cy 0.26024 trunk-ground
+21     alu 0.08216   grass-bush
+22      lo 0.13108        trunk
+23      an 0.13547         twig</code></pre>
+</div>
+</div>
+<p>Voila! Now you can plot, take the mean, etc. Which prints out the first six and last six lines of the file.</p>
+<p>Now try reading in <code>anolisSSDsemicolon.csv</code> what did you get? Try reading it in with <code>read.table()</code> - check out the help page.</p>
+<p>R can read in many other formats as well, including database formats, excel native format (although it is easier in practice to save as .csv), fixed width formats, and scanning lines. For more information see the R manual “R Data Import/Export” which you can get from <code>help.start()</code> or at <a href="http://www.r-project.org" class="uri">http://www.r-project.org</a>.</p>
+</section>
+<section id="input-files-generated-by-data-loggers" class="level2">
+<h2 class="anchored" data-anchor-id="input-files-generated-by-data-loggers">Input files generated by data loggers</h2>
+<p>Files that are generated by computer, even if they are not separated by commas (.csv) are not too bad to deal with. Take, for example, the file format generated from our hand-held Ocean Optics specroradiometer. It is very regular in structure, and we have tons of data files, so it is well worth the programming effort to code a script for automatic file input.</p>
+<p>First, you can open the file below in a text editor. If you’d rather open it in R, you can use:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;">readLines</span>(<span class="st" style="color: #20794D;">"data/20070725_01forirr.txt"</span>)</span></code></pre></div>
+</div>
+<p>Notice that there is a very large header, in fact the first 17 lines. Notice also that the last line will cause a problem. Also, the delimiter in this file is tab (backslash t).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">temp <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">readLines</span>(<span class="st" style="color: #20794D;">"20070725_01forirr.txt"</span>)</span>
+<span id="cb16-2"><span class="fu" style="color: #4758AB;">head</span>(temp)</span>
+<span id="cb16-3"><span class="fu" style="color: #4758AB;">tail</span>(temp)</span></code></pre></div>
+</div>
+<p>We can solve these issues using the <code>skip</code> and the <code>comment.char</code> arguments of <code>read.table</code> to ignore both types of lines, reading in only the “good stuff”. Also, the default delimiter in this function is the tab:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.table</span>(<span class="at" style="color: #657422;">file=</span><span class="st" style="color: #20794D;">"20070725_01forirr.txt"</span>, <span class="at" style="color: #657422;">skip=</span><span class="dv" style="color: #AD0000;">17</span>, <span class="at" style="color: #657422;">comment.char=</span><span class="st" style="color: #20794D;">"&gt;"</span>)</span>
+<span id="cb17-2"><span class="fu" style="color: #4758AB;">names</span>(dat) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"lambda"</span>, <span class="st" style="color: #20794D;">"intensity"</span>)</span>
+<span id="cb17-3"><span class="fu" style="color: #4758AB;">head</span>(dat)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  lambda intensity
+1 177.33         0
+2 177.55         0
+3 177.77         0
+4 177.99         0
+5 178.21         0
+6 178.43         0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="fu" style="color: #4758AB;">tail</span>(dat)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     lambda intensity
+3643 888.21   0.29491
+3644 888.38   0.31306
+3645 888.54   0.28153
+3646 888.71   0.28245
+3647 888.87   0.18988
+3648 889.04   0.18988</code></pre>
+</div>
+</div>
+<p>The file produces (useless) rows of data outside of the range of accuracy of the spectraradiometer. We can get rid of these by subsetting the data, selecting only the range 300-750nm:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">300</span>, ]  <span class="co" style="color: #5E5E5E;"># cut off rows below 300nm</span></span>
+<span id="cb21-2">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">750</span>, ]  <span class="co" style="color: #5E5E5E;">#cut off rows above 750nm</span></span></code></pre></div>
+</div>
+<p>Or do both at once:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">300</span> <span class="sc" style="color: #5E5E5E;">&amp;</span> dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">750</span>,]</span></code></pre></div>
+</div>
+<p>If we are going to be doing this subsetting over and over, we might want to save this as an index vector which tells us the position of the rows of data we want to keep in the dataframe (don’t worry, we’ll cover this again in the workhorse functions chapter).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1">oo <span class="ot" style="color: #003B4F;">&lt;-</span> dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">300</span> <span class="sc" style="color: #5E5E5E;">&amp;</span> dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">750</span></span>
+<span id="cb23-2">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[oo, ]   <span class="co" style="color: #5E5E5E;"># same as longer version above</span></span></code></pre></div>
+</div>
+<p>We can now save the cleaned up version of the irradiance data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><span class="fu" style="color: #4758AB;">write.csv</span>(dat, <span class="st" style="color: #20794D;">"20070725_01forirr.csv"</span>)</span></code></pre></div>
 </div>
 </section>
-<section id="acknowledgements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
-<p>Material for this lecture was borrowed and adopted from</p>
-<ul>
-<li>Add here.</li>
-</ul>
 </section>
-</section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="read-from-url" class="level1">
+<h1>Read from URL</h1>
+<p>A URL is just another datastream or pipe. If it is a .csv file on the internet, R supports reading it in directly:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1">anolis2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">"https://raw.githubusercontent.com/mbutler808/rclassdata/main/2023-01-31-DataIO/anolisSSD.csv"</span>)</span>
+<span id="cb25-2"><span class="fu" style="color: #4758AB;">head</span>(anolis2)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  species   logSSD    ecomorph
+1      oc -0.00512        twig
+2      eq  0.08454 crown-giant
+3      co  0.24703 trunk-crown
+4     aln  0.24837 trunk-crown
+5      ol  0.09844  grass-bush
+6      in  0.06137        twig</code></pre>
 </div>
-<div class="callout-caption-container flex-fill">
-Learning objectives
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>At the end of this lesson you will:</strong></p>
-<ul>
-<li>Add here.</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="add-lecture-here" class="level1">
-<h1>Add lecture here</h1>
-<div class="panel-tabset">
-<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" aria-controls="tabset-1-1" aria-selected="true">Mac/UNIX</a></li><li class="nav-item"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" aria-controls="tabset-1-2" aria-selected="false">PC</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" aria-labelledby="tabset-1-1-tab">
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"></code></pre></div>
-</div>
-<div id="tabset-1-2" class="tab-pane" aria-labelledby="tabset-1-2-tab">
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"></code></pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="post-lecture-materials" class="level1">
-<h1>Post-lecture materials</h1>
-<section id="final-questions" class="level3">
-<h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
-<p>Here are some post-lecture questions to help you think about the material discussed.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Questions
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="fu" style="color: #4758AB;">cbind</span>(anolis, anolis2)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   species   logSSD     ecomorph species   logSSD     ecomorph
+1       oc -0.00512         twig      oc -0.00512         twig
+2       eq  0.08454  crown-giant      eq  0.08454  crown-giant
+3       co  0.24703  trunk-crown      co  0.24703  trunk-crown
+4      aln  0.24837  trunk-crown     aln  0.24837  trunk-crown
+5       ol  0.09844   grass-bush      ol  0.09844   grass-bush
+6       in  0.06137         twig      in  0.06137         twig
+7       cu  0.09501  crown-giant      cu  0.09501  crown-giant
+8       ri  0.08947  crown-giant      ri  0.08947  crown-giant
+9       sa  0.28893 trunk-ground      sa  0.28893 trunk-ground
+10      op  0.15963   grass-bush      op  0.15963   grass-bush
+11      va  0.14766         twig      va  0.14766         twig
+12      li  0.38873 trunk-ground      li  0.38873 trunk-ground
+13      ga  0.28768  crown-giant      ga  0.28768  crown-giant
+14      gr  0.39786  trunk-crown      gr  0.39786  trunk-crown
+15      br  0.17106        trunk      br  0.17106        trunk
+16      di  0.13801        trunk      di  0.13801        trunk
+17      kr  0.23478   grass-bush      kr  0.23478   grass-bush
+18      cr  0.39796 trunk-ground      cr  0.39796 trunk-ground
+19      st  0.15737  trunk-crown      st  0.15737  trunk-crown
+20      cy  0.26024 trunk-ground      cy  0.26024 trunk-ground
+21     alu  0.08216   grass-bush     alu  0.08216   grass-bush
+22      lo  0.13108        trunk      lo  0.13108        trunk
+23      an  0.13547         twig      an  0.13547         twig</code></pre>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Add here.</li>
-</ol>
-</div>
-</div>
-</section>
-<section id="additional-resources" class="level3">
-<h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Tip
+Use the correct file format
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<ul>
-<li>Add here.</li>
-</ul>
+<p>Make sure that your URL leads to a raw <code>.csv</code> file, and not the <code>.html</code> rendering of your csv file!</p>
 </div>
 </div>
-</section>
-<section id="rtistry" class="level2">
-<h2 class="anchored" data-anchor-id="rtistry">rtistry</h2>
-<div class="cell fig-cap-location-top">
-
-</div>
-<p>[Add here.]</p>
 
 
-</section>
 </section>
 
  ]]></description>
