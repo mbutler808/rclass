@@ -31,9 +31,14 @@ In the age of Artificial Intelligence (AI), we have many data-intensive tools av
 
 The Wizard of Oz (1939) starring Judy Garland was the first major motion picture in color via the complex Technicolor process. It was a tremendous success. I remember my father telling me about what a huge event it was when it came to his small town. Yet, would it have been an inevitable success? Even at that time, there were many other movies, and there were a lot of doubts about whether the American audience would accept the fantasy story, the length, the musical choices, the actors, and so many other variables. Even though the movie landscape was much simpler then, it was still multivariate.
 
-![](http://www.posterwire.com/wp-content/images/wizard_of_oz.jpg){width=300}
-[Wizard of Oz, MGM 1939](https://en.wikipedia.org/wiki/The_Wizard_of_Oz_(1939_film))
+::: {#fig-oz layout-ncol=2}
 
+![](http://www.posterwire.com/wp-content/images/wizard_of_oz.jpg){width=300}
+
+![](https://upload.wikimedia.org/wikipedia/commons/d/d6/The_Wizard_of_Oz_Judy_Garland_Terry_1939.jpg){#fig-judy width=300}[Judy Garland and Dorothy, and Toto, NBC television network]()
+
+[The Wizard of Oz, MGM 1939](https://en.wikipedia.org/wiki/The_Wizard_of_Oz_(1939_film))
+:::
 
 Yet there must be something to the analysis of data into human behavior. Internet companies sell our web browsing history, there are still opinion polls, demographic surveys, and the like.  Do these types of data differ? Can we do better?
 
@@ -70,4 +75,4 @@ When we break it down, what can we do with data?
     -   Predictive order
 
 
-Can we identify these data comparisons in [Winchell et. al, (2023)](https://doi.org/10.1073/pnas.2216789120)? 
+Can we identify these data comparisons in [Winchell et. al, (2023)](https://doi.org/10.1073/pnas.2216789120)?

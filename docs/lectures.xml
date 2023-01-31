@@ -42,7 +42,19 @@
 <section id="can-we-design-a-hit-tv-show-or-anything-of-importance-with-data" class="level1">
 <h1>Can we design a hit TV show (or anything of importance) with data?</h1>
 <p>The Wizard of Oz (1939) starring Judy Garland was the first major motion picture in color via the complex Technicolor process. It was a tremendous success. I remember my father telling me about what a huge event it was when it came to his small town. Yet, would it have been an inevitable success? Even at that time, there were many other movies, and there were a lot of doubts about whether the American audience would accept the fantasy story, the length, the musical choices, the actors, and so many other variables. Even though the movie landscape was much simpler then, it was still multivariate.</p>
-<p><img src="https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/http:/www.posterwire.com/wp-content/images/wizard_of_oz.jpg" class="img-fluid" width="300"> <a href="https://en.wikipedia.org/wiki/The_Wizard_of_Oz_(1939_film)">Wizard of Oz, MGM 1939</a></p>
+<div id="fig-oz" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/http:/www.posterwire.com/wp-content/images/wizard_of_oz.jpg" class="img-fluid figure-img" width="300"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/https:/upload.wikimedia.org/wikipedia/commons/d/d6/The_Wizard_of_Oz_Judy_Garland_Terry_1939.jpg" id="fig-judy" class="img-fluid figure-img" width="300"><a href="">Judy Garland and Dorothy, and Toto, NBC television network</a></p>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: <a href="https://en.wikipedia.org/wiki/The_Wizard_of_Oz_(1939_film)">The Wizard of Oz, MGM 1939</a></figcaption><p></p>
+</figure>
+</div>
 <p>Yet there must be something to the analysis of data into human behavior. Internet companies sell our web browsing history, there are still opinion polls, demographic surveys, and the like. Do these types of data differ? Can we do better?</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
