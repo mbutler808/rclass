@@ -10,7 +10,47 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023</description>
 <generator>quarto-1.2.313</generator>
-<lastBuildDate>Thu, 26 Jan 2023 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 31 Jan 2023 10:00:00 GMT</lastBuildDate>
+<item>
+  <title>What is the question?</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<!-- Add interesting quote -->
+<section id="pre-lecture-materials" class="level1">
+<h1>Pre-lecture materials</h1>
+<section id="read-ahead" class="level2">
+<h2 class="anchored" data-anchor-id="read-ahead">Read ahead</h2>
+<ul>
+<li>Take a look at the data in this recent paper: <a href="https://doi.org/10.1073/pnas.2216789120">Winchell et. al, (2023)</a> Genome-wide parallelism underlies contemporary adaptation in urban lizards. PNAS 120 (3) e2216789120 <strong>Check SLACK channel for pdf</strong></li>
+</ul>
+</section>
+<section id="watch-ahead-a-motivating-example-for-the-whole-endeavor-of-data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="watch-ahead-a-motivating-example-for-the-whole-endeavor-of-data-analysis">Watch ahead: A Motivating Example for the whole endeavor of data analysis</h2>
+<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
+<p>In the age of AI, we have many tools to analyze data. But can we just throw more data at a problem to get better outcomes? Please watch this thought provoking short talk by <a href="https://www.ted.com/speakers/sebastian_wernicke">Sebastian Wernicke</a> “How to use data to make a hit TV show”… What goes wrong when we look for decisions in the wrong places 🌴</p>
+<div style="position:relative;height:0;padding-bottom:56.25%">
+<iframe src="https://embed.ted.com/talks/lang/en/sebastian_wernicke_how_to_use_data_to_make_a_hit_tv_show" width="854" height="480" style="position:absolute;left:0;top:0;width:100%;height:100%" frameborder="0" scrolling="no" allowfullscreen="">
+</iframe>
+</div>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>module 2</category>
+  <category>week 3</category>
+  <category>data</category>
+  <category>questions</category>
+  <category>data mining</category>
+  <guid>https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/index.html</guid>
+  <pubDate>Tue, 31 Jan 2023 10:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Reproducible Research</title>
   <dc:creator>Marguerite Butler</dc:creator>
@@ -120,7 +160,8 @@ Learning objectives
 <li>Scientific papers whose conclusions depend on nontrivial statistics should have statistical referees, and those referees should be heeded.</li>
 <li>Not all errors are describable by statistics. There is also what physicists call <em>systematic error</em> that is the same in every replication of an experiment. Physicists regularly attempt to quantify this. Others should too.</li>
 </ol>
-<p>At the very least scientists should use - version control, - software testing, - code reviews, - literate programming, and - all code available in a permanent public repository.</p>
+<p>A reasonable ideal for reproducible research today - Research should be reproducible. Anything in a scientific paper should be reproducible by the reader. - Whatever may have been the case in low tech days, this ideal has long gone. Much scientific research in recent years is too complicated and the published details to scanty for anyone to reproduce it. - The lack of detail is not entirely the author’s fault. Journals have severe page pressure and no room for full explanations. - For many years, the only hope of reproducibility is old-fashioned person-to-person contact. Write the authors, ask for data, code, whatever. Some authors help, some don’t. If the authors are not cooperative, tough. - Even cooperative authors may be unable to help. If too much time has gone by and their archiving was not systematic enough and if their software was unportable, there may be no way to recreate the analysis. - Fortunately, the internet comes to the rescue. No page pressure there! - Nowadays, many scientific papers also point to supplementary materials on the internet. Data, computer programs, whatever should be there, permanently. Ideally with a permanent Document Identifier or DOI. There are complaints that many Supplmentary Materials are incomprehensible, but that can be improved with practices of reproducible reserach.</p>
+<p>Therefore, at the very least scientists should use in their statistical programming - version control, - software testing, - code reviews, - literate programming, and - all data and code available in a permanent public repository.</p>
 <p>Some journals have specific policies to promote reproducibility in manuscripts that are published in their journals. For example, the Journal of American Statistical Association (JASA) requires authors to submit their code and data to reproduce their analyses and a set of Associate Editors of Reproducibility review those materials as part of the review process:</p>
 <ul>
 <li><a href="https://jasa-acs.github.io/repro-guide" class="uri">https://jasa-acs.github.io/repro-guide</a></li>
@@ -1433,7 +1474,7 @@ There are many reasons to be proficient in the shell:
 <p>Macs use the same terminal utilities as UNIX/Linux systems. On the Mac, the command line interface app is called <em>Terminal</em>, which you will find in your <em>Application</em> folder, in the <em>Utilities</em> subfolder (here is a screentshot of our GUI Interface).</p>
 <div class="cell fig-cap-location-top">
 <div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/terminal.png" class="img-fluid"></p>
+<p><img src="https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/terminal.png" class="img-fluid" width="986"></p>
 </div>
 </div>
 <p>On a PC you would use the <em>Command Prompt</em> otherwise known as the <em>Windows Command Processor</em> or <em>CMD</em>. If you used a pre-Windows machine, you would be familiar with MS-DOS. To open CMD:</p>

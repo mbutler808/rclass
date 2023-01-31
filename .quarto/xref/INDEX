@@ -47,5 +47,11 @@
   },
   "posts/2023-01-26-intro-quarto/index.qmd": {
     "index.html": "ffeba4e7"
+  },
+  "posts/2023-01-31-what-is-the-question/index.qmd": {
+    "index.html": "218fc18c"
+  },
+  "posts/2023-01-31-what-is-the-question/draft_index.qmd": {
+    "draft_index.html": "f1334cb9"
   }
 }
