@@ -24,8 +24,8 @@ For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring
 |        | Jan 26 | `r emojifont::emoji('octopus')` Reproducible Research \[[html](posts/2023-01-26-reproducible-research/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/tree/main/posts/2023-01-26-reproducible-research/index.qmd)\]  |||
 |        | Jan 26 | `r emojifont::emoji('octopus')` Literate Programming / Intro to Quarto \[[html](posts/2023-01-26-intro-quarto/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/tree/main/posts/2023-01-26-intro-quarto/index.qmd)\]|||
 ||||||
-| Week 3       | Jan 31  | `r emojifont::emoji('microscope')` What is the Question? Data management and workflow  | | |
-|              | Jan 31 | `r emojifont::emoji('eyeglasses')` Reading/Writing data | | |
+| Week 3       | Jan 31  | `r emojifont::emoji('microscope')` What is the Question? \[[html](posts/2023-01-31-what-is-the-question/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/tree/main/posts/2023-01-31-what-is-the-question/index.qmd)\] | | |
+|              | Jan 31 | `r emojifont::emoji('eyeglasses')` Reading/Writing data \[[html](posts/2023-01-31-reading-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/tree/main/posts/2023-01-31-reading-data/index.qmd)\]| | |
 |              | Feb 2 | `r emojifont::emoji('hocho')` Tidying Data  | `r emojifont::emoji('fallen_leaf')` Project 0 due ||
 ||||||
 | **Module 3** |         | **Data Visulization in R** | | |
