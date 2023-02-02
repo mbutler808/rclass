@@ -292,6 +292,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#github-settings-to-serve-your-webpage" id="toc-github-settings-to-serve-your-webpage" class="nav-link" data-scroll-target="#github-settings-to-serve-your-webpage">GitHub settings to serve your webpage</a></li>
   </ul></li>
   <li><a href="#now-make-more-changes" id="toc-now-make-more-changes" class="nav-link" data-scroll-target="#now-make-more-changes">Now make more changes!</a></li>
+  <li><a href="#for-fun" id="toc-for-fun" class="nav-link" data-scroll-target="#for-fun">For fun</a></li>
   <li><a href="#final-tips" id="toc-final-tips" class="nav-link" data-scroll-target="#final-tips">Final tips</a></li>
   </ul></li>
   <li><a href="#post-lecture-materials" id="toc-post-lecture-materials" class="nav-link" data-scroll-target="#post-lecture-materials">Post-lecture materials</a>
@@ -855,6 +856,24 @@ The Quarto Workflow is
 </ul>
 </div>
 </div>
+</section>
+<section id="for-fun" class="level2">
+<h2 class="anchored" data-anchor-id="for-fun">For fun</h2>
+<p>You can have fun with emoji! Guangchuang Yu wrote the package <code>emojifont</code> (this is the same person who wrote the widely used <code>ggtree</code> package) and now you can bring your emoji out of your phone and into your quarto documents! Install the R package <code>emojifont</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"emojifont"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then anywhere you want an emoji in the markdown file, you just type:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">r emojifont::emoji('palm_tree')</span><span class="st">`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>🌴</p>
+<p>Or if you want several, just line them up:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">r emojifont::emoji('balloon')</span><span class="st">``</span><span class="at">r emojifont::emoji('tada')</span><span class="st">``</span><span class="at">r emojifont::emoji('smiley')</span><span class="st">`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>🎈🎉😃</p>
+<p>There is a handy cheat sheet of emoji names here <a href="https://gist.github.com/rxaviers/7360908" class="uri">https://gist.github.com/rxaviers/7360908</a></p>
 </section>
 <section id="final-tips" class="level2">
 <h2 class="anchored" data-anchor-id="final-tips">Final tips</h2>

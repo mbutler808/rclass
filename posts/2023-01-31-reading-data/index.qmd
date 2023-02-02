@@ -8,6 +8,7 @@ author:
 description: "So many ways to get data into R"
 date: 2023-01-31
 categories: [module 2, week 3, data, input, output, formats]
+bibliography: bibliography.bib
 format:
   html:
     code-fold: false
@@ -198,3 +199,48 @@ cbind(anolis, anolis2)
 
 Make sure that your URL leads to a raw `.csv` file, and not the `.html` rendering of your csv file!
 :::
+
+
+# Entering data with spreadsheets
+
+Data management is a major issue for any scientist, so it is worthwhile to develop some best practices. Entering data into spreadsheets is a fundamental step in any study using field data or any type of information that is gathered by humans. Some of the issues to consider are:
+
+1.  How can we best minimize human error?
+2.  What dataset structures are best for analyzing the data using software?
+3.  Compatability with other datasets in the lab, or commonly used in the field.
+
+In the best case, we want to make our data available to the world, which means that it will have a permanence. We may also want to build on this data year after year, so it is worth thinking about a good design.
+
+## Human Error
+
+It is very easy to make a typo, and humans are really bad at catching our own typos in real time. Right? They creep in despite our best efforts. This is why even though it is possible to measure specimens and enter the numbers directly into the computer, itʻs not something I would do.
+
+I always write my measurements down into a notebook or a datasheet using pencil and paper. This has saved me many errors in three ways (1) sometimes my brain is still processing what I just wrote and I will catch a typo. (2) I write my data in rows for specimens and columns for the different measurements. As the dataset builds, it is easy to notice errors if some number is really off. (3) If you have any doubts, you can quickly look over your page and re-measure anything suspicous. If you have the person-power, you can also have one person taking the measurements and calling them out, and another writing them down and repeating them back. It is a very effective way to check on the spot.
+
+I had my first post-college job at an insurance rating board. This is a business that deals with reams and reams of data. We did work a lot with Fortran code and spreadsheets, but surprisingly, some of it does actually have to get manually checked.
+The protocol was simple, a paper printout of the old version was put next to the new version and a person went along with a ruler, literally putting a check mark after verifying the number. A second check was done as well, and then I finally understood the meaning of "double checking" `r emojifont::emoji('stuck_out_tongue_closed_eyes')`. When I got to grad school, it was eye-opening to find that checking any personʻs data entry was a rare practice `r emojifont::emoji('astonished')`.  Please, whenever possible check your data entry. So here are some tips:
+
+    1.  Record data in a notebook (paper and pencil). It serves as a permanent record.
+    2.  Write it down in a data table format in an order that minimizes error. For example, if it is convenient to take five measurements in a particular order, then organize your table that way and always take the measurements in the same order.
+    3.  Organize your spreadsheet to mirror the hand-written data. This will minimize data entry errors.
+    4.  Have another person check your data entry against the notebook.
+
+
+## Organizing your spreadhseet
+
+When it comes time to enter your data in a spreadsheet, there are many things you can do to improve organization. Below is a summary of the recommendations made in paper by Karl Broman and Kara Woo [@Broman:2018].
+
+-  **Be Consistent** - Have a plan before you start entering data. Be consistent and stick to it.
+-  **Choose Good Names for Things** - You want the names you pick for objects, files, and directories to be memorable, easy to spell, descriptive, but concise. This is actually a hard balance to achieve and it does require time and thought.
+    -  One important rule to follow is do not use spaces, use underscores _ or dashes instead -.
+    -  Also, avoid symbols; stick to letters and numbers.
+-  **Write Dates as YYYY-MM-DD** - To avoid confusion, we strongly recommend using this global ISO 8601 standard.
+-  **No Empty Cells** - Fill in all cells and use some common code for missing data.
+-  **Put Just One Thing in a Cell** - It is better to add columns to store the extra information rather than having more than one piece of information in one cell.
+-  **Make It a Rectangle** - The spreadsheet should be a rectangle.
+-  **Create a Data Dictionary** - If you need to explain things, such as what the columns are or what the labels used for categorical variables are, do this in a separate file. This is an excellent use for a README.md file
+-  **No Calculations in the Raw Data Files** - Excel permits you to perform calculations. Do not make this part of your spreadsheet. Code for calculations should be in a script.
+-  **Do Not Use Font Color or Highlighting as Data** - Most import functions are not able to import this information. Encode this information as a variable (a "comment" column) instead.
+-  **Make Backups** - Make regular backups of your data.
+-  **Use Data Validation to Avoid Errors** - Leverage the tools in your spreadsheet software so that the process is as error-free and repetitive-stress-injury-free as possible. Think of checks you can do for "reality checks".
+-  **Save the Data as Text Files** - Save files for sharing in comma or tab delimited format.  An unambiguous text format is the best for archiving your data.

@@ -439,6 +439,28 @@ Congratulations! `r emojifont::emoji('zap')` Your website is now live `r emojifo
 -  Check your website (this may take a beat)
 :::
 
+## For fun
+
+You can have fun with emoji! Guangchuang Yu wrote the package `emojifont` (this is the same person who wrote the widely used `ggtree` package) and now you can bring your emoji out of your phone and into your quarto documents! Install the R package `emojifont`:
+
+```{r eval=F}
+install.packages("emojifont")
+```
+
+Then anywhere you want an emoji in the markdown file, you just type:
+```{r eval=F}
+`r emojifont::emoji('palm_tree')`
+```
+`r emojifont::emoji('palm_tree')`
+
+Or if you want several, just line them up:
+```{r eval=F}
+`r emojifont::emoji('balloon')``r emojifont::emoji('tada')``r emojifont::emoji('smiley')`
+```
+`r emojifont::emoji('balloon')``r emojifont::emoji('tada')``r emojifont::emoji('smiley')`
+
+There is a handy cheat sheet of emoji names here <https://gist.github.com/rxaviers/7360908>
+
 ## Final tips
 
 ::: {.callout-tip}
