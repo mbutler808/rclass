@@ -8,8 +8,13 @@ author:
 description: "So many ways to get data into R"
 date: 2023-01-31
 categories: [module 2, week 3, data, input, output, formats]
+format:
+  html:
+    code-fold: false
 ---
 <!-- Add interesting quote -->
+
+<!-- Sweave2knitr() -->
 
 So far, we have been working within R, either typing data in directly or using R's functions to generate data. In order to analyze your own data, you have to load data from an external file into R.  Similarly, to save your work, you'll probably want to write files from R to your hard drive. Both of these require interacting with your computer's operating system. In this chapter, we're just going to do it. We'll talk more about what's going on in a later section on the R Environment.
 
@@ -19,13 +24,12 @@ So far, we have been working within R, either typing data in directly or using R
 1.  Built-in datasets - useful for practice
 2.  Text files, importing from .csv is especially easy
 3.  Files in other formats, e.g., .xls
-4.  readline  when the text format is irregular
+4.  readLines from a connection including files
 5.  Data not on your local computer, e.g., piped via a url
 6.  Special connections, e.g., google sheets
-7.  readLines from a connection
 :::
 
-# Build-in datasets
+# Built-in datasets
 
 R has many built-in datasets that come distributed with R. They are very useful for demonstrating Rʻs many functions for statistics, plotting, and other uses.
 
@@ -75,7 +79,7 @@ It is very nice because it is unambiguous, not easily corruptible, and non-propr
 
 ## Get the files onto your computer
 
-First, get the data files from the `data` GitHub repo. Navigate to within the rclassdata folder on your computer and execute:
+First, get the data files from the `rcassdatadata` GitHub repo. Navigate to within the rclassdata folder on your computer and execute:
 
 ```{.bash filename=Terminal}
 git pull origin main
@@ -98,7 +102,7 @@ Copy the `2023-01-31-DataIO` folder into Rclass to work for today.
 Getting the file in is easy. If it is in csv format, you just use:
 
 ```{r}
-#| eval: true
+#| eval: false
 read.csv("anolisSSD.csv")  # look for the file in the Data directory
 ```
 
@@ -133,7 +137,7 @@ First, you can open the file below in a text editor. If you'd rather open it in 
 
 ```{r}
 #| eval: false
-readLines("data/20070725_01forirr.txt")
+readLines("20070725_01forirr.txt")
 ```
 
 Notice that there is a very large header, in fact the first 17 lines. Notice also that the last line will cause a problem. Also, the delimiter in this file is tab (backslash t).
@@ -179,7 +183,7 @@ We can now save the cleaned up version of the irradiance data:
 write.csv(dat, "20070725_01forirr.csv")
 ```
 
-# Read from URL 
+# Read from URL
 
 A URL is just another datastream or pipe.  If it is a .csv file on the internet, R supports reading it in directly:
 

@@ -260,7 +260,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#build-in-datasets" id="toc-build-in-datasets" class="nav-link active" data-scroll-target="#build-in-datasets">Build-in datasets</a></li>
+  <li><a href="#built-in-datasets" id="toc-built-in-datasets" class="nav-link active" data-scroll-target="#built-in-datasets">Built-in datasets</a></li>
   <li><a href="#the-biggest-issue-for-fairly-new-users" id="toc-the-biggest-issue-for-fairly-new-users" class="nav-link" data-scroll-target="#the-biggest-issue-for-fairly-new-users">The biggest issue for fairly new users</a></li>
   <li><a href="#reading-in-text-files" id="toc-reading-in-text-files" class="nav-link" data-scroll-target="#reading-in-text-files">Reading in Text Files</a>
   <ul class="collapse">
@@ -282,6 +282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <!-- Add interesting quote -->
+<!-- Sweave2knitr() -->
 <p>So far, we have been working within R, either typing data in directly or using R’s functions to generate data. In order to analyze your own data, you have to load data from an external file into R. Similarly, to save your work, you’ll probably want to write files from R to your hard drive. Both of these require interacting with your computer’s operating system. In this chapter, we’re just going to do it. We’ll talk more about what’s going on in a later section on the R Environment.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -297,15 +298,14 @@ There are many different ways to access data in R
 <li>Built-in datasets - useful for practice</li>
 <li>Text files, importing from .csv is especially easy</li>
 <li>Files in other formats, e.g., .xls</li>
-<li>readline when the text format is irregular</li>
+<li>readLines from a connection including files</li>
 <li>Data not on your local computer, e.g., piped via a url</li>
 <li>Special connections, e.g., google sheets</li>
-<li>readLines from a connection</li>
 </ol>
 </div>
 </div>
-<section id="build-in-datasets" class="level1">
-<h1>Build-in datasets</h1>
+<section id="built-in-datasets" class="level1">
+<h1>Built-in datasets</h1>
 <p>R has many built-in datasets that come distributed with R. They are very useful for demonstrating Rʻs many functions for statistics, plotting, and other uses.</p>
 <p>To see a list of them, you can type <code>data()</code> at the command line. To see the contents, type the name of the dataset. To see the help page type a ? in front of the name:</p>
 <div class="cell">
@@ -354,7 +354,7 @@ There are many different ways to access data in R
 <p>It is very nice because it is unambiguous, not easily corruptible, and non-proprietary. Thus it is readable by nearly every program that reads in data.</p>
 <section id="get-the-files-onto-your-computer" class="level2">
 <h2 class="anchored" data-anchor-id="get-the-files-onto-your-computer">Get the files onto your computer</h2>
-<p>First, get the data files from the <code>data</code> GitHub repo. Navigate to within the rclassdata folder on your computer and execute:</p>
+<p>First, get the data files from the <code>rcassdatadata</code> GitHub repo. Navigate to within the rclassdata folder on your computer and execute:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
@@ -374,41 +374,15 @@ There are many different ways to access data in R
 <p>Getting the file in is easy. If it is in csv format, you just use:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">"anolisSSD.csv"</span>)  <span class="co"># look for the file in the Data directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   species   logSSD     ecomorph
-1       oc -0.00512         twig
-2       eq  0.08454  crown-giant
-3       co  0.24703  trunk-crown
-4      aln  0.24837  trunk-crown
-5       ol  0.09844   grass-bush
-6       in  0.06137         twig
-7       cu  0.09501  crown-giant
-8       ri  0.08947  crown-giant
-9       sa  0.28893 trunk-ground
-10      op  0.15963   grass-bush
-11      va  0.14766         twig
-12      li  0.38873 trunk-ground
-13      ga  0.28768  crown-giant
-14      gr  0.39786  trunk-crown
-15      br  0.17106        trunk
-16      di  0.13801        trunk
-17      kr  0.23478   grass-bush
-18      cr  0.39796 trunk-ground
-19      st  0.15737  trunk-crown
-20      cy  0.26024 trunk-ground
-21     alu  0.08216   grass-bush
-22      lo  0.13108        trunk
-23      an  0.13547         twig</code></pre>
-</div>
 </div>
 <p>This is an <em>Anolis</em> lizard sexual size dimorphism dataset. It has values of dimorphism by species for different ecomorphs, or microhabitat specialists.</p>
 <p>To save the data, give it a name and save it:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>anolis <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"anolisSSD.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>anolis <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"anolisSSD.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>It is a good practice to <em>always</em> check that the data were read in properly. If it is a large file, you’ll want to at least check the beginning and end were read in properly:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(anolis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(anolis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  species   logSSD    ecomorph
 1      oc -0.00512        twig
@@ -418,7 +392,7 @@ There are many different ways to access data in R
 5      ol  0.09844  grass-bush
 6      in  0.06137        twig</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(anolis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(anolis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   species  logSSD     ecomorph
 18      cr 0.39796 trunk-ground
@@ -438,19 +412,19 @@ There are many different ways to access data in R
 <p>Files that are generated by computer, even if they are not separated by commas (.csv) are not too bad to deal with. Take, for example, the file format generated from our hand-held Ocean Optics specroradiometer. It is very regular in structure, and we have tons of data files, so it is well worth the programming effort to code a script for automatic file input.</p>
 <p>First, you can open the file below in a text editor. If you’d rather open it in R, you can use:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">readLines</span>(<span class="st">"data/20070725_01forirr.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">readLines</span>(<span class="st">"20070725_01forirr.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Notice that there is a very large header, in fact the first 17 lines. Notice also that the last line will cause a problem. Also, the delimiter in this file is tab (backslash t).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"20070725_01forirr.txt"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(temp)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(temp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"20070725_01forirr.txt"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(temp)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(temp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can solve these issues using the <code>skip</code> and the <code>comment.char</code> arguments of <code>read.table</code> to ignore both types of lines, reading in only the “good stuff”. Also, the default delimiter in this function is the tab:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file=</span><span class="st">"20070725_01forirr.txt"</span>, <span class="at">skip=</span><span class="dv">17</span>, <span class="at">comment.char=</span><span class="st">"&gt;"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"lambda"</span>, <span class="st">"intensity"</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file=</span><span class="st">"20070725_01forirr.txt"</span>, <span class="at">skip=</span><span class="dv">17</span>, <span class="at">comment.char=</span><span class="st">"&gt;"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"lambda"</span>, <span class="st">"intensity"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  lambda intensity
 1 177.33         0
@@ -460,7 +434,7 @@ There are many different ways to access data in R
 5 178.21         0
 6 178.43         0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     lambda intensity
 3643 888.21   0.29491
@@ -473,21 +447,21 @@ There are many different ways to access data in R
 </div>
 <p>The file produces (useless) rows of data outside of the range of accuracy of the spectraradiometer. We can get rid of these by subsetting the data, selecting only the range 300-750nm:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>lambda <span class="sc">&gt;=</span> <span class="dv">300</span>, ]  <span class="co"># cut off rows below 300nm</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>lambda <span class="sc">&lt;=</span> <span class="dv">750</span>, ]  <span class="co">#cut off rows above 750nm</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>lambda <span class="sc">&gt;=</span> <span class="dv">300</span>, ]  <span class="co"># cut off rows below 300nm</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>lambda <span class="sc">&lt;=</span> <span class="dv">750</span>, ]  <span class="co">#cut off rows above 750nm</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Or do both at once:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>lambda <span class="sc">&gt;=</span> <span class="dv">300</span> <span class="sc">&amp;</span> dat<span class="sc">$</span>lambda <span class="sc">&lt;=</span> <span class="dv">750</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>lambda <span class="sc">&gt;=</span> <span class="dv">300</span> <span class="sc">&amp;</span> dat<span class="sc">$</span>lambda <span class="sc">&lt;=</span> <span class="dv">750</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If we are going to be doing this subsetting over and over, we might want to save this as an index vector which tells us the position of the rows of data we want to keep in the dataframe (don’t worry, we’ll cover this again in the workhorse functions chapter).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>oo <span class="ot">&lt;-</span> dat<span class="sc">$</span>lambda <span class="sc">&gt;=</span> <span class="dv">300</span> <span class="sc">&amp;</span> dat<span class="sc">$</span>lambda <span class="sc">&lt;=</span> <span class="dv">750</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat[oo, ]   <span class="co"># same as longer version above</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>oo <span class="ot">&lt;-</span> dat<span class="sc">$</span>lambda <span class="sc">&gt;=</span> <span class="dv">300</span> <span class="sc">&amp;</span> dat<span class="sc">$</span>lambda <span class="sc">&lt;=</span> <span class="dv">750</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat[oo, ]   <span class="co"># same as longer version above</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now save the cleaned up version of the irradiance data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(dat, <span class="st">"20070725_01forirr.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(dat, <span class="st">"20070725_01forirr.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -495,8 +469,8 @@ There are many different ways to access data in R
 <h1>Read from URL</h1>
 <p>A URL is just another datastream or pipe. If it is a .csv file on the internet, R supports reading it in directly:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>anolis2 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/mbutler808/rclassdata/main/2023-01-31-DataIO/anolisSSD.csv"</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(anolis2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>anolis2 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/mbutler808/rclassdata/main/2023-01-31-DataIO/anolisSSD.csv"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(anolis2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  species   logSSD    ecomorph
 1      oc -0.00512        twig
@@ -506,7 +480,7 @@ There are many different ways to access data in R
 5      ol  0.09844  grass-bush
 6      in  0.06137        twig</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(anolis, anolis2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(anolis, anolis2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   species   logSSD     ecomorph species   logSSD     ecomorph
 1       oc -0.00512         twig      oc -0.00512         twig

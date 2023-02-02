@@ -133,6 +133,7 @@ Discussion Questions
 
 
 <!-- Add interesting quote -->
+<!-- Sweave2knitr() -->
 <p>So far, we have been working within R, either typing data in directly or using R’s functions to generate data. In order to analyze your own data, you have to load data from an external file into R. Similarly, to save your work, you’ll probably want to write files from R to your hard drive. Both of these require interacting with your computer’s operating system. In this chapter, we’re just going to do it. We’ll talk more about what’s going on in a later section on the R Environment.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -148,15 +149,14 @@ There are many different ways to access data in R
 <li>Built-in datasets - useful for practice</li>
 <li>Text files, importing from .csv is especially easy</li>
 <li>Files in other formats, e.g., .xls</li>
-<li>readline when the text format is irregular</li>
+<li>readLines from a connection including files</li>
 <li>Data not on your local computer, e.g., piped via a url</li>
 <li>Special connections, e.g., google sheets</li>
-<li>readLines from a connection</li>
 </ol>
 </div>
 </div>
-<section id="build-in-datasets" class="level1">
-<h1>Build-in datasets</h1>
+<section id="built-in-datasets" class="level1">
+<h1>Built-in datasets</h1>
 <p>R has many built-in datasets that come distributed with R. They are very useful for demonstrating Rʻs many functions for statistics, plotting, and other uses.</p>
 <p>To see a list of them, you can type <code>data()</code> at the command line. To see the contents, type the name of the dataset. To see the help page type a ? in front of the name:</p>
 <div class="cell">
@@ -205,7 +205,7 @@ There are many different ways to access data in R
 <p>It is very nice because it is unambiguous, not easily corruptible, and non-proprietary. Thus it is readable by nearly every program that reads in data.</p>
 <section id="get-the-files-onto-your-computer" class="level2">
 <h2 class="anchored" data-anchor-id="get-the-files-onto-your-computer">Get the files onto your computer</h2>
-<p>First, get the data files from the <code>data</code> GitHub repo. Navigate to within the rclassdata folder on your computer and execute:</p>
+<p>First, get the data files from the <code>rcassdatadata</code> GitHub repo. Navigate to within the rclassdata folder on your computer and execute:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
@@ -225,41 +225,15 @@ There are many different ways to access data in R
 <p>Getting the file in is easy. If it is in csv format, you just use:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">"anolisSSD.csv"</span>)  <span class="co" style="color: #5E5E5E;"># look for the file in the Data directory</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   species   logSSD     ecomorph
-1       oc -0.00512         twig
-2       eq  0.08454  crown-giant
-3       co  0.24703  trunk-crown
-4      aln  0.24837  trunk-crown
-5       ol  0.09844   grass-bush
-6       in  0.06137         twig
-7       cu  0.09501  crown-giant
-8       ri  0.08947  crown-giant
-9       sa  0.28893 trunk-ground
-10      op  0.15963   grass-bush
-11      va  0.14766         twig
-12      li  0.38873 trunk-ground
-13      ga  0.28768  crown-giant
-14      gr  0.39786  trunk-crown
-15      br  0.17106        trunk
-16      di  0.13801        trunk
-17      kr  0.23478   grass-bush
-18      cr  0.39796 trunk-ground
-19      st  0.15737  trunk-crown
-20      cy  0.26024 trunk-ground
-21     alu  0.08216   grass-bush
-22      lo  0.13108        trunk
-23      an  0.13547         twig</code></pre>
-</div>
 </div>
 <p>This is an <em>Anolis</em> lizard sexual size dimorphism dataset. It has values of dimorphism by species for different ecomorphs, or microhabitat specialists.</p>
 <p>To save the data, give it a name and save it:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">anolis <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">"anolisSSD.csv"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">anolis <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">"anolisSSD.csv"</span>)</span></code></pre></div>
 </div>
 <p>It is a good practice to <em>always</em> check that the data were read in properly. If it is a large file, you’ll want to at least check the beginning and end were read in properly:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;">head</span>(anolis)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;">head</span>(anolis)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  species   logSSD    ecomorph
 1      oc -0.00512        twig
@@ -269,7 +243,7 @@ There are many different ways to access data in R
 5      ol  0.09844  grass-bush
 6      in  0.06137        twig</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;">tail</span>(anolis)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="fu" style="color: #4758AB;">tail</span>(anolis)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   species  logSSD     ecomorph
 18      cr 0.39796 trunk-ground
@@ -289,19 +263,19 @@ There are many different ways to access data in R
 <p>Files that are generated by computer, even if they are not separated by commas (.csv) are not too bad to deal with. Take, for example, the file format generated from our hand-held Ocean Optics specroradiometer. It is very regular in structure, and we have tons of data files, so it is well worth the programming effort to code a script for automatic file input.</p>
 <p>First, you can open the file below in a text editor. If you’d rather open it in R, you can use:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;">readLines</span>(<span class="st" style="color: #20794D;">"data/20070725_01forirr.txt"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="fu" style="color: #4758AB;">readLines</span>(<span class="st" style="color: #20794D;">"20070725_01forirr.txt"</span>)</span></code></pre></div>
 </div>
 <p>Notice that there is a very large header, in fact the first 17 lines. Notice also that the last line will cause a problem. Also, the delimiter in this file is tab (backslash t).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">temp <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">readLines</span>(<span class="st" style="color: #20794D;">"20070725_01forirr.txt"</span>)</span>
-<span id="cb16-2"><span class="fu" style="color: #4758AB;">head</span>(temp)</span>
-<span id="cb16-3"><span class="fu" style="color: #4758AB;">tail</span>(temp)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">temp <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">readLines</span>(<span class="st" style="color: #20794D;">"20070725_01forirr.txt"</span>)</span>
+<span id="cb15-2"><span class="fu" style="color: #4758AB;">head</span>(temp)</span>
+<span id="cb15-3"><span class="fu" style="color: #4758AB;">tail</span>(temp)</span></code></pre></div>
 </div>
 <p>We can solve these issues using the <code>skip</code> and the <code>comment.char</code> arguments of <code>read.table</code> to ignore both types of lines, reading in only the “good stuff”. Also, the default delimiter in this function is the tab:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.table</span>(<span class="at" style="color: #657422;">file=</span><span class="st" style="color: #20794D;">"20070725_01forirr.txt"</span>, <span class="at" style="color: #657422;">skip=</span><span class="dv" style="color: #AD0000;">17</span>, <span class="at" style="color: #657422;">comment.char=</span><span class="st" style="color: #20794D;">"&gt;"</span>)</span>
-<span id="cb17-2"><span class="fu" style="color: #4758AB;">names</span>(dat) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"lambda"</span>, <span class="st" style="color: #20794D;">"intensity"</span>)</span>
-<span id="cb17-3"><span class="fu" style="color: #4758AB;">head</span>(dat)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.table</span>(<span class="at" style="color: #657422;">file=</span><span class="st" style="color: #20794D;">"20070725_01forirr.txt"</span>, <span class="at" style="color: #657422;">skip=</span><span class="dv" style="color: #AD0000;">17</span>, <span class="at" style="color: #657422;">comment.char=</span><span class="st" style="color: #20794D;">"&gt;"</span>)</span>
+<span id="cb16-2"><span class="fu" style="color: #4758AB;">names</span>(dat) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"lambda"</span>, <span class="st" style="color: #20794D;">"intensity"</span>)</span>
+<span id="cb16-3"><span class="fu" style="color: #4758AB;">head</span>(dat)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  lambda intensity
 1 177.33         0
@@ -311,7 +285,7 @@ There are many different ways to access data in R
 5 178.21         0
 6 178.43         0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="fu" style="color: #4758AB;">tail</span>(dat)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="fu" style="color: #4758AB;">tail</span>(dat)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     lambda intensity
 3643 888.21   0.29491
@@ -324,21 +298,21 @@ There are many different ways to access data in R
 </div>
 <p>The file produces (useless) rows of data outside of the range of accuracy of the spectraradiometer. We can get rid of these by subsetting the data, selecting only the range 300-750nm:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">300</span>, ]  <span class="co" style="color: #5E5E5E;"># cut off rows below 300nm</span></span>
-<span id="cb21-2">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">750</span>, ]  <span class="co" style="color: #5E5E5E;">#cut off rows above 750nm</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">300</span>, ]  <span class="co" style="color: #5E5E5E;"># cut off rows below 300nm</span></span>
+<span id="cb20-2">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">750</span>, ]  <span class="co" style="color: #5E5E5E;">#cut off rows above 750nm</span></span></code></pre></div>
 </div>
 <p>Or do both at once:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">300</span> <span class="sc" style="color: #5E5E5E;">&amp;</span> dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">750</span>,]</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">300</span> <span class="sc" style="color: #5E5E5E;">&amp;</span> dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">750</span>,]</span></code></pre></div>
 </div>
 <p>If we are going to be doing this subsetting over and over, we might want to save this as an index vector which tells us the position of the rows of data we want to keep in the dataframe (don’t worry, we’ll cover this again in the workhorse functions chapter).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1">oo <span class="ot" style="color: #003B4F;">&lt;-</span> dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">300</span> <span class="sc" style="color: #5E5E5E;">&amp;</span> dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">750</span></span>
-<span id="cb23-2">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[oo, ]   <span class="co" style="color: #5E5E5E;"># same as longer version above</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">oo <span class="ot" style="color: #003B4F;">&lt;-</span> dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">300</span> <span class="sc" style="color: #5E5E5E;">&amp;</span> dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">750</span></span>
+<span id="cb22-2">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[oo, ]   <span class="co" style="color: #5E5E5E;"># same as longer version above</span></span></code></pre></div>
 </div>
 <p>We can now save the cleaned up version of the irradiance data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><span class="fu" style="color: #4758AB;">write.csv</span>(dat, <span class="st" style="color: #20794D;">"20070725_01forirr.csv"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><span class="fu" style="color: #4758AB;">write.csv</span>(dat, <span class="st" style="color: #20794D;">"20070725_01forirr.csv"</span>)</span></code></pre></div>
 </div>
 </section>
 </section>
@@ -346,8 +320,8 @@ There are many different ways to access data in R
 <h1>Read from URL</h1>
 <p>A URL is just another datastream or pipe. If it is a .csv file on the internet, R supports reading it in directly:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1">anolis2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">"https://raw.githubusercontent.com/mbutler808/rclassdata/main/2023-01-31-DataIO/anolisSSD.csv"</span>)</span>
-<span id="cb25-2"><span class="fu" style="color: #4758AB;">head</span>(anolis2)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1">anolis2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">"https://raw.githubusercontent.com/mbutler808/rclassdata/main/2023-01-31-DataIO/anolisSSD.csv"</span>)</span>
+<span id="cb24-2"><span class="fu" style="color: #4758AB;">head</span>(anolis2)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  species   logSSD    ecomorph
 1      oc -0.00512        twig
@@ -357,7 +331,7 @@ There are many different ways to access data in R
 5      ol  0.09844  grass-bush
 6      in  0.06137        twig</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="fu" style="color: #4758AB;">cbind</span>(anolis, anolis2)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><span class="fu" style="color: #4758AB;">cbind</span>(anolis, anolis2)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   species   logSSD     ecomorph species   logSSD     ecomorph
 1       oc -0.00512         twig      oc -0.00512         twig
@@ -410,6 +384,344 @@ Use the correct file format
   <category>output</category>
   <category>formats</category>
   <guid>https://mbutler808.github.io/posts/2023-01-31-reading-data/index.html</guid>
+  <pubDate>Tue, 31 Jan 2023 10:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Reference management</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2023-02-01-reference-management/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<!-- Add interesting quote -->
+<section id="pre-lecture-materials" class="level1">
+<h1>Pre-lecture materials</h1>
+<section id="read-ahead" class="level3">
+<h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Read ahead
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before class, you can prepare by reading the following materials:</strong></p>
+<ol type="1">
+<li>Authoring in <a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html">R Markdown from RStudio</a></li>
+<li>Citations from <a href="https://monashdatafluency.github.io/r-rep-res/citations.html">Reproducible Research in R</a> from the <a href="https://monashdatafluency.github.io">Monash Data Fluency</a> initiative</li>
+<li>Bibliography from <a href="https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html">R Markdown Cookbook</a></li>
+</ol>
+</div>
+</div>
+</section>
+<section id="acknowledgements" class="level3">
+<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/</a></li>
+<li><a href="https://andreashandel.github.io/MADAcourse" class="uri">https://andreashandel.github.io/MADAcourse</a></li>
+<li><a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html" class="uri">https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html</a></li>
+<li><a href="https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html" class="uri">https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html</a></li>
+<li><a href="https://monashdatafluency.github.io/r-rep-res/citations.html" class="uri">https://monashdatafluency.github.io/r-rep-res/citations.html</a></li>
+</ul>
+</section>
+</section>
+<section id="learning-objectives" class="level1">
+<h1>Learning objectives</h1>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Know what types of bibliography file formats can be used in a R Markdown file</li>
+<li>Learn how to add citations to a Quarto file</li>
+<li>Know how to change the citation style (e.g.&nbsp;APA, Chicago, Evolution, etc)</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Your citation list is a critical aspect of research, as all research is built on the contribution in prior work. One of the most tedious tasks of science is hand-editing bibiolographies — and one of the great benefits of the LaTeX environment is the automated <em>formatting references for bibliographies</em>. 🎊</p>
+<p>Itʻs worth taking a little time to learn how to use these tools, as citations are critical for every paper, project report, or academic website, and is often even required in paper assignments. Since R markdown and Quarto work nicely with LaTeX (and BibTeX, the associated reference management software), we get a bonus in having access to the power of BibTeX without writing any LaTeX, maing it easy to add citations to our Quarto markdown projects.</p>
+<p>Quarto documentation currently doesnʻt include citations, but seems to support all the features presnt in R markdown. We will be using <code>.bib</code> format references in this tutorial, but R markdown (and presumably Quarto) supports other citation formats as well (<a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html">for more info see</a>).</p>
+<section id="the-parts" class="level2">
+<h2 class="anchored" data-anchor-id="the-parts">The Parts</h2>
+<p>There are three basic parts:</p>
+<ol type="1">
+<li>The citation data which is stored in the <code>.bib</code> file Section&nbsp;4, and</li>
+<li>In-text citations included by the author into the <code>.qmd</code> document Section&nbsp;7, and</li>
+<li>Linking the ʻ.bibʻ file in the <code>YAML</code> header Section&nbsp;6.</li>
+</ol>
+<p>From this, both the <em>in-text citations</em> as well as the <em>citation list</em> at the end of the document will be rendered.</p>
+<p>There are additional customization options. You can change the <em>style</em> of the bibliography using style and class files Section&nbsp;8. This is at the level of the entire document, it is easy to switch. Within the document, there are also many options for in-text citation styles Section&nbsp;9. You can also customize the style file by editing the LaTeX.</p>
+<p><em>Reference managers</em> are helper software (independent of BibTeX) that are wonderful tools to help you collect and organize your citation data Section&nbsp;5.</p>
+</section>
+</section>
+<section id="sec-bib" class="level1">
+<h1>The Bibliography is in <code>.bib</code> files</h1>
+<p>The citation data are stored in a <code>.bib</code> file which is a text file. Most people donʻt type these entries themselves (unless itʻs for a new publication!) but rather download these through journal databases such as <em>Web of Science</em>, <em>PubMed</em>, directly from jornal websites, etc.</p>
+<p>R provides nice function <code>citation()</code> that generating the citation blob for R packages. Let’s try generating citation text for the R environment by using the following command</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">citation</span>(<span class="st" style="color: #20794D;">"base"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+To cite R in publications use:
+
+  R Core Team (2022). R: A language and environment for statistical
+  computing. R Foundation for Statistical Computing, Vienna, Austria.
+  URL https://www.R-project.org/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2022},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it
+when using it for data analysis. See also 'citation("pkgname")' for
+citing R packages.</code></pre>
+</div>
+</div>
+<p>You can replace “base” with any R package name, such as “rmarkdown” or my package “ouch”. You can see that the format is simple, the information is in a key = value format, and the various parts have tags.</p>
+<p>Multiple citations are stored in your <code>.bib</code> file, with each citation separated by a blank line.</p>
+</section>
+<section id="sec-manager" class="level1">
+<h1>Reference Managers</h1>
+<p>Personally, I really like [BibDesk]<a href="https://bibdesk.sourceforge.io" class="uri">https://bibdesk.sourceforge.io</a> for Mac OS to manage my citations. It is easy to use and has all the features I need. A cross-platform option that is popular now is JabRef <a href="https://github.com/JabRef/jabref" class="uri">https://github.com/JabRef/jabref</a>. <a href="https://en.wikipedia.org/wiki/JabRef">JabRef</a> is written in Java, is open source and has support for Linux, Windows, and MacOS.</p>
+<section id="citation-management-software" class="level2">
+<h2 class="anchored" data-anchor-id="citation-management-software">Citation management software</h2>
+<p>In addition to <code>.bib</code> (BibTeX) there are a lot of file formats in use including <code>.medline</code> (MEDLINE), <code>.ris</code> (RIS), and <code>.enl</code> (EndNote), among others. You can generally download the results of your literature search in the format of your choice (some citation manager software can convert formats as well).</p>
+<p>If you recall the output from <code>citation("rmarkdown")</code> above, one option is to copy and paste the BibTeX output into a text file labeled <code>.bib</code> or into citation management software, but instead we can use Rʻs <code>write_bib()</code> function from the <code>knitr</code> package to create a bibliography file.</p>
+<p>Let’s run the following code in order to generate a <code>my-refs.bib</code> file</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">knitr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">write_bib</span>(<span class="st" style="color: #20794D;">"rmarkdown"</span>, <span class="at" style="color: #657422;">file =</span> <span class="st" style="color: #20794D;">"my-refs.bib"</span>)</span></code></pre></div>
+</div>
+<p>You can output multiple citations by passing a vector of package names:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">knitr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">write_bib</span>(<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"rmarkdown"</span>,<span class="st" style="color: #20794D;">"base"</span>), <span class="at" style="color: #657422;">file =</span> <span class="st" style="color: #20794D;">"my-refs.bib"</span>)</span></code></pre></div>
+</div>
+<p>Now we can see we have the file saved locally.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">list.files</span>()</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "ButlerPapers.bib" "evolution.csl"    "index.qmd"        "index.rmarkdown" 
+[5] "my-refs.bib"     </code></pre>
+</div>
+</div>
+<p>If you open up the <code>my-refs.bib</code> file, you will see</p>
+<pre><code>@Manual{R-base,
+  title = {R: A Language and Environment for Statistical Computing},
+  author = {{R Core Team}},
+  organization = {R Foundation for Statistical Computing},
+  address = {Vienna, Austria},
+  year = {2022},
+  url = {https://www.R-project.org/},
+}
+
+@Manual{R-rmarkdown,
+  title = {rmarkdown: Dynamic Documents for R},
+  author = {JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin Ushey and Aron Atkins and Hadley Wickham and Joe Cheng and Winston Chang and Richard Iannone},
+  year = {2021},
+  note = {R package version 2.8},
+  url = {https://CRAN.R-project.org/package=rmarkdown},
+}
+
+@Book{rmarkdown2018,
+  title = {R Markdown: The Definitive Guide},
+  author = {Yihui Xie and J.J. Allaire and Garrett Grolemund},
+  publisher = {Chapman and Hall/CRC},
+  address = {Boca Raton, Florida},
+  year = {2018},
+  note = {ISBN 9781138359338},
+  url = {https://bookdown.org/yihui/rmarkdown},
+}
+
+@Book{rmarkdown2020,
+  title = {R Markdown Cookbook},
+  author = {Yihui Xie and Christophe Dervieux and Emily Riederer},
+  publisher = {Chapman and Hall/CRC},
+  address = {Boca Raton, Florida},
+  year = {2020},
+  note = {ISBN 9780367563837},
+  url = {https://bookdown.org/yihui/rmarkdown-cookbook},
+}</code></pre>
+<div class="resources">
+<p><strong>Note there are three keys that we will use later on</strong>:</p>
+<ul>
+<li><code>R-rmarkdown</code></li>
+<li><code>rmarkdown2018</code></li>
+<li><code>rmarkdown2020</code></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="sec-linking" class="level1">
+<h1>Linking <code>.bib</code> file with <code>.rmd</code> or <code>.qmd</code> files</h1>
+<p>In order to use references within a R Markdown file, you will need to specify the name and a location of a bibliography file using the bibliography metadata field in a YAML metadata section. For example:</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><span class="pp" style="color: #AD0000;">---</span></span>
+<span id="cb8-2"><span class="fu" style="color: #4758AB;">title</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> </span><span class="st" style="color: #20794D;">"My top ten favorite R packages"</span></span>
+<span id="cb8-3"><span class="fu" style="color: #4758AB;">output</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> html_document</span></span>
+<span id="cb8-4"><span class="fu" style="color: #4758AB;">bibliography</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> my-refs.bib</span></span>
+<span id="cb8-5"><span class="pp" style="color: #AD0000;">---</span></span></code></pre></div>
+<p>You can include multiple reference files using the following syntax, alternatively you can concatenate two bib files into one.</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><span class="pp" style="color: #AD0000;">---</span></span>
+<span id="cb9-2"><span class="fu" style="color: #4758AB;">bibliography</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> </span><span class="kw" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"my-refs1.bib"</span><span class="kw" style="color: #003B4F;">,</span><span class="at" style="color: #657422;"> </span><span class="st" style="color: #20794D;">"my-refs2.bib"</span><span class="kw" style="color: #003B4F;">]</span></span>
+<span id="cb9-3"><span class="pp" style="color: #AD0000;">---</span></span></code></pre></div>
+</section>
+<section id="sec-inline" class="level1">
+<h1>Inline citation</h1>
+<p>Now we can start using those bib keys that we have learned just before, using the following syntax</p>
+<ul>
+<li><code>[@key]</code> for single citation</li>
+<li><code>[@key1; @key2]</code> multiple citation can be separated by semi-colon</li>
+<li><code>[-@key]</code> in order to suppress author name, and just display the year</li>
+<li><code>[see @key1 p 12; also this ref @key2]</code> is also a valid syntax</li>
+</ul>
+<p>Let’s start by citing the <code>rmarkdown</code> package using the following code and press <code>Knit</code> button:</p>
+<hr>
+<p>I have been using the amazing Rmarkdown package <span class="citation" data-cites="R-rmarkdown">(Allaire et al. 2022)</span>! These look like great books to read <span class="citation" data-cites="rmarkdown2018 rmarkdown2020">(Xie, Allaire, and Grolemund 2018; and Xie, Dervieux, and Riederer 2020)</span>.</p>
+<hr>
+<p>Pretty cool, huh??</p>
+</section>
+<section id="sec-style" class="level1">
+<h1>Citation styles</h1>
+<p>By default, Pandoc will use a Chicago author-date format for citations and references.</p>
+<p>To use another style, for example, in ecology and evolution, we often use the <code>evolution.csl</code> style. You will need to specify a CSL (Citation Style Language) file in the <code>csl</code> metadata field, e.g.,</p>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><span class="pp" style="color: #AD0000;">---</span></span>
+<span id="cb10-2"><span class="fu" style="color: #4758AB;">title</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> </span><span class="st" style="color: #20794D;">"My top ten favorite R packages"</span></span>
+<span id="cb10-3"><span class="fu" style="color: #4758AB;">output</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> html_document</span></span>
+<span id="cb10-4"><span class="fu" style="color: #4758AB;">bibliography</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> my-refs.bib</span></span>
+<span id="cb10-5"><span class="fu" style="color: #4758AB;">csl</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> biomed-central.csl</span></span>
+<span id="cb10-6"><span class="pp" style="color: #AD0000;">---</span></span></code></pre></div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Resources
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <a href="https://www.zotero.org/styles">Zotero Style Repository</a> makes it easy to search for and download your desired style. Just include it in the same directory as with your <code>.qmd</code> file.</p>
+</div>
+</div>
+<p>CSL files also can be tweaked to meet custom formatting requirements. For example, we can change the number of authors required before “et al.” is used to abbreviate them. This can be simplified through the use of visual editors such as the one available at <a href="https://editor.citationstyles.org" class="uri">https://editor.citationstyles.org</a>.</p>
+</section>
+<section id="sec-options" class="level1">
+<h1>Other cool features</h1>
+<section id="add-an-item-to-a-bibliography-without-using-it" class="level4">
+<h4 class="anchored" data-anchor-id="add-an-item-to-a-bibliography-without-using-it">Add an item to a bibliography without using it</h4>
+<p>By default, the bibliography will only display items that are directly referenced in the document. If you want to include items in the bibliography without actually citing them in the body text, you can define a dummy nocite metadata field and put the citations there. They will be included in the references cited at the end, even though there is no in-text citation.</p>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb11-1"><span class="pp" style="color: #AD0000;">---</span></span>
+<span id="cb11-2"><span class="fu" style="color: #4758AB;">nocite</span><span class="kw" style="color: #003B4F;">: </span><span class="ch" style="color: #20794D;">|</span></span>
+<span id="cb11-3">  @item1, @item2</span>
+<span id="cb11-4"><span class="pp" style="color: #AD0000;">---</span></span></code></pre></div>
+</section>
+<section id="add-all-items-to-the-bibliography" class="level4">
+<h4 class="anchored" data-anchor-id="add-all-items-to-the-bibliography">Add all items to the bibliography</h4>
+<p>If we do not wish to explicitly state all of the items within the bibliography but would still like to show them in our references, we can use the following syntax:</p>
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><span class="pp" style="color: #AD0000;">---</span></span>
+<span id="cb12-2"><span class="fu" style="color: #4758AB;">nocite</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> </span><span class="st" style="color: #20794D;">'@*'</span></span>
+<span id="cb12-3"><span class="pp" style="color: #AD0000;">---</span></span></code></pre></div>
+<p>This will force all items to be displayed in the bibliography.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Resources
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can also have an appendix appear after bibliography. For more on this, see:</p>
+<ul>
+<li><a href="https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html" class="uri">https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html</a></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="a-comment" class="level1">
+<h1>A Comment</h1>
+<p>We have learned that within your bibliography file (e.g.&nbsp;<code>my-refs.bib</code>), each reference gets a key, which is a shorthand that is generated by the reference manager or by yourself.</p>
+<p>For instance, I use a format of <code>author:year</code> for example <code>Butler:2023</code> because itʻs easy for me to remember the literature that I want to cite that way. It makes it easier to write the content.</p>
+<p>When there are multiple citations in a year by the same author last name, my BibDesk software adds two unique letters after the year (I usually manually change it to one letter, i.e., <code>Butler:2023a</code>) so that each citation has a unique key.</p>
+<p>You can choose any format you wish, just pick one and use it <em>forever</em>. As you write more papers, you can easily copy citations into your different bibliographies. You are building a database that is <em>reusable</em>.</p>
+<p>In your R Markdown document, you can then cite the reference by adding the key, such as <code>...in the paper by Butler et al. [@Butler:2022]...</code>.</p>
+</section>
+<section id="post-lecture-materials" class="level1">
+<h1>Post-lecture materials</h1>
+<section id="practice" class="level3">
+<h3 class="anchored" data-anchor-id="practice">Practice</h3>
+<p>Here are some post-lecture tasks to practice some of the material discussed.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Try out the following:</strong></p>
+<ol type="1">
+<li><p>What do you notice that’s different when you run <code>citation("tidyverse")</code> (compared to <code>citation("rmarkdown")</code>)?</p></li>
+<li><p>Install the following packages:</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;">install.packages</span>(<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"bibtex"</span>, <span class="st" style="color: #20794D;">"RefManageR"</span>)</span></code></pre></div>
+</div>
+<p>What do they do? How might they be helpful to you in terms of reference management?</p>
+<ol start="3" type="1">
+<li>Practice using a different CSL file to change the citation style.</li>
+</ol>
+</div>
+</div>
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-R-rmarkdown" class="csl-entry">
+Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2022. <em>Rmarkdown: Dynamic Documents for r</em>. <a href="https://CRAN.R-project.org/package=rmarkdown">https://CRAN.R-project.org/package=rmarkdown</a>.
+</div>
+<div id="ref-rmarkdown2018" class="csl-entry">
+Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. <em>R Markdown: The Definitive Guide</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/rmarkdown">https://bookdown.org/yihui/rmarkdown</a>.
+</div>
+<div id="ref-rmarkdown2020" class="csl-entry">
+Xie, Yihui, Christophe Dervieux, and Emily Riederer. 2020. <em>R Markdown Cookbook</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/rmarkdown-cookbook">https://bookdown.org/yihui/rmarkdown-cookbook</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>module 1</category>
+  <category>week 3</category>
+  <category>Quarto</category>
+  <category>authoring</category>
+  <category>BibTeX</category>
+  <category>programming</category>
+  <guid>https://mbutler808.github.io/posts/2023-02-01-reference-management/index.html</guid>
   <pubDate>Tue, 31 Jan 2023 10:00:00 GMT</pubDate>
 </item>
 <item>
@@ -1835,7 +2147,7 @@ There are many reasons to be proficient in the shell:
 <p>Macs use the same terminal utilities as UNIX/Linux systems. On the Mac, the command line interface app is called <em>Terminal</em>, which you will find in your <em>Application</em> folder, in the <em>Utilities</em> subfolder (here is a screentshot of our GUI Interface).</p>
 <div class="cell fig-cap-location-top">
 <div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/terminal.png" class="img-fluid"></p>
+<p><img src="https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/terminal.png" class="img-fluid" width="986"></p>
 </div>
 </div>
 <p>On a PC you would use the <em>Command Prompt</em> otherwise known as the <em>Windows Command Processor</em> or <em>CMD</em>. If you used a pre-Windows machine, you would be familiar with MS-DOS. To open CMD:</p>

@@ -1,0 +1,205 @@
+m=4259
+53.5*(m/1000)^1.06
+install.packages("BioGeoBears")
+statenames <- c( "n",	"v",	"c",	"f",	"a",	"e",	"y",	"g",	"m",	"s",	"r",	"w", 	"b")#
+column_labels <- c("null", statenames, apply(combn(statenames,2), 2, paste, collapse=""))
+statenames <- c( "n", "v", "c", "f", "a", "e", "y", "g", "m", "s", "r", "w", "b")
+statenames
+column_labels <- c("null", statenames, apply(combn(statenames,2), 2, paste, collapse=""))
+column_labels <- c("null", statenames, apply(combn(statenames,2), 2, paste, collapse=""))
+column_labels
+grep("e", column_labels[-1])
+grep("e", column_labels[-1])+1
+epct <- grep("e", column_labels[-1])+1
+epct
+column_labels[epct]
+498.13*2
+l <-  -498.13
+-2*l
+round(-2*l)
+l <-  -500.88
+round(-2*l)
+l <-  -503
+round(-2*l)
+l <-  -509.74
+round(-2*l)
+l <-  -513.56
+round(-2*l)
+l <-  -536.15
+round(-2*l)
+l <-  -557.17
+round(-2*l)
+l <-  -592.24
+round(-2*l)
+round(-2*-642.66)
+round(-2*-667.15)
+round(-2* -687.47)
+round(-2*-689.52)
+round(-2*-716.03)
+ed = 0.23*18.15 + 0.11*39.2
+ed
+0.23*18.15
+0.11*39.2
+530/ED
+530/ed
+530/ed/1000
+530/ed/1000/.9
+530/ed/1000/.9 * 2.2
+FA = 530/ed
+FA
+FA*.23
+FA*.11
+FA*.23/135
+GPA = FA * .23
+GPA
+GPA/135
+0.1063999 * 1.2996
+0.1063999 / 1.2996
+0.1063999 / (1.2996 * 10^(-4))
+0.1063999 / (1.2996 * 10^(-4)) / (pi*5)
+FA
+FA/1000 * 60
+FAb = FA/1000 * 60
+FAb*.26
+FAb*.23
+FAb*.23*1000/7
+FAb*.23*1000/7 / 135
+FAb*.23*1000/7 / 135 / (.00012996)
+FAb*.23*1000/7 / 135 / (.00012996) / (pi * 5)
+8.314*293/96500
+25.24*ln(3/150)
+25.24*log(3/150)
+25.24*log(100/10)
+25.24*log(100/.01)
+25.24/2*log(100/.01)
+25.24/2*log(10/.01)
+25.24*log(.0209)
+8.314*293/96485
+8.314*293/96485*log(3/150)
+6+2.5+1+2+1.5
+1.5+5+4+3+6.5
+22*.95
+8.314*298/96485*log(3/150)
+?log
+8.314*298/96485*log(10)
+8.314*298/96485*log(10/.01)
+4.5+3+3+2.5+1
+14*.8
+.02*785^.8
+.048*785
+.048*785*2.7
+.048*.785*2.7
+.285*12/100
+.285*12
+install.packages("tidyverse")
+install.packages("here")
+?here
+??here
+install.packages("tidytuesdayR")
+install.packages("emojifont")
+require(remojifont)
+require("r emojifont")
+require(remojifont)
+require(emojifont)
+?emoji
+emoji("heart")
+emoji(c("heart", "smile")
+)
+read.csv("dat.csv")
+daturl <- read.csv("https://github.com/mbutler808/rclassdata/blob/main/2023-01-31-DataIO/anolisSSD.csv")
+daturl
+dat2 <- read.csv("https://raw.githubusercontent.com/mbutler808/rclassdata/main/2023-01-31-DataIO/anolisSSD.csv")
+dat2
+?file
+?files
+install.packages("rvest", dependencies=TRUE)
+library(tidyverse)
+read_html(https://amphibiansoftheworld.amnh.org/Amphibia/Anura/Microhylidae/Asterophryinae/Oreophryne)
+read_html("https://amphibiansoftheworld.amnh.org/Amphibia/Anura/Microhylidae/Asterophryinae/Oreophryne")
+library(rvest)
+read_html("https://amphibiansoftheworld.amnh.org/Amphibia/Anura/Microhylidae/Asterophryinae/Oreophryne")
+?read_html
+read_html("https://amphibiansoftheworld.amnh.org/Amphibia/Anura/Microhylidae/Asterophryinae/Oreophryne")
+read_html("http://rvest.tidyverse.org/")
+webpage <- "https://amphibiansoftheworld.amnh.org/Amphibia/Anura/Microhylidae/Asterophryinae/Oreophryne"
+content <- read_html(GET(webpage))
+install.packages(httr)
+install.packages("httr")
+content <- read_html(GET(webpage))
+library("httr")
+??GET
+?GET
+url <- "https://amphibiansoftheworld.amnh.org/Amphibia/Anura/Microhylidae/Asterophryinae/Oreophryne"
+httr::GET(url)
+page <- read_html(GET(url))
+page <- read_html(httr::GET(url))
+page <- url %>% #
+  httr::GET(config = httr::config(ssl_verifypeer = FALSE)) %>% #
+  read_html()
+html <- httr::GET(url)
+html
+httr::set_config(config(ssl_verifypeer = FALSE, ssl_verifyhost = FALSE))
+?httr
+??config
+httr::set_config(httr::config(ssl_verifypeer = FALSE, ssl_verifyhost = FALSE))
+httr::set_config(config(ssl_verifypeer = FALSE, ssl_verifyhost = FALSE))
+page <- url %>% #
+  httr::GET(config = httr::config(ssl_verifypeer = FALSE)) %>% #
+  read_html()
+httr::set_config(config(ssl_verifypeer = FALSE, ssl_verifyhost = FALSE, header = {#
+  "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36",#
+  "X-Requested-With": "XMLHttpRequest"#
+}#
+))
+header = paste0("User-Agent:", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36,",#
+  "X-Requested-With:", "XMLHttpRequest")
+httr::set_config(config(ssl_verifypeer = FALSE, ssl_verifyhost = FALSE, header = header#
+))
+httr::set_config(httr::config(ssl_verifypeer = FALSE, ssl_verifyhost = FALSE, header = header))
+browser = paste0("User-Agent:", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36,",#
+  "X-Requested-With:", "XMLHttpRequest")
+httr::set_config(httr::config(ssl_verifypeer = FALSE, ssl_verifyhost = FALSE, header = browser))
+page <- url %>% #
+   httr::GET(config = httr::config(ssl_verifypeer = FALSE)) %>% #
+   read_html()
+?httr::set_config
+uastring <- "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36"#
+#
+   pgsession <- html_session(url, user_agent(uastring))#
+#
+   pgform <- html_form(pgsession)[[1]]
+library(rvest)#
+   library(httr)#
+   uastring <- "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36"
+pgsession <- html_session(url, user_agent(uastring))
+?httr
+pgsession <- html_session(url, httr::user_agent(uastring))
+pgsession <- html_session(url, rvest::user_agent(uastring))
+pgsession <- html_session(url, httr::user_agent(uastring))
+?httr::user_agent
+pgsession <- html_session(url, httr::user_agent("httr"))
+install.packages(RSelenium)
+install.packages("RSelenium")
+install.packages("netstat")
+library(RSelenium)#
+library(netstat)#
+#
+rD <- rsDriver(browser = "firefox", port = free_port())
+remDr <- rD[["client"]]
+url <- "https://en.wikipedia.org/wiki/World_population"#
+#
+(paragraphs <- read_html(url) %>% html_nodes("p"))
+(paragraphs <- read_html(GET(url)) %>% html_nodes("p"))
+(paragraphs <- read_html(httr::GET(url)) %>% html_nodes("p"))
+set_config(config(ssl_verifypeer = 0L))
+httr::set_config(httr::config(ssl_verifypeer = 0L))
+getSymbols("MSFT")
+(paragraphs <- read_html(httr::GET(url)) %>% html_nodes("p"))
+?knitr
+setwd("~/Dropbox/Zool710Programming in R for Biologists 2012/chapters")
+library(knitr)
+Sweave2knitr("DataIO.Rnw")
+setwd("~/Documents/git/")
+list.files()
+setwd("rclass-site")
+list.files()
