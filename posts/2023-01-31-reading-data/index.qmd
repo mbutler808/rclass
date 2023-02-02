@@ -15,6 +15,13 @@ format:
 ---
 <!-- Add interesting quote -->
 
+### Acknowledgements
+
+Material for this lecture was borrowed and adopted from
+
+- <http://rafalab.dfci.harvard.edu/dsbook/importing-data.html>
+# Introduction
+
 <!-- Sweave2knitr() -->
 
 So far, we have been working within R, either typing data in directly or using R's functions to generate data. In order to analyze your own data, you have to load data from an external file into R.  Similarly, to save your work, you'll probably want to write files from R to your hard drive. Both of these require interacting with your computer's operating system. In this chapter, we're just going to do it. We'll talk more about what's going on in a later section on the R Environment.
@@ -200,6 +207,53 @@ cbind(anolis, anolis2)
 Make sure that your URL leads to a raw `.csv` file, and not the `.html` rendering of your csv file!
 :::
 
+# What to do when your spreadsheet is malformed
+
+You will inevitably run into malformed spreadsheets. If there are unexpected characters used as delimiters, irregular delimiters, or uneven numbers of elements, these will all cause problems reading in data smoothly into any software.
+
+Most of the time, these issues are inadvertent. For example, if you cut and paste off the web, extra characters can easily be introduced. Try reading in `species_list_IUCN.csv`. It is a large spreadsheet of every species of subfamily Asteriorphinae frog in the world (over 330). Does it look OK?
+
+```{r eval=T}
+temp <- read.csv("species_list_IUCN.csv")
+head(temp)
+tail(temp)
+```
+
+Itʻs hard to tell from this output what the problem is. Try `readLines`, which will show you the entire line of data:
+
+```{r eval=T}
+tempL <- readLines("species_list_IUCN.csv")
+head(tempL)
+tail(tempL)
+```
+
+Now you can clearly see that it is extra whitespace. Extra blank columns, and a huge long line of white space after each species name. Starting from *Aphantophryne pansa*, there are two extra spaces in front of each species name.
+
+The easiest thing to do here is to open up the spreadsheet in your spreadsheet program (or plain text editor) and read it back in. Delete the extra columns, and do search and replace on the two leading spaces and trailing multiple spaces. Also change that very long name to something more reasonable like "gensp". (This is an example of using variable names as annotations or comments - donʻt do it.)
+
+Alternatively, you can solve these problems within R. We will learn these object and string manipulation skills later, but here is one way to solve the problems once you have diagnosed them.
+
+#### Read in and select only the first columns
+
+The rest of the columns are blank, so we really only need the first one. Also lets give it a shorter name.
+
+```{r}
+dat <- read.csv("species_list_IUCN.csv")
+dat <- dat[1]   # select only the first column and resave dat
+names(dat) <- "gensp"  # give the column a shorter name
+```
+
+#### Use function `trimws`
+
+R has a handy function `trimws` that trims white space
+
+```{r}
+dat <- trimws(dat)
+head(dat)
+tail(dat)
+```
+
+How you deal with cleaning the data will depend on what the issue is. But the first step is always diagnosing the problem. Weʻll learn many more strategies as we go.
 
 # Entering data with spreadsheets
 
@@ -244,3 +298,32 @@ When it comes time to enter your data in a spreadsheet, there are many things yo
 -  **Make Backups** - Make regular backups of your data.
 -  **Use Data Validation to Avoid Errors** - Leverage the tools in your spreadsheet software so that the process is as error-free and repetitive-stress-injury-free as possible. Think of checks you can do for "reality checks".
 -  **Save the Data as Text Files** - Save files for sharing in comma or tab delimited format.  An unambiguous text format is the best for archiving your data.
+
+# A word about Encodings
+
+## Text versus binary files
+
+For data science purposes, files can generally be classified into two categories: text files (also known as ASCII files) and binary files. You have already worked with text files. All your R scripts are text files and so are the Quarto files used to create this website. The .csv tables you have read are also text files. One big advantage of these files is that we can easily “look” at them using a plain text editor, without having to purchase any kind of special software.
+
+Any text editor can be used to examine a text file, including freely available editors such as RStudio, Notepad, textEdit, vi, emacs, nano, and pico. However, if you try to open, say, an Excel xls file, jpg or png file, you will not be able to see anything immediately useful. These are binary files. Excel files are actually compressed folders with several text files inside. But the main distinction here is that text files can be easily examined.
+
+Although R includes tools for reading widely used binary files, such as xls files, in general you will want to find data sets stored in text files. The problem with using propietary formats for data management is that htey are poor formats for achival purposes. These formats may change or they donʻt copy well, so that eventually you can no longer open them.
+
+Similarly, when sharing data you want to make it available as text files as long as storage is not an issue (binary files are much more efficient at saving space on your disk). In general, plain-text formats make it easier to share data since commercial software is not required for working with the data, and they are more reliable.
+
+Technically, html and xml files are text files too, but they have complicated tags around the information. In the Data Wrangling part of the book we learn to extract data from more complex text files such as html files.
+
+## Unicode versus ASCII
+
+A pitfall in data science is assuming a file is an ASCII text file when, in fact, it is something else that can look a lot like an ASCII text file, for example, a Unicode text file.
+
+To understand the difference between these, remember that everything on a computer needs to eventually be converted to 0s and 1s (binary format). ASCII is an encoding that maps characters to numbers making it easier for humans to read.
+
+ASCII uses 7 bits (seven variables that can be either 0 or 1) which results in  2^7 = 128 unique items, enough to encode all the characters on an English language keyboard. However, we need to expand the possibilities if we want to include support for other languages or additional characters.
+
+![ascii](ascii1.png)
+![ascii2](ascii2.png)
+
+For this reason, a new encoding, using more than 7 bits, was defined: Unicode. When using Unicode, one can chose between 8, 16, and 32 bits abbreviated UTF-8, UTF-16, and UTF-32 respectively. RStudio actually defaults to UTF-8 encoding.
+
+Although we do not go into the details of how to deal with the different encodings here, it is important that you know these different encodings exist so that you can better diagnose a problem if you encounter it. One way problems manifest themselves is when you see “weird looking” characters you were not expecting. This StackOverflow discussion is an example: https://stackoverflow.com/questions/18789330/r-on-windows-character-encoding-hell.

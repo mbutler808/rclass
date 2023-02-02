@@ -37,6 +37,7 @@ The course materials are licensed under the [Creative Commons Attribution-NonCom
 
 Intro to R (by the R Core Group): <https://cran.r-project.org/doc/manuals/r-release/R-intro.html>
 R for Data Science: <http://r4ds.had.co.nz/>
+Intro to Data Science: <http://rafalab.dfci.harvard.edu/dsbook/>
 Various “Cheat Sheets”: <https://www.rstudio.com/resources/cheatsheets/>
 DataCamp: <http://www.datacamp.com>
 R reference card: <http://cran.r-project.org/doc/contrib/Short-refcard.pdfUCLA>
