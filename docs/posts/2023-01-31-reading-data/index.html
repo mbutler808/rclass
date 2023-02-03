@@ -305,6 +305,7 @@ div.csl-indent {
   </ul></li>
   <li><a href="#calculating-memory-requirements-for-r-objects" id="toc-calculating-memory-requirements-for-r-objects" class="nav-link" data-scroll-target="#calculating-memory-requirements-for-r-objects">Calculating Memory Requirements for R Objects</a></li>
   <li><a href="#other-data-types" id="toc-other-data-types" class="nav-link" data-scroll-target="#other-data-types">Other data types</a></li>
+  <li><a href="#ascii-art" id="toc-ascii-art" class="nav-link" data-scroll-target="#ascii-art">ASCII art</a></li>
   </ul>
 </nav>
 </nav>
@@ -755,7 +756,7 @@ Binary data can take on only two values - 0 or 1
 <div id="fig-ascii" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="ascii1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: Binary encodings in ACII, with some of the most used escape sequences like or tab and for new line.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Binary encodings in ACII, with some of the most used escape sequences like <code>\t</code> for tab and <code>\n</code> for new line.</figcaption><p></p>
 </figure>
 </div>
 <div id="fig-ascii2" class="quarto-figure quarto-figure-center anchored">
@@ -781,8 +782,8 @@ Binary data can take on only two values - 0 or 1
 <p>It is all one stream of informatin to the computer, but the computer will interpret the information as a new line when it detects one of these characters. When software is provided a file with an unexpected line ending, it is not able to properly detect the lines of information (maybe it sees only one huge line). See?</p>
 <p>There are two types of line endings in use today:</p>
 <ul>
-<li><p><strong>On UNIX and MacOS</strong>, text file line-endings are terminated with a newline character (ASCII 0x0a, represented by the escape sequence in most languages), also referred to as a linefeed (LF).</p></li>
-<li><p><strong>On Windows</strong>, line-endings are terminated with a combination of a carriage return (ASCII 0x0d or and a newline(), also referred to as CR/LF.</p></li>
+<li><p><strong>On UNIX and MacOS</strong>, text file line-endings are terminated with a newline character (ASCII 0x0a, represented by the <code>\n</code> escape sequence in most languages), also referred to as a linefeed (LF).</p></li>
+<li><p><strong>On Windows</strong>, line-endings are terminated with a combination of a carriage return (ASCII 0x0d or <code>\r</code>) and a newline(<code>\n</code>), also referred to as CR/LF.</p></li>
 </ul>
 <p>If your computer complains about line endings, the easiest thing to do is to open it in one of the good plain text editors and save it with the line endings it is expecting (usually as LF instead of CR/LF).</p>
 </section>
@@ -819,6 +820,15 @@ Binary data can take on only two values - 0 or 1
 <li><a href="https://github.com/jeroen/jsonlite#jsonlite"><code>jsonlite</code></a> for JSON</li>
 <li><a href="https://github.com/r-lib/xml2"><code>xml2</code></a> for XML.</li>
 </ul>
+</section>
+<section id="ascii-art" class="level1">
+<h1>ASCII art</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://nl.wikipedia.org/wiki/Gebruiker:Wilinckx"><img src="https://upload.wikimedia.org/wikipedia/commons/4/45/BB-ASCII-art-screenshot-zebra.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">Zebra in ASCII by Wilinckx, Wikimedia commons</figcaption><p></p>
+</figure>
+</div>
 
 
 

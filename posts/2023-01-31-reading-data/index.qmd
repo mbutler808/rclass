@@ -350,7 +350,7 @@ To understand the difference between these, remember that everything on a comput
 
 ASCII uses 7 bits -- seven variables that can be either 0 or 1 -- which results in  2^7^ = 128 unique items, enough to encode all the characters on an English language keyboard (all characters, numbers, and symbols, @fig-ascii, @fig-ascii2). However, we need to expand the possibilities if we want to include support for other languages or additional characters.
 
-![Binary encodings in ACII, with some of the most used escape sequences like \t for tab and \n for new line.](ascii1.png){#fig-ascii}
+![Binary encodings in ACII, with some of the most used escape sequences like `\t` for tab and `\n` for new line.](ascii1.png){#fig-ascii}
 
 ![Some examples of ASCII encodings for A-E and a-e.](ascii2.png){#fig-ascii2}
 
@@ -375,9 +375,9 @@ It is all one stream of informatin to the computer, but the computer will interp
 
 There are two types of line endings in use today:
 
--  **On UNIX and MacOS**, text file line-endings are terminated with a newline character (ASCII 0x0a, represented by the \n escape sequence in most languages), also referred to as a linefeed (LF).
+-  **On UNIX and MacOS**, text file line-endings are terminated with a newline character (ASCII 0x0a, represented by the `\n` escape sequence in most languages), also referred to as a linefeed (LF).
 
--  **On Windows**, line-endings are terminated with a combination of a carriage return (ASCII 0x0d or \r) and a newline(\n), also referred to as CR/LF.
+-  **On Windows**, line-endings are terminated with a combination of a carriage return (ASCII 0x0d or `\r`) and a newline(`\n`), also referred to as CR/LF.
 
 If your computer complains about line endings, the easiest thing to do is to open it in one of the good plain text editors and save it with the line endings it is expecting (usually as LF instead of CR/LF).
 
@@ -421,3 +421,7 @@ For example, check out
 -   [`rvest`](https://github.com/tidyverse/rvest) for web scraping
 -   [`jsonlite`](https://github.com/jeroen/jsonlite#jsonlite) for JSON
 -   [`xml2`](https://github.com/r-lib/xml2) for XML.
+
+# ASCII art
+
+[![Zebra in ASCII by Wilinckx, Wikimedia commons](https://upload.wikimedia.org/wikipedia/commons/4/45/BB-ASCII-art-screenshot-zebra.png)](https://nl.wikipedia.org/wiki/Gebruiker:Wilinckx)
