@@ -32,7 +32,7 @@ Material for this lecture was borrowed and adopted from
 
 -   Be able to read and write text / csv files in R
 -   Diagnose some common problems importing data and troubleshoot
--   Be able to indentify different file types and encodings
+-   Be able to identify different file types and encodings
 -   Plan using best practices for data management and spreasheet design
 -   Be able to calculate memory requirements for R objects
 -   Be aware of various packages to read in other types of data

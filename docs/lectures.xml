@@ -157,7 +157,7 @@ Learning objectives
 <ul>
 <li>Be able to read and write text / csv files in R</li>
 <li>Diagnose some common problems importing data and troubleshoot</li>
-<li>Be able to indentify different file types and encodings</li>
+<li>Be able to identify different file types and encodings</li>
 <li>Plan using best practices for data management and spreasheet design</li>
 <li>Be able to calculate memory requirements for R objects</li>
 <li>Be aware of various packages to read in other types of data</li>
