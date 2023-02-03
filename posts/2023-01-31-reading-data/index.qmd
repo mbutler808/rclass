@@ -19,7 +19,25 @@ format:
 
 Material for this lecture was borrowed and adopted from
 
-- <http://rafalab.dfci.harvard.edu/dsbook/importing-data.html>
+-  <http://rafalab.dfci.harvard.edu/dsbook/importing-data.html>
+-  <https://www.stephaniehicks.com/jhustatcomputing2022>
+
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Be able to read and write text / csv files in R
+-   Diagnose some common problems importing data and troubleshoot
+-   Be able to indentify different file types and encodings
+-   Plan using best practices for data management and spreasheet design
+-   Be able to calculate memory requirements for R objects
+-   Be aware of various packages to read in other types of data
+:::
+
 # Introduction
 
 <!-- Sweave2knitr() -->
@@ -216,7 +234,6 @@ Most of the time, these issues are inadvertent. For example, if you cut and past
 ```{r eval=T}
 temp <- read.csv("species_list_IUCN.csv")
 head(temp)
-tail(temp)
 ```
 
 Itʻs hard to tell from this output what the problem is. Try `readLines`, which will show you the entire line of data:
@@ -224,7 +241,6 @@ Itʻs hard to tell from this output what the problem is. Try `readLines`, which 
 ```{r eval=T}
 tempL <- readLines("species_list_IUCN.csv")
 head(tempL)
-tail(tempL)
 ```
 
 Now you can clearly see that it is extra whitespace. Extra blank columns, and a huge long line of white space after each species name. Starting from *Aphantophryne pansa*, there are two extra spaces in front of each species name.
@@ -248,12 +264,12 @@ names(dat) <- "gensp"  # give the column a shorter name
 R has a handy function `trimws` that trims white space
 
 ```{r}
-dat <- trimws(dat)
-head(dat)
-tail(dat)
+gensp <- trimws(dat$gensp)
+head(gensp)
 ```
 
 How you deal with cleaning the data will depend on what the issue is. But the first step is always diagnosing the problem. Weʻll learn many more strategies as we go.
+
 
 # Entering data with spreadsheets
 
@@ -274,10 +290,10 @@ I always write my measurements down into a notebook or a datasheet using pencil 
 I had my first post-college job at an insurance rating board. This is a business that deals with reams and reams of data. We did work a lot with Fortran code and spreadsheets, but surprisingly, some of it does actually have to get manually checked.
 The protocol was simple, a paper printout of the old version was put next to the new version and a person went along with a ruler, literally putting a check mark after verifying the number. A second check was done as well, and then I finally understood the meaning of "double checking" `r emojifont::emoji('stuck_out_tongue_closed_eyes')`. When I got to grad school, it was eye-opening to find that checking any personʻs data entry was a rare practice `r emojifont::emoji('astonished')`.  Please, whenever possible check your data entry. So here are some tips:
 
-    1.  Record data in a notebook (paper and pencil). It serves as a permanent record.
-    2.  Write it down in a data table format in an order that minimizes error. For example, if it is convenient to take five measurements in a particular order, then organize your table that way and always take the measurements in the same order.
-    3.  Organize your spreadsheet to mirror the hand-written data. This will minimize data entry errors.
-    4.  Have another person check your data entry against the notebook.
+1.  Record data in a notebook (paper and pencil). It serves as a permanent record.
+2.  Write it down in a data table format in an order that minimizes error. For example, if it is convenient to take five measurements in a particular order, then organize your table that way and always take the measurements in the same order.
+3.  Organize your spreadsheet to mirror the hand-written data. This will minimize data entry errors.
+4.  Have another person check your data entry against the notebook.
 
 
 ## Organizing your spreadhseet
@@ -299,15 +315,19 @@ When it comes time to enter your data in a spreadsheet, there are many things yo
 -  **Use Data Validation to Avoid Errors** - Leverage the tools in your spreadsheet software so that the process is as error-free and repetitive-stress-injury-free as possible. Think of checks you can do for "reality checks".
 -  **Save the Data as Text Files** - Save files for sharing in comma or tab delimited format.  An unambiguous text format is the best for archiving your data.
 
-# A word about Encodings
+# A few words about Encodings
 
 ## Text versus binary files
 
-For data science purposes, files can generally be classified into two categories: text files (also known as ASCII files) and binary files. You have already worked with text files. All your R scripts are text files and so are the Quarto files used to create this website. The .csv tables you have read are also text files. One big advantage of these files is that we can easily “look” at them using a plain text editor, without having to purchase any kind of special software.
+For data science purposes, files can generally be classified into two categories: text files (also known as **ASCII** files) and **binary** files. You have already worked with text files. All your R scripts are text files and so are the Quarto files used to create this website. The .csv tables you have read are also text files. One big advantage of these files is that we can easily “look” at them using a plain text editor, without having to purchase any kind of special software.
 
-Any text editor can be used to examine a text file, including freely available editors such as RStudio, Notepad, textEdit, vi, emacs, nano, and pico. However, if you try to open, say, an Excel xls file, jpg or png file, you will not be able to see anything immediately useful. These are binary files. Excel files are actually compressed folders with several text files inside. But the main distinction here is that text files can be easily examined.
+Any text editor can be used to examine a text file, including freely available editors such as **R**, **RStudio**, **Atom**, **Notepad**, **TextEdit**, **vi**, **emacs**, **nano**, and **pico**. However, if you try to open, say, an Excel xls file, jpg or png file, you will not be able to see anything immediately useful. These are binary files. Excel files are actually compressed folders with several text files inside. But the main distinction here is that text files can be easily examined.
 
-Although R includes tools for reading widely used binary files, such as xls files, in general you will want to find data sets stored in text files. The problem with using propietary formats for data management is that htey are poor formats for achival purposes. These formats may change or they donʻt copy well, so that eventually you can no longer open them.
+Although R includes tools for reading widely used binary files, such as xls files, *in general you will want to find data sets stored in text files*. If necessary, use the proprietary software to export the data into text files and go from there.
+
+::: {.callout-warning}
+The problem with using propietary formats for data management is that htey are poor formats for achival purposes. These formats may change or they donʻt copy well, so that eventually you can no longer open them.
+:::
 
 Similarly, when sharing data you want to make it available as text files as long as storage is not an issue (binary files are much more efficient at saving space on your disk). In general, plain-text formats make it easier to share data since commercial software is not required for working with the data, and they are more reliable.
 
@@ -317,13 +337,87 @@ Technically, html and xml files are text files too, but they have complicated ta
 
 A pitfall in data science is assuming a file is an ASCII text file when, in fact, it is something else that can look a lot like an ASCII text file, for example, a Unicode text file.
 
-To understand the difference between these, remember that everything on a computer needs to eventually be converted to 0s and 1s (binary format). ASCII is an encoding that maps characters to numbers making it easier for humans to read.
+To understand the difference between these, remember that everything on a computer needs to eventually be converted to 0s and 1s (binary format). ASCII is an encoding that maps bits to characters that are easier for humans to read.
 
-ASCII uses 7 bits (seven variables that can be either 0 or 1) which results in  2^7 = 128 unique items, enough to encode all the characters on an English language keyboard. However, we need to expand the possibilities if we want to include support for other languages or additional characters.
+:::{.callout-note}
+# Binary data can take on only two values - 0 or 1
+-  a **bit** is the smallest unit, a single binary character (0 or 1).
+-  a **byte** is eight bits.
+-  a **megabyte** or MB is one million bytes.
+-  a **gigabyte** or GB is one billion bytes.
+-  You can roughly calculate the size of your data by the numbers of bytes per each observation.
+:::
 
-![ascii](ascii1.png)
-![ascii2](ascii2.png)
+ASCII uses 7 bits -- seven variables that can be either 0 or 1 -- which results in  2^7^ = 128 unique items, enough to encode all the characters on an English language keyboard (all characters, numbers, and symbols, @fig-ascii, @fig-ascii2). However, we need to expand the possibilities if we want to include support for other languages or additional characters.
+
+![Binary encodings in ACII, with some of the most used escape sequences like \t for tab and \n for new line.](ascii1.png){#fig-ascii}
+
+![Some examples of ASCII encodings for A-E and a-e.](ascii2.png){#fig-ascii2}
 
 For this reason, a new encoding, using more than 7 bits, was defined: Unicode. When using Unicode, one can chose between 8, 16, and 32 bits abbreviated UTF-8, UTF-16, and UTF-32 respectively. RStudio actually defaults to UTF-8 encoding.
 
-Although we do not go into the details of how to deal with the different encodings here, it is important that you know these different encodings exist so that you can better diagnose a problem if you encounter it. One way problems manifest themselves is when you see “weird looking” characters you were not expecting. This StackOverflow discussion is an example: https://stackoverflow.com/questions/18789330/r-on-windows-character-encoding-hell.
+Although we do not go into the details of how to deal with the different encodings here, it is important that you know these different encodings exist so that you can better diagnose a problem if you encounter it. One way problems manifest themselves is when you see “weird looking” characters you were not expecting.
+
+Many plain text editors (Atom, Sublime, TextWrangler, Notepad++) will detect encodings and tell you what they are and may also convert between them. Also from the command line the `file` command will reveal the encoding (should also work on Windows if you have `git` installed:
+
+```{.zsh filename=Terminal}
+file filename
+```
+
+This StackOverflow discussion is an example: <https://stackoverflow.com/questions/18789330/r-on-windows-character-encoding-hell>.
+
+
+## Line endings
+
+One last potential headache is the character used for line endings. The line ending is the invisible (to us) character that is added to your file when you press the `return` key.
+
+It is all one stream of informatin to the computer, but the computer will interpret the information as a new line when it detects one of these characters. When software is provided a file with an unexpected line ending, it is not able to properly detect the lines of information (maybe it sees only one huge line). See?
+
+There are two types of line endings in use today:
+
+-  **On UNIX and MacOS**, text file line-endings are terminated with a newline character (ASCII 0x0a, represented by the \n escape sequence in most languages), also referred to as a linefeed (LF).
+
+-  **On Windows**, line-endings are terminated with a combination of a carriage return (ASCII 0x0d or \r) and a newline(\n), also referred to as CR/LF.
+
+If your computer complains about line endings, the easiest thing to do is to open it in one of the good plain text editors and save it with the line endings it is expecting (usually as LF instead of CR/LF).
+
+# Calculating Memory Requirements for R Objects
+
+Because **R stores all of its objects in physical memory**, it is important to be aware of how much memory is being used up by all of the data objects residing in your workspace.
+
+It is easy to make a back of the envelope calculation of how much memory will be required by a new dataset.  For example, suppose I have a data frame with 1,500,000 rows and 120 columns, all of which are numeric data. Roughly, how much memory is required to store this data frame?
+
+Well, on most modern computers [double precision floating point numbers](http://en.wikipedia.org/wiki/Double-precision_floating-point_format) are stored using 64 bits of memory, or 8 bytes. Given that information, you can do the following calculation
+
+1,500,000 × 120 × 8 bytes/numeric = 1,440,000,000 bytes
+
+= 1,440,000,000 bytes / 2^20^ bytes/MB
+
+= 1,373 MB
+
+= 1.37 GB
+
+So the dataset would require about 1.37 GB of RAM. Most computers these days have at least that much RAM. However, you need to be aware of
+
+-   what other programs might be running on your computer, using up RAM
+-   what other R objects might already be taking up RAM in your workspace
+
+Reading in a large dataset for which you do not have enough RAM is one easy way to freeze up your computer (or at least your R session). When that happens you to kill the R process, in the best case scenario, or reboot your computer, in the worst case. So before opening up potentially huge datasets,  make sure to do a rough calculation of memory requirements needed. You'll thank me later.
+
+*Also, itʻs aways good to build a script as you go and save frequently.*
+
+# Other data types
+
+Now, there are of course, many R packages that have been developed to read in all kinds of other datasets, and you may need to resort to one of these packages if you are working in a specific area.
+
+For example, check out
+
+-   [`DBI`](https://github.com/r-dbi/DBI) for relational databases
+-   [`haven`](https://haven.tidyverse.org) for SPSS, Stata, and SAS data
+-   [`httr`](https://github.com/r-lib/httr) for web APIs
+-   [`readxl`](https://readxl.tidyverse.org) for `.xls` and `.xlsx` sheets
+-   [`googlesheets4`](https://googlesheets4.tidyverse.org) for Google Sheets
+-   [`googledrive`](https://googledrive.tidyverse.org) for Google Drive files
+-   [`rvest`](https://github.com/tidyverse/rvest) for web scraping
+-   [`jsonlite`](https://github.com/jeroen/jsonlite#jsonlite) for JSON
+-   [`xml2`](https://github.com/r-lib/xml2) for XML.
