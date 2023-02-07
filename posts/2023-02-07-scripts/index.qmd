@@ -206,7 +206,7 @@ Try to create a script file for all the analyses we've done so far (and for ever
 
 ## Make sure you can see file endings
 
-Does your MacOS or Windows environment show you the file endings? If not be sure to turn them on. Try the instructions below or you can google for "show all file exensions in" (Mac or Windows, etc.).
+Does your MacOS or Windows environment show you the file endings (i.e., `.R`, `.pdf`, `.csv`, etc.)? If not be sure to turn them on. Try the instructions below or you can google for "show all file exensions in" (Mac or Windows, etc.).
 
 #### Mac OS
 
