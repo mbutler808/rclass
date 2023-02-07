@@ -259,8 +259,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#read-ahead" id="toc-read-ahead" class="nav-link active" data-scroll-target="#read-ahead">Read ahead</a></li>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning objectives</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#clean-scripts" id="toc-clean-scripts" class="nav-link" data-scroll-target="#clean-scripts">Clean Scripts</a></li>
   <li><a href="#script-template" id="toc-script-template" class="nav-link" data-scroll-target="#script-template">Script Template</a></li>
@@ -290,26 +289,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- # Pre-lecture materials -->
 <!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
 <p>✏️</p>
-<section id="read-ahead" class="level3">
-<h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Read ahead
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Before class, you can prepare by reading the following materials:</strong></p>
-<ol type="1">
-<li>Add here.</li>
-<li>Add here.</li>
-</ol>
-</div>
-</div>
-</section>
 <section id="learning-objectives" class="level1">
 <h1>Learning objectives</h1>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -440,13 +419,23 @@ All good script follows the first three R’s, as you increase along the path of
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">text</span>(<span class="at">x=</span><span class="dv">15</span>, <span class="at">y=</span><span class="dv">13</span>, <span class="fu">paste</span>(<span class="st">"slope = "</span>, <span class="fu">coef</span>(lm.HLSVL)[<span class="dv">2</span>]))  </span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>() <span class="co"># turn off pdf device so future plots go back to screen</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Just to clarify, the syntax is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>() <span class="co"># open pdf device for printing</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a> <span class="co"># lines of code that print to pdf such as a plot</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a> <span class="co">#   any additional plot elements such as title, text, etc. </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>() <span class="co"># close pdf device, completing the file</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you forget <code>dev.off()</code> your pdf will be corrupted. If you donʻt print anythying to the pdf, it may be blank or it may also be corrupted.</p>
 </section>
 <section id="history-file" class="level1">
 <h1>History file</h1>
 <p>Another handy feature of R is that it automatically saves a history file. That is, a file that has a list of every command you’ve executed in your sessions.</p>
 <p>It is saved by default as <code>.history</code> in your working directory. Because the file name begins with a period, it is not visible normally (although it is there – you can see it from the terminal by using the <code>ls -a</code> command). It is great to have in case you are in a bind, but a better practice is to save any important history explicitly with your own filename, either click on the history button on the R gui (box with yellow and blue lines), and click on “save history” at the bottom of the side window, or type the code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">savehistory</span>(<span class="at">file =</span> <span class="st">"date_today.Rhistory"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">savehistory</span>(<span class="at">file =</span> <span class="st">"date_today.Rhistory"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This is an ordinary text file, which you can open up and edit (removing all the mistakes), and save as a <code>scriptname.R</code> file.</p>
 <p>Another helpful tip when writing source code is to use <code>print()</code> and <code>cat()</code> functions to print out your output to the console. When you are using R in interactive mode, when you type the name of a variable, you get a print of its contents. However, when you source the same code, the variable does not print to the screen. You have to explicitly put a <code>print()</code> or <code>cat()</code> function around it.</p>
@@ -455,22 +444,22 @@ All good script follows the first three R’s, as you increase along the path of
 <div class="code-with-filename-file">
 <pre><strong>test.R</strong></pre>
 </div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">names</span><span class="er">(</span><span class="ex">iris</span><span class="kw">)</span>   <span class="co"># will not print to console when sourced</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">spp</span> <span class="op">&lt;</span>- unique<span class="er">(</span><span class="ex">iris</span><span class="va">$Species</span><span class="kw">)</span>  <span class="co"># only unique values</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">spp</span> <span class="op">&lt;</span>- as.character<span class="er">(</span><span class="ex">spp</span><span class="kw">)</span>     <span class="co"># factor -&gt; character</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">spp</span>   <span class="co"># will not print to console when sourced</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">print</span><span class="er">(</span><span class="st">'Species names'</span><span class="kw">)</span>  <span class="co"># will print</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ex">print</span><span class="er">(</span><span class="ex">spp</span><span class="kw">)</span>              <span class="co"># will print</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span><span class="er">(</span><span class="st">'\n'</span><span class="ex">,</span> <span class="st">'Species names ='</span>, spp<span class="kw">)</span>  <span class="co"># concatenate </span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># \n is a carriage return character</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="ex">summary</span><span class="er">(</span><span class="ex">iris</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">names</span><span class="er">(</span><span class="ex">iris</span><span class="kw">)</span>   <span class="co"># will not print to console when sourced</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">spp</span> <span class="op">&lt;</span>- unique<span class="er">(</span><span class="ex">iris</span><span class="va">$Species</span><span class="kw">)</span>  <span class="co"># only unique values</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">spp</span> <span class="op">&lt;</span>- as.character<span class="er">(</span><span class="ex">spp</span><span class="kw">)</span>     <span class="co"># factor -&gt; character</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">spp</span>   <span class="co"># will not print to console when sourced</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">print</span><span class="er">(</span><span class="st">'Species names'</span><span class="kw">)</span>  <span class="co"># will print</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">print</span><span class="er">(</span><span class="ex">spp</span><span class="kw">)</span>              <span class="co"># will print</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span><span class="er">(</span><span class="st">'\n'</span><span class="ex">,</span> <span class="st">'Species names ='</span>, spp<span class="kw">)</span>  <span class="co"># concatenate </span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># \n is a carriage return character</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="ex">summary</span><span class="er">(</span><span class="ex">iris</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then test it by running:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"test.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"test.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can see that <code>print()</code> just makes a rough dump of the variables onto the screen. I added a character string so that we would know what variable was being printed to screen. <code>cat()</code> makes a nicer, more customized display (it turns everything into a character vector, then pastes them together [i.e., concatenates them] before printing). They both do the same basic job, however. Notice also that <code>summary()</code> does print to screen. Usually you only need to use these explicit print statements to see the contents of your variables as you are debugging.</p>
 </section>
@@ -479,7 +468,7 @@ All good script follows the first three R’s, as you increase along the path of
 <p>Finally, remember that R is interactive, and the objects you create during a session are still around even after you’ve run your source code and forgotten about them. So to really check that your script is complete, you should shut down R (don’t save the workspace), double click on the name of your script to restart R in the correct directory, and then source the program again. Does it work? Great!!</p>
 <p>You could also try clearing all the objects from your workspace using the command:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())     <span class="co"># remove a list of objects consisting of the entire workspace</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())     <span class="co"># remove a list of objects consisting of the entire workspace</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>But this doesn’t unload your packages, and there is still a danger that the script won’t run in a fresh session if you forgot to include loadig the packages in your script. It’s OK to use for minor incremental changes, but the best thing for a real test when you are done drafting your script is to quit R and retry with a blank slate.</p>
 <p>In general, most of my analyses are pretty quick in terms of computer time (not coding and debugging time!). So I never save my workspace, because I don’t want to deal with any <strong>ghost</strong> objects I have forgotten about. Instead, I write a nice script that will generate the whole analysis. If it’s a really big complex analysis, you can save intermediate output as R data files (more on this later).</p>
@@ -515,14 +504,14 @@ All good script follows the first three R’s, as you increase along the path of
 <div class="code-with-filename-file">
 <pre><strong>Terminal/CMD</strong></pre>
 </div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span> myfolder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span> myfolder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If it is not pre-installed on your mac, you may need to install it with homebrew:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install tree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install tree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -533,8 +522,8 @@ All good script follows the first three R’s, as you increase along the path of
 <li>R has great diagnostic plots for linear models. Read about them in the help page for <code>?plot.lm</code> and incorporate a multi-panel figure by adding two lines of code to the script you’ve already made:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))   <span class="co"># set the plot environment to have two rows and two columns</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lmHLSVL)  <span class="co"># or the name of your linear model object          </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))   <span class="co"># set the plot environment to have two rows and two columns</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lmHLSVL)  <span class="co"># or the name of your linear model object          </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="3" type="1">
 <li>Save output to a file.</li>

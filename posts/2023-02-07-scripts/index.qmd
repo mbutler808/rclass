@@ -17,16 +17,6 @@ categories: [module 1, week 3, R, scripts, reproducibility ]
 <!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
 `r emojifont::emoji('pencil2')`
 
-### Read ahead
-
-::: callout-note
-## Read ahead
-
-**Before class, you can prepare by reading the following materials:**
-
-1.  Add here.
-2.  Add here.
-:::
 
 # Learning objectives
 
@@ -144,6 +134,20 @@ pdf(file="MicrohylidHandLvsSize.pdf") # open pdf device for printing
     text(x=15, y=13, paste("slope = ", coef(lm.HLSVL)[2]))  
 dev.off() # turn off pdf device so future plots go back to screen
 ```
+
+Just to clarify, the syntax is:
+
+```{r eval=F}
+pdf() # open pdf device for printing
+ 
+ # lines of code that print to pdf such as a plot
+ #   any additional plot elements such as title, text, etc. 
+ 
+dev.off() # close pdf device, completing the file
+```
+
+If you forget `dev.off()` your pdf will be corrupted. If you donʻt print anythying to the pdf, it may be blank or it may also be corrupted. 
+
 
 # History file 
 
