@@ -137,7 +137,7 @@ All good script follows the first three R’s, as you increase along the path of
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;">#require(stats)        # stats is part of the base package and doesn't need to be loaded, </span></span>
 <span id="cb2-2">    <span class="co" style="color: #5E5E5E;"># but if you need an add-on package, you would require it here.</span></span>
 <span id="cb2-3"></span>
-<span id="cb2-4">dat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span> (<span class="st" style="color: #20794D;">"../Data/morphpre.csv"</span>)  <span class="co" style="color: #5E5E5E;"># read in data</span></span>
+<span id="cb2-4">dat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span> (<span class="st" style="color: #20794D;">"Data/morphpre.csv"</span>)  <span class="co" style="color: #5E5E5E;"># read in data</span></span>
 <span id="cb2-5"></span>
 <span id="cb2-6">lm.HLSVL <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">lm</span>(dat<span class="sc" style="color: #5E5E5E;">$</span>HandL <span class="sc" style="color: #5E5E5E;">~</span> dat<span class="sc" style="color: #5E5E5E;">$</span>SVL)   <span class="co" style="color: #5E5E5E;"># run a linear model</span></span>
 <span id="cb2-7"></span>

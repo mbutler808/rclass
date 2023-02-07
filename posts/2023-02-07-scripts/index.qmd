@@ -102,7 +102,7 @@ And here is a simple example script that reads in data, calculates summary stati
 #require(stats)        # stats is part of the base package and doesn't need to be loaded, 
     # but if you need an add-on package, you would require it here.
 
-dat <- read.csv ("../Data/morphpre.csv")  # read in data
+dat <- read.csv ("Data/morphpre.csv")  # read in data
 
 lm.HLSVL <- lm(dat$HandL ~ dat$SVL)   # run a linear model
 
