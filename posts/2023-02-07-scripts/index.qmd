@@ -114,7 +114,7 @@ abline(lm.HLSVL, col="red")              # plots the regression line, in red
 
 Note that I have used spacing and indents to increase the ``readability'' of the code. Use it to set of blocks of code that accomplish one task, with indents to indicate heirarchy.  We will talk more about this in the functions section.
 
-Save the script file as "`testScript.R` or a title of your choice in your class folder. Now if you want to run the code, you simply type at the R console (from within your Rclass directory):
+Save the script file as `testScript.R` or a title of your choice in your class folder. Now if you want to run the code, you simply type at the R console (from within your Rclass directory):
 
 ```{r eval=F}
 source("testScript.R")
@@ -142,7 +142,7 @@ pdf() # open pdf device for printing
  
  # lines of code that print to pdf such as a plot
  #   any additional plot elements such as title, text, etc. 
- 
+
 dev.off() # close pdf device, completing the file
 ```
 
@@ -203,6 +203,18 @@ In general, most of my analyses are pretty quick in terms of computer time (not 
 Try to create a script file for all the analyses we've done so far (and for every session throughout the course). 
 
 # Letʻs get Organized
+
+## Make sure you can see file endings
+
+Does your MacOS or Windows environment show you the file endings? If not be sure to turn them on. Try the instructions below or you can google for "show all file exensions in" (Mac or Windows, etc.).
+
+#### Mac OS
+
+This is a Finder preference. From any Finder window, click on the menu bar: `Finder >  Preferences > Advanced >`  Click on *Show all finename extensions*.
+
+#### Windows 
+
+This is in File Explorer (Windows key + E). Click on the menu: `View > Show > File Name Extensions`.  You can also choose to show all hidden files if you wish. For pictures [see here](https://pureinfotech.com/show-file-extensions-windows-11/)
 
 ## Text editor environment
 

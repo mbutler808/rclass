@@ -301,6 +301,13 @@
     "text": "✏️"
   },
   {
+    "objectID": "posts/2023-02-07-scripts/index.html#make-sure-you-can-see-file-endings",
+    "href": "posts/2023-02-07-scripts/index.html#make-sure-you-can-see-file-endings",
+    "title": "Saving your work as R scripts",
+    "section": "Make sure you can see file endings",
+    "text": "Make sure you can see file endings\nDoes your MacOS or Windows environment show you the file endings? If not be sure to turn them on. Try the instructions below or you can google for “show all file exensions in” (Mac or Windows, etc.).\n\nMac OS\nThis is a Finder preference. From any Finder window, click on the menu bar: Finder >  Preferences > Advanced > Click on Show all finename extensions.\n\n\nWindows\nThis is in File Explorer (Windows key + E). Click on the menu: View > Show > File Name Extensions. You can also choose to show all hidden files if you wish. For pictures see here"
+  },
+  {
     "objectID": "posts/2023-02-07-scripts/index.html#text-editor-environment",
     "href": "posts/2023-02-07-scripts/index.html#text-editor-environment",
     "title": "Saving your work as R scripts",

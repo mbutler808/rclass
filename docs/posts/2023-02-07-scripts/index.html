@@ -268,6 +268,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#remember-the-workspace" id="toc-remember-the-workspace" class="nav-link" data-scroll-target="#remember-the-workspace">Remember the workspace</a></li>
   <li><a href="#letʻs-get-organized" id="toc-letʻs-get-organized" class="nav-link" data-scroll-target="#letʻs-get-organized">Letʻs get Organized</a>
   <ul class="collapse">
+  <li><a href="#make-sure-you-can-see-file-endings" id="toc-make-sure-you-can-see-file-endings" class="nav-link" data-scroll-target="#make-sure-you-can-see-file-endings">Make sure you can see file endings</a></li>
   <li><a href="#text-editor-environment" id="toc-text-editor-environment" class="nav-link" data-scroll-target="#text-editor-environment">Text editor environment</a></li>
   <li><a href="#different-desktop-windows" id="toc-different-desktop-windows" class="nav-link" data-scroll-target="#different-desktop-windows">Different Desktop Windows</a></li>
   <li><a href="#organize-your-projects-into-folders" id="toc-organize-your-projects-into-folders" class="nav-link" data-scroll-target="#organize-your-projects-into-folders">Organize your Projects into Folders</a></li>
@@ -402,7 +403,7 @@ All good script follows the first three R’s, as you increase along the path of
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note that I have used spacing and indents to increase the ``readability’’ of the code. Use it to set of blocks of code that accomplish one task, with indents to indicate heirarchy. We will talk more about this in the functions section.</p>
-<p>Save the script file as “<code>testScript.R</code> or a title of your choice in your class folder. Now if you want to run the code, you simply type at the R console (from within your Rclass directory):</p>
+<p>Save the script file as <code>testScript.R</code> or a title of your choice in your class folder. Now if you want to run the code, you simply type at the R console (from within your Rclass directory):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"testScript.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -425,7 +426,7 @@ All good script follows the first three R’s, as you increase along the path of
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a> <span class="co"># lines of code that print to pdf such as a plot</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a> <span class="co">#   any additional plot elements such as title, text, etc. </span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>() <span class="co"># close pdf device, completing the file</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you forget <code>dev.off()</code> your pdf will be corrupted. If you donʻt print anythying to the pdf, it may be blank or it may also be corrupted.</p>
@@ -476,6 +477,18 @@ All good script follows the first three R’s, as you increase along the path of
 </section>
 <section id="letʻs-get-organized" class="level1">
 <h1>Letʻs get Organized</h1>
+<section id="make-sure-you-can-see-file-endings" class="level2">
+<h2 class="anchored" data-anchor-id="make-sure-you-can-see-file-endings">Make sure you can see file endings</h2>
+<p>Does your MacOS or Windows environment show you the file endings? If not be sure to turn them on. Try the instructions below or you can google for “show all file exensions in” (Mac or Windows, etc.).</p>
+<section id="mac-os" class="level4">
+<h4 class="anchored" data-anchor-id="mac-os">Mac OS</h4>
+<p>This is a Finder preference. From any Finder window, click on the menu bar: <code>Finder &gt;  Preferences &gt; Advanced &gt;</code> Click on <em>Show all finename extensions</em>.</p>
+</section>
+<section id="windows" class="level4">
+<h4 class="anchored" data-anchor-id="windows">Windows</h4>
+<p>This is in File Explorer (Windows key + E). Click on the menu: <code>View &gt; Show &gt; File Name Extensions</code>. You can also choose to show all hidden files if you wish. For pictures <a href="https://pureinfotech.com/show-file-extensions-windows-11/">see here</a></p>
+</section>
+</section>
 <section id="text-editor-environment" class="level2">
 <h2 class="anchored" data-anchor-id="text-editor-environment">Text editor environment</h2>
 <p>While I love the R text editor for writing R scripts, for working with multiple .qmd and other files I find it helpful to have a full-featured plain text editor. A new tool that I discovered is the Sublime text editor. If youʻd like to try it out, you can download it here: <a href="https://www.sublimetext.com" class="uri">https://www.sublimetext.com</a></p>
