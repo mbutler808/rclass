@@ -58,7 +58,7 @@ Learning objectives
 <div class="callout-body-container callout-body">
 <p><strong>At the end of this lesson you will:</strong></p>
 <ul>
-<li>Know how to building good scripts</li>
+<li>Know how to build good scripts</li>
 <li>Be able to run source code</li>
 <li>Be able to verify your script</li>
 <li>Know how to start debugging scripts</li>
@@ -83,15 +83,15 @@ A key part of any analysis is verification:
 <div class="callout-body-container callout-body">
 <ul>
 <li>Did you do what you really think you did?</li>
-<li>Know how to building good scripts Was the input free of error?</li>
-<li>Know how to building good scripts Did the steps of your analysis work without error?</li>
-<li>Know how to building good scripts And perhaps most importantly – can you reproduce it?</li>
+<li>Was the input free of error?</li>
+<li>Did the steps of your analysis work without error?</li>
+<li>And perhaps most importantly – can you reproduce it?</li>
 </ul>
 </div>
 </div>
 </section>
-<section id="clean-scriptsxx" class="level1">
-<h1>Clean Scriptsxx</h1>
+<section id="clean-scripts" class="level1">
+<h1>Clean Scripts</h1>
 <p>Writing <strong>clean scripts</strong> help you to accomplish these goals. <em>Scripts are lines of code saved in an ordinary text file with a <code>.R</code> or <code>.r</code> ending.</em> (Make sure it is plain text, and NOT an <code>.rtf</code>, <code>.doc</code>, or other type of binary file.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -221,6 +221,47 @@ font-style: italic;">###</span></span></code></pre></div>
 <p>In general, most of my analyses are pretty quick in terms of computer time (not coding and debugging time!). So I never save my workspace, because I don’t want to deal with any <strong>ghost</strong> objects I have forgotten about. Instead, I write a nice script that will generate the whole analysis. If it’s a really big complex analysis, you can save intermediate output as R data files (more on this later).</p>
 <p>Try to create a script file for all the analyses we’ve done so far (and for every session throughout the course).</p>
 </section>
+<section id="letʻs-get-organized" class="level1">
+<h1>Letʻs get Organized</h1>
+<section id="text-editor-environment" class="level2">
+<h2 class="anchored" data-anchor-id="text-editor-environment">Text editor environment</h2>
+<p>While I love the R text editor for writing R scripts, for working with multiple .qmd and other files I find it helpful to have a full-featured plain text editor. A new tool that I discovered is the Sublime text editor. If youʻd like to try it out, you can download it here: <a href="https://www.sublimetext.com" class="uri">https://www.sublimetext.com</a></p>
+<p>A couple of features I like is that you can have multiple panes open. For example if you want to copy text from an old script to a new script, you can easily see and do that.</p>
+<p>It also allows you to organize <em>Projects</em>, various folders that will appear on the sidebar to preserve your workspace. So for example if you have your Rclass folder in one place and your website folder in another, you can have both open within the Sublime project. When you finish working on it you can save the project and reopen it later.</p>
+<p>To create a project start by opening a new file. Then choose the <code>Project &gt; Add folder to Project...</code> on the menu bar. You can load mulitple folders.</p>
+</section>
+<section id="different-desktop-windows" class="level2">
+<h2 class="anchored" data-anchor-id="different-desktop-windows">Different Desktop Windows</h2>
+<p>Itʻs also nice to have multiple desktops to organize your work. - It makes it easier to find your different apps. - You may have one workspace for your text editor, and another for your Terminal or CMD prompt, for example. - If I am working with multiple git repos, I might have a separate Terminal open for each one (on the same desktop).</p>
+<p>To use multiple desktops: <a href="https://support.microsoft.com/en-us/windows/multiple-desktops-in-windows-36f52e38-5b4a-557b-2ff9-e1a60c976434">On Windows</a> <a href="https://support.apple.com/guide/mac-help/work-in-multiple-spaces-mh14112/mac">On Mac</a></p>
+<p>One the Mac, you can open new desktops by using three fingers to swipe up on the trackpad. Switch between them by swiping left or right with three fingers.</p>
+</section>
+<section id="organize-your-projects-into-folders" class="level2">
+<h2 class="anchored" data-anchor-id="organize-your-projects-into-folders">Organize your Projects into Folders</h2>
+<p>Weʻve been learning about reproducibility. One important aspect is file organization. Each project should be organized into one folder that contains:</p>
+<ul>
+<li>All input data (usually in a Data folder)</li>
+<li>All code and documentation</li>
+<li>All output</li>
+</ul>
+<p>The idea is to keep everything complete, self-contained, and clear. Move old versions into a “Trash” folder. If you donʻt end up looking back at it, then delete it! (Or if you are bold, delete it right away!)</p>
+<p>A really useful UNIX/CMD command is <code>tree</code>. It shows you the directory structure contained within any folder. It works on both MacOS and Windows.</p>
+<p>This is in ASCII – so you can copy and paste it into your README.md file!</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal/CMD</strong></pre>
+</div>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;">tree</span> myfolder</span></code></pre></div>
+</div>
+<p>If it is not pre-installed on your mac, you may need to install it with homebrew:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="ex" style="color: null;">brew</span> install tree</span></code></pre></div>
+</div>
+</section>
+</section>
 <section id="exercises" class="level1">
 <h1>Exercises</h1>
 <ol type="1">
@@ -228,8 +269,8 @@ font-style: italic;">###</span></span></code></pre></div>
 <li>R has great diagnostic plots for linear models. Read about them in the help page for <code>?plot.lm</code> and incorporate a multi-panel figure by adding two lines of code to the script you’ve already made:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;">par</span>(<span class="at" style="color: #657422;">mfrow =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">2</span>))   <span class="co" style="color: #5E5E5E;"># set the plot environment to have two rows and two columns</span></span>
-<span id="cb9-2"><span class="fu" style="color: #4758AB;">plot</span>(lmHLSVL)  <span class="co" style="color: #5E5E5E;"># or the name of your linear model object          </span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;">par</span>(<span class="at" style="color: #657422;">mfrow =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">2</span>))   <span class="co" style="color: #5E5E5E;"># set the plot environment to have two rows and two columns</span></span>
+<span id="cb11-2"><span class="fu" style="color: #4758AB;">plot</span>(lmHLSVL)  <span class="co" style="color: #5E5E5E;"># or the name of your linear model object          </span></span></code></pre></div>
 </div>
 <ol start="3" type="1">
 <li>Save output to a file.</li>

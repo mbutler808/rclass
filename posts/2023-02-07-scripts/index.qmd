@@ -35,7 +35,7 @@ categories: [module 1, week 3, R, scripts, reproducibility ]
 
 **At the end of this lesson you will:**
 
--   Know how to building good scripts
+-   Know how to build good scripts
 -   Be able to run source code 
 -   Be able to verify your script
 -   Know how to start debugging scripts
@@ -53,15 +53,12 @@ Because R is interactive, it is tempting to simply play with code until you get 
 :::{.callout-note}
 ## A key part of any analysis is verification:
 -   Did you do what you really think you did?
--   Know how to building good scripts
-Was the input free of error?
--   Know how to building good scripts
-Did the steps of your analysis work without error?
--   Know how to building good scripts
-And perhaps most importantly -- can you reproduce it?
+-   Was the input free of error?
+-   Did the steps of your analysis work without error?
+-   And perhaps most importantly -- can you reproduce it?
 :::
 
-# Clean Scriptsxx
+# Clean Scripts
 
 Writing **clean scripts** help you to accomplish these goals. *Scripts are lines of code saved in an ordinary text file with a `.R` or `.r` ending.* (Make sure it is plain text, and NOT an `.rtf`, `.doc`, or other type of binary file.
 
@@ -200,6 +197,57 @@ But this doesn't unload your packages, and there is still a danger that the scri
 In general, most of my analyses are pretty quick in terms of computer time (not coding and debugging time!). So I never save my workspace, because I don't want to deal with any **ghost** objects I have forgotten about. Instead, I write a nice script that will generate the whole analysis. If it's a really big complex analysis, you can save intermediate output as R data files (more on this later). 
 
 Try to create a script file for all the analyses we've done so far (and for every session throughout the course). 
+
+# Letʻs get Organized
+
+## Text editor environment
+
+While I love the R text editor for writing R scripts, for working with multiple .qmd and other files I find it helpful to have a full-featured plain text editor. A new tool that I discovered is the Sublime text editor. If youʻd like to try it out, you can download it here: <https://www.sublimetext.com>
+
+A couple of features I like is that you can have multiple panes open. For example if you want to copy text from an old script to a new script, you can easily see and do that. 
+
+It also allows you to organize *Projects*, various folders that will appear on the sidebar to preserve your workspace. So for example if you have your Rclass folder in one place and your website folder in another, you can have both open within the Sublime project. When you finish working on it you can save the project and reopen it later. 
+
+To create a project start by opening a new file. Then choose the `Project > Add folder to Project...` on the menu bar. You can load mulitple folders.  
+
+## Different Desktop Windows
+
+Itʻs also nice to have multiple desktops to organize your work. 
+-  It makes it easier to find your different apps.
+-  You may have one workspace for your text editor, and another for your Terminal or CMD prompt, for example. 
+-  If I am working with multiple git repos, I might have a separate Terminal open for each one (on the same desktop). 
+
+To use multiple desktops: 
+[On Windows](<https://support.microsoft.com/en-us/windows/multiple-desktops-in-windows-36f52e38-5b4a-557b-2ff9-e1a60c976434>)
+[On Mac](https://support.apple.com/guide/mac-help/work-in-multiple-spaces-mh14112/mac)
+
+One the Mac, you can open new desktops by using three fingers to swipe up on the trackpad. Switch between them by swiping left or right with three fingers. 
+
+## Organize your Projects into Folders
+
+Weʻve been learning about reproducibility. One important aspect is file organization.  Each project should be organized into one folder that contains:
+
+-  All input data (usually in a Data folder)
+-  All code and documentation
+-  All output
+
+The idea is to keep everything complete, self-contained, and clear. 
+Move old versions into a "Trash" folder. If you donʻt end up looking back at it, then delete it! (Or if you are bold, delete it right away!)
+
+A really useful UNIX/CMD command is `tree`. It shows you the directory structure contained within any folder. It works on both MacOS and Windows. 
+
+This is in ASCII -- so you can copy and paste it into your README.md file! 
+
+```{.bash filename=Terminal/CMD}
+tree myfolder
+``` 
+
+If it is not pre-installed on your mac, you may need to install it with homebrew:
+
+```{.bash filename=Terminal}
+brew install tree
+``` 
+
 
 # Exercises
 
