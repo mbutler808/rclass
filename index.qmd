@@ -12,7 +12,7 @@ about:
       href: https://github.com/mbutler808
 ---
 
-Welcome to Data Science for Biologists at the University of Hawai`i!
+Welcome to Data Science for Biologists at the University of Hawaiʻi!
 
 ## What is this course?
 
