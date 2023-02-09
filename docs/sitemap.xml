@@ -2,146 +2,74 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/index.html</loc>
-<<<<<<< HEAD
-    <lastmod>2023-02-09T23:25:56.271Z</lastmod>
+    <lastmod>2023-02-09T23:32:45.322Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-01-17-the-big-picture/index.html</loc>
-    <lastmod>2023-02-09T23:25:56.793Z</lastmod>
+    <lastmod>2023-02-09T23:32:45.847Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-01-31-reading-data/index.html</loc>
-    <lastmod>2023-02-09T23:25:58.364Z</lastmod>
+    <lastmod>2023-02-09T23:32:47.497Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-01-26-reproducible-research/index.html</loc>
-    <lastmod>2023-02-09T23:25:59.089Z</lastmod>
+    <lastmod>2023-02-09T23:32:48.266Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-01-26-intro-quarto/index.html</loc>
-    <lastmod>2023-02-09T23:26:00.660Z</lastmod>
+    <lastmod>2023-02-09T23:32:49.793Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/index.html</loc>
-    <lastmod>2023-02-09T23:26:01.626Z</lastmod>
+    <lastmod>2023-02-09T23:32:50.766Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-01-24-intro-git-github/index.html</loc>
-    <lastmod>2023-02-09T23:26:02.694Z</lastmod>
+    <lastmod>2023-02-09T23:32:51.850Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-02-09-data/index.html</loc>
-    <lastmod>2023-02-09T23:26:04.569Z</lastmod>
+    <lastmod>2023-02-09T23:32:56.971Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-02-01-reference-management/index.html</loc>
-    <lastmod>2023-02-09T23:26:05.784Z</lastmod>
+    <lastmod>2023-02-09T23:32:58.108Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-02-07-scripts/index.html</loc>
-    <lastmod>2023-02-09T23:26:06.856Z</lastmod>
+    <lastmod>2023-02-09T23:32:59.162Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/projects/2023-01-24-project-0/index.html</loc>
-    <lastmod>2023-02-09T23:26:10.356Z</lastmod>
+    <lastmod>2023-02-09T23:33:02.230Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/projects.html</loc>
-    <lastmod>2023-02-09T23:26:10.818Z</lastmod>
+    <lastmod>2023-02-09T23:33:02.727Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/index.html</loc>
-    <lastmod>2023-02-09T23:26:11.298Z</lastmod>
+    <lastmod>2023-02-09T23:33:03.186Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/about.html</loc>
-    <lastmod>2023-02-09T23:26:11.703Z</lastmod>
+    <lastmod>2023-02-09T23:33:03.588Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/lectures.html</loc>
-    <lastmod>2023-02-09T23:26:12.663Z</lastmod>
+    <lastmod>2023-02-09T23:33:04.526Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/syllabus.html</loc>
-    <lastmod>2023-02-09T23:26:14.648Z</lastmod>
+    <lastmod>2023-02-09T23:33:06.414Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/resources.html</loc>
-    <lastmod>2023-02-09T23:26:15.067Z</lastmod>
+    <lastmod>2023-02-09T23:33:06.824Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/schedule.html</loc>
-    <lastmod>2023-02-09T23:26:17.714Z</lastmod>
-=======
-    <lastmod>2023-02-09T20:12:49.528Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/posts/2023-01-17-the-big-picture/index.html</loc>
-    <lastmod>2023-02-09T20:12:50.038Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/posts/2023-01-31-reading-data/index.html</loc>
-    <lastmod>2023-02-09T20:12:51.685Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/posts/2023-01-26-reproducible-research/index.html</loc>
-    <lastmod>2023-02-09T20:12:52.405Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/posts/2023-01-26-intro-quarto/index.html</loc>
-    <lastmod>2023-02-09T20:12:53.885Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/index.html</loc>
-    <lastmod>2023-02-09T20:12:54.867Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/posts/2023-01-24-intro-git-github/index.html</loc>
-    <lastmod>2023-02-09T20:12:55.927Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/posts/2023-02-09-data/index.html</loc>
-    <lastmod>2023-02-09T20:12:57.660Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/posts/2023-02-01-reference-management/index.html</loc>
-    <lastmod>2023-02-09T20:12:58.800Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/posts/2023-02-07-scripts/index.html</loc>
-    <lastmod>2023-02-09T20:12:59.872Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/projects/2023-01-24-project-0/index.html</loc>
-    <lastmod>2023-02-09T20:13:00.827Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/projects.html</loc>
-    <lastmod>2023-02-09T20:13:01.288Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/index.html</loc>
-    <lastmod>2023-02-09T20:13:01.758Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/about.html</loc>
-    <lastmod>2023-02-09T20:13:02.172Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/lectures.html</loc>
-    <lastmod>2023-02-09T20:13:03.104Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/syllabus.html</loc>
-    <lastmod>2023-02-09T20:13:04.055Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/resources.html</loc>
-    <lastmod>2023-02-09T20:13:04.446Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mbutler808.github.io/schedule.html</loc>
-    <lastmod>2023-02-09T20:13:05.026Z</lastmod>
->>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
+    <lastmod>2023-02-09T23:33:09.524Z</lastmod>
   </url>
 </urlset>

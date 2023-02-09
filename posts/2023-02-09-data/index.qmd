@@ -1,33 +1,17 @@
 ---
-<<<<<<< HEAD
 title: "Types of Data"  
-=======
-title: Types of Data
->>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 author:
   - name: Marguerite Butler
     url: https://butlerlab.org
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
-<<<<<<< HEAD
 description: "All about data and how it is represented in R"  
 date: 2023-02-09
 categories: [module 2, week 4, data, data structures, objects]  
-=======
-description: "Add"
-fig_caption: yes
-date: 2023-02-09
-categories: [module 2, week 4, data, data structures, objects ]
->>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 ---
 
 <!-- Add interesting quote -->
 
-<<<<<<< HEAD
-=======
-<!-- # Pre-lecture materials -->
-
->>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
 `r emojifont::emoji('pencil2')`
 
@@ -195,10 +179,6 @@ Note: Most computers use 64-bit operating systems these days, so the sizes above
 For a quick tour of the data types, see <https://r-coder.com/data-types-r>
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 __String/character:__ Character values are alphanumeric values (plus whitespace, punctuation, etc.). A string is a collection of characters, in other words "text". 
 
 -  strings can be pasted together using the `paste()` function. 
@@ -360,10 +340,6 @@ The common attributes of objects (the most helpful to know are **class, mode, le
 
 | Functions | Actions |
 |---------|:-----|
-<<<<<<< HEAD
-=======
-
->>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 | c(n1, n2, n3) | combines elements into an object |  
 | cbind(x, y) | binds objects together by column | 
 | rbind(x, y) | binds objects together by row  |
@@ -396,20 +372,12 @@ The common attributes of objects (the most helpful to know are **class, mode, le
 
 
 
-<<<<<<< HEAD
 # Examples 
-=======
-## Examples 
->>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 
 ### Various ways to create vectors:
 
 ```{r}
-<<<<<<< HEAD
 x <- c( 1, 5, 7, 2, 6)  # numeric
-=======
-x <- c( 1, 5, 7)  # numeric
->>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 x
 rep( x, times=2)
 y <- rnorm(8)
@@ -419,7 +387,6 @@ goodanswer
 species <- letters[1:4]    # special stored data object: lower case letters a - d
 species
 LETTERS[1:3]   # A B C  # character
-<<<<<<< HEAD
 treatment <- c("low", "low", "high", "med", "high")  # character vector
 treatment
 treat <- factor(treatment)   # create a factor
@@ -428,14 +395,6 @@ treat
 The vector `treat` has five elements, it is factor with levels of `low`, `med`, or `high`.
 
 It is simple to do arithmetic on numeric vectors:
-=======
-treatment <- c("low", "med", "high")
-treat <- factor(treatment)   # create a factor
-treat
-```
-
-It is simple to do arithmetic on vectors:
->>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 ```{r}
 x
 x+2
@@ -451,7 +410,7 @@ mode(x)
 
 ### Factors are categorical data 
 
-For example, `large` and `small`, or `blue`, `red`, and `yellow`. Factors may be ordered, which means that the order of the categories has meaning (like income categories). By default, factors are unordered. Levels are the values (i.e., names of the categories) that the factor can take.
+For example, `large` and `small`, or `blue`, `red`, and `yellow`. Factors may be ordered, which means that the order of the categories has meaning (like income categories). By default, factors are unordered. Levels are the categories that the factor can take on.
 
 You can easily coerce one type to another:
 ```{r}
@@ -599,9 +558,3 @@ You can see that there are four elements of `mylist`, a character vector named `
 
 
 
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
