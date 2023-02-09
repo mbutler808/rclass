@@ -21,6 +21,10 @@
 
 
 <!-- Add interesting quote -->
+<<<<<<< HEAD
+=======
+<!-- # Pre-lecture materials -->
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
 <p>✏️</p>
 <section id="overview" class="level1">
@@ -364,7 +368,11 @@ Good sources for practice manipulating strings:
 </section>
 <section id="helpful-functions-for-creating-objects" class="level1">
 <h1>Helpful functions for creating objects</h1>
+<<<<<<< HEAD
 <table class="table">
+=======
+<table>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <thead>
 <tr class="header">
 <th>Functions</th>
@@ -372,6 +380,7 @@ Good sources for practice manipulating strings:
 </tr>
 </thead>
 <tbody>
+<<<<<<< HEAD
 <tr class="odd">
 <td>c(n1, n2, n3)</td>
 <td style="text-align: left;">combines elements into an object</td>
@@ -386,6 +395,13 @@ Good sources for practice manipulating strings:
 </tr>
 </tbody>
 </table>
+=======
+</tbody>
+</table>
+<p>c(n1, n2, n3) | combines elements into an object |<br>
+cbind(x, y) | binds objects together by column |<br>
+rbind(x, y) | binds objects together by row |</p>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <section id="for-sequences" class="level2">
 <h2 class="anchored" data-anchor-id="for-sequences">For sequences</h2>
 <table class="table">
@@ -472,6 +488,7 @@ Good sources for practice manipulating strings:
 </tbody>
 </table>
 </section>
+<<<<<<< HEAD
 </section>
 <section id="examples" class="level1">
 <h1>Examples</h1>
@@ -486,12 +503,32 @@ Good sources for practice manipulating strings:
 <div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;">rep</span>( x, <span class="at" style="color: #657422;">times=</span><span class="dv" style="color: #AD0000;">2</span>)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 1 5 7 2 6 1 5 7 2 6</code></pre>
+=======
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
+<section id="various-ways-to-create-vectors" class="level3">
+<h3 class="anchored" data-anchor-id="various-ways-to-create-vectors">Various ways to create vectors:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">x <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>( <span class="dv" style="color: #AD0000;">1</span>, <span class="dv" style="color: #AD0000;">5</span>, <span class="dv" style="color: #AD0000;">7</span>)  <span class="co" style="color: #5E5E5E;"># numeric</span></span>
+<span id="cb11-2">x</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 5 7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;">rep</span>( x, <span class="at" style="color: #657422;">times=</span><span class="dv" style="color: #AD0000;">2</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 5 7 1 5 7</code></pre>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 </div>
 <div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">y <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">8</span>)</span>
 <span id="cb15-2">y</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
+<<<<<<< HEAD
 <pre><code>[1] -0.51225338  1.52125499 -0.78500554 -0.79115847  0.06134829 -1.74273326
 [7]  0.36334867 -0.83748772</code></pre>
+=======
+<pre><code>[1] -0.8477101  0.1362619 -1.1017865  0.5987823 -1.1607960  1.0501601  0.9224576
+[8]  0.1584222</code></pre>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 </div>
 <div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">goodanswer <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="cn" style="color: #8f5902;">TRUE</span>, <span class="cn" style="color: #8f5902;">TRUE</span>, <span class="cn" style="color: #8f5902;">FALSE</span>)  <span class="co" style="color: #5E5E5E;"># logical</span></span>
 <span id="cb17-2">goodanswer</span></code></pre></div>
@@ -507,6 +544,7 @@ Good sources for practice manipulating strings:
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "A" "B" "C"</code></pre>
 </div>
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1">treatment <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"low"</span>, <span class="st" style="color: #20794D;">"low"</span>, <span class="st" style="color: #20794D;">"high"</span>, <span class="st" style="color: #20794D;">"med"</span>, <span class="st" style="color: #20794D;">"high"</span>)  <span class="co" style="color: #5E5E5E;"># character vector</span></span>
 <span id="cb23-2">treatment</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -533,15 +571,46 @@ Levels: high low med</code></pre>
 <div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1">x<span class="sc" style="color: #5E5E5E;">^</span><span class="dv" style="color: #AD0000;">2</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  1 25 49  4 36</code></pre>
+=======
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1">treatment <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"low"</span>, <span class="st" style="color: #20794D;">"med"</span>, <span class="st" style="color: #20794D;">"high"</span>)</span>
+<span id="cb23-2">treat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">factor</span>(treatment)   <span class="co" style="color: #5E5E5E;"># create a factor</span></span>
+<span id="cb23-3">treat</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] low  med  high
+Levels: high low med</code></pre>
+</div>
+</div>
+<p>It is simple to do arithmetic on vectors:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1">x</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 5 7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1">x<span class="sc" style="color: #5E5E5E;">+</span><span class="dv" style="color: #AD0000;">2</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 7 9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1">x<span class="sc" style="color: #5E5E5E;">^</span><span class="dv" style="color: #AD0000;">2</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1 25 49</code></pre>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 </div>
 </div>
 <p>Typically the class of a vector is returned as the type of information contained, so that return values of the atomic types “numeric”, “character”, “factor”, or “logical” indicate that the object is a vector:</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><span class="fu" style="color: #4758AB;">class</span>(x)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "numeric"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><span class="fu" style="color: #4758AB;">mode</span>(x)</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><span class="fu" style="color: #4758AB;">class</span>(x)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><span class="fu" style="color: #4758AB;">mode</span>(x)</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "numeric"</code></pre>
 </div>
@@ -552,6 +621,7 @@ Levels: high low med</code></pre>
 <p>For example, <code>large</code> and <code>small</code>, or <code>blue</code>, <code>red</code>, and <code>yellow</code>. Factors may be ordered, which means that the order of the categories has meaning (like income categories). By default, factors are unordered. Levels are the values (i.e., names of the categories) that the factor can take.</p>
 <p>You can easily coerce one type to another:</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><span class="fu" style="color: #4758AB;">as.numeric</span>(treat)   <span class="co" style="color: #5E5E5E;"># coerce to numeric</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2 2 1 3 1</code></pre>
@@ -561,28 +631,52 @@ Levels: high low med</code></pre>
 <pre><code>[1] "-0.51225338335893"  "1.52125499156946"   "-0.785005537833906"
 [4] "-0.791158468556979" "0.061348289136381"  "-1.7427332602413"  
 [7] "0.363348665999131"  "-0.837487723734499"</code></pre>
+=======
+<div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><span class="fu" style="color: #4758AB;">as.numeric</span>(treat)   <span class="co" style="color: #5E5E5E;"># coerce to numeric</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 3 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><span class="fu" style="color: #4758AB;">as.character</span>(y)  <span class="co" style="color: #5E5E5E;"># coerce to character</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "-0.847710092708081" "0.136261863967154"  "-1.10178646645434" 
+[4] "0.59878229602775"   "-1.16079595711005"  "1.05016006278594"  
+[7] "0.922457604894394"  "0.158422236343554" </code></pre>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 </div>
 </div>
 <p>Note that when values are quoted, they are of type character.</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><span class="fu" style="color: #4758AB;">class</span>(<span class="st" style="color: #20794D;">"pony"</span>)</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><span class="fu" style="color: #4758AB;">class</span>(<span class="st" style="color: #20794D;">"pony"</span>)</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "character"</code></pre>
 </div>
 </div>
 <p>However, notice that factors return different values for class and mode:</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb43" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><span class="fu" style="color: #4758AB;">class</span>(treat)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "factor"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><span class="fu" style="color: #4758AB;">mode</span>(treat)</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><span class="fu" style="color: #4758AB;">class</span>(treat)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><span class="fu" style="color: #4758AB;">mode</span>(treat)</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "numeric"</code></pre>
 </div>
 </div>
 <p>And sometimes, when doing ordinary manipulations such as coercing to numeric or combining vectors together to create a matrix, we get:</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb47" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><span class="fu" style="color: #4758AB;">as.numeric</span>(treat)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2 2 1 3 1</code></pre>
@@ -597,12 +691,27 @@ Levels: high low med</code></pre>
 [5,] 6     1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb51" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><span class="fu" style="color: #4758AB;">plot</span>(treat, x)</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb45" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><span class="fu" style="color: #4758AB;">as.numeric</span>(treat)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 3 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><span class="fu" style="color: #4758AB;">cbind</span>(x, treat)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     x treat
+[1,] 1     2
+[2,] 5     3
+[3,] 7     1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><span class="fu" style="color: #4758AB;">plot</span>(treat, x)</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output-display">
 <p><img src="https://mbutler808.github.io/posts/2023-02-09-data/index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>This is because internally, factors are stored as digits, 1, 2, etc. to the number of categories. The characters that you see are actually labels for the factor categories called “levels”. Look at the help page for factor (<code>?factor</code>) and read the entry for levels. If nothing is specified for the order of the levels, then they are numbered alphabetically! This explains the weird behavior. So if you want the order of the levels to be a more logical “low, medium, high”, you can do so by specifying the order of the levels explicitly when you create the factor:</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb52" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1">treat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">factor</span>(treat, <span class="at" style="color: #657422;">levels=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"low"</span>, <span class="st" style="color: #20794D;">"med"</span>, <span class="st" style="color: #20794D;">"high"</span>))</span>
 <span id="cb52-2">treat</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -610,6 +719,15 @@ Levels: high low med</code></pre>
 Levels: low med high</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb54" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><span class="fu" style="color: #4758AB;">plot</span>(treat,x)</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb50" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1">treat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">factor</span>(treat, <span class="at" style="color: #657422;">levels=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"low"</span>, <span class="st" style="color: #20794D;">"med"</span>, <span class="st" style="color: #20794D;">"high"</span>))</span>
+<span id="cb50-2">treat</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] low  med  high
+Levels: low med high</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><span class="fu" style="color: #4758AB;">plot</span>(treat,x)</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output-display">
 <p><img src="https://mbutler808.github.io/posts/2023-02-09-data/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -617,7 +735,11 @@ Levels: low med high</code></pre>
 <p>If you get frustrated because youʻre trying to treat a factor as a character, itʻs sometimes safer to manipulate factors by coercing to character first before doing anything else.</p>
 <p>Hereʻs another illustration of methods dispatch - The plot function by default accepts arguments in x, y order. If x is a factor as above, the plot assumes a categorial format for the x-axis. However, if you switch the order:</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb55" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><span class="fu" style="color: #4758AB;">plot</span>(x,treat)</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb53" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><span class="fu" style="color: #4758AB;">plot</span>(x,treat)</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output-display">
 <p><img src="https://mbutler808.github.io/posts/2023-02-09-data/index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -625,6 +747,7 @@ Levels: low med high</code></pre>
 <p>It is treated as a continuous x-axis. This is because methods dispatch for the plot function will be guided by the class of the objects that you supply. With x as a factor, R assumes you want a discrete x-axis, with the x as a continuous variable and y as the factor level, it will plot on the internal codes for the factor levels (if you want a horizontal bar plot use <code>barplot(..., horiz=TRUE)</code>. If you want histograms use <code>hist()</code>.</p>
 <p>If you name a vector, the names are attached to each value:</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb56" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><span class="fu" style="color: #4758AB;">names</span>(x) <span class="ot" style="color: #003B4F;">&lt;-</span> treatment</span>
 <span id="cb56-2">x</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -634,6 +757,17 @@ Levels: low med high</code></pre>
 <div class="sourceCode cell-code" id="cb58" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><span class="fu" style="color: #4758AB;">names</span>(x) </span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "low"  "low"  "high" "med"  "high"</code></pre>
+=======
+<div class="sourceCode cell-code" id="cb54" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><span class="fu" style="color: #4758AB;">names</span>(x) <span class="ot" style="color: #003B4F;">&lt;-</span> treatment</span>
+<span id="cb54-2">x</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> low  med high 
+   1    5    7 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><span class="fu" style="color: #4758AB;">names</span>(x) </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "low"  "med"  "high"</code></pre>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 </div>
 </div>
 </section>
@@ -642,11 +776,16 @@ Levels: low med high</code></pre>
 <p>Data are often rectangular. For example, you might have height and weight columns for each subject (rows), or you might have a matrix describing the genetic relatedness between each pair of individuals in a family. Whether it is a square or a rectangular matrix, you will have a series of vectors of equal length. In fact, in R you can think of it as a single long vector with breaks at the end of each column.</p>
 <p>Creating a matrix:</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb60" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1">xy <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">cbind</span>(x,y)  <span class="co" style="color: #5E5E5E;"># column bind</span></span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb58" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1">xy <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">cbind</span>(x,y)  <span class="co" style="color: #5E5E5E;"># column bind</span></span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in cbind(x, y): number of rows of result is not a multiple of vector
 length (arg 1)</code></pre>
 </div>
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb62" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1">xy</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     x           y
@@ -661,30 +800,63 @@ length (arg 1)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb64" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1">z <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">matrix</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">6</span>, <span class="at" style="color: #657422;">nrow=</span><span class="dv" style="color: #AD0000;">2</span>)  <span class="co" style="color: #5E5E5E;">#create a matrix with 2 rows</span></span>
 <span id="cb64-2">z</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb60" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1">xy</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     x          y
+[1,] 1 -0.8477101
+[2,] 5  0.1362619
+[3,] 7 -1.1017865
+[4,] 1  0.5987823
+[5,] 5 -1.1607960
+[6,] 7  1.0501601
+[7,] 1  0.9224576
+[8,] 5  0.1584222</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1">z <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">matrix</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">6</span>, <span class="at" style="color: #657422;">nrow=</span><span class="dv" style="color: #AD0000;">2</span>)  <span class="co" style="color: #5E5E5E;">#create a matrix with 2 rows</span></span>
+<span id="cb62-2">z</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3]
 [1,]    1    3    5
 [2,]    2    4    6</code></pre>
 </div>
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb66" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><span class="fu" style="color: #4758AB;">matrix</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">6</span>, <span class="at" style="color: #657422;">nrow=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">byrow=</span><span class="dv" style="color: #AD0000;">2</span>)</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb64" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><span class="fu" style="color: #4758AB;">matrix</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">6</span>, <span class="at" style="color: #657422;">nrow=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">byrow=</span><span class="dv" style="color: #AD0000;">2</span>)</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3]
 [1,]    1    2    3
 [2,]    4    5    6</code></pre>
 </div>
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb68" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><span class="fu" style="color: #4758AB;">class</span>(z)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "matrix" "array" </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb70" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><span class="fu" style="color: #4758AB;">mode</span>(z)</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb66" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><span class="fu" style="color: #4758AB;">class</span>(z)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "matrix" "array" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><span class="fu" style="color: #4758AB;">mode</span>(z)</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "numeric"</code></pre>
 </div>
 </div>
 <p>Names applied to a matrix will attach the names to each value. If you want to name the rows and columns of a matrix you must use <code>rownames()</code> or <code>colnames()</code></p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb72" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><span class="fu" style="color: #4758AB;">names</span>(z) <span class="ot" style="color: #003B4F;">&lt;-</span> letters[<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">6</span>]  </span>
 <span id="cb72-2">z</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb70" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><span class="fu" style="color: #4758AB;">names</span>(z) <span class="ot" style="color: #003B4F;">&lt;-</span> letters[<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">6</span>]  </span>
+<span id="cb70-2">z</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3]
 [1,]    1    3    5
@@ -692,18 +864,31 @@ length (arg 1)</code></pre>
 attr(,"names")
 [1] "a" "b" "c" "d" "e" "f"</code></pre>
 </div>
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb74" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1">z[<span class="st" style="color: #20794D;">"c"</span>]</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb72" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1">z[<span class="st" style="color: #20794D;">"c"</span>]</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>c 
 3 </code></pre>
 </div>
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb76" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1">z[<span class="st" style="color: #20794D;">"f"</span>]</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb74" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1">z[<span class="st" style="color: #20794D;">"f"</span>]</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>f 
 6 </code></pre>
 </div>
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb78" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><span class="fu" style="color: #4758AB;">colnames</span>(z) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"tom"</span>, <span class="st" style="color: #20794D;">"dick"</span>, <span class="st" style="color: #20794D;">"harry"</span>)</span>
 <span id="cb78-2">z</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb76" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><span class="fu" style="color: #4758AB;">colnames</span>(z) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"tom"</span>, <span class="st" style="color: #20794D;">"dick"</span>, <span class="st" style="color: #20794D;">"harry"</span>)</span>
+<span id="cb76-2">z</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>     tom dick harry
 [1,]   1    3     5
@@ -714,20 +899,33 @@ attr(,"names")
 </div>
 <p>Matrices have rows and columns, and are all of the same type whether it is numeric or character. There is a full suite of matrix math facilities in R to operate on numeric matrices.</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb80" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1">z<span class="sc" style="color: #5E5E5E;">+</span><span class="dv" style="color: #AD0000;">2</span></span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb78" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1">z<span class="sc" style="color: #5E5E5E;">+</span><span class="dv" style="color: #AD0000;">2</span></span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>     tom dick harry
 [1,]   3    5     7
 [2,]   4    6     8</code></pre>
 </div>
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb82" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1">z<span class="sc" style="color: #5E5E5E;">*</span><span class="dv" style="color: #AD0000;">2</span>  <span class="co" style="color: #5E5E5E;"># ordinary element-by-element multiplication</span></span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb80" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1">z<span class="sc" style="color: #5E5E5E;">*</span><span class="dv" style="color: #AD0000;">2</span>  <span class="co" style="color: #5E5E5E;"># ordinary element-by-element multiplication</span></span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>     tom dick harry
 [1,]   2    6    10
 [2,]   4    8    12</code></pre>
 </div>
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb84" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1">x <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">4</span>)</span>
 <span id="cb84-2">z<span class="sc" style="color: #5E5E5E;">%*%</span>x  <span class="co" style="color: #5E5E5E;"># matrix multiplication</span></span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb82" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1">x <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">4</span>)</span>
+<span id="cb82-2">z<span class="sc" style="color: #5E5E5E;">%*%</span>x  <span class="co" style="color: #5E5E5E;"># matrix multiplication</span></span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1]
 [1,]   27
@@ -739,6 +937,7 @@ attr(,"names")
 <h3 class="anchored" data-anchor-id="data-frames">Data Frames</h3>
 <p>Dataframes are superficially similar to matrices. They are rectangular. However, a major difference is that the vectors that comprise a dataframe can have vectors of different type. For example, one column can contain species names, whereas the other columns might contain numerical data.</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb86" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1">species <span class="ot" style="color: #003B4F;">=</span> letters[<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">3</span>]</span>
 <span id="cb86-2">y <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">3</span>)</span>
 <span id="cb86-3">dat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">data.frame</span>(species, x, y)</span></code></pre></div>
@@ -762,6 +961,31 @@ attr(,"names")
 <pre><code>[1] 3</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb95" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><span class="fu" style="color: #4758AB;">dim</span>(dat)</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb84" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1">species <span class="ot" style="color: #003B4F;">=</span> letters[<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">3</span>]</span>
+<span id="cb84-2">y <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">3</span>)</span>
+<span id="cb84-3">dat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">data.frame</span>(species, x, y)</span></code></pre></div>
+</div>
+<p>Internally, it is no longer a single vector but actually a list of vectors:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><span class="fu" style="color: #4758AB;">class</span>(dat)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb87" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><span class="fu" style="color: #4758AB;">mode</span>(dat)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb89" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><span class="fu" style="color: #4758AB;">names</span>(dat)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "species" "x"       "y"      </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb91" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><span class="fu" style="color: #4758AB;">length</span>(dat)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb93" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><span class="fu" style="color: #4758AB;">dim</span>(dat)</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3 3</code></pre>
 </div>
@@ -769,20 +993,34 @@ attr(,"names")
 <p>This is why the length of a dataframe is the number of columns. The names are the names of the columns, etc.</p>
 <p>You can access the columns of dataframes using the <code>$</code> operator, or using brackets, or by index number: and the name of the element, by the index number and double brackets, or by name and double bracket. Or a single value by using indexing on the row and column number separated by a comma. More on this later in the indexing chapter.</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb97" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1">dat<span class="sc" style="color: #5E5E5E;">$</span>species</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "a" "b" "c"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb99" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1">dat[<span class="dv" style="color: #AD0000;">1</span>]</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb95" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1">dat<span class="sc" style="color: #5E5E5E;">$</span>species</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a" "b" "c"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb97" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1">dat[<span class="dv" style="color: #AD0000;">1</span>]</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>  species
 1       a
 2       b
 3       c</code></pre>
 </div>
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb101" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1">dat[<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">3</span>]</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.06061749</code></pre>
+=======
+<div class="sourceCode cell-code" id="cb99" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1">dat[<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">3</span>]</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.206183</code></pre>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 </div>
 </div>
 </section>
@@ -790,6 +1028,7 @@ attr(,"names")
 <h3 class="anchored" data-anchor-id="lists">Lists</h3>
 <p>Lists are vectors of arbitrary objects. You can string any kind of objects together in a list. Sometimes the objects are identical, such as when you are doing a massive simulation study and each list element may be a simulated dataset in form of a dataframe. Alternatively, each element of a list may contain a different type of object. This is especially useful for model fitting output, for example, where you may want to store the input data in one list element, and in other list elements: the expression for the model, the fitted parameters, and the information criteria. All of these items are logically related, and if you name the list elements you can easily access the information wanted.</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb103" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1">mylist <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">list</span>(species,x,y,z)</span>
 <span id="cb103-2"><span class="fu" style="color: #4758AB;">names</span>(mylist) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"species"</span>, <span class="st" style="color: #20794D;">"x"</span>, <span class="st" style="color: #20794D;">"y"</span>, <span class="st" style="color: #20794D;">"z"</span>)</span>
 <span id="cb103-3"><span class="fu" style="color: #4758AB;">class</span>(mylist)</span></code></pre></div>
@@ -805,6 +1044,23 @@ attr(,"names")
 <pre><code>[1] 4</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb109" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><span class="fu" style="color: #4758AB;">dim</span>(mylist)</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb101" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1">mylist <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">list</span>(species,x,y,z)</span>
+<span id="cb101-2"><span class="fu" style="color: #4758AB;">names</span>(mylist) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"species"</span>, <span class="st" style="color: #20794D;">"x"</span>, <span class="st" style="color: #20794D;">"y"</span>, <span class="st" style="color: #20794D;">"z"</span>)</span>
+<span id="cb101-3"><span class="fu" style="color: #4758AB;">class</span>(mylist)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb103" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><span class="fu" style="color: #4758AB;">mode</span>(mylist)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb105" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><span class="fu" style="color: #4758AB;">length</span>(mylist)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb107" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><span class="fu" style="color: #4758AB;">dim</span>(mylist)</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>NULL</code></pre>
 </div>
@@ -812,7 +1068,11 @@ attr(,"names")
 <p>Note that lists have no <strong>dimension</strong> (because they are more flexible vectors - kinda like stretchy christmas stockings). However, if you have a matrix or a dataframe within a list those will have vectors. The object within lists have their own attributes.</p>
 <p>You can access the z element of mylist in a number of ways, using the <code>$</code> operator and the name of the element, by the index number and double brackets, or by name and double bracket:</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb111" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1">mylist<span class="sc" style="color: #5E5E5E;">$</span>z</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb109" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1">mylist<span class="sc" style="color: #5E5E5E;">$</span>z</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>     tom dick harry
 [1,]   1    3     5
@@ -820,6 +1080,7 @@ attr(,"names")
 attr(,"names")
 [1] "a" "b" "c" "d" "e" "f"</code></pre>
 </div>
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb113" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><span class="fu" style="color: #4758AB;">names</span>(mylist<span class="sc" style="color: #5E5E5E;">$</span>z)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "a" "b" "c" "d" "e" "f"</code></pre>
@@ -829,18 +1090,37 @@ attr(,"names")
 <pre><code>[1] "a" "b" "c" "d" "e" "f"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb117" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><span class="fu" style="color: #4758AB;">names</span>(mylist[[<span class="st" style="color: #20794D;">"z"</span>]])</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb111" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><span class="fu" style="color: #4758AB;">names</span>(mylist<span class="sc" style="color: #5E5E5E;">$</span>z)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a" "b" "c" "d" "e" "f"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb113" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><span class="fu" style="color: #4758AB;">names</span>(mylist[[<span class="dv" style="color: #AD0000;">4</span>]])</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a" "b" "c" "d" "e" "f"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb115" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><span class="fu" style="color: #4758AB;">names</span>(mylist[[<span class="st" style="color: #20794D;">"z"</span>]])</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "a" "b" "c" "d" "e" "f"</code></pre>
 </div>
 </div>
 <p>To see the structure of the list object, use <code>str()</code></p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb119" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><span class="fu" style="color: #4758AB;">str</span>(mylist)</span></code></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb117" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><span class="fu" style="color: #4758AB;">str</span>(mylist)</span></code></pre></div>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 4
  $ species: chr [1:3] "a" "b" "c"
  $ x      : num [1:3] 1 2 4
+<<<<<<< HEAD
  $ y      : num [1:3] -0.0606 1.7631 1.6524
+=======
+ $ y      : num [1:3] 1.206 0.342 -0.183
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
  $ z      : int [1:2, 1:3] 1 2 3 4 5 6
   ..- attr(*, "names")= chr [1:6] "a" "b" "c" "d" ...
   ..- attr(*, "dimnames")=List of 2
@@ -853,6 +1133,10 @@ attr(,"names")
 
 </section>
 </section>
+<<<<<<< HEAD
+=======
+</section>
+>>>>>>> d79fc3c365b62d8b99ce43d18c855f98c43ad31a
 
 
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
