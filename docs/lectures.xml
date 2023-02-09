@@ -10,7 +10,355 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023</description>
 <generator>quarto-1.2.313</generator>
-<lastBuildDate>Tue, 07 Feb 2023 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 09 Feb 2023 10:00:00 GMT</lastBuildDate>
+<item>
+  <title>Types of Data</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2023-02-09-data/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<!-- Add interesting quote -->
+<!-- # Pre-lecture materials -->
+<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
+<p>✏️</p>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>We will discuss different types of data, how they are represented in R, and how data type influences the types of data analyses we may employ.</p>
+</section>
+<section id="pre-lecture-materials" class="level1">
+<h1>Pre-lecture materials</h1>
+<section id="watch" class="level3">
+<h3 class="anchored" data-anchor-id="watch">Watch</h3>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Watch
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before class, you can prepare by watching:</strong></p>
+<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/wzPRpyoNaa8?start=350" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</div>
+</div>
+</section>
+<section id="acknowledgements" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><a href="https://andreashandel.github.io/MADAcourse/Data_Types.html" class="uri">https://andreashandel.github.io/MADAcourse/Data_Types.html</a></li>
+<li><a href="https://r-coder.com/data-types-r/#Raw_data_type_in_R" class="uri">https://r-coder.com/data-types-r/#Raw_data_type_in_R</a></li>
+<li><a href="https://www.stat.auckland.ac.nz/~paul/ItDT/HTML/node76.html" class="uri">https://www.stat.auckland.ac.nz/~paul/ItDT/HTML/node76.html</a> # Learning objectives</li>
+</ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Understand different types of data and how they are represented computationally</li>
+<li>Understand that different data types require different analysis approaches</li>
+<li>Recognize different base data types in R and know how to work with them</li>
+<li>Know about the base data structures in R and how to make them do what you want</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="what-is-data-anyway" class="level1">
+<h1>What is data anyway?</h1>
+<p>Merriam Webster defines <strong>data</strong> as <em>factual information (such as <strong>measurements</strong> or <strong>statistics</strong>) used as a basis for <strong>reasoning</strong>, <strong>discussion</strong>, or <strong>calculation</strong>.</em></p>
+<p>From a practicing scientistsʻ point of view, data is anything <strong>measureable</strong> or <strong>scorable</strong> that could provide <strong>information</strong> regarding a phenomenon of interest.</p>
+<p>Ideally, data:</p>
+<ul>
+<li>are <strong>repeatable</strong> (at least within statistical error).<br>
+</li>
+<li>contain more <strong>signal</strong> than <strong>noise</strong>.</li>
+</ul>
+<p>For example, if we are studying how morphology changes with body size, we could take measurements such as <em>body length</em>, <em>head length</em>, <em>arm length</em>, and <em>leg length</em> on a sample of <em>individuals</em>. These measurements would provide linear, <strong>continuous data</strong> that would inform our study of size and scaling. If we also expected males and females to differ, then <em>sex</em> would be a <strong>categorical variable</strong>.</p>
+<ul>
+<li>It is important to <em>define the variables</em> so that the measurements are <em>repeatable</em> by other scientists collecting data on the same or similar samples.<br>
+</li>
+<li>The <em>variables</em> chosen are expected to be related to the phenomenon of interest (here, scaling).<br>
+</li>
+<li>The <em>individuals</em> are replicates from the same sample population, meaning that they should be equally embody or be influenced by the phenomenon we are studying. In other words, they form a homogenous sample. In the example of sexual dimorphism, we potentially have different groups within our sample. This can be taken account of in analyses using our <em>categorical grouping variable</em> <em>sex</em>.</li>
+</ul>
+<p>Data have many forms such as images, sound, video, text, or any combination. Today we also have access to large volume datastreams from remote sensing, social media, or from all the various -omics. The kind of data, and how messy it is, determines the amount of processing that needs to be done before analysis.</p>
+<p>At some point your data will most likely be arranged into spreadsheets, with observations as rows and variables as columns. <strong>In this course, we will focus on the data source that you are most likely to encounter in your analyses, the “(messy) spreadsheet” type, containing bits of information collected on individuals.</strong> Please do feel free to play around with other data types on your own, e.g.&nbsp;for your course project.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-havedata" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://mbutler808.github.io/images/i-have-data_3.jpeg" class="img-fluid figure-img" style="width:80.0%" alt="A cartoon showing two people arguing at a table, and a third person, the data analyst is at his laptop. He is smiling and says *When you two have finished arguing your opinions, I actually have data*."></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Weʻve all been here. Source: timoelliott.com</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="https://timoelliott.com/blog/cartoons/analytics-cartoons">Source: timoelliott.com</a></p>
+</section>
+<section id="types-of-variables" class="level1">
+<h1>Types of Variables</h1>
+<p>Variables are the conceptual elements of the data. Variables are typically categorized by the nature of how they can vary (i.e., quantitative, qualitative, ordinal), because these differences dictate different analytical approaches and statistical methods.</p>
+<p><strong>Quantitative:</strong> This data type, also called <em>metric</em> data, represents variation in magnitude and generally allows one to do certain mathematical operations, e.g., subtraction or addition. The most common variations include:</p>
+<ul>
+<li><em><strong>Continuous</strong></em>: Can take on any numerical value. Examples include mass, length, distance, age, etc.</li>
+<li><em><strong>Discrete</strong></em>: Can only take countable (integer) values, e.g., the number of offspring an indivdiual produces.</li>
+<li><em><strong>Fraction/Proportion</strong></em>: A continuous ratio of two values, with the numerator being a part to the whole which is represented by the demoninator. Thus these variables take on values between 0 and 1.</li>
+<li><em><strong>Ratios</strong></em>: A continuous ratio of any two values. Data measured on a ratio scale have all the properties of continuous data.</li>
+</ul>
+<p><strong>Qualitative:</strong> Generally speaking, qualitative data indicate <em>categories</em> which have no intrinsic numeric value or natural order. Therefore it would not make sense to apply arithmetic to qualitative data such as color, sex, or family group, etc. You may see the term <em>nominal</em> (definition: “pertaining to names”) data applied to categorial data in the statistical literature. Major types of <strong>qualitative</strong> data include:</p>
+<ul>
+<li><em><strong>Categorical</strong></em>: e.g., flower color, continent of origin, social status, disease state, etc.</li>
+<li><em><strong>Descriptive</strong></em>: e.g., free text data from field observations.</li>
+</ul>
+<p><strong>Ordinal:</strong> Related to categorical data, this type differs in that they can be ranked, at least qualitatively.</p>
+<p>For example, while body condition may be a qualitative assessment, “obese” clearly indicates greater fat stores than “well-conditioned”, which is greater than “emaciated”. Thus, ordinal data fall between being strictly quantitative or strictly qualitative. In some cases, if there are numerous categories, you can begin to think of them as approaching continuous data, although one important difference is that there is no clear numerical value that you can assign to the different categories (i.e., it is unclear whether the difference between obese and well-conditioned is the same as the difference between well-conditioned and emaciated). It may make sense to apply rank order statistics to ordinal data, but it would not make sense to add, subtract, or multiply these categories.</p>
+</section>
+<section id="analysis-approaches-and-their-relationship-to-data" class="level1">
+<h1>Analysis approaches and their relationship to data</h1>
+<p>It may be obvious that data type will dictate the types of analyses one can do. It might be less obvious that the <strong>question of interest</strong> and whether there is a <em>quantitative or ordinal outcome</em> also drive our analyitical approach.</p>
+<section id="when-we-want-to-know-the-strength-of-the-quantitative-relationship" class="level3">
+<h3 class="anchored" data-anchor-id="when-we-want-to-know-the-strength-of-the-quantitative-relationship">When we want to know the strength of the quantitative relationship</h3>
+<p>Methods for <strong>quantitative responses</strong> (or outcomes) that address questions such as “<em>how much does leg length increase with body size?</em>”? In other words, “<em>how much does variable Y change with each increment of change in variable X</em>?” These are usually referred to as <strong>regression approaches</strong>.</p>
+<p>There are many subtypes of regression such as linear regression for continuous outcomes, and Poisson regression for discrete outcomes.</p>
+<ul>
+<li><strong><em>Linear regression</em></strong> predicts a continuous response, such as body size.</li>
+<li><strong><em>Poisson regression</em></strong> predicts a count or discrete response, such as population size.</li>
+</ul>
+<p>Both types of regression can be based independent variables that are continuous, discrete, or categorical (or some combination). They differ in the underlying distribution of the modeled response variable, often a normal distribution for linear regression, and a Poisson distribution for the Poisson regression.</p>
+</section>
+<section id="when-we-want-to-know-about-grouping" class="level3">
+<h3 class="anchored" data-anchor-id="when-we-want-to-know-about-grouping">When we want to know about grouping</h3>
+<p>Methods that recover <strong>categorical responses</strong>, in other words, categorizing observations based on the analysis of data, are usually referred to as <strong>classification approaches.</strong> These methods are useful for looking for order in nature, such as whether different species can be grouped into “ecomorphs” based on their morphology, or to predict the type of behavioral response (e.g., “attack” or “flee”) based on responses to different stimuli.</p>
+<p>It is possible to obtain an ordinal response as well, using <a href="https://en.wikipedia.org/wiki/Ordinal_regression"><strong>ordinal regression</strong></a>. Alternatively, the the response can be treated as unordered categorical or as continuous (depending on how you code them, i.e., in R as a factor or numeric).</p>
+<p>There are no hard and fast rules regarding when it is appropriate to treat an ordinal variable as fully quantitative. It should, however, at least be explained or justified. You can always treat it as categorical, but then you lose some information on the ranking of the variable.</p>
+<p>To add to the confusion, these classification methods are often based on regression, with the decision to classify based on one category or another dependent on comparing distances or probabilities based on regression results.<sup>1</sup></p>
+<p>Recently, there has been a lot of interest in AI and machine learning. This is often just a fancy way of renaming <strong><em>discriminant function analysis</em></strong> and <strong><em>cluster analysis</em></strong>. When you see <em>supervised</em> learning in the literature, it refers to cases when we have the categories predefined, and often we have a training dataset with data on individuals of each category to use to train the classification algorithm before we use it to predict grouping (i.e., <em>discriminant function analysis</em>). When we donʻt have the categories <em>a priori</em>, and the algorithms determine the categories and their number, these analysis methods are usually referred to as <em>clustering approaches</em> and are also called <em>unsupervised</em> learning methods.</p>
+<p>We will return to and apply some of those methods later in the course.</p>
+</section>
+</section>
+<section id="data-types-in-r" class="level1">
+<h1>Data types in R</h1>
+<p>Now that we have a basic understanding of the conceptual landscape of data, letʻs breifly discuss how these different types of data are represented in and handled by R.</p>
+<p>If you would like a gentle video walk through/demonstration of data types, now would be a good time to check out the <em>Types</em> section of the RStudio <a href="https://rstudio.cloud/learn/primers/1.2">programming basic primer</a>. For more details and examples see <a href="https://rafalab.github.io/dsbook/r-basics.html">chapter 3 of IDS</a>.</p>
+<section id="basic-data-types" class="level2">
+<h2 class="anchored" data-anchor-id="basic-data-types">Basic data types</h2>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+R has six basic (atomic) types of data:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="table">
+<thead>
+<tr class="header">
+<th>Atomic Type</th>
+<th style="text-align: left;">Short Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>string</strong> (or character)</td>
+<td style="text-align: left;">text</td>
+</tr>
+<tr class="even">
+<td><strong>integer</strong></td>
+<td style="text-align: left;">countable numbers</td>
+</tr>
+<tr class="odd">
+<td><strong>real</strong></td>
+<td style="text-align: left;">real numbers</td>
+</tr>
+<tr class="even">
+<td><strong>logical</strong></td>
+<td style="text-align: left;">TRUE or FALSE</td>
+</tr>
+<tr class="odd">
+<td><strong>complex</strong></td>
+<td style="text-align: left;">numbers with imaginary component</td>
+</tr>
+<tr class="even">
+<td><strong>raw</strong></td>
+<td style="text-align: left;">raw bytes</td>
+</tr>
+</tbody>
+</table>
+<p><em><strong>All other data types are derived from the atomic types</strong></em></p>
+</div>
+</div>
+<p>https://r-coder.com/data-types-r/#Raw_data_type_in_R</p>
+<p><strong>String/character:</strong> Character values are alphanumeric values (plus whitespace, punctuation, etc.). A string is a collection of characters, in other words “text”.</p>
+<ul>
+<li>strings can be pasted together using the <code>paste()</code> function.</li>
+<li>R has powerful tools for <strong>string manipulation</strong>, including searching, replacing, and customized partial matching (with or without replacement) using <strong>wildcards</strong> and perl-like <a href="https://github.com/rstudio/cheatsheets/blob/master/regex.pdf"><strong>regular expressions</strong> (or <strong>regex</strong>)</a> using base functions such as
+<ul>
+<li><code>grep()</code></li>
+<li><code>sub()</code></li>
+<li><code>gsub()</code></li>
+<li><code>substr()</code></li>
+</ul></li>
+<li>There are also packages specific for string manipulation including the <a href="https://stringr.tidyverse.org/"><code>stringr</code> package</a> which is part of the tidyverse.</li>
+</ul>
+<p>It is very likely that you will need to work with strings at some point during a data analysis, even if it is only to find specific values, clean up variable names, etc.</p>
+<p>These problems can be quite the headache! But instead of editing them by hand and possibly making an error, it is better to do this with code. It also makes it easier to keep a record of the original data and all of the changes made to it, improving the reproducibility of your analysis.</p>
+<p>There is a learning curve to using these tools, especially <strong>regex</strong> syntax, but they are very powerful and well worth your time.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Good sources for practice manipulating strings:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>For beginners: Review <a href="https://r4ds.had.co.nz/strings.html">the <em>Strings</em> chapter (14) of R4DS</a>, and do the exercises.</li>
+<li><a href="https://rafalab.github.io/dsbook/string-processing.html">The <em>string processing</em> chapter (25) of IDS</a></li>
+<li><a href="https://stat545.com/character-vectors.html">the <em>Character Vectors</em> chapter in the STAT 545 book</a> by <a href="https://jennybryan.org/">Jenny Bryan</a></li>
+</ul>
+<p><strong>Decide which one is right for your level and work through some examples. I think youʻll agree that it is worth your time.</strong></p>
+</div>
+</div>
+<p><strong>Numeric (double or integer):</strong> Variables of type <code>numeric</code> in R are either integers or double precision (representing real numbers).</p>
+<ul>
+<li>Integers and real values are different, but in practice most R users donʻt pay attention to this distinction. Integer values tend to be coerced (converted) to real values if any mathematical operations are done to them.</li>
+<li>If an integer is explicity needed, you can create them using functions such as <code>as.integer()</code>.</li>
+<li>Note that when you type an integer value, e.g.&nbsp;<code>x &lt;- 2</code>, into R, this is considered numeric by default.</li>
+<li>If you want to make sure a value is treated as integer, add an <code>L</code>, e.g.&nbsp;<code>x &lt;- 2L</code>.</li>
+</ul>
+<p><strong>Logical:</strong> Logical variables are binary and can take on only two values, <code>TRUE</code> or <code>FALSE</code> (which are <em>reserved words</em> that only take on these meanings in R).</p>
+<ul>
+<li>In R, logical values are interpreted as 1 for <code>TRUE</code> and 0 for <code>FALSE</code>.</li>
+<li>R also understands <code>T</code>, <code>True</code>, and <code>true</code> for <code>TRUE</code>, and the corresponding representations for <code>FALSE</code>.</li>
+<li>Importantly, logical comparisons are used for <strong>indexing</strong>. You will use logical comparisons when cleaning and checking your data, or running analyses, e.g., if you want to see if your variable <code>x</code> is greater than 5, then the R command <code>x &gt; 5</code> will return either TRUE or FALSE, based on the value of <code>x</code>.</li>
+<li><em>Note: reserved words are understood as constants and should not be “quoted”</em>.</li>
+</ul>
+</section>
+<section id="derived-data-types" class="level2">
+<h2 class="anchored" data-anchor-id="derived-data-types">Derived data types</h2>
+<p>R also allows derived data types called <strong>classes</strong> that are built up from atomic data types. There are R base classes as well as new classes that can be defined as needed by programmers (maybe you?).</p>
+<p><strong>Factors:</strong> Are Rʻs class for categorical variables.</p>
+<ul>
+<li><strong>Factors</strong> have <strong>names</strong> and <strong>values</strong>.</li>
+<li>For example, a <strong>size</strong> factor may have <code>names</code> (or <code>levels</code>) of <code>small</code>, <code>medium</code>. and <code>large</code> with values 0,1,2. Here, the values simply indicate the different categories, with the names being the human-friendly labels for the values.<br>
+</li>
+<li>Factors can be ordered/ordinal or not.</li>
+<li>Factors could be numeric values, e.g., the number of offspring.</li>
+<li>Or it could be a factor coding for 3 types of habitat (unordered),</li>
+<li>Or 3 levels of life history stage (ordered).</li>
+<li>An excellent package to work with factors is the <a href="https://forcats.tidyverse.org/"><code>forcats</code> package</a>.</li>
+</ul>
+<p>For more about factors, work through the <a href="https://r4ds.had.co.nz/factors.html"><em>Factors</em> chapter of R4DS</a>, and do the exercises.</p>
+<p><strong>Date/time:</strong> Dates in base R are of the class <code>Date</code> (and are called <code>POSIX</code> variables). The <a href="https://lubridate.tidyverse.org/"><code>lubridate</code> package</a> is a tidyverse package to work with dates, which many people find easier. There are other packages as well.</p>
+<p>Additional resources are the <a href="https://r4ds.had.co.nz/dates-and-times.html"><em>Dates and times</em> chapter of R4DS</a> and the <a href="https://rafalab.github.io/dsbook/parsing-dates-and-times.html"><em>Parsing Dates and Times</em> chapter of IDS</a>.</p>
+<p><strong>Programmer-defined classes</strong> Many packages define their own classes. For example class <code>phylo</code> is used to represent phylogenetic trees in the <code>ape</code> package.</p>
+<section id="there-are-several-functions-that-can-show-you-the-data-type-of-an-r-object" class="level3">
+<h3 class="anchored" data-anchor-id="there-are-several-functions-that-can-show-you-the-data-type-of-an-r-object">There are several functions that can show you the data type of an R object</h3>
+<p>such as <code>typeof()</code>, <code>mode()</code>, <code>storage.mode()</code>, <code>class()</code> and <code>str()</code>.</p>
+</section>
+</section>
+<section id="data-structures-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="data-structures-in-r">Data structures in R</h2>
+<p>Data in R are stored in data structures called <strong>objects</strong>.</p>
+<p><strong>Vectors:</strong> vectors are the simplest object, a collection of data elements in a single sequence.</p>
+<ul>
+<li>One way to create vectors is with the <code>concatenate</code> command, <code>c()</code>.<br>
+</li>
+<li><code>1:3</code> is shorthand for a numeric sequence <code>=c(1,2,3)</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">x <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">3</span>,<span class="dv" style="color: #AD0000;">12</span>,<span class="dv" style="color: #AD0000;">5</span>)</span>
+<span id="cb1-2">y <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">3</span></span>
+<span id="cb1-3">x</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  3 12  5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">y</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3</code></pre>
+</div>
+</div>
+<ul>
+<li><strong>A single vector can contain only one type</strong> (e.g., all characters or all numeric).</li>
+<li>If you try to mix and match, everything will default to the lowest common denominator, typically a character (anything can be a character).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">x1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">1</span>, <span class="st" style="color: #20794D;">"dog"</span>)</span>
+<span id="cb5-2"><span class="fu" style="color: #4758AB;">class</span>(x)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;">class</span>(x1)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">x1</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "3"   "1"   "dog"</code></pre>
+</div>
+</div>
+<p>What happened?</p>
+<p><strong>Matrices:</strong> A matrix is a rectangular collection of data elements in rows and columns.</p>
+<ul>
+<li>A matrix can contain only one type.</li>
+<li>Internally, R stores matrices as a long vector, keeping track of where the columm breaks are.</li>
+<li>Matrices are really important for the matrix math used to solve many statistical models.</li>
+</ul>
+<p><strong>Data frames:</strong> A data frame is a rectangular data structure that is designed to store records of individual subjects.</p>
+<ul>
+<li>A data frame has rows and columns.</li>
+<li>Columns are allowed to be of different data types (for example, “character” for the subject names and “numeric” for measured variables for each subject, and “factors” for categories such as sex, etc.).</li>
+<li>Internally, data frames are stored as a list of vectors, one for each column. This allows each column to have a different type.</li>
+<li>Each columm must have the same number of elements or rows, i.e., it must be rectangular.</li>
+<li>Typically, the columms of data frames have names corresponding to variable names.</li>
+</ul>
+<p><strong>Lists:</strong> Lists do not have to be rectangular and are the most flexible data type in R. A list is a vector possibly composed of different structures and of varying length (this is the only type where that is allowed!). &gt; - Lists are commonly used for model fits in statistical functions. For example, you may want to store the model (an expression), the input data (a dataframe), the output coefficients (a vector), - R has many powerful functions that operate on lists.</p>
+<p>Other types of data structures exist; they are often introduced by specific R packages. An important one to know is the <code>tibble</code> which is a type of data frame used in the <code>tidyverse</code>. It is similar, but not exactly like a data frame. You can read more about <code>tibbles</code> <a href="https://tibble.tidyverse.org/">on its package website</a> and in <a href="https://r4ds.had.co.nz/tibbles.html">R4DS chapter 10</a>.</p>
+</section>
+<section id="other-derived-data-types" class="level2">
+<h2 class="anchored" data-anchor-id="other-derived-data-types">Other derived data types</h2>
+<p><strong>Timeseries:</strong> A very useful set of tools for times-series analysis in R is the set of packages called <a href="https://tidyverts.org/">the tidyverts</a>. CRAN also has a <a href="https://cran.r-project.org/web/views/TimeSeries.html">Task View for <em>Time Series Analysis</em>.</a> (A <em>Task View</em> on CRAN is a site that tries to combine and summarize various R packages for a specific topic). Another task view that deals with longitudinal/time-series data is the <a href="https://cran.r-project.org/web/views/Survival.html"><em>Survival Analysis</em> Task View</a>.</p>
+<p><strong>Omics:</strong> The <a href="https://www.bioconductor.org/">bioconductor</a> website is your source for (almost) all tools and resources related to omics-type data analyses in R.</p>
+<p><strong>Text:</strong> Working with and analyzing larger sections of text is different from the simple string manipulation discussed above. These days, analysis of text often goes by the term <em>natural language processing</em>. Such text analysis will continue to increase in importance, given the increasing data streams of that type. If you are interested in doing full analyses of text data, the <a href="https://juliasilge.github.io/tidytext/"><code>tidytext</code> R package</a> and the <a href="https://www.tidytextmining.com/">Text mining with R book</a> are great resources. A short introduction to this topic is <a href="https://rafalab.github.io/dsbook/text-mining.html">The <em>text mining</em> chapter (27) of IDS.</a></p>
+<p><strong>Images:</strong> Images are generally converted into multiple matrices of values for different pixels of an image. For instance, one could divide an image into a 100x100 grid of pixels, and assign each pixel a RGB values and intensity. That means one would have 4 matrices of numeric values, each of size 100x100. One would then perform operations on those values. We won’t do anything with images here, there are some R packages for analyzing image data.</p>
+<p><strong>Videos:</strong> Are a time-series of images. Analysis of videos therefore has an extra layer of complexity.</p>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>For example, logistic regression (a regression to predict a binary [yes/no] outcome) is used for classification. The underlying model predicts a quantitative outcome (a value between 0 and 1 usually interpreted as a probability), which is then binned to make categorical predictions.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>module 2</category>
+  <category>week 4</category>
+  <category>data</category>
+  <category>data structures</category>
+  <category>objects</category>
+  <guid>https://mbutler808.github.io/posts/2023-02-09-data/index.html</guid>
+  <pubDate>Thu, 09 Feb 2023 10:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Saving your work as R scripts</title>
   <dc:creator>Marguerite Butler</dc:creator>
