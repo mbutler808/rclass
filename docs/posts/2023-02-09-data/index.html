@@ -279,7 +279,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#there-are-several-functions-that-can-show-you-the-data-type-of-an-r-object" id="toc-there-are-several-functions-that-can-show-you-the-data-type-of-an-r-object" class="nav-link" data-scroll-target="#there-are-several-functions-that-can-show-you-the-data-type-of-an-r-object">There are several functions that can show you the data type of an R object</a></li>
   </ul></li>
-  <li><a href="#data-structures-in-r" id="toc-data-structures-in-r" class="nav-link" data-scroll-target="#data-structures-in-r">Data structures in R</a></li>
+  </ul></li>
+  <li><a href="#data-structures-in-r" id="toc-data-structures-in-r" class="nav-link" data-scroll-target="#data-structures-in-r">Data structures in R</a>
+  <ul class="collapse">
   <li><a href="#other-derived-data-types" id="toc-other-derived-data-types" class="nav-link" data-scroll-target="#other-derived-data-types">Other derived data types</a></li>
   </ul></li>
   <li><a href="#attributes-of-objects" id="toc-attributes-of-objects" class="nav-link" data-scroll-target="#attributes-of-objects">Attributes of Objects</a></li>
@@ -571,8 +573,9 @@ Good sources for practice manipulating strings:
 <p>such as <code>typeof()</code>, <code>mode()</code>, <code>storage.mode()</code>, <code>class()</code> and <code>str()</code>.</p>
 </section>
 </section>
-<section id="data-structures-in-r" class="level2">
-<h2 class="anchored" data-anchor-id="data-structures-in-r">Data structures in R</h2>
+</section>
+<section id="data-structures-in-r" class="level1">
+<h1>Data structures in R</h1>
 <p>Data in R are stored in data structures called <strong>objects</strong>.</p>
 <p><strong>Vectors:</strong> vectors are the simplest object, a collection of data elements in a single sequence.</p>
 <ul>
@@ -628,7 +631,6 @@ Good sources for practice manipulating strings:
 </ul>
 <p><strong>Lists:</strong> Lists do not have to be rectangular and are the most flexible data type in R. A list is a vector possibly composed of different structures and of varying length (this is the only type where that is allowed!). &gt; - Lists are commonly used for model fits in statistical functions. For example, you may want to store the model (an expression), the input data (a dataframe), the output coefficients (a vector), - R has many powerful functions that operate on lists.</p>
 <p>Other types of data structures exist; they are often introduced by specific R packages. An important one to know is the <code>tibble</code> which is a type of data frame used in the <code>tidyverse</code>. It is similar, but not exactly like a data frame. You can read more about <code>tibbles</code> <a href="https://tibble.tidyverse.org/">on its package website</a> and in <a href="https://r4ds.had.co.nz/tibbles.html">R4DS chapter 10</a>.</p>
-</section>
 <section id="other-derived-data-types" class="level2">
 <h2 class="anchored" data-anchor-id="other-derived-data-types">Other derived data types</h2>
 <p><strong>Timeseries:</strong> A very useful set of tools for times-series analysis in R is the set of packages called <a href="https://tidyverts.org/">the tidyverts</a>. CRAN also has a <a href="https://cran.r-project.org/web/views/TimeSeries.html">Task View for <em>Time Series Analysis</em>.</a> (A <em>Task View</em> on CRAN is a site that tries to combine and summarize various R packages for a specific topic). Another task view that deals with longitudinal/time-series data is the <a href="https://cran.r-project.org/web/views/Survival.html"><em>Survival Analysis</em> Task View</a>.</p>
@@ -778,8 +780,8 @@ Good sources for practice manipulating strings:
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">8</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  2.1947349 -0.2562585 -0.2035381  0.6288877 -1.3370207  1.4989109 -0.6963506
-[8] -0.4644783</code></pre>
+<pre><code>[1]  0.6035840 -0.2962841 -0.8967044  1.3248768 -0.4958451 -0.3829508 -0.3614549
+[8] -1.3265518</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>goodanswer <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)  <span class="co"># logical</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>goodanswer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -846,9 +848,9 @@ Levels: high low med</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.character</span>(y)  <span class="co"># coerce to character</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2.19473492174288"   "-0.256258504107015" "-0.203538085760892"
-[4] "0.628887650147721"  "-1.3370207075044"   "1.49891085267534"  
-[7] "-0.696350574541103" "-0.464478304179928"</code></pre>
+<pre><code>[1] "0.603583967065033"  "-0.296284094449709" "-0.896704433798679"
+[4] "1.32487675268472"   "-0.495845125081481" "-0.382950811166559"
+[7] "-0.36145488966505"  "-1.3265518247781"  </code></pre>
 </div>
 </div>
 <p>Note that when values are quoted, they are of type character.</p>
@@ -938,14 +940,14 @@ length (arg 1)</code></pre>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>xy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     x          y
-[1,] 1  2.1947349
-[2,] 5 -0.2562585
-[3,] 7 -0.2035381
-[4,] 2  0.6288877
-[5,] 6 -1.3370207
-[6,] 1  1.4989109
-[7,] 5 -0.6963506
-[8,] 7 -0.4644783</code></pre>
+[1,] 1  0.6035840
+[2,] 5 -0.2962841
+[3,] 7 -0.8967044
+[4,] 2  1.3248768
+[5,] 6 -0.4958451
+[6,] 1 -0.3829508
+[7,] 5 -0.3614549
+[8,] 7 -1.3265518</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nrow=</span><span class="dv">2</span>)  <span class="co">#create a matrix with 2 rows</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>z</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1070,7 +1072,7 @@ attr(,"names")
 </div>
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>dat[<span class="dv">1</span>,<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.8251715</code></pre>
+<pre><code>[1] -0.2100909</code></pre>
 </div>
 </div>
 </section>
@@ -1128,7 +1130,7 @@ attr(,"names")
 <pre><code>List of 4
  $ species: chr [1:3] "a" "b" "c"
  $ x      : num [1:3] 1 2 4
- $ y      : num [1:3] -0.825 -0.43 0.171
+ $ y      : num [1:3] -0.21 -0.852 -1.686
  $ z      : int [1:2, 1:3] 1 2 3 4 5 6
   ..- attr(*, "names")= chr [1:6] "a" "b" "c" "d" ...
   ..- attr(*, "dimnames")=List of 2

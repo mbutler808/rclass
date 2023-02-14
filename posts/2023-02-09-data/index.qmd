@@ -252,7 +252,7 @@ such as `typeof()`, `mode()`, `storage.mode()`, `class()` and `str()`.
 
 
 
-## Data structures in R
+# Data structures in R
 
 Data in R are stored in data structures called **objects**. 
 
