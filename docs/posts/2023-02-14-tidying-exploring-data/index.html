@@ -983,7 +983,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 </div>
 <p>To add points to an existing plot, use <code>points()</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(penguins[penguins<span class="sc">$</span>species<span class="sc">==</span><span class="st">"Adelie"</span>,], <span class="fu">points</span>( body_mass_g, bill_length_mm, <span class="at">col=</span><span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(penguins, <span class="fu">plot</span>( body_mass_g, bill_length_mm))</span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(penguins[penguins<span class="sc">$</span>species<span class="sc">==</span><span class="st">"Adelie"</span>,], <span class="fu">points</span>( body_mass_g, bill_length_mm, <span class="at">col=</span><span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+</div>
 </div>
 <p>One could fit linear models, for example, and use <code>lines()</code> to overlay the line on the plot.</p>
 </section>

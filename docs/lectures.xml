@@ -708,7 +708,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 </div>
 <p>To add points to an existing plot, use <code>points()</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb130" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><span class="fu" style="color: #4758AB;">with</span>(penguins[penguins<span class="sc" style="color: #5E5E5E;">$</span>species<span class="sc" style="color: #5E5E5E;">==</span><span class="st" style="color: #20794D;">"Adelie"</span>,], <span class="fu" style="color: #4758AB;">points</span>( body_mass_g, bill_length_mm, <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"red"</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb130" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><span class="fu" style="color: #4758AB;">with</span>(penguins, <span class="fu" style="color: #4758AB;">plot</span>( body_mass_g, bill_length_mm))</span>
+<span id="cb130-2"><span class="fu" style="color: #4758AB;">with</span>(penguins[penguins<span class="sc" style="color: #5E5E5E;">$</span>species<span class="sc" style="color: #5E5E5E;">==</span><span class="st" style="color: #20794D;">"Adelie"</span>,], <span class="fu" style="color: #4758AB;">points</span>( body_mass_g, bill_length_mm, <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"red"</span>))</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-14-tidying-exploring-data/index_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+</div>
 </div>
 <p>One could fit linear models, for example, and use <code>lines()</code> to overlay the line on the plot.</p>
 </section>
@@ -742,7 +746,7 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
   <category>objects</category>
   <guid>https://mbutler808.github.io/posts/2023-02-14-tidying-exploring-data/index.html</guid>
   <pubDate>Thu, 09 Feb 2023 10:00:00 GMT</pubDate>
-  <media:content url="https://mbutler808.github.io/images/penguins.png" medium="image" type="image/png" height="86" width="144"/>
+  <media:content url="https://mbutler808.github.io/images/penguins.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Types of Data</title>
@@ -1820,12 +1824,14 @@ font-style: italic;">###</span></span></code></pre></div>
 <h2 class="anchored" data-anchor-id="text-editor-environment">Text editor environment</h2>
 <p>While I love the R text editor for writing R scripts, for working with multiple .qmd and other files I find it helpful to have a full-featured plain text editor. A new tool that I discovered is the Sublime text editor. If youʻd like to try it out, you can download it here: <a href="https://www.sublimetext.com" class="uri">https://www.sublimetext.com</a></p>
 <p>A couple of features I like is that you can have multiple panes open. For example if you want to copy text from an old script to a new script, you can easily see and do that.</p>
-<p>It also allows you to organize <em>Projects</em>, various folders that will appear on the sidebar to preserve your workspace. So for example if you have your Rclass folder in one place and your website folder in another, you can have both open within the Sublime project. When you finish working on it you can save the project and reopen it later.</p>
+<p>It also allows you to organize <em>Projects</em>, various folders that will appear on the sidebar to preserve your workspace. This helps when you are writing text documents across folders. So for example if you have your Rclass folder in one place and your website folder in another, you can have both open within the Sublime project. When you finish working on it you can save the project and reopen it later.</p>
 <p>To create a project start by opening a new file. Then choose the <code>Project &gt; Add folder to Project...</code> on the menu bar. You can load mulitple folders.</p>
+<p>It has contextual highlighting for Quarto as well as GitHub markdown.</p>
+<p>It also has integration with command line R <a href="https://bishwarup-paul.medium.com/a-guide-to-using-r-in-sublime-text-27f78b33f872" class="uri">https://bishwarup-paul.medium.com/a-guide-to-using-r-in-sublime-text-27f78b33f872</a>. You can run R commands in a lower terminal pane, sent directly from your text document in sublime.</p>
 </section>
 <section id="different-desktop-windows" class="level2">
 <h2 class="anchored" data-anchor-id="different-desktop-windows">Different Desktop Windows</h2>
-<p>Itʻs also nice to have multiple desktops to organize your work. - It makes it easier to find your different apps. - You may have one workspace for your text editor, and another for your Terminal or CMD prompt, for example. - If I am working with multiple git repos, I might have a separate Terminal open for each one (on the same desktop).</p>
+<p>Itʻs also nice to have multiple desktops to organize your work. - It makes it easier to find your different apps. - You may have one workspace for your text editor, and another for your Terminal or CMD prompt, for example. - If I am working with multiple git repos, I might have one desktop just for my Terminal windows with a separate Terminal open for each one.</p>
 <p>To use multiple desktops: <a href="https://support.microsoft.com/en-us/windows/multiple-desktops-in-windows-36f52e38-5b4a-557b-2ff9-e1a60c976434">On Windows</a> <a href="https://support.apple.com/guide/mac-help/work-in-multiple-spaces-mh14112/mac">On Mac</a></p>
 <p>One the Mac, you can open new desktops by using three fingers to swipe up on the trackpad. Switch between them by swiping left or right with three fingers.</p>
 </section>

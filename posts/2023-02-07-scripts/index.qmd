@@ -222,16 +222,20 @@ While I love the R text editor for writing R scripts, for working with multiple 
 
 A couple of features I like is that you can have multiple panes open. For example if you want to copy text from an old script to a new script, you can easily see and do that. 
 
-It also allows you to organize *Projects*, various folders that will appear on the sidebar to preserve your workspace. So for example if you have your Rclass folder in one place and your website folder in another, you can have both open within the Sublime project. When you finish working on it you can save the project and reopen it later. 
+It also allows you to organize *Projects*, various folders that will appear on the sidebar to preserve your workspace. This helps when you are writing text documents across folders. So for example if you have your Rclass folder in one place and your website folder in another, you can have both open within the Sublime project. When you finish working on it you can save the project and reopen it later. 
 
 To create a project start by opening a new file. Then choose the `Project > Add folder to Project...` on the menu bar. You can load mulitple folders.  
+
+It has contextual highlighting for Quarto as well as GitHub markdown. 
+
+It also has integration with command line R <https://bishwarup-paul.medium.com/a-guide-to-using-r-in-sublime-text-27f78b33f872>. You can run R commands in a lower terminal pane, sent directly from your text document in sublime. 
 
 ## Different Desktop Windows
 
 Itʻs also nice to have multiple desktops to organize your work. 
 -  It makes it easier to find your different apps.
 -  You may have one workspace for your text editor, and another for your Terminal or CMD prompt, for example. 
--  If I am working with multiple git repos, I might have a separate Terminal open for each one (on the same desktop). 
+-  If I am working with multiple git repos, I might have one desktop just for my Terminal windows with a separate Terminal open for each one. 
 
 To use multiple desktops: 
 [On Windows](<https://support.microsoft.com/en-us/windows/multiple-desktops-in-windows-36f52e38-5b4a-557b-2ff9-e1a60c976434>)

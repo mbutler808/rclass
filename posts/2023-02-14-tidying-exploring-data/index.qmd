@@ -402,7 +402,8 @@ with(penguins, plot( body_mass_g, bill_length_mm))
 To add points to an existing plot, use `points()`
 
 
-```{r eval=F}
+```{r }
+with(penguins, plot( body_mass_g, bill_length_mm))
 with(penguins[penguins$species=="Adelie",], points( body_mass_g, bill_length_mm, col="red"))
 ```
 
