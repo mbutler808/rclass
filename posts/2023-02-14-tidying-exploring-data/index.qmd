@@ -259,7 +259,7 @@ grep("p", sp, ignore.case=T, value=T)   # case-sensitive by default
 grep("^P", sp, value=T)  # only those which start with (^) capital P
 ```
 
-It is possible to use perl-type regular expressions, and the sub function is also available. Sub is related to grep, but substitutes a replacement value to the matched pattern. Notice that there are two species which have upper case letters. We can fix this with:
+It is possible to use perl-type regular expressions, and the sub function is also available. `sub` is related to `grep`, but substitutes a replacement value to the matched pattern. Notice that there are two species which have upper case letters. We can fix this with:
 
 ```{r}
 sp <- rownames(geo)

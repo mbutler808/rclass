@@ -703,7 +703,7 @@ $cvec
 <pre><code>[1] "Pinaroloxias" "Platyspiza"  </code></pre>
 </div>
 </div>
-<p>It is possible to use perl-type regular expressions, and the sub function is also available. Sub is related to grep, but substitutes a replacement value to the matched pattern. Notice that there are two species which have upper case letters. We can fix this with:</p>
+<p>It is possible to use perl-type regular expressions, and the sub function is also available. <code>sub</code> is related to <code>grep</code>, but substitutes a replacement value to the matched pattern. Notice that there are two species which have upper case letters. We can fix this with:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>sp <span class="ot">&lt;-</span> <span class="fu">rownames</span>(geo)</span>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sub</span>(<span class="at">pattern =</span> <span class="st">"^P"</span>, <span class="at">replacement =</span> <span class="st">"p"</span>, sp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
