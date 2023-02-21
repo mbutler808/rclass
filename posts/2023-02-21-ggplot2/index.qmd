@@ -1,0 +1,406 @@
+---
+title: "The ggplot2 package"  
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Introduction to the gplot2 grammar of graphics"  
+date: 2023-02-21
+categories: [module 3, week 7, R, programming, plotting, ggplot2, data visualization]  
+---
+
+<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
+<!-- `r emojifont::emoji('bar_plot')` -->
+
+
+### Excellent references
+
+::: callout-note
+## For more details see
+
+1.  Wonderful Window shopping in the R graph gallery (with code): <https://r-graph-gallery.com>
+2.  The "grammar of graphics" explained in Hadley Wickamʻs article: <http://vita.had.co.nz/papers/layered-grammar.pdf>
+3.  Very gentle intro for beginners: <https://posit.cloud/learn/primers/3>
+4.  Hadley Wickamʻs overview: <https://r4ds.had.co.nz/data-visualisation>
+4.  Cedric Schererʻs Step-by-step tutorial: <https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/>
+6.  For in-depth reading, Hadley Wickamʻs ggplot2 book: <https://ggplot2-book.org>
+:::
+
+
+### Acknowledgements
+
+Material for this lecture was borrowed and adopted from
+
+-   <http://rafalab.dfci.harvard.edu/dsbook/ggplot2.html>
+-   <https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-15-ggplot2-plotting-system-part-2/> 
+-   <https://rdpeng.github.io/Biostat776/lecture-the-ggplot2-plotting-system-part-2>
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Be able to build up layers of graphics using `ggplot()`
+-   Be able to modify properties of a `ggplot()` including layers and labels
+:::
+
+
+# Overview 
+
+Last time we discussed the elements of plotting in the R base graphical system. The base functions such as `plot()` open a new plot window and set up the coordinate system, axes, and often return the default plot. Annotations can be added onto a plot with additional functions such as `points()`, `lines()`, `text()`, etc. Many other plotting functions exist too, you can check out the `graphics` package <https://rdocumentation.org/packages/graphics/versions/3.6.2>. Or type `?graphics` at the R prompt and check out the help page index. 
+
+Today we will learn about the [`ggplot2` package](https://ggplot2.tidyverse.org) written by Hadley Wickam <https://hadley.nz>. `ggplot2` introduces a new syntax for plotting, based on the idea of a *grammar of graphics*. The idea is that the user supplies the data, specifies how ggplot2 maps variables to aesthetics, what graphical primitives or types to use, and it takes care of the details. The grammar of graphics builds plots in layers. 
+
+Just as in spoken language, where a beginner can form many sentences from only learning a handful of verbs, nouns and adjectives, using the ggplot2 grammar, even beginners can create hundreds of different plots.
+
+Note that `ggplot2` is part of the `tidyverse` and thus is designed to work exclusively with data tables in tidy format (rectangular data where rows are observations and columns are variables). 
+
+Being literate in ggplot2 requires using several functions and arguments, which may not make sense at first. The ggplot2 cheat sheet can be super helpful: <https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf> or google “ggplot2 cheat sheet”.
+
+
+The first step in learning `ggplot2` is to understand the basic elements of the grammar:
+
+## Basic components of a ggplot2 plot
+
+::: callout-tip
+### Key components
+
+A **`ggplot2` plot** consists of a number of **key components**.
+
+-  __Data__: In the form of a dataframe or tibble, containing all of the data that will be displayed on the plot.
+-  __Geometry__: The geometry or `geoms` define the style of the plot such as scatterplot, barplot, histogram, violin plots, smooth densities, qqplot,  boxplot, and others. 
+- __Aesthetic mapping__: Aesthetic mappings describe how data are mapped to color, size, shape, location, or to legend elements. How we define the mapping depends on what geometry we are using.
+
+Nearly all plots drawn with ggplot2 will have the above compoents. In addition you may want to have specify __additional elements__: 
+
+-  __Facets__: When used, facets describe how panel plots based on partions of the data should be drawn.
+
+-   __Statistical Transformations__: Or __stats__ are transformations of the data such as log-transformation, binning, quantiles, smoothing.
+
+-   __Scales__: Scales are used to indicate which factors are associated with the levels of the aesthetic mapping. Use manual scales to specify each level. 
+
+-   __Coordinate System__: ggplot2 will use a default coordinate system drawn from the data, but you can customize the coordinate system in which the locations of the geoms will be drawn
+
+:::
+
+
+Plots are built up in layers, with the typical ordering being
+
+1.  Plot the data
+2.  Overlay a summary that reveals the relationship
+3.  Add metadata and annotation
+
+
+# Creating a ggplot object
+
+`ggplot2` works by creating a ggplot object that can you can then add to. The `ggplot()` function initializes the graph object, usually by specifying the data. See the `?ggplot` help page. 
+
+Weʻll start by loading the ggplot package and using the built-in `iris` dataset. 
+
+```{r}
+require(ggplot2) 
+ggplot(data = iris)
+```
+
+Another way to send data to the function is through piping. These are both equivalent to the line above:
+
+```{r eval=F}
+iris |> ggplot()
+iris %>% ggplot()
+```
+
+The `%>%` is the older pipe operator, but you will start to see `|>` more often now too. 
+
+You have sent data to  `ggplot()` but it is a blank canvas because you have given it no geometry to plot (no points, bars, etc.)
+
+It is an object, so you can save it to a named variable, say `p`:
+
+```{r}
+p <- ggplot(data = iris)
+class(p)
+```
+
+To render the plot associated with this object, we simply print the object p. We can do this in interactive mode by simply typing `p` at the command line or using the `print()` function. However, in a script, you will want to use the `print()` function, and typically print it to a pdf device. 
+
+```{r eval=F}
+print(p)
+p
+
+pdf()       # opens a pdf device
+  print(p)  # prints the plot
+dev.off()   # closes pdf device
+```
+
+# Layers
+
+Additional components are added in layers, which is to say, separate R statements added on to the object with the `+` operator. Layers are very flexible and can define geometries, compute summary statistics, define what scales to use, or even change styles. 
+
+A template for creating a plot with layers would look like this:
+
+> DATA |> ggplot() + LAYER1 + LAYER2 + … + LAYERN
+
+To save it to a ggplot object, say `p`: 
+
+> p <- DATA |> ggplot() + LAYER1 + LAYER2
+
+Or if you want to save different varieties of objects or at different stages, just assign them to different names:
+
+> q <- p + LAYER3  
+> r <- p + LAYER4 
+
+
+# Geometries
+
+
+The geometry specifies the geometrical elements such as points, lines, etc. which in turn determines the kind of plot that we want to make. If We want to make a scatterplot. What geometry do we use?
+
+Taking a quick look at the [cheat sheet](https://posit.co/resources/cheatsheets/), we see that the function used to create plots with this geometry is `geom_point`.
+
+![](https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf)
+
+
+It will take you a bit to get familiar with the naming conventions, but with them you can use some powerful tools. 
+
+Geometry function names follow the pattern: geom_ followed by the name of the geometry. Some examples include `geom_point`, `geom_bar`, and `geom_histogram`.
+
+For `geom_point` to run properly we need to provide __data__ and a __mapping__. We have already connected the object p with the iris data table, and if we add the layer `geom_point` it defaults to using this data. 
+
+To find out what mappings are expected, jump down to the __Aesthetics section__ of the help file `geom_point` help file. It states that the required aesthetics are in bold. Which arguments are required? 
+
+
+```{r}
+?geom_point
+```
+
+It should come as no surprise that to make points appear, you need to specify `x` and `y`. 
+
+
+# Aesthetic mappings
+
+__Aesthetic mappings__ connect elements of the data with features of the graph, such as distance along an axis, size, or color. 
+
+The `aes()` function, used inside of a __geom__ is where the mappings happen, that is where data are connected with graph elements through defining __aesthetic mappings__ (you will see this lingo a lot).
+
+To produce a scatterplot of `Petal.Length` by `Petal.Width` we could use:
+
+```{r}
+iris |> ggplot() + 
+  geom_point(aes(x = Petal.Length, y = Petal.Width))
+```
+
+We can drop the x = and y = if we wanted to since these are the first and second expected arguments, as seen in the help page.
+
+Instead of defining our plot from scratch, if we save the object as `p` we can also add a layer to the `p` object. The lines below produce the same plot (verify yourself):
+
+
+```{r eval=F}
+p <- ggplot(data = iris)
+p + geom_point(aes(Petal.Length, Petal.Width))
+
+```
+
+Nothing else was specified, so the __scale__ and __labels__ are defined by default when adding this layer. __aes__ uses the variable names from the vectors within the data object: we donʻt have to call them as `iris$Petal.Length` and `iris$Petal.Width`. 
+
+The behavior of recognizing the variables from the data component is quite specific to __aes__. With most functions, if you try to access the values of Petal.Length outside of aes you receive an error.
+
+# Adding annotations (more layers)
+
+Suppose we wanted to label each point on the plot. First we add numbers to the iris data and remake the ggplot object:
+
+```{r}
+iris$id <- c(1:length(iris$Species)) 
+head(iris)
+```
+
+The `geom_label` and `geom_text` functions  add text to the plot with and without a rectangle behind the text, respectively.
+
+Because each point has a label (id), we need an aesthetic mapping to make the connection between points and labels. By reading the help file, we learn that we supply the mapping between point and label through the label argument of aes. So the code looks like this:
+
+
+```{r}
+p <- iris |> ggplot() + 
+  geom_point(aes(Petal.Length, Petal.Width)) +
+  geom_text(aes(Petal.Length, Petal.Width, label = id))
+p  
+```
+
+Itʻs a mess because there are many identical points, but you can see how it works.
+
+Pay special attention to what goes __inside__ and __outside__ of the `aes()`. 
+
+
+Note:
+
+```{r eval=F}
+p_test <- p + geom_text(aes(Petal.Length, Petal.Width, label = id))
+```
+
+Works, but moving `label=id `outside of the `aes()` does not: 
+
+
+```{r eval=F}
+p_test <- p + geom_text(aes(Petal.Length, Petal.Width), label = id)
+```
+
+The variable `id` is only understood to be part of the original dataframe inside of `aes()`. More on this later.
+
+# Global versus local aesthetic mappings
+
+In the previous example, we define the mapping `aes(Petal.Length, Petal.Width)` twice, once in each geometry. 
+
+If the same mapping applies to each component of the plot, we can use a __global aesthetic mapping__. Generally we do this when we define the blank slate ggplot object. Remember that the function ggplot contains an argument that permits us to define aesthetic mappings:
+
+```{r}
+args(ggplot)
+```
+
+If we define a mapping in ggplot, all the geometries that are added as layers will default to this mapping. We redefine p:
+
+```{r}
+p <- iris |> ggplot(aes(Petal.Length, Petal.Width, label=id)) 
+```
+
+and then we can simply write the following code to produce the previous plot:
+
+```{r}
+p + geom_point(size = 3) + 
+  geom_text(nudge_x = .15)
+```
+
+We keep the size and nudge_x arguments in geom_point and geom_text, respectively, because we want to only increase the size of points and only nudge the labels. If we put those arguments in aes then they would apply to both plots. Also note that the geom_point function does not need a label argument and therefore ignores that aesthetic.
+
+If necessary, we can override the global mapping by defining a new mapping within each layer. These local definitions override the global. Here is an example:
+
+```{r}
+p + geom_point(size = 3) +  
+  geom_text(aes(x = 2, y = 2, label = "Hello there!"))
+```
+
+Clearly, the second call to geom_text does not use population and total.
+
+
+
+# Scales
+
+Often in morphometrics, we use a log scale. We can log transform the plot (how it looks without changing the data) through a scales layer. A quick look at the cheat sheet reveals the scale_x_continuous function lets us control the behavior of scales. We use them like this:
+
+```{r}
+p + geom_point(size = 3) +  
+  geom_text(nudge_x = 0.05) + 
+  scale_x_continuous(trans = "log10") +
+  scale_y_continuous(trans = "log10") 
+```
+
+Because we are in the log-scale now, the nudge must be made smaller.
+
+This particular transformation is so common that ggplot2 provides the specialized functions scale_x_log10 and scale_y_log10, which we can use to rewrite the code like this:
+
+```{r}
+p + geom_point(size = 3) +  
+  geom_text(nudge_x = 0.05) + 
+  scale_x_log10() +
+  scale_y_log10() 
+```
+
+
+
+# Labels and titles
+
+Similarly, the cheat sheet quickly reveals that to change labels and add a title, we use the following functions:
+
+```{r}
+p + geom_point(size = 3) +  
+  geom_text(nudge_x = 0.05) + 
+  scale_x_log10() +
+  scale_y_log10() +
+  xlab("Petal Length (log scale)") + 
+  ylab("Petal Width (log scale)") +
+  ggtitle("Fisherʻs Iris dataset")
+```
+
+We are almost there! All we have left to do is add color, a legend, and optional changes to the style.
+
+We can change the color of the points using the col argument in the geom_point function. To facilitate demonstration of new features, we will redefine p to be everything except the points layer:
+
+```{r}
+p <- p + geom_point(size = 3) +  
+  geom_text(nudge_x = 0.05) + 
+  scale_x_log10() +
+  scale_y_log10() +
+  xlab("Petal Length (log scale)") + 
+  ylab("Petal Width (log scale)") +
+  ggtitle("Fisherʻs Iris dataset")
+
+p + geom_point(size = 3, color ="blue")
+```
+
+This, of course, is not what we want. We want to assign color depending on the Species. A nice default behavior of ggplot2 is that if we assign a categorical variable to color, it automatically assigns a different color to each category and also adds a legend.
+
+Since the choice of color is determined by a feature of each observation, this is an aesthetic mapping. To map each point to a color, we need to use aes. We use the following code:
+
+```{r}
+p + geom_point(aes(col=Species), size = 3)
+```
+
+The x and y mappings are inherited from those already defined in p, so we do not redefine them. We also move aes to the first argument since that is where mappings are expected in this function call.
+
+Here we see yet another useful default behavior: ggplot2 automatically adds a legend that maps color to region. To avoid adding this legend we set the geom_point argument show.legend = FALSE.
+
+# Annotation, shapes, and adjustments
+
+We often want to add shapes or annotation to figures that are not derived directly from the aesthetic mapping; examples include labels, boxes, shaded areas, and lines.
+
+Here we want to add a line that represents the regression. 
+
+```{r}
+# need to add
+```
+
+
+To add a line we use the geom_abline function. ggplot2 uses ab in the name to remind us we are supplying the intercept (a) and slope (b). The default line has slope 1 and intercept 0 so we only have to define the intercept:
+
+```{r}
+# p + geom_point(aes(col=Species), size = 3) + 
+#  geom_abline(intercept = log10(r))
+```
+
+Here geom_abline does not use any information from the data object.
+
+We can change the line type and color of the lines using arguments. Also, we draw it first so it doesn’t go over our points.
+
+p <- p + geom_abline(intercept = log10(r), lty = 2, color = "darkgrey") +
+  geom_point(aes(col=region), size = 3)  
+Note that we have redefined p and used this new p below and in the next section.
+
+The default plots created by ggplot2 are already very useful. However, we frequently need to make minor tweaks to the default behavior. Although it is not always obvious how to make these even with the cheat sheet, ggplot2 is very flexible.
+
+For example, we can make changes to the legend via the scale_color_discrete function. In our plot the word region is capitalized and we can change it like this:
+
+```{r}
+p <- p + scale_color_discrete(name = "Species") 
+```
+
+# Add-on packages
+
+The power of ggplot2 is augmented further due to the availability of add-on packages. The remaining changes needed to put the finishing touches on our plot require the ggthemes and ggrepel packages.
+
+The style of a ggplot2 graph can be changed using the theme functions. Several themes are included as part of the ggplot2 package. In fact, for most of the plots in this book, we use a function in the dslabs package that automatically sets a default theme:
+
+ds_theme_set()
+Many other themes are added by the package ggthemes. Among those are the theme_economist theme that we used. After installing the package, you can change the style by adding a layer like this:
+
+library(ggthemes)
+p + theme_economist()
+You can see how some of the other themes look by simply changing the function. For instance, you might try the theme_fivethirtyeight() theme instead.
+
+The final difference has to do with the position of the labels. In our plot, some of the labels fall on top of each other. The add-on package ggrepel includes a geometry that adds labels while ensuring that they don’t fall on top of each other. We simply change geom_text with geom_text_repel.
+
+
+# Putting it all together
+
+Now that we are done testing, we can write one piece of code that produces our desired plot from scratch.
+
+

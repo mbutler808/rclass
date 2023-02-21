@@ -15,42 +15,44 @@ For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring
 |---------------|---------------|---------------|---------------|---------------|
 | **Module 1** |         | **Computational Tools for Data Science** |||
 ||||||
-| Week 1       | Jan 17  | `r emojifont::emoji('wave')` Installing R/RStudio, GitHub \[[html](posts/2023-01-17-the-big-picture/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/tree/main/posts/2023-01-17-the-big-picture/index.qmd)\]                                                                                                              |  ||
-|              | Jan 19  | `r emojifont::emoji('woman_technologist')` Shell scripts, File Organization \[[html](posts/2023-01-19-your-computer-filesystems/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/tree/main/posts/2023-01-19-your-computer-filesystems/index.qmd)\] |||
+| Week 1       | Jan 17  | `r emojifont::emoji('wave')` Installing R/RStudio, GitHub \[[html](posts/2023-01-17-the-big-picture/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-17-the-big-picture/index.qmd)\]                                                                                                              |  ||
+|              | Jan 19  | `r emojifont::emoji('woman_technologist')` Shell scripts, File Organization \[[html](posts/2023-01-19-your-computer-filesystems/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-19-your-computer-filesystems/index.qmd)\] |||
 ||||||
 | **Module 2** |         | **Data Analysis in R ** |||
 ||||||
-| Week 2       | Jan 24 | `r emojifont::emoji('octopus')`  Intro to Git and GitHub \[[html](posts/2023-01-24-intro-git-github/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/tree/main/posts/2023-01-24-intro-git-github/index.qmd)\] |  `r emojifont::emoji('palm_tree')` Project 0 \[[html](projects/2023-01-24-project-0/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/blob/main/projects/2023-01-24-project-0/index.qmd)\]  | |
-|        | Jan 26 | `r emojifont::emoji('octopus')` Reproducible Research \[[html](posts/2023-01-26-reproducible-research/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/tree/main/posts/2023-01-26-reproducible-research/index.qmd)\]  |||
-|        | Jan 26 | `r emojifont::emoji('octopus')` Literate Programming / Intro to Quarto \[[html](posts/2023-01-26-intro-quarto/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/tree/main/posts/2023-01-26-intro-quarto/index.qmd)\]|||
+| Week 2       | Jan 24 | `r emojifont::emoji('octopus')`  Intro to Git and GitHub \[[html](posts/2023-01-24-intro-git-github/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-24-intro-git-github/index.qmd)\] |  `r emojifont::emoji('palm_tree')` Project 0 \[[html](projects/2023-01-24-project-0/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/blob/main/projects/2023-01-24-project-0/index.qmd)\]  | |
+|        | Jan 26 | `r emojifont::emoji('octopus')` Reproducible Research \[[html](posts/2023-01-26-reproducible-research/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-26-reproducible-research/index.qmd)\]  |||
+|        | Jan 26 | `r emojifont::emoji('octopus')` Literate Programming / Intro to Quarto \[[html](posts/2023-01-26-intro-quarto/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-26-intro-quarto)\]|||
 ||||||
-| Week 3       | Jan 31  | `r emojifont::emoji('microscope')` What is the Question? \[[html](posts/2023-01-31-what-is-the-question/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/tree/main/posts/2023-01-31-what-is-the-question/index.qmd)\] | | |
-|              | Jan 31 | `r emojifont::emoji('eyeglasses')` Reading/Writing data \[[html](posts/2023-01-31-reading-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/tree/main/posts/2023-01-31-reading-data/index.qmd)\]| | |
-|              | Feb 2 | `r emojifont::emoji('hocho')` Tidying Data  | `r emojifont::emoji('fallen_leaf')` Project 0 due ||
+| Week 3       | Jan 31  | `r emojifont::emoji('microscope')` What is the Question? \[[html](posts/2023-01-31-what-is-the-question/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-31-what-is-the-question/index.qmd)\] | | |
+|              | Jan 31 | `r emojifont::emoji('eyeglasses')` Reading/Writing data \[[html](posts/2023-01-31-reading-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-31-reading-data/index.qmd)\]| | |
+|              | Feb 2 | `r emojifont::emoji('eyeglasses')` Reference Management \[[html](posts/2023-02-01-reference-management/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-02-01-reference-management/index.qmd)\]  | `r emojifont::emoji('fallen_leaf')` Project 0 due ||
 ||||||
 | **Module 3** |         | **Data Visulization in R** | | |
 ||||||
-| Week 4       | Feb 7  | `r emojifont::emoji('bar_chart')` Plotting Systems (Base R)| | |
-|              | Feb 9 | `r emojifont::emoji('bar_chart')` ggplot2 | | |
+| Week 4       | Feb 7  | `r emojifont::emoji('octopus')` Scripts \[[html](posts/2023-02-07-scripts/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-02-07-scripts/index.qmd)\] | | |
+|              | Feb 9 | `r emojifont::emoji('nut_and_bolt')` Data \[[html](posts/2023-02-09-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-02-09-data/index.qmd)\] | | |
 ||||||
 | **Module 4** |         | **Nuts and Bolts of R** |||
 ||||||
-| Week 5       | Feb 14 | `r emojifont::emoji('nut_and_bolt')` R Nuts and Bolts (Objects) |||
-|              | Feb 16 | `r emojifont::emoji('handshake')` Reshaping objects | `r emojifont::emoji('fallen_leaf')` Project 1 due |     |
+
+|  Week 5        | Feb 14 | `r emojifont::emoji('hocho')` Tidying Data \[[html](posts/2023-02-14-tidying-exploring-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-02-14-tidying-exploring-data/index.qmd)\] | ||
+
+|              | Feb 16 | `r emojifont::emoji('bar_chart')` Plotting Systems (Base R) \[[html](posts/2023-02-16-plotting-systems/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-02-16-plotting-systems/index.qmd)\] | `r emojifont::emoji('seedling')` Project 1 assigned |     |
 ||||||
 | Week 6       | Feb 21 | `r emojifont::emoji('pencil')` Control Structures | | |
 |              |  Feb 23 | `r emojifont::emoji('clipboard')` Functions | | |
 ||||||
 |  Week 7       | Feb 28 | `r emojifont::emoji('monkey')` Loop Functions | |
 ||||||
-|              | Mar 2  | `r emojifont::emoji('bug')`  Debugging and Error Handling |||
+|              | Mar 2  | `r emojifont::emoji('bug')`  Debugging and Error Handling | `emoji('seedling')` Project 1 due||
 ||||||
 | **Module 5** |         | **Special Data Types** | | |
 ||||||
 | Week 8       | Mar 7 | `r emojifont::emoji('calendar')` Dates and Times | | |
 |              | Mar 9 | `r emojifont::emoji('racehorse')` Regular Expressions | `r emojifont::emoji('fallen_leaf')` Project 2 due | |
 ||||||
-| Week 9       | Mar 14 | `r emojifont::emoji('sunny')` Spring Break |||
+| Week 9       | Mar 14 | `r emojifont::emoji('handshake')` Spring Break |||
 |              | Mar 16 | `r emojifont::emoji('sunny')` Spring Break |||
 ||||||
 | Week 10      | Mar 21 | `r emojifont::emoji('mushroom')` Factors | | |
@@ -84,3 +86,5 @@ For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring
 |  Week 16     | May 2  | `r emojifont::emoji('trophy')` Final Presentations | `r emojifont::emoji('confetti_ball')` Project 4 due | |
 ||||||
 :::
+
+
