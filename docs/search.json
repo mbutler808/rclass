@@ -217,6 +217,34 @@
     "text": "Basic components of a ggplot2 plot\n\n\n\n\n\n\nKey components\n\n\n\nA ggplot2 plot consists of a number of key components.\n\nData: In the form of a dataframe or tibble, containing all of the data that will be displayed on the plot.\nGeometry: The geometry or geoms define the style of the plot such as scatterplot, barplot, histogram, violin plots, smooth densities, qqplot, boxplot, and others.\nAesthetic mapping: Aesthetic mappings describe how data are mapped to color, size, shape, location, or to legend elements. How we define the mapping depends on what geometry we are using.\n\nNearly all plots drawn with ggplot2 will have the above compoents. In addition you may want to have specify additional elements:\n\nFacets: When used, facets describe how panel plots based on partions of the data should be drawn.\nStatistical Transformations: Or stats are transformations of the data such as log-transformation, binning, quantiles, smoothing.\nScales: Scales are used to indicate which factors are associated with the levels of the aesthetic mapping. Use manual scales to specify each level.\nCoordinate System: ggplot2 will use a default coordinate system drawn from the data, but you can customize the coordinate system in which the locations of the geoms will be drawn\n\n\n\nPlots are built up in layers, with the typical ordering being\n\nPlot the data\nOverlay a summary that reveals the relationship\nAdd metadata and annotation"
   },
   {
+    "objectID": "posts/2023-02-21-ggplot2/index.html#legend",
+    "href": "posts/2023-02-21-ggplot2/index.html#legend",
+    "title": "The ggplot2 package",
+    "section": "Legend",
+    "text": "Legend\nFor example, we can make changes to the legend title via the scale_color_discrete function():\n\np + geom_point(aes(col=Species), size = 3) + \n  scale_color_discrete(name = \"Iris Varieties\")"
+  },
+  {
+    "objectID": "posts/2023-02-21-ggplot2/index.html#no-legend",
+    "href": "posts/2023-02-21-ggplot2/index.html#no-legend",
+    "title": "The ggplot2 package",
+    "section": "No legend",
+    "text": "No legend\nggplot2 automatically adds a legend that maps color to species. To remove the legend we set the geom_point() argument show.legend = FALSE.\n\np + geom_point(aes(col=Species), size = 3, show.legend=FALSE)"
+  },
+  {
+    "objectID": "posts/2023-02-21-ggplot2/index.html#themes",
+    "href": "posts/2023-02-21-ggplot2/index.html#themes",
+    "title": "The ggplot2 package",
+    "section": "Themes",
+    "text": "Themes\nThe default theme for ggplot2 uses the gray background with white grid lines.\nIf you don’t like this, you can use the black and white theme by using the theme_bw() function.\nThe theme_bw() function also allows you to set the typeface for the plot, in case you don’t want the default Helvetica. Here we change the typeface to Times.\n\n\n\n\n\n\nNote\n\n\n\nFor things that only make sense globally, use theme(), i.e. theme(legend.position = \"none\"). Two standard appearance themes are included\n\ntheme_gray(): The default theme (gray background)\ntheme_bw(): More stark/plain\n\n\n\n\np + \n  geom_point(aes(color = Species)) + \n  theme_bw(base_family = \"Times\")\n\n\n\n\nModifying the theme for a plot"
+  },
+  {
+    "objectID": "posts/2023-02-21-ggplot2/index.html#ggthemes",
+    "href": "posts/2023-02-21-ggplot2/index.html#ggthemes",
+    "title": "The ggplot2 package",
+    "section": "ggthemes",
+    "text": "ggthemes\nThe style of a ggplot2 graph can be changed using the theme functions. Several themes are included as part of the ggplot2 package.\nMany other themes are added by the package ggthemes. Among those are the theme_economist theme that we used. After installing the package, you can change the style by adding a layer like this:\n\nrequire(ggthemes)\n\nLoading required package: ggthemes\n\np + geom_point(aes(col=Species, size = 3, alpha = 1/2)) +\n  scale_color_manual(values=cols) + \n  theme_economist()\n\n\n\n\nYou can see how some of the other themes look by simply changing the function. For instance, you might try the theme_fivethirtyeight() theme instead.\nggrepel\nThe final difference has to do with the position of the labels. In our plot, some of the labels fall on top of each other. The package ggrepel includes a geometry that adds labels while ensuring that they don’t fall on top of each other. We simply change geom_text with geom_text_repel.\n\nrequire(ggrepel)\n\nLoading required package: ggrepel\n\np + geom_point(aes(col=Species, size = 3, alpha = 1/2)) +\n  scale_color_manual(values=cols) + \n  theme_economist() +\n  geom_text_repel(aes(Petal.Length, Petal.Width, label = id))\n\nWarning: ggrepel: 90 unlabeled data points (too many overlaps). Consider\nincreasing max.overlaps"
+  },
+  {
     "objectID": "posts/2023-01-26-intro-quarto/index.html",
     "href": "posts/2023-01-26-intro-quarto/index.html",
     "title": "Literate Statistical Programming and Quarto",

@@ -1,0 +1,663 @@
+hi my name is Marguerite Butler speaking
+0:03
+on behalf of my collaborators Ethan Hill
+0:05
+Diana GAO Dan Polhemus and Alan Allison
+0:08
+and we are very excited to share our
+0:11
+work with you on the amazing astrophryne
+0:14
+frogs of the papuan region and our
+0:16
+recent findings about their biogeography
+0:18
+micro highlights are an extremely
+0:21
+diverse family of frogs with over 700
+0:23
+species over half of them are in the
+0:26
+sub-family astrophyine and they are
+0:28
+centered in the papuan region while
+0:31
+there's some species in throughout
+0:33
+southeast Asia and parts of Australia
+0:35
+the story is there is just a tremendous
+0:38
+over abundance of them in the papuan
+0:41
+region around New Guinea and its
+0:43
+satellite Islands
+0:45
+now these are the name species the
+0:47
+taxonomy is still not complete over the
+0:50
+past 10 years have been working on the
+0:52
+phylogeny which was quite complicated
+0:54
+and we're very excited to report that we
+0:57
+finally have a highly resolved tree with
+1:00
+most of the nodes highly supported it's
+1:02
+revealed that the clade is about 20
+1:05
+million years old there are 17 Genera
+1:08
+with most of them having evolved early
+1:11
+in their history and concordantly
+1:13
+diversified into five anuran Lifestyles
+1:16
+which are mostly conserved within Genera
+1:19
+terrestrial fossorial semi-aquatic
+1:21
+scansorial and arboreal this phylogeny
+1:24
+has been really informative about many
+1:27
+features of the clade which were not
+1:29
+recognized before for example
+1:32
+how do we explain these weird disjunct
+1:34
+distributions the phylogeny revealed
+1:37
+that we have sister taxa on the
+1:39
+satellite Islands which are over 300
+1:42
+kilometers away from the tip but its
+1:44
+actual sister clade is more like 600
+1:46
+kilometers away on the mainland
+1:48
+how do these poor dispersers Traverse
+1:51
+such humongous distances
+1:53
+well one hypothesis has to be the role
+1:57
+of plate tectonics you know you can see
+1:59
+the plate boundaries even from Google
+2:02
+Earth
+2:03
+and you can see the margins of many
+2:05
+tectonic plates right around the region
+2:07
+because New Guinea lies in the Ring of
+2:10
+Fire
+2:11
+so what is the role of biogeography
+2:14
+that's the obvious question in
+2:16
+generating these hundreds of species if
+2:19
+you recall from geology plate tectonics
+2:21
+can do all kinds of movements along the
+2:24
+Earth's surface we can have stresses
+2:27
+induced by plates shearing plates
+2:30
+spreading or plates converging and when
+2:33
+we have convergence what we often have
+2:35
+at these boundaries are the formation of
+2:37
+volcanic island arcs these can travel
+2:40
+along with the plate until they
+2:43
+basically Collide into another border
+2:46
+and then accrete onto the Mainland New
+2:49
+Guinea lies at the juncture of five
+2:51
+major tectonic plates and many micro
+2:54
+plates as well
+2:56
+making it one of the most active regions
+2:58
+of the Earth
+3:00
+it's well known that nagini has a
+3:03
+complex history among geologists it's
+3:06
+recognized that there are five tectonic
+3:09
+regions we use these as geo-regions in
+3:11
+our model and I want to point out to you
+3:13
+the East poplin composite terrain we
+3:16
+also recognize the satellite islands
+3:18
+where the frogs are distributed
+3:21
+now there are a few points of agreement
+3:24
+among the geologists in terms of the
+3:27
+formation of New Guinea as you can see
+3:29
+from core samples the northern margin of
+3:32
+New Guinea has a complex composition but
+3:35
+what's still under debate by geologists
+3:38
+is how the North Coast was assembled so
+3:42
+Ethan Hill and Diana GAO my former
+3:44
+students assembled these hypotheses from
+3:47
+the literature the first idea was slow
+3:51
+and steady basically the North Coast was
+3:54
+formed by the accretion of many many
+3:56
+many independent events that occurred
+3:58
+over a slow continuous process
+4:02
+unfortunately uh the epct in this model
+4:05
+docked about 20 million years ago with
+4:08
+the vocal cup docking more recently
+4:11
+the mobile belt hypothesis alternatively
+4:14
+says that the epct and the accreted
+4:18
+terrains
+4:19
+formed offshore
+4:21
+separate from the rest of the Mainland
+4:24
+before docking on to the Australian
+4:27
+kraton finally we have this recent
+4:30
+emergence hypothesis for the mainland
+4:32
+which states that only the high Central
+4:35
+Cordillera was above water until about 5
+4:39
+million years ago when the rest of the
+4:41
+island emerged these make very different
+4:44
+predictions about the biogeography of
+4:47
+its terrestrial fauna
+4:49
+and then finally we have one that
+4:51
+concerns the formation of the of the
+4:54
+offshore Islands
+4:56
+um so Dan pohimus noticed that these
+4:59
+islands have the same core composition
+5:02
+as parts of the Owen stanleys from the
+5:05
+epct and so he posits that these are
+5:08
+Continental Islands which broke away
+5:10
+from the mainland and not Oceanic
+5:12
+Islands that's supported by this
+5:14
+woodlark riff that's opening up and
+5:17
+basically carrying woodlark to the North
+5:19
+and the Louisiana's in this direction
+5:23
+so we can test these different
+5:25
+geological ideas with our biological
+5:27
+data using our time calibrated phylogeny
+5:31
+with 218 tips as well as a model of
+5:35
+geographic range Evolution using deck
+5:38
+models where a range evolves as a
+5:41
+discrete character and we allow range
+5:43
+changes by dispersal into new areas
+5:46
+Extinction from previous areas include a
+5:49
+Genesis
+5:50
+and importantly for testing alternative
+5:53
+models we can actually model different
+5:55
+ideas about connectivity using these
+5:58
+dispersal multiplier matrices which
+6:01
+takes each area and allows us to
+6:03
+represent whether they are connected or
+6:06
+not connected
+6:07
+and we can represent each different idea
+6:10
+by using a different Matrix
+6:14
+we can also include time stratified
+6:17
+hypotheses where land mass Arrangements
+6:20
+change at different points in their
+6:22
+history
+6:24
+these can be compared using a Bayesian
+6:27
+framework provided by biogeo bears
+6:29
+software
+6:30
+and evaluating these models using AIC
+6:33
+our data basically consists of GPS
+6:36
+coordinate
+6:37
+but here are our data 218 samples
+6:41
+representing all 17 Genera of
+6:44
+astrophyine across 80 sites across all
+6:48
+13 geo-regions the five Mainland and a
+6:51
+numerous offshore Islands let's
+6:54
+illustrate our biogeographical
+6:55
+hypotheses with these cartoons so a null
+6:58
+hypothesis was a current connectivity
+7:01
+ignoring Geo history so this would be
+7:04
+basically Island biogeography Theory
+7:06
+where dispersal within the mainland is
+7:09
+freely allowed but dispersal to the
+7:11
+offshore Islands would be much more
+7:13
+difficult next we have slow slow and
+7:16
+steady which allows for the sequential
+7:19
+assembly of the Mainland recognizing the
+7:21
+different tectonic units which are
+7:24
+connected by land bridges as they
+7:27
+accrete then we have the mobile belt
+7:29
+hypothesis which connects the
+7:32
+accreditarians and the epct which is
+7:35
+time stratified and later docking onto
+7:38
+the mainland and finally we have the
+7:40
+recent emergence hypothesis with only
+7:42
+the fold belts available before 5
+7:45
+million years and then the rest of the
+7:47
+Mainland coming up later when we compare
+7:50
+all of these models within our AIC
+7:52
+framework we have a clear winner which
+7:55
+is the slow and steady hypothesis
+7:57
+so going forward we adopt the slow and
+8:00
+steady for the mainland and then add in
+8:03
+the islands and so our first idea is
+8:06
+that the Louisiana's have a common
+8:08
+history and then we also include the
+8:11
+woodlark woodlark island with the
+8:13
+Louisiana's our next idea connects the
+8:16
+Louisiana's with the epct
+8:19
+with or without wood lark and then
+8:22
+finally we are not quite sure whether
+8:26
+the association should be with the epct
+8:28
+so all offshore islands are connected to
+8:30
+the epct or to the accredited terrains
+8:33
+or we have each offshore island is
+8:36
+connected to its closest North Coast
+8:39
+Terrain
+8:41
+testing everything all together we have
+8:44
+a clear winner again so we have strong
+8:47
+support for the slow and steady assembly
+8:50
+of the Mainland and the offshore Islands
+8:53
+having
+8:54
+affiliation with either the epct or the
+8:58
+accreted terrains applying our model
+9:01
+back to the phylogeny we can reconstruct
+9:04
+the history of geographic Transitions
+9:07
+and we find that they evolved out of the
+9:10
+epct and we found over 70 dispersals
+9:15
+so now if we take a look at the sequence
+9:18
+of geological events next to inferred
+9:21
+dispersal events we can begin to tell a
+9:24
+story over 20 million years ago
+9:27
+astrophrenia arrived on the epct
+9:32
+about 20 million years ago the epct
+9:34
+docked onto the mainland at which point
+9:37
+we could begin to see dispersal events
+9:40
+from the epct to the accreted terrains
+9:42
+and to the fold belt and I just want to
+9:45
+note that these are independent
+9:47
+migration events but what's listed here
+9:49
+are the different Genera that they come
+9:51
+from
+9:51
+moving on uh 15 to 10 million years ago
+9:55
+the accreted terrains are getting much
+9:57
+larger
+9:59
+the high mountains are rising and the
+10:01
+louisianas are beginning to break apart
+10:03
+from the Owens downlays we have
+10:06
+dispersal from the epct
+10:09
+to the fold belt to the accreted
+10:11
+terrains and then to the offshore
+10:13
+islands in the more recent 10 to 3
+10:16
+million years ago we have continuing
+10:18
+dispersal out of the accrediturines to
+10:21
+the Philippines and Indonesia as well as
+10:24
+the other terrains and then continuing
+10:27
+dispersal to the offshore Islands as
+10:30
+they are moving away we start to see
+10:32
+that dispersal is tapering off
+10:36
+New Britain is getting closer and closer
+10:38
+to the mainland and finally in the most
+10:41
+recent Epoch it's as close as it's ever
+10:44
+been and we finally have some dispersal
+10:46
+from the mainland to New Britain
+10:49
+and we have continuing dispersal out of
+10:52
+the epct pretty cool huh we can begin to
+10:55
+understand some of our previous results
+10:57
+which didn't honestly make a whole lot
+11:00
+of sense
+11:01
+communities based on species coexistence
+11:05
+at different sites and there are
+11:07
+numerous multi-species communities that
+11:11
+we recovered they all occur from our
+11:14
+data set mostly along the North Coast
+11:16
+well now this starts to make sense and
+11:20
+importantly we don't find any evidence
+11:22
+in support of biogeography Theory which
+11:25
+would predict that close Islands would
+11:27
+have more species instead we have the
+11:30
+largest closest island with only two
+11:32
+species but we have this tiny Island far
+11:35
+away with seven species
+11:40
+we have extremely high generic diversity
+11:43
+which supports the idea of numerous
+11:46
+independent colonizations very low rates
+11:49
+of insight to diversification we can
+11:51
+reality check it with data compiled from
+11:53
+the iucn red list and when Diana
+11:57
+downloaded the shape files and mapped
+11:58
+them we find a pretty reasonable
+12:00
+distribution of astrophyiny composed of
+12:03
+over 150 species with most of the
+12:07
+co-occurrence along the North Coast
+12:09
+which is exactly in line with our data
+12:13
+set so in conclusion we found that by
+12:16
+using really poor dispersers we can
+12:20
+actually find great evidence of past Lan
+12:23
+connections as noted by Sir Alfred
+12:25
+Wallace and find out many interesting
+12:27
+things about our group we showed that
+12:30
+biology can provide excellent
+12:32
+information to test geological
+12:34
+hypotheses we found strong evidence for
+12:37
+a slow and steady assembly of the
+12:39
+Mainland of New Guinea and the rifting
+12:42
+off of the louisians and woodlark from
+12:44
+the Owen stanleys plate tectonics
+12:47
+provides ample geological opportunity
+12:50
+what I mean is that frogs evolve by
+12:53
+dispersal and cladogenesis onto either
+12:56
+accreted land masses or dispersal over
+13:00
+small water gaps as islands are either
+13:02
+breaking away or coming closer into
+13:05
+proximity that explains The Coincidence
+13:08
+of numerous independent colonizations
+13:11
+over a narrow time window and allows the
+13:15
+formation of complex communities with
+13:17
+high generic diversification and
+13:19
+explains the seemingly crazy disjunct
+13:22
+sister toxic distributions between
+13:24
+distant islands and the mainland so that
+13:27
+frogs did not have to swim across the
+13:29
+open ocean which they don't do very well
+13:32
+they only had to very rarely this
+13:35
+demonstrates the potential and
+13:37
+importance of non-adaptive processes
+13:39
+combined with early adaptive radiation
+13:42
+to massively multiply biodiversity
+13:47
+we have many many people to thank
+13:50
+and to see more of our work about this
+13:53
+amazing group please check out my
+13:55
+students talks on sigbee plus kasau is
+13:58
+speaking on a phantophanie and Allison
+14:01
+Fisher on Oriophryne and these are
+14:04
+two very weird taxonomic puzzles that
+14:08
+have pretty exciting conclusions for
+14:10
+convergence in montane frogs and a
+14:14
+puzzling enormous genus of arboreal
+14:16
+frogs I'd like to thank our field teams
+14:20
+it was a lot of fun and very hard work
+14:23
+and finally I'd like to thank marvely my
+14:27
+postdoc advisor and her late husband
+14:30
+Dave who both introduced me to the
+14:33
+beauty and wonder of amphibians what
+14:36
+incredible biodiversity and always
+14:39
+encouraged all of us to go for it you
+14:43
+know and their their vote of confidence
+14:45
+in our ability to solve the hard
+14:49
+problems and just explore is is just
+14:53
+Priceless thank you

@@ -283,7 +283,7 @@ NULL</code></pre>
 </section>
 <section id="scales" class="level1">
 <h1>Scales</h1>
-<p>Often in morphometrics, we use a log scale. We can log transform the plot (how it looks without changing the data) through a scales layer. A quick look at the cheat sheet reveals the scale_x_continuous function lets us control the behavior of scales. We use them like this:</p>
+<p>Changing scales is a common task. For example, in morphometrics, we often use a log scale. We can log transform the plot (how it looks without changing the data) through a scales layer. A quick look at the cheat sheet reveals the <strong>scale_x_continuous</strong> function lets us control the behavior of scales. We use them like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span>  </span>
 <span id="cb21-2">  <span class="fu" style="color: #4758AB;">geom_text</span>(<span class="at" style="color: #657422;">nudge_x =</span> <span class="fl" style="color: #AD0000;">0.05</span>) <span class="sc" style="color: #5E5E5E;">+</span> </span>
@@ -294,7 +294,7 @@ NULL</code></pre>
 </div>
 </div>
 <p>Because we are in the log-scale now, the nudge must be made smaller.</p>
-<p>This particular transformation is so common that ggplot2 provides the specialized functions scale_x_log10 and scale_y_log10, which we can use to rewrite the code like this:</p>
+<p>This particular transformation is so common that ggplot2 provides the special functions <strong>scale_x_log10</strong> and <strong>scale_y_log10</strong>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span>  </span>
 <span id="cb22-2">  <span class="fu" style="color: #4758AB;">geom_text</span>(<span class="at" style="color: #657422;">nudge_x =</span> <span class="fl" style="color: #AD0000;">0.05</span>) <span class="sc" style="color: #5E5E5E;">+</span> </span>
@@ -307,31 +307,23 @@ NULL</code></pre>
 </section>
 <section id="labels-and-titles" class="level1">
 <h1>Labels and titles</h1>
-<p>Similarly, the cheat sheet quickly reveals that to change labels and add a title, we use the following functions:</p>
+<p>Similarly, the cheat sheet shows that to change labels and add a title, we use the following functions:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span>  </span>
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1">q <span class="ot" style="color: #003B4F;">&lt;-</span> p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span>  </span>
 <span id="cb23-2">  <span class="fu" style="color: #4758AB;">geom_text</span>(<span class="at" style="color: #657422;">nudge_x =</span> <span class="fl" style="color: #AD0000;">0.05</span>) <span class="sc" style="color: #5E5E5E;">+</span> </span>
 <span id="cb23-3">  <span class="fu" style="color: #4758AB;">scale_x_log10</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
 <span id="cb23-4">  <span class="fu" style="color: #4758AB;">scale_y_log10</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
 <span id="cb23-5">  <span class="fu" style="color: #4758AB;">xlab</span>(<span class="st" style="color: #20794D;">"Petal Length (log scale)"</span>) <span class="sc" style="color: #5E5E5E;">+</span> </span>
 <span id="cb23-6">  <span class="fu" style="color: #4758AB;">ylab</span>(<span class="st" style="color: #20794D;">"Petal Width (log scale)"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
 <span id="cb23-7">  <span class="fu" style="color: #4758AB;">ggtitle</span>(<span class="st" style="color: #20794D;">"Fisherʻs Iris dataset"</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
-</div>
 </div>
 <p>We are almost there! All we have left to do is add color, a legend, and optional changes to the style.</p>
-<p>We can change the color of the points using the col argument in the geom_point function. To facilitate demonstration of new features, we will redefine p to be everything except the points layer:</p>
+</section>
+<section id="color-annotations-by-group" class="level1">
+<h1>Color annotations by group</h1>
+<p>We can change the color of the points using the <code>col</code> argument in the <code>geom_point()</code> function. To facilitate demonstration of new features, we will save the log-scaled plot as q and include everything except the points layer:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1">p <span class="ot" style="color: #003B4F;">&lt;-</span> p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span>  </span>
-<span id="cb24-2">  <span class="fu" style="color: #4758AB;">geom_text</span>(<span class="at" style="color: #657422;">nudge_x =</span> <span class="fl" style="color: #AD0000;">0.05</span>) <span class="sc" style="color: #5E5E5E;">+</span> </span>
-<span id="cb24-3">  <span class="fu" style="color: #4758AB;">scale_x_log10</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb24-4">  <span class="fu" style="color: #4758AB;">scale_y_log10</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb24-5">  <span class="fu" style="color: #4758AB;">xlab</span>(<span class="st" style="color: #20794D;">"Petal Length (log scale)"</span>) <span class="sc" style="color: #5E5E5E;">+</span> </span>
-<span id="cb24-6">  <span class="fu" style="color: #4758AB;">ylab</span>(<span class="st" style="color: #20794D;">"Petal Width (log scale)"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb24-7">  <span class="fu" style="color: #4758AB;">ggtitle</span>(<span class="st" style="color: #20794D;">"Fisherʻs Iris dataset"</span>)</span>
-<span id="cb24-8"></span>
-<span id="cb24-9">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">color =</span><span class="st" style="color: #20794D;">"blue"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1">q <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">color =</span><span class="st" style="color: #20794D;">"blue"</span>)</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -339,47 +331,375 @@ NULL</code></pre>
 <p>This, of course, is not what we want. We want to assign color depending on the Species. A nice default behavior of ggplot2 is that if we assign a categorical variable to color, it automatically assigns a different color to each category and also adds a legend.</p>
 <p>Since the choice of color is determined by a feature of each observation, this is an aesthetic mapping. To map each point to a color, we need to use aes. We use the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1">q <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>)</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The x and y mappings are inherited from those already defined in p, so we do not redefine them. We also move aes to the first argument since that is where mappings are expected in this function call.</p>
-<p>Here we see yet another useful default behavior: ggplot2 automatically adds a legend that maps color to region. To avoid adding this legend we set the geom_point argument show.legend = FALSE.</p>
+<p>Why donʻt we need to supply the x and y? Those mappings are inherited from the global aes specification in <strong>p</strong>.</p>
+<p>Suppose we wanted to use a custom color palette for our data. How do we specify them? Notice that the <strong>aes(col=Species)</strong> indicates which <strong>points</strong> are grouped by color according to the <strong>Species</strong> value. <em>Nothing in the vector Species indicates a color.</em></p>
+<p>Recall that Species is actually a <strong>factor</strong>, and so the values would be 1,2,3. How does this information get translated? In R, numbers are translated into a default color vector for plot.</p>
+<section id="specifying-custom-colors" class="level3">
+<h3 class="anchored" data-anchor-id="specifying-custom-colors">Specifying custom colors</h3>
+<p>The values of the colors we wish to use are specified in the scale parameter <strong>scale_color_manual</strong>. For these examples, letʻs go back to the untransformed values:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb26-2">  <span class="fu" style="color: #4758AB;">scale_color_manual</span>(<span class="at" style="color: #657422;">values=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"red"</span>, <span class="st" style="color: #20794D;">"blue"</span>, <span class="st" style="color: #20794D;">"purple"</span>))</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>R has hundreds of named colors. You can see the names with the <code>colors()</code> function. There is a cool little function in the <strong>easyGgplot2</strong> package that displays the colors. Now we have a lot of fancy colors to play with:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="fu" style="color: #4758AB;">install.packages</span>(<span class="st" style="color: #20794D;">"remotes"</span>)</span>
+<span id="cb27-2">remotes<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">install_github</span>(<span class="st" style="color: #20794D;">"kassambara/easyGgplot2"</span>)</span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1">easyGgplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">showCols</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="specifying-colors-by-level" class="level3">
+<h3 class="anchored" data-anchor-id="specifying-colors-by-level">Specifying colors by level</h3>
+<p>We can control which color is matched with which level of species. Looking at the help page for <strong>scale_color_manual</strong>, under <em>values</em> we see the explanation:</p>
+<blockquote class="blockquote">
+<p><strong>values</strong><br>
+a set of aesthetic values to map data values to. The values will be matched in order (usually alphabetical) with the limits of the scale, or with breaks if provided. If this is a <strong>named vector</strong>, then the v_alues will be matched based on the names instead_. Data values that don’t match will be given na.value.</p>
+</blockquote>
+<p>Letʻs use some of these fun colors, by creating a vector <code>cols</code> of color names and passing it to the <code>values</code> argument of <code>scale_color_manual</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1">cols <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"darkorange"</span>, <span class="st" style="color: #20794D;">"navyblue"</span>, <span class="st" style="color: #20794D;">"deeppink"</span>)</span>
+<span id="cb29-2"></span>
+<span id="cb29-3">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb29-4">  <span class="fu" style="color: #4758AB;">scale_color_manual</span>(<span class="at" style="color: #657422;">values=</span>cols)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This is great! But what if we wanted to have pink on the bottom (setosa), orange in the middle (versicolor), and navy (virginica) on the top? Playing with the vector by trial and error always works, but what if we had a dozen species?</p>
+</section>
+<section id="named-color-vector" class="level3">
+<h3 class="anchored" data-anchor-id="named-color-vector">Named color vector</h3>
+<p>We can specify the match of colors to specific species by naming the <code>cols</code> vector with the species names. Then the <code>cols</code> vector will have color values, named by the species they represent:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1">cols <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"darkorange"</span>, <span class="st" style="color: #20794D;">"navyblue"</span>, <span class="st" style="color: #20794D;">"deeppink"</span>)</span>
+<span id="cb30-2"><span class="fu" style="color: #4758AB;">names</span>(cols) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"versicolor"</span>, <span class="st" style="color: #20794D;">"virginica"</span>, <span class="st" style="color: #20794D;">"setosa"</span>)</span>
+<span id="cb30-3"></span>
+<span id="cb30-4">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb30-5">  <span class="fu" style="color: #4758AB;">scale_color_manual</span>(<span class="at" style="color: #657422;">values=</span>cols)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Voila! This is a perfect example of a key - value pair.</p>
+</section>
+<section id="transparency" class="level3">
+<h3 class="anchored" data-anchor-id="transparency">Transparency</h3>
+<p>The transparency of colors is controlled by the aesthetic <code>alpha</code>, where 1 indicates 100% opacity (or 0 transparency).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">2</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb31-2">  <span class="fu" style="color: #4758AB;">scale_color_manual</span>(<span class="at" style="color: #657422;">values=</span>cols)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Transparency really helps with overlapping points.</p>
+</section>
+<section id="jitter" class="level3">
+<h3 class="anchored" data-anchor-id="jitter">Jitter</h3>
+<p>Another way of dealing with overlapping points is to add a little random noise to each, called <strong>jitter</strong>. Try using <code>geom_jitter</code> instead of <code>geom_point</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_jitter</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">2</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb32-2">  <span class="fu" style="color: #4758AB;">scale_color_manual</span>(<span class="at" style="color: #657422;">values=</span>cols)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>If you want to see where the jitter is relative to the true coordinates, you can use both:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">2</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb33-2">  <span class="fu" style="color: #4758AB;">scale_color_manual</span>(<span class="at" style="color: #657422;">values=</span>cols) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb33-3">  <span class="fu" style="color: #4758AB;">geom_jitter</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Here the true points are in color, and the jitter is shown in the smaller black points.</p>
+<p>Jitter is fine for discrete values to spread it out for visualization (say jitter along the discrete axis but not the continuous axis), <em>but not as ideal for metric data where distance along the axis really mean something</em>.</p>
+</section>
 </section>
 <section id="annotation-shapes-and-adjustments" class="level1">
 <h1>Annotation, shapes, and adjustments</h1>
 <p>We often want to add shapes or annotation to figures that are not derived directly from the aesthetic mapping; examples include labels, boxes, shaded areas, and lines.</p>
-<p>Here we want to add a line that represents the regression.</p>
+<section id="scatterplot-with-smoother" class="level3">
+<h3 class="anchored" data-anchor-id="scatterplot-with-smoother">Scatterplot with smoother</h3>
+<p><strong>geom_smooth()</strong> adds a smoothing line but the default is a <strong>loess</strong> smoother, which is flexible and nonparametric but might be too flexible for our purposes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><span class="co" style="color: #5E5E5E;"># need to add</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb34-2">    <span class="fu" style="color: #4758AB;">geom_smooth</span>()</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
 </div>
-<p>To add a line we use the geom_abline function. ggplot2 uses ab in the name to remind us we are supplying the intercept (a) and slope (b). The default line has slope 1 and intercept 0 so we only have to define the intercept:</p>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The following aesthetics were dropped during statistical transformation: label
+ℹ This can happen when ggplot fails to infer the correct grouping structure in
+  the data.
+ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+  variable into a factor?</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We get a warning because we are not using the <code>label</code> aesthetic (remember it is =id). There is no problem but to stop the annoying warnings, letʻs leave off <code>label</code> until we need it.</p>
+<p>If we want to explain a simple linear trend between the <code>x</code> and <code>y</code> variables, perhaps we’d prefer a linear regression line.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="co" style="color: #5E5E5E;"># p + geom_point(aes(col=Species), size = 3) + </span></span>
-<span id="cb27-2"><span class="co" style="color: #5E5E5E;">#  geom_abline(intercept = log10(r))</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1">p <span class="ot" style="color: #003B4F;">&lt;-</span> iris <span class="sc" style="color: #5E5E5E;">|&gt;</span> <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> Petal.Length, <span class="at" style="color: #657422;">y =</span> Petal.Width))</span>
+<span id="cb37-2"></span>
+<span id="cb37-3">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb37-4">    <span class="fu" style="color: #4758AB;">geom_smooth</span>(<span class="at" style="color: #657422;">method=</span><span class="st" style="color: #20794D;">"lm"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
-<p>Here geom_abline does not use any information from the data object.</p>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Or without the standard error envelope:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb39-2">    <span class="fu" style="color: #4758AB;">geom_smooth</span>(<span class="at" style="color: #657422;">method=</span><span class="st" style="color: #20794D;">"lm"</span>, <span class="at" style="color: #657422;">se=</span><span class="cn" style="color: #8f5902;">FALSE</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can also compute the regression separately and add the line using <code>geom_abline()</code>, similar to the base R <code>abline()</code> function. Note: the ab in the name is to remind us we are supplying the intercept (a) and slope (b).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1">lm.fit <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">lm</span>(iris<span class="sc" style="color: #5E5E5E;">$</span>Petal.Width <span class="sc" style="color: #5E5E5E;">~</span> iris<span class="sc" style="color: #5E5E5E;">$</span>Petal.Length)</span>
+<span id="cb41-2"></span>
+<span id="cb41-3">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb41-4">    <span class="fu" style="color: #4758AB;">geom_abline</span>(<span class="at" style="color: #657422;">intercept =</span> <span class="fu" style="color: #4758AB;">coef</span>(lm.fit)[<span class="dv" style="color: #AD0000;">1</span>], <span class="at" style="color: #657422;">slope=</span> <span class="fu" style="color: #4758AB;">coef</span>(lm.fit)[<span class="dv" style="color: #AD0000;">2</span>])</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Here <code>geom_abline()</code> does not use any information from the data object, only the regression coefficients.</p>
 <p>We can change the line type and color of the lines using arguments. Also, we draw it first so it doesn’t go over our points.</p>
-<p>p &lt;- p + geom_abline(intercept = log10(r), lty = 2, color = “darkgrey”) + geom_point(aes(col=region), size = 3)<br>
-Note that we have redefined p and used this new p below and in the next section.</p>
-<p>The default plots created by ggplot2 are already very useful. However, we frequently need to make minor tweaks to the default behavior. Although it is not always obvious how to make these even with the cheat sheet, ggplot2 is very flexible.</p>
-<p>For example, we can make changes to the legend via the scale_color_discrete function. In our plot the word region is capitalized and we can change it like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1">p <span class="ot" style="color: #003B4F;">&lt;-</span> p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">scale_color_discrete</span>(<span class="at" style="color: #657422;">name =</span> <span class="st" style="color: #20794D;">"Species"</span>) </span></code></pre></div>
+<div class="sourceCode cell-code" id="cb42" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_abline</span>(<span class="at" style="color: #657422;">intercept =</span> <span class="fu" style="color: #4758AB;">coef</span>(lm.fit)[<span class="dv" style="color: #AD0000;">1</span>], </span>
+<span id="cb42-2">                <span class="at" style="color: #657422;">slope=</span> <span class="fu" style="color: #4758AB;">coef</span>(lm.fit)[<span class="dv" style="color: #AD0000;">2</span>],</span>
+<span id="cb42-3">                <span class="at" style="color: #657422;">lty =</span> <span class="dv" style="color: #AD0000;">2</span>, </span>
+<span id="cb42-4">                <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"darkgrey"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb42-5">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>)  </span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
 </div>
+</div>
+</section>
+<section id="geom_-by-group" class="level3">
+<h3 class="anchored" data-anchor-id="geom_-by-group"><strong>geom</strong>_ by group</h3>
+<p>We can see that although the three species of iris generally fall along a line, that there are clusters by species. Perhaps separate linear models by group may be a better fit.</p>
+<p>There are two ways that we can do this. The first is to put a grouping aesthetic within the smoother.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb43-2">    <span class="fu" style="color: #4758AB;">geom_smooth</span>( <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">group=</span>Species), <span class="at" style="color: #657422;">method=</span><span class="st" style="color: #20794D;">"lm"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Another way to do this is to add col (here as a grouping variable) in the global ggplot aesthetic, which will apply to all downstream layers:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1">r <span class="ot" style="color: #003B4F;">&lt;-</span> iris <span class="sc" style="color: #5E5E5E;">|&gt;</span> <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> Petal.Length, <span class="at" style="color: #657422;">y=</span> Petal.Width, <span class="at" style="color: #657422;">col=</span>Species)) </span>
+<span id="cb45-2"> </span>
+<span id="cb45-3">r <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb45-4">    <span class="fu" style="color: #4758AB;">geom_smooth</span>( <span class="at" style="color: #657422;">method=</span><span class="st" style="color: #20794D;">"lm"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="multi-panel-plots-facet_wrap" class="level3">
+<h3 class="anchored" data-anchor-id="multi-panel-plots-facet_wrap">Multi panel plots <strong>facet_wrap</strong></h3>
+<p><a href="https://ggplot2-book.org/facet.html">Facets</a> are what ggplot calls multi-panel plots. They split the data by some factor, which can be very helpful for viewing varition of subsets of the data.</p>
+<p>The two main functions are <code>facet_wrap()</code> and <code>facet_grid()</code></p>
+<p><strong>facet_wrap()</strong> lays the panels out in a ribbon, in sequential order. See the documentation for arguments to control the number of rows or columns, etc.</p>
+<p>The faceting variable (here, Species) is using formula syntax <code>~Species</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb47-2">   <span class="fu" style="color: #4758AB;">geom_smooth</span>( <span class="at" style="color: #657422;">method=</span><span class="st" style="color: #20794D;">"lm"</span>) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb47-3">   <span class="fu" style="color: #4758AB;">facet_wrap</span>(<span class="sc" style="color: #5E5E5E;">~</span>Species)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>facet_grid()</strong> is explicity a grid. The syntax <code>. ~ Species</code> facets by column. a</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb49-2">   <span class="fu" style="color: #4758AB;">geom_smooth</span>( <span class="at" style="color: #657422;">method=</span><span class="st" style="color: #20794D;">"lm"</span>) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb49-3">   <span class="fu" style="color: #4758AB;">facet_grid</span>(. <span class="sc" style="color: #5E5E5E;">~</span> Species)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The syntax <code>Species ~ .</code> facets by row. The syntax <code>Y ~ X</code> would facet by rows and columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb51-2">   <span class="fu" style="color: #4758AB;">geom_smooth</span>( <span class="at" style="color: #657422;">method=</span><span class="st" style="color: #20794D;">"lm"</span>) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb51-3">   <span class="fu" style="color: #4758AB;">facet_grid</span>(Species <span class="sc" style="color: #5E5E5E;">~</span> .)   </span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="more-customization" class="level1">
+<h1>More customization</h1>
+<p>The default plots created by ggplot2 are already very useful. However, we frequently need to make minor tweaks to the default behavior. Although it is not always obvious how to make these even with the cheat sheet, ggplot2 is very flexible.</p>
+<section id="legend" class="level2">
+<h2 class="anchored" data-anchor-id="legend">Legend</h2>
+<p>For example, we can make changes to the legend title via the <code>scale_color_discrete function()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb53-2">  <span class="fu" style="color: #4758AB;">scale_color_discrete</span>(<span class="at" style="color: #657422;">name =</span> <span class="st" style="color: #20794D;">"Iris Varieties"</span>) </span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="no-legend" class="level2">
+<h2 class="anchored" data-anchor-id="no-legend">No legend</h2>
+<p>ggplot2 automatically adds a legend that maps color to species. To remove the legend we set the <code>geom_point()</code> argument <code>show.legend = FALSE</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">show.legend=</span><span class="cn" style="color: #8f5902;">FALSE</span>)</span></code></pre></div>
+</div>
+</section>
+<section id="themes" class="level2">
+<h2 class="anchored" data-anchor-id="themes">Themes</h2>
+<p>The <strong>default theme for <code>ggplot2</code> uses the gray background</strong> with white grid lines.</p>
+<p>If you don’t like this, you can use the black and white theme by using the <code>theme_bw()</code> function.</p>
+<p>The <code>theme_bw()</code> function also allows you to set the typeface for the plot, in case you don’t want the default Helvetica. Here we change the typeface to Times.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For things that only make sense globally, use <code>theme()</code>, i.e.&nbsp;<code>theme(legend.position = "none")</code>. Two standard appearance themes are included</p>
+<ul>
+<li><code>theme_gray()</code>: The default theme (gray background)</li>
+<li><code>theme_bw()</code>: More stark/plain</li>
+</ul>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1">p <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb55-2">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">color =</span> Species)) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb55-3">  <span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_family =</span> <span class="st" style="color: #20794D;">"Times"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Modifying the theme for a plot</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="add-on-packages" class="level1">
 <h1>Add-on packages</h1>
-<p>The power of ggplot2 is augmented further due to the availability of add-on packages. The remaining changes needed to put the finishing touches on our plot require the ggthemes and ggrepel packages.</p>
-<p>The style of a ggplot2 graph can be changed using the theme functions. Several themes are included as part of the ggplot2 package. In fact, for most of the plots in this book, we use a function in the dslabs package that automatically sets a default theme:</p>
-<p>ds_theme_set() Many other themes are added by the package ggthemes. Among those are the theme_economist theme that we used. After installing the package, you can change the style by adding a layer like this:</p>
-<p>library(ggthemes) p + theme_economist() You can see how some of the other themes look by simply changing the function. For instance, you might try the theme_fivethirtyeight() theme instead.</p>
-<p>The final difference has to do with the position of the labels. In our plot, some of the labels fall on top of each other. The add-on package ggrepel includes a geometry that adds labels while ensuring that they don’t fall on top of each other. We simply change geom_text with geom_text_repel.</p>
+<p>The power of ggplot2 is augmented further due to the availability of add-on packages. The remaining changes needed to put the finishing touches on our plot require the <code>ggthemes</code> and <code>ggrepel</code> packages.</p>
+<section id="ggthemes" class="level2">
+<h2 class="anchored" data-anchor-id="ggthemes"><strong>ggthemes</strong></h2>
+<p>The style of a ggplot2 graph can be changed using the theme functions. Several themes are included as part of the ggplot2 package.</p>
+<p>Many other themes are added by the package <code>ggthemes</code>. Among those are the <code>theme_economist</code> theme that we used. After installing the package, you can change the style by adding a layer like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><span class="fu" style="color: #4758AB;">require</span>(ggthemes)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ggthemes</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">2</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb58-2">  <span class="fu" style="color: #4758AB;">scale_color_manual</span>(<span class="at" style="color: #657422;">values=</span>cols) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb58-3">  <span class="fu" style="color: #4758AB;">theme_economist</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>You can see how some of the other themes look by simply changing the function. For instance, you might try the <code>theme_fivethirtyeight()</code> theme instead.</p>
+<p><strong>ggrepel</strong></p>
+<p>The final difference has to do with the position of the labels. In our plot, some of the labels fall on top of each other. The package <code>ggrepel</code> includes a geometry that adds labels while ensuring that they don’t fall on top of each other. We simply change <code>geom_text</code> with <code>geom_text_repel</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><span class="fu" style="color: #4758AB;">require</span>(ggrepel)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ggrepel</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb61" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1">p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">2</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb61-2">  <span class="fu" style="color: #4758AB;">scale_color_manual</span>(<span class="at" style="color: #657422;">values=</span>cols) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb61-3">  <span class="fu" style="color: #4758AB;">theme_economist</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb61-4">  <span class="fu" style="color: #4758AB;">geom_text_repel</span>(<span class="fu" style="color: #4758AB;">aes</span>(Petal.Length, Petal.Width, <span class="at" style="color: #657422;">label =</span> id))</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ggrepel: 90 unlabeled data points (too many overlaps). Consider
+increasing max.overlaps</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
 </section>
 <section id="putting-it-all-together" class="level1">
 <h1>Putting it all together</h1>
 <p>Now that we are done testing, we can write one piece of code that produces our desired plot from scratch.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1">iris<span class="sc" style="color: #5E5E5E;">$</span>id <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="fu" style="color: #4758AB;">length</span>(iris<span class="sc" style="color: #5E5E5E;">$</span>Species)</span>
+<span id="cb63-2">cols <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"darkorange"</span>, <span class="st" style="color: #20794D;">"navyblue"</span>, <span class="st" style="color: #20794D;">"deeppink"</span>)</span>
+<span id="cb63-3"><span class="fu" style="color: #4758AB;">names</span>(cols) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"versicolor"</span>, <span class="st" style="color: #20794D;">"virginica"</span>, <span class="st" style="color: #20794D;">"setosa"</span>)</span>
+<span id="cb63-4"></span>
+<span id="cb63-5">iris <span class="sc" style="color: #5E5E5E;">|&gt;</span> <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> Petal.Length, <span class="at" style="color: #657422;">y =</span> Petal.Width, <span class="at" style="color: #657422;">col=</span>Species)) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb63-6">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">size=</span><span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">alpha=</span><span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">2</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb63-7">   <span class="fu" style="color: #4758AB;">geom_smooth</span>(<span class="at" style="color: #657422;">method=</span><span class="st" style="color: #20794D;">"lm"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb63-8">  <span class="fu" style="color: #4758AB;">scale_color_manual</span>(<span class="at" style="color: #657422;">values=</span>cols) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb63-9">  <span class="fu" style="color: #4758AB;">theme_economist</span>() </span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-02-21-ggplot2/index_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>I left off the point labels because itʻs too busy, but you can modify as you wish! It is often useful to label points when you are data cleaning or if you are interested in highlighting certain points. In that case, you could label only specific points.</p>
+</section>
+<section id="exercises" class="level1">
+<h1>Exercises</h1>
+<ol type="1">
+<li>In the final ggplot above, modify it to label only point 50, 100, and 150. Hint: You can make another column of the iris dataframe that has labels only on those specific rows, and use that as your label argument.</li>
+<li>Try making a different kind of plot from the same data. Maybe a violin plot? Or any plot of your choice.</li>
+<li>Try plotting a different kind of data using ggplot (maybe a discrete variable?). You can look at the built-in <code>mtcars</code> dataset or any new dataset.</li>
+</ol>
 
 
 </section>
@@ -1473,7 +1793,7 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
   <category>objects</category>
   <guid>https://mbutler808.github.io/posts/2023-02-14-tidying-exploring-data/index.html</guid>
   <pubDate>Tue, 14 Feb 2023 10:00:00 GMT</pubDate>
-  <media:content url="https://mbutler808.github.io/images/penguins.png" medium="image" type="image/png" height="86" width="144"/>
+  <media:content url="https://mbutler808.github.io/images/penguins.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Types of Data</title>

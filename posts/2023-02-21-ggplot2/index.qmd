@@ -285,7 +285,7 @@ Clearly, the second call to geom_text does not use population and total.
 
 # Scales
 
-Often in morphometrics, we use a log scale. We can log transform the plot (how it looks without changing the data) through a scales layer. A quick look at the cheat sheet reveals the scale_x_continuous function lets us control the behavior of scales. We use them like this:
+Changing scales is a common task. For example, in morphometrics, we often use a log scale. We can log transform the plot (how it looks without changing the data) through a scales layer. A quick look at the cheat sheet reveals the __scale_x_continuous__ function lets us control the behavior of scales. We use them like this:
 
 ```{r}
 p + geom_point(size = 3) +  
@@ -296,7 +296,7 @@ p + geom_point(size = 3) +
 
 Because we are in the log-scale now, the nudge must be made smaller.
 
-This particular transformation is so common that ggplot2 provides the specialized functions scale_x_log10 and scale_y_log10, which we can use to rewrite the code like this:
+This particular transformation is so common that ggplot2 provides the special functions __scale_x_log10__ and __scale_y_log10__:
 
 ```{r}
 p + geom_point(size = 3) +  
@@ -309,10 +309,10 @@ p + geom_point(size = 3) +
 
 # Labels and titles
 
-Similarly, the cheat sheet quickly reveals that to change labels and add a title, we use the following functions:
+Similarly, the cheat sheet shows that to change labels and add a title, we use the following functions:
 
 ```{r}
-p + geom_point(size = 3) +  
+q <- p + geom_point(size = 3) +  
   geom_text(nudge_x = 0.05) + 
   scale_x_log10() +
   scale_y_log10() +
@@ -323,18 +323,12 @@ p + geom_point(size = 3) +
 
 We are almost there! All we have left to do is add color, a legend, and optional changes to the style.
 
-We can change the color of the points using the col argument in the geom_point function. To facilitate demonstration of new features, we will redefine p to be everything except the points layer:
+# Color annotations by group
+
+We can change the color of the points using the `col` argument in the `geom_point()` function. To facilitate demonstration of new features, we will save the log-scaled plot as q and include everything except the points layer:
 
 ```{r}
-p <- p + geom_point(size = 3) +  
-  geom_text(nudge_x = 0.05) + 
-  scale_x_log10() +
-  scale_y_log10() +
-  xlab("Petal Length (log scale)") + 
-  ylab("Petal Width (log scale)") +
-  ggtitle("Fisherʻs Iris dataset")
-
-p + geom_point(size = 3, color ="blue")
+q + geom_point(size = 3, color ="blue")
 ```
 
 This, of course, is not what we want. We want to assign color depending on the Species. A nice default behavior of ggplot2 is that if we assign a categorical variable to color, it automatically assigns a different color to each category and also adds a legend.
@@ -342,65 +336,303 @@ This, of course, is not what we want. We want to assign color depending on the S
 Since the choice of color is determined by a feature of each observation, this is an aesthetic mapping. To map each point to a color, we need to use aes. We use the following code:
 
 ```{r}
-p + geom_point(aes(col=Species), size = 3)
+q + geom_point(aes(col=Species), size = 3)
 ```
 
-The x and y mappings are inherited from those already defined in p, so we do not redefine them. We also move aes to the first argument since that is where mappings are expected in this function call.
+Why donʻt we need to supply the x and y? Those mappings are inherited from the global aes specification in __p__. 
 
-Here we see yet another useful default behavior: ggplot2 automatically adds a legend that maps color to region. To avoid adding this legend we set the geom_point argument show.legend = FALSE.
+Suppose we wanted to use a custom color palette for our data. How do we specify them? Notice that the __aes(col=Species)__ indicates which __points__ are grouped by color according to the __Species__ value. _Nothing in the vector Species indicates a color._  
+
+Recall that Species is actually a __factor__, and so the values would be 1,2,3. How does this information get translated? In R, numbers are translated into a default color vector for plot. 
+
+### Specifying custom colors
+
+The values of the colors we wish to use are specified in the scale parameter __scale_color_manual__. For these examples, letʻs go back to the untransformed values: 
+
+```{r}
+p + geom_point(aes(col=Species, size = 3)) +
+  scale_color_manual(values=c("red", "blue", "purple"))
+```
+
+R has hundreds of named colors. You can see the names with the `colors()` function. There is a cool little function in the __easyGgplot2__ package that displays the colors. Now we have a lot of fancy colors to play with:
+
+```{r eval=F}
+install.packages("remotes")
+remotes::install_github("kassambara/easyGgplot2")
+```
+```{r}
+easyGgplot2::showCols()
+```
+
+### Specifying colors by level
+
+We can control which color is matched with which level of species. Looking at the help page for __scale_color_manual__, under *values* we see the explanation:
+
+> __values__  
+> a set of aesthetic values to map data values to. The values will be matched in order (usually alphabetical) with the limits of the scale, or with breaks if provided. If this is a __named vector__, then the v_alues will be matched based on the names instead_. Data values that don't match will be given na.value. 
+
+Letʻs use some of these fun colors, by creating a vector `cols` of color names and passing it to the `values` argument of `scale_color_manual`:
+
+```{r}
+cols <- c("darkorange", "navyblue", "deeppink")
+
+p + geom_point(aes(col=Species, size = 3)) +
+  scale_color_manual(values=cols)
+```
+
+This is great! But what if we wanted to have pink on the bottom (setosa), orange in the middle (versicolor), and navy (virginica) on the top? 
+Playing with the vector by trial and error always works, but what if we had a dozen species? 
+
+### Named color vector
+
+We can specify the match of colors to specific species by naming the `cols` vector with the species names. Then the `cols` vector will have color values, named by the species they represent: 
+
+```{r}
+cols <- c("darkorange", "navyblue", "deeppink")
+names(cols) <- c("versicolor", "virginica", "setosa")
+
+p + geom_point(aes(col=Species, size = 3)) +
+  scale_color_manual(values=cols)
+```
+
+Voila! This is a perfect example of a key - value pair. 
+
+### Transparency
+
+The transparency of colors is controlled by the aesthetic `alpha`, where 1 indicates 100% opacity (or 0 transparency).  
+
+```{r}
+p + geom_point(aes(col=Species, size = 3, alpha = 1/2)) +
+  scale_color_manual(values=cols)
+```
+Transparency really helps with overlapping points. 
+
+### Jitter
+
+Another way of dealing with overlapping points is to add a little random noise to each, called __jitter__. Try using `geom_jitter` instead of `geom_point`
+
+```{r}
+p + geom_jitter(aes(col=Species, size = 3, alpha = 1/2)) +
+  scale_color_manual(values=cols)
+```
+
+If you want to see where the jitter is relative to the true coordinates, you can use both:
+
+```{r}
+p + geom_point(aes(col=Species, size = 3, alpha = 1/2)) +
+  scale_color_manual(values=cols) +
+  geom_jitter()
+```
+
+Here the true points are in color, and the jitter is shown in the smaller black points. 
+
+Jitter is fine for discrete values to spread it out for visualization (say jitter along the discrete axis but not the continuous axis), _but not as ideal for metric data where distance along the axis really mean something_. 
+
 
 # Annotation, shapes, and adjustments
 
 We often want to add shapes or annotation to figures that are not derived directly from the aesthetic mapping; examples include labels, boxes, shaded areas, and lines.
 
-Here we want to add a line that represents the regression. 
+
+### Scatterplot with smoother
+
+__geom_smooth()__ adds a smoothing line but the default is a __loess__ smoother, which is flexible and nonparametric but might be too flexible for our purposes. 
 
 ```{r}
-# need to add
+p + geom_point(aes(col=Species), size = 3) +
+    geom_smooth()
 ```
 
+We get a warning because we are not using the `label` aesthetic (remember it is =id). There is no problem but to stop the annoying warnings, letʻs leave off `label` until we need it. 
 
-To add a line we use the geom_abline function. ggplot2 uses ab in the name to remind us we are supplying the intercept (a) and slope (b). The default line has slope 1 and intercept 0 so we only have to define the intercept:
+If we want to explain a simple linear trend between the `x` and `y` variables, perhaps we’d prefer a linear regression line.
 
 ```{r}
-# p + geom_point(aes(col=Species), size = 3) + 
-#  geom_abline(intercept = log10(r))
+p <- iris |> ggplot(aes(x = Petal.Length, y = Petal.Width))
+
+p + geom_point(aes(col=Species), size = 3) +
+    geom_smooth(method="lm")
 ```
 
-Here geom_abline does not use any information from the data object.
+Or without the standard error envelope:
+
+```{r}
+p + geom_point(aes(col=Species), size = 3) +
+    geom_smooth(method="lm", se=FALSE)
+```
+
+We can also compute the regression separately and add the line using `geom_abline()`, similar to the base R `abline()` function. Note: the ab in the name is to remind us we are supplying the intercept (a) and slope (b). 
+
+```{r}
+lm.fit <- lm(iris$Petal.Width ~ iris$Petal.Length)
+
+p + geom_point(aes(col=Species), size = 3) +
+    geom_abline(intercept = coef(lm.fit)[1], slope= coef(lm.fit)[2])
+```
+
+Here `geom_abline()` does not use any information from the data object, only the regression coefficients.
 
 We can change the line type and color of the lines using arguments. Also, we draw it first so it doesn’t go over our points.
 
-p <- p + geom_abline(intercept = log10(r), lty = 2, color = "darkgrey") +
-  geom_point(aes(col=region), size = 3)  
-Note that we have redefined p and used this new p below and in the next section.
+```{r}
+p + geom_abline(intercept = coef(lm.fit)[1], 
+                slope= coef(lm.fit)[2],
+                lty = 2, 
+                color = "darkgrey") +
+  geom_point(aes(col=Species), size = 3)  
+```
+
+### __geom___ by group
+
+We can see that although the three species of iris generally fall along a line, that there are clusters by species. Perhaps separate linear models by group may be a better fit. 
+
+There are two ways that we can do this. The first is to put a grouping aesthetic within the smoother. 
+
+```{r}
+p + geom_point(aes(col=Species), size = 3) +
+    geom_smooth( aes(group=Species), method="lm")
+```
+
+Another way to do this is to add col (here as a grouping variable) in the global ggplot aesthetic, which will apply to all downstream layers: 
+
+```{r}
+r <- iris |> ggplot(aes(x = Petal.Length, y= Petal.Width, col=Species)) 
+ 
+r + geom_point(aes(col=Species), size = 3) +
+    geom_smooth( method="lm")
+```
+
+### Multi panel plots __facet_wrap__
+
+[Facets](https://ggplot2-book.org/facet.html) are what ggplot calls multi-panel plots. They split the data by some factor, which can be very helpful for viewing varition of subsets of the data. 
+
+The two main functions are `facet_wrap()` and `facet_grid()`
+
+__facet_wrap()__ lays the panels out in a ribbon, in sequential order. See the documentation for arguments to control the number of rows or columns, etc. 
+
+The faceting variable (here, Species) is using formula syntax `~Species`. 
+
+```{r}
+p + geom_point(aes(col=Species), size = 3) +
+   geom_smooth( method="lm") + 
+   facet_wrap(~Species)
+```
+
+__facet_grid()__ is explicity a grid. The syntax `. ~ Species` facets by column. a
+```{r}
+p + geom_point(aes(col=Species), size = 3) +
+   geom_smooth( method="lm") + 
+   facet_grid(. ~ Species)
+```
+
+The syntax `Species ~ .` facets by row. The syntax `Y ~ X` would facet by rows and columns.
+
+```{r}
+p + geom_point(aes(col=Species), size = 3) +
+   geom_smooth( method="lm") + 
+   facet_grid(Species ~ .)   
+```
+
+
+# More customization
 
 The default plots created by ggplot2 are already very useful. However, we frequently need to make minor tweaks to the default behavior. Although it is not always obvious how to make these even with the cheat sheet, ggplot2 is very flexible.
 
-For example, we can make changes to the legend via the scale_color_discrete function. In our plot the word region is capitalized and we can change it like this:
+## Legend
+
+For example, we can make changes to the legend title via the `scale_color_discrete function()`:
 
 ```{r}
-p <- p + scale_color_discrete(name = "Species") 
+p + geom_point(aes(col=Species), size = 3) + 
+  scale_color_discrete(name = "Iris Varieties") 
 ```
+
+## No legend
+
+ggplot2 automatically adds a legend that maps color to species. To remove the legend we set the `geom_point()` argument `show.legend = FALSE`.  
+
+```{r eval=F}
+p + geom_point(aes(col=Species), size = 3, show.legend=FALSE)
+```
+
+## Themes
+
+The **default theme for `ggplot2` uses the gray background** with white grid lines.
+
+If you don't like this, you can use the black and white theme by using the `theme_bw()` function.
+
+The `theme_bw()` function also allows you to set the typeface for the plot, in case you don't want the default Helvetica. Here we change the typeface to Times.
+
+::: callout-tip
+### Note
+
+For things that only make sense globally, use `theme()`, i.e. `theme(legend.position = "none")`. Two standard appearance themes are included
+
+-   `theme_gray()`: The default theme (gray background)
+-   `theme_bw()`: More stark/plain
+:::
+
+```{r}
+#| fig-cap: "Modifying the theme for a plot"
+p + 
+  geom_point(aes(color = Species)) + 
+  theme_bw(base_family = "Times")
+```
+
 
 # Add-on packages
 
-The power of ggplot2 is augmented further due to the availability of add-on packages. The remaining changes needed to put the finishing touches on our plot require the ggthemes and ggrepel packages.
+The power of ggplot2 is augmented further due to the availability of add-on packages. The remaining changes needed to put the finishing touches on our plot require the `ggthemes` and `ggrepel` packages.
 
-The style of a ggplot2 graph can be changed using the theme functions. Several themes are included as part of the ggplot2 package. In fact, for most of the plots in this book, we use a function in the dslabs package that automatically sets a default theme:
+## __ggthemes__
 
-ds_theme_set()
-Many other themes are added by the package ggthemes. Among those are the theme_economist theme that we used. After installing the package, you can change the style by adding a layer like this:
+The style of a ggplot2 graph can be changed using the theme functions. Several themes are included as part of the ggplot2 package. 
 
-library(ggthemes)
-p + theme_economist()
-You can see how some of the other themes look by simply changing the function. For instance, you might try the theme_fivethirtyeight() theme instead.
+Many other themes are added by the package `ggthemes`. Among those are the `theme_economist` theme that we used. After installing the package, you can change the style by adding a layer like this:
 
-The final difference has to do with the position of the labels. In our plot, some of the labels fall on top of each other. The add-on package ggrepel includes a geometry that adds labels while ensuring that they don’t fall on top of each other. We simply change geom_text with geom_text_repel.
+```{r}
+require(ggthemes)
+p + geom_point(aes(col=Species, size = 3, alpha = 1/2)) +
+  scale_color_manual(values=cols) + 
+  theme_economist()
+```
+You can see how some of the other themes look by simply changing the function. For instance, you might try the `theme_fivethirtyeight()` theme instead.
 
+__ggrepel__
+
+The final difference has to do with the position of the labels. In our plot, some of the labels fall on top of each other. The package `ggrepel` includes a geometry that adds labels while ensuring that they don’t fall on top of each other. We simply change `geom_text` with `geom_text_repel`.
+
+```{r}
+require(ggrepel)
+p + geom_point(aes(col=Species, size = 3, alpha = 1/2)) +
+  scale_color_manual(values=cols) + 
+  theme_economist() +
+  geom_text_repel(aes(Petal.Length, Petal.Width, label = id))
+```
 
 # Putting it all together
 
 Now that we are done testing, we can write one piece of code that produces our desired plot from scratch.
 
+```{r}
+iris$id <- 1:length(iris$Species)
+cols <- c("darkorange", "navyblue", "deeppink")
+names(cols) <- c("versicolor", "virginica", "setosa")
 
+iris |> ggplot(aes(x = Petal.Length, y = Petal.Width, col=Species)) + 
+  geom_point(aes(size=3, alpha=1/2)) +
+   geom_smooth(method="lm") +
+  scale_color_manual(values=cols) + 
+  theme_economist() 
+```
+
+I left off the point labels because itʻs too busy, but you can modify as you wish! It is often useful to label points when you are data cleaning or if you are interested in highlighting certain points. In that case, you could label only  specific points. 
+
+
+
+# Exercises
+
+1. In the final ggplot above, modify it to label only point 50, 100, and 150.  Hint: You can make another column of the iris dataframe that has labels only on those specific rows, and use that as your label argument. 
+2. Try making a different kind of plot from the same data. Maybe a violin plot? Or any plot of your choice. 
+3. Try plotting a different kind of data using ggplot (maybe a discrete variable?).  You can look at the built-in `mtcars` dataset or any new dataset.  
+ 
