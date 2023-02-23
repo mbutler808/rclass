@@ -369,7 +369,7 @@ easyGgplot2::showCols()
 We can control which color is matched with which level of species. Looking at the help page for __scale_color_manual__, under *values* we see the explanation:
 
 > __values__  
-> a set of aesthetic values to map data values to. The values will be matched in order (usually alphabetical) with the limits of the scale, or with breaks if provided. If this is a __named vector__, then the v_alues will be matched based on the names instead_. Data values that don't match will be given na.value. 
+> a set of aesthetic values to map data values to. The values will be matched in order (usually alphabetical) with the limits of the scale, or with breaks if provided. If this is a __named vector__, then the _values will be matched based on the names instead_. Data values that don't match will be given na.value. 
 
 Letʻs use some of these fun colors, by creating a vector `cols` of color names and passing it to the `values` argument of `scale_color_manual`:
 
@@ -395,14 +395,14 @@ p + geom_point(aes(col=Species, size = 3)) +
   scale_color_manual(values=cols)
 ```
 
-Voila! This is a perfect example of a key - value pair. 
+Voila! `names(cols)` and `cols` are a perfect example of a key - value pair. 
 
 ### Transparency
 
-The transparency of colors is controlled by the aesthetic `alpha`, where 1 indicates 100% opacity (or 0 transparency).  
+The transparency of colors is controlled by the aesthetic `alpha`, where 1 indicates 100% opacity (or 0 transparency), with smaller decimals indicating more transparency.  
 
 ```{r}
-p + geom_point(aes(col=Species, size = 3, alpha = 1/2)) +
+p + geom_point(aes(col=Species, size = 3, alpha = 0.5)) +
   scale_color_manual(values=cols)
 ```
 Transparency really helps with overlapping points. 
@@ -412,22 +412,63 @@ Transparency really helps with overlapping points.
 Another way of dealing with overlapping points is to add a little random noise to each, called __jitter__. Try using `geom_jitter` instead of `geom_point`
 
 ```{r}
-p + geom_jitter(aes(col=Species, size = 3, alpha = 1/2)) +
+p + geom_jitter(aes(col=Species, size = 3, alpha = 0.5)) +
   scale_color_manual(values=cols)
 ```
 
 If you want to see where the jitter is relative to the true coordinates, you can use both:
 
 ```{r}
-p + geom_point(aes(col=Species, size = 3, alpha = 1/2)) +
+p + geom_point() +
   scale_color_manual(values=cols) +
-  geom_jitter()
+  geom_jitter(aes(col=Species, size = 3, alpha = 0.5))
 ```
 
 Here the true points are in color, and the jitter is shown in the smaller black points. 
 
 Jitter is fine for discrete values to spread it out for visualization (say jitter along the discrete axis but not the continuous axis), _but not as ideal for metric data where distance along the axis really mean something_. 
 
+# Side by side plots
+
+Facets work great when they are subsets of the same data, but when you have different data or you want to apply different geoms or aesthetics and compare, you need a more general purpose panel system.  
+
+The `cowplot` package was written for arranging multiple plots. Letʻs compare what it looks like to jitter the black dots vs. jittering the transparent circles:
+
+```{r eval=F}
+install.packages("cowplot")
+```
+```{r}
+require(cowplot)
+
+plot1 <- p + geom_point() +
+  scale_color_manual(values=cols) +
+  geom_jitter(aes(col=Species, size = 3, alpha = 0.5))
+
+plot2 <- p + geom_point(aes(col=Species, size = 3, alpha = 0.5)) +
+  scale_color_manual(values=cols) +
+  geom_jitter()
+  
+plot_grid(plot1, plot2, labels="AUTO")
+```
+
+The labels arguement is to label the plots, for example for publication. 
+
+Another example, suppose we want to explore variation along `Sepal.Length` by `Species`:
+
+```{r}
+plot1 <- ggplot(iris, aes(x = Species, y = Sepal.Length, fill=Species)) + 
+  geom_boxplot() +
+  scale_color_manual(values=cols,  aesthetics="fill") 
+ 
+plot2 <- ggplot(iris, aes(x = Sepal.Length, fill = Species, col=Species)) + 
+  geom_density(alpha=0.5) +
+  scale_color_manual(values=cols, aesthetics="fill") +
+  theme(legend.position = c(0.8, 0.8))
+  
+plot_grid(plot1, plot2, labels="AUTO")
+```
+
+This is not quite right - we need to fix it! Please check the help pages. 
 
 # Annotation, shapes, and adjustments
 
