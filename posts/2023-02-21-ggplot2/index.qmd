@@ -669,7 +669,11 @@ iris |> ggplot(aes(x = Petal.Length, y = Petal.Width, col=Species)) +
 
 I left off the point labels because itʻs too busy, but you can modify as you wish! It is often useful to label points when you are data cleaning or if you are interested in highlighting certain points. In that case, you could label only  specific points. 
 
+# Saving
 
+You can save your plots using the base R `pdf()` and `dev.off()` combination, opening the device, printing your plots, then closing the device. 
+
+There is also a `ggsave()` function specifically to save ggplot objects to different format. Check out the help page for it.  
 
 # Exercises
 
