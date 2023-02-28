@@ -42,7 +42,7 @@ For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring
 ||||||
 | **Module 4** |         | **Nuts and Bolts of R** |||
 ||||||
-|  Week 7       | Feb 28 | `r emojifont::emoji('monkey')` Tidyverse and data wrangling \[[html](posts/2023-02-28-tidyverse/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-02-28-tidyverse/index.qmd)\] | |
+|  Week 7       | Feb 28 | `r emojifont::emoji('monkey')` Tidyverse and data wrangling \[[html](posts/2023-02-28-dplyr/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-02-28-dplyr/index.qmd)\] | |
 |              | Mar 2  | `r emojifont::emoji('bug')`  Debugging and Error Handling | `emoji('seedling')` Project 1 due||
 ||||||
 | **Module 5** |         | **Special Data Types** | | |

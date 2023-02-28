@@ -76,7 +76,7 @@ As defined by Hadley Wickham in his 2014 paper published in the *Journal of Stat
 
 # What shapes does the data need to be in?
 
-Beyond the data being tidy, however, we also need to think about what shape it needs to be in. 
+Beyond the data being tidy, however, we also need to think about what shape it needs to be in. Weʻll review concepts and tools in the next two lessons. 
 
 Now that we have had some experience plotting our data, we can see the value of having rectangular dataframes.  We can also see that for particular graphics and analyses, we need to have the data arranged in particular ways. 
 
