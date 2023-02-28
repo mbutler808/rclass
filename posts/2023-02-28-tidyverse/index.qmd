@@ -1,5 +1,5 @@
 ---
-title: "Getting data in shape with the Tidyverse"
+title: "Getting data in shape with dplyr"
 author:
   - name: Marguerite Butler
     url: https://butlerlab.org
@@ -56,7 +56,27 @@ Material for this lecture was borrowed and adopted from
 
 It is still important to understand base R manipulations, particularly for things such as cleaning raw data, troubleshooting, and writing custom functions. But the tidyverse provides many useful tools for data manipuation and analysis of cleaned data. In this session we will learn about __dplyr__ and friends.  
 
+
+# Tidy data
+
+The tidyverse has many slogans. A particularly good one for all data analysis is the notion of **tidy data**.
+
+As defined by Hadley Wickham in his 2014 paper published in the *Journal of Statistical Software*, a [tidy dataset](https://www.jstatsoft.org/article/view/v059i10) has the following properties:
+
+1.  Each variable forms a column.
+
+2.  Each observation forms a row.
+
+3.  Each type of observational unit forms a table.
+
+![Artwork by Allison Horst on tidy data](https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/tidydata_1.jpg){width="80%"}
+
+\[**Source**: [Artwork by Allison Horst](https://github.com/allisonhorst/stats-illustrations)\]
+
+
 # What shapes does the data need to be in?
+
+Beyond the data being tidy, however, we also need to think about what shape it needs to be in. 
 
 Now that we have had some experience plotting our data, we can see the value of having rectangular dataframes.  We can also see that for particular graphics and analyses, we need to have the data arranged in particular ways. 
 

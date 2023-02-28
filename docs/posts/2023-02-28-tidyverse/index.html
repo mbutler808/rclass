@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2023-02-28">
 <meta name="description" content="Add">
 
-<title>ZOOL710 Data Science in R for Biologists - Getting data in shape with the Tidyverse</title>
+<title>ZOOL710 Data Science in R for Biologists - Getting data in shape with dplyr</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -208,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Getting data in shape with the Tidyverse</h1>
+      <h1 class="title">Getting data in shape with dplyr</h1>
                   <div>
         <div class="description">
           Add
@@ -268,6 +268,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#tidy-data" id="toc-tidy-data" class="nav-link" data-scroll-target="#tidy-data">Tidy data</a></li>
   <li><a href="#what-shapes-does-the-data-need-to-be-in" id="toc-what-shapes-does-the-data-need-to-be-in" class="nav-link" data-scroll-target="#what-shapes-does-the-data-need-to-be-in">What shapes does the data need to be in?</a></li>
   <li><a href="#tibbles" id="toc-tibbles" class="nav-link" data-scroll-target="#tibbles">Tibbles</a>
   <ul class="collapse">
@@ -368,8 +369,26 @@ Learning objectives
 <h1>Overview</h1>
 <p>It is still important to understand base R manipulations, particularly for things such as cleaning raw data, troubleshooting, and writing custom functions. But the tidyverse provides many useful tools for data manipuation and analysis of cleaned data. In this session we will learn about <strong>dplyr</strong> and friends.</p>
 </section>
+<section id="tidy-data" class="level1">
+<h1>Tidy data</h1>
+<p>The tidyverse has many slogans. A particularly good one for all data analysis is the notion of <strong>tidy data</strong>.</p>
+<p>As defined by Hadley Wickham in his 2014 paper published in the <em>Journal of Statistical Software</em>, a <a href="https://www.jstatsoft.org/article/view/v059i10">tidy dataset</a> has the following properties:</p>
+<ol type="1">
+<li><p>Each variable forms a column.</p></li>
+<li><p>Each observation forms a row.</p></li>
+<li><p>Each type of observational unit forms a table.</p></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/tidydata_1.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Artwork by Allison Horst on tidy data</figcaption><p></p>
+</figure>
+</div>
+<p>[<strong>Source</strong>: <a href="https://github.com/allisonhorst/stats-illustrations">Artwork by Allison Horst</a>]</p>
+</section>
 <section id="what-shapes-does-the-data-need-to-be-in" class="level1">
 <h1>What shapes does the data need to be in?</h1>
+<p>Beyond the data being tidy, however, we also need to think about what shape it needs to be in.</p>
 <p>Now that we have had some experience plotting our data, we can see the value of having rectangular dataframes. We can also see that for particular graphics and analyses, we need to have the data arranged in particular ways.</p>
 <p>For example, take a look at this elegant graphic below. This single graphic is packed with information on fat, BMR, TEE, and activity levels, all for mulitple species. Is it more effective that individual bar plots? This arrangement is so helpful because you can imagine questions that can be answered with it by comparing the different aspects of the data.</p>
 <p><img src="../../images/HumanTEE.png" class="img-fluid" alt="Human total energy expenditure compared with other primates."> <a href="https://www.science.org/content/article/scientist-busts-myths-about-how-humans-burn-calories-and-why?fbclid=IwAR3fzOwd09LBUOR9ely2t4om0-CtYcuT8ux_f46OopQnpiAVENgX_24bWpY">Source: Gibbons, 2022 based on data of H. Ponzer et al., NATURE, 533:90, 2016</a></p>
@@ -1336,16 +1355,16 @@ Example
 <pre><code># A tibble: 10 × 16
    name      height  mass hair  skin  eye   birth…¹ sex   gender homew…² species
    &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;  
- 1 Lobot        175    79 none  light blue       37 male  mascu… Bespin  Human  
- 2 Qui-Gon …    193    89 brown fair  blue       92 male  mascu… &lt;NA&gt;    Human  
- 3 Bib Fort…    180    NA none  pale  pink       NA male  mascu… Ryloth  Twi'lek
- 4 C-3PO        167    75 &lt;NA&gt;  gold  yell…     112 none  mascu… Tatooi… Droid  
- 5 Ki-Adi-M…    198    82 white pale  yell…      92 male  mascu… Cerea   Cerean 
- 6 Watto        137    NA black blue… yell…      NA male  mascu… Toydar… Toydar…
- 7 Jango Fe…    183    79 black tan   brown      66 male  mascu… Concor… Human  
- 8 Adi Gall…    184    50 none  dark  blue       NA fema… femin… Corusc… Tholot…
- 9 Nien Nunb    160    68 none  grey  black      NA male  mascu… Sullust Sullus…
-10 Mace Win…    188    84 none  dark  brown      72 male  mascu… Haruun… Human  
+ 1 Finn          NA    NA black dark  dark       NA male  mascu… &lt;NA&gt;    Human  
+ 2 Quarsh P…    183    NA black dark  brown      62 &lt;NA&gt;  &lt;NA&gt;   Naboo   &lt;NA&gt;   
+ 3 R2-D2         96    32 &lt;NA&gt;  whit… red        33 none  mascu… Naboo   Droid  
+ 4 Wedge An…    170    77 brown fair  hazel      21 male  mascu… Corell… Human  
+ 5 Sly Moore    178    48 none  pale  white      NA &lt;NA&gt;  &lt;NA&gt;   Umbara  &lt;NA&gt;   
+ 6 Bail Pre…    191    NA black tan   brown      67 male  mascu… Aldera… Human  
+ 7 Palpatine    170    75 grey  pale  yell…      82 male  mascu… Naboo   Human  
+ 8 Saesee T…    188    NA none  pale  oran…      NA male  mascu… Iktotch Iktotc…
+ 9 Biggs Da…    183    84 black light brown      24 male  mascu… Tatooi… Human  
+10 Adi Gall…    184    50 none  dark  blue       NA fema… femin… Corusc… Tholot…
 # … with 5 more variables: films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;,
 #   heightsize &lt;dbl&gt;, height.quint &lt;fct&gt;, and abbreviated variable names
 #   ¹​birth_year, ²​homeworld</code></pre>
