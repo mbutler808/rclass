@@ -82,7 +82,7 @@ Now that we have had some experience plotting our data, we can see the value of 
 
 For example, take a look at this elegant graphic below.  This single graphic is packed with information on fat, BMR, TEE, and activity levels, all for mulitple species. Is it more effective that individual bar plots?  This arrangement is so helpful because you can imagine questions that can be answered with it by comparing the different aspects of the data. 
 
-![Human total energy expenditure compared with other primates.](../../images/HumanTEE.png)
+![Human total energy expenditure compared with other primates.](../../images/humanTEE.png)
 [Source: Gibbons, 2022 based on data of H. Ponzer et al., NATURE, 533:90, 2016](https://www.science.org/content/article/scientist-busts-myths-about-how-humans-burn-calories-and-why?fbclid=IwAR3fzOwd09LBUOR9ely2t4om0-CtYcuT8ux_f46OopQnpiAVENgX_24bWpY)
 
 

@@ -104,7 +104,7 @@ Learning objectives
 <p>Beyond the data being tidy, however, we also need to think about what shape it needs to be in. Weʻll review concepts and tools in the next two lessons.</p>
 <p>Now that we have had some experience plotting our data, we can see the value of having rectangular dataframes. We can also see that for particular graphics and analyses, we need to have the data arranged in particular ways.</p>
 <p>For example, take a look at this elegant graphic below. This single graphic is packed with information on fat, BMR, TEE, and activity levels, all for mulitple species. Is it more effective that individual bar plots? This arrangement is so helpful because you can imagine questions that can be answered with it by comparing the different aspects of the data.</p>
-<p><img src="https://mbutler808.github.io/images/HumanTEE.png" class="img-fluid" alt="Human total energy expenditure compared with other primates."> <a href="https://www.science.org/content/article/scientist-busts-myths-about-how-humans-burn-calories-and-why?fbclid=IwAR3fzOwd09LBUOR9ely2t4om0-CtYcuT8ux_f46OopQnpiAVENgX_24bWpY">Source: Gibbons, 2022 based on data of H. Ponzer et al., NATURE, 533:90, 2016</a></p>
+<p><img src="https://mbutler808.github.io/images/humanTEE.png" class="img-fluid" alt="Human total energy expenditure compared with other primates."> <a href="https://www.science.org/content/article/scientist-busts-myths-about-how-humans-burn-calories-and-why?fbclid=IwAR3fzOwd09LBUOR9ely2t4om0-CtYcuT8ux_f46OopQnpiAVENgX_24bWpY">Source: Gibbons, 2022 based on data of H. Ponzer et al., NATURE, 533:90, 2016</a></p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1068,16 +1068,16 @@ Example
 <pre><code># A tibble: 10 × 16
    name      height  mass hair  skin  eye   birth…¹ sex   gender homew…² species
    &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;  
- 1 Poe Dame…     NA  NA   brown light brown      NA male  mascu… &lt;NA&gt;    Human  
- 2 Ayla Sec…    178  55   none  blue  hazel      48 fema… femin… Ryloth  Twi'lek
- 3 Luminara…    170  56.2 black yell… blue       58 fema… femin… Mirial  Mirial…
- 4 Poggle t…    183  80   none  green yell…      NA male  mascu… Geonos… Geonos…
- 5 Watto        137  NA   black blue… yell…      NA male  mascu… Toydar… Toydar…
- 6 Wilhuff …    180  NA   aubu… fair  blue       64 male  mascu… Eriadu  Human  
- 7 Tion Med…    206  80   none  grey  black      NA male  mascu… Utapau  Pau'an 
- 8 Wicket S…     88  20   brown brown brown       8 male  mascu… Endor   Ewok   
- 9 C-3PO        167  75   &lt;NA&gt;  gold  yell…     112 none  mascu… Tatooi… Droid  
-10 Mas Amed…    196  NA   none  blue  blue       NA male  mascu… Champa… Chagri…
+ 1 Zam Wese…    168    55 blon… fair… yell…      NA fema… femin… Zolan   Clawdi…
+ 2 Luke Sky…    172    77 blond fair  blue       19 male  mascu… Tatooi… Human  
+ 3 Jar Jar …    196    66 none  oran… oran…      52 male  mascu… Naboo   Gungan 
+ 4 IG-88        200   140 none  metal red        15 none  mascu… &lt;NA&gt;    Droid  
+ 5 Sebulba      112    40 none  grey… oran…      NA male  mascu… Malast… Dug    
+ 6 Lobot        175    79 none  light blue       37 male  mascu… Bespin  Human  
+ 7 Mas Amed…    196    NA none  blue  blue       NA male  mascu… Champa… Chagri…
+ 8 Jek Tono…    180   110 brown fair  blue       NA male  mascu… Bestin… Human  
+ 9 Wedge An…    170    77 brown fair  hazel      21 male  mascu… Corell… Human  
+10 Saesee T…    188    NA none  pale  oran…      NA male  mascu… Iktotch Iktotc…
 # … with 5 more variables: films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;,
 #   heightsize &lt;dbl&gt;, height.quint &lt;fct&gt;, and abbreviated variable names
 #   ¹​birth_year, ²​homeworld</code></pre>
