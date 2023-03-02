@@ -112,6 +112,66 @@ Will you want to do an analysis of the data along with a size-corrected dataset?
 There is a huge wealth of literature on size and how to analyze shape. 
 
 
+# Tiny review of Univariate statistics
+
+## Linear Regression
+
+Linear regression asks whether there is a relationship between X and Y, that is if you know X can you predict the value of Y?
+
+```{r}
+with(iris, plot(Sepal.Width ~ Sepal.Length))
+lm.fit <- with(iris, lm(Sepal.Width ~ Sepal.Length))
+abline(lm.fit, col="blue")
+```
+
+Linear regression results in two parameters, the best-fit slope and intercept:
+
+```{r}
+lm.fit 
+summary(lm.fit)
+```
+
+Regression minimizes the __sum of squared errors__ (or deviations) from the line. The "errors" are the difference between where Y is, and where Y should be if it followed a perfect line. 
+
+We can illustrate what this means:
+
+```{r}
+x <- iris$Sepal.Length
+y <- iris$Sepal.Width
+yhat <- predict(lm.fit)
+
+with(iris, plot(Sepal.Width ~ Sepal.Length))
+with(iris, abline(lm.fit, col="blue"))
+for(i in 1:length(x))  lines(x[c(i,i)],c(y[i], yhat[i]), col="red", lty=2)
+```
+
+The regression line is the best fit line that minimizes the sums of squared deviations from the regression. It turns out that the least-squares fit of the regression line is also provides the Maximum Likelihood fits of the parameters of the line (the slope and intercept).
+
+## ANOVA
+
+Analysis of variance is very closely related to regression. It also works by minimizing sums of squares, but it asks a different question. 
+
+Does the data better fit a model with one group (one regression line?) or multiple groups (multiple regression lines, one for each group)?
+
+Another way to state ANOVA is - is at least one of these groups different than the others?
+
+If we want to know whether species are different in sepal length, then we need to have lm fit the model by species. We do this like so:
+
+```{r}
+lm.fit <- with(iris, lm(Sepal.Length ~ Species))
+summary(lm.fit)
+```
+
+Notice that now have more parameters estimated. You can specify which parameter values and contrasts you want displayed. Often we just want an ANOVA table:
+
+```{r}
+anova(lm.fit)
+``` 
+
+We can see that species are significantly different in sepal length. Can you make a plot that shows this? 
+
+
+
 # Principal Components Analysis
 
 Now you are ready to begin. Often we have many variables measured and we suspect that many of the variables are collinear (or correlated) so that many of them contain the same or similar information. To summarize the variation, we may want to do a Principal Components Analysis.
@@ -257,4 +317,4 @@ iris.can$eigenvalues
 iris.can$pct
 ```
 
-Ninetly-nine percent of the variance is explained by Can1, which is itself dominated by Petal length and width (.98 and .97), and also with a  strong contribution by sepal length (.79). Sepal width provides a contribution in the opposite direction but its correlation value is less (-0.53). We can get most of the separation between species along simply Can1.  The scores of each individual in Can space is given in `iris.can\
+__Ninetly-nine percent of the variance__ is explained by __Can1__, which is itself dominated by Petal length and width (__.98__ and __.97__), and also with a  strong contribution by sepal length (__.79__). Sepal width provides a contribution in the opposite direction but its correlation value is less (-0.53). We can get most of the separation between species along simply Can1.  The scores of each individual in Can space is given in `iris.can`
