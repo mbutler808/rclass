@@ -259,14 +259,45 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>We can see that species are significantly different in sepal length. Can you make a plot that shows this?</p>
 </section>
+<section id="ancova" class="level2">
+<h2 class="anchored" data-anchor-id="ancova">ANCOVA</h2>
+<p>There are many forms of regession and ANOVA. For example, if you want to see if the relationship between Sepal.Length and Sepal.Width differs by species, you woul do an ANCOVA (analysis of covariance):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">lm.fit <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">lm</span>(Sepal.Width <span class="sc" style="color: #5E5E5E;">~</span> Sepal.Length <span class="sc" style="color: #5E5E5E;">+</span> Species))</span>
+<span id="cb15-2"><span class="fu" style="color: #4758AB;">summary</span>(lm.fit)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Sepal.Width ~ Sepal.Length + Species)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.95096 -0.16522  0.00171  0.18416  0.72918 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)        1.67650    0.23536   7.123 4.46e-11 ***
+Sepal.Length       0.34988    0.04630   7.557 4.19e-12 ***
+Speciesversicolor -0.98339    0.07207 -13.644  &lt; 2e-16 ***
+Speciesvirginica  -1.00751    0.09331 -10.798  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.289 on 146 degrees of freedom
+Multiple R-squared:  0.5693,    Adjusted R-squared:  0.5604 
+F-statistic: 64.32 on 3 and 146 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Which would fit separate Y-intercepts for each species.</p>
+</section>
 </section>
 <section id="principal-components-analysis" class="level1">
 <h1>Principal Components Analysis</h1>
 <p>Now you are ready to begin. Often we have many variables measured and we suspect that many of the variables are collinear (or correlated) so that many of them contain the same or similar information. To summarize the variation, we may want to do a Principal Components Analysis.</p>
 <p>PCA is an ordination method that is useful to explore patterns of variation in the data. When variables are correlated (or non-independent), PCA finds linear combinations of the original data that summarize <em>most</em> of the variation. It is therefore very useful for reducing the number of variables to a few most important axes of variation.</p>
 <p>It produces a number of Principal Component axes (the same number as the number of original variables). The first PC axis is along the direction of greatest variation in the data. The second PC axis is orthogonal (perpendicular) to the first, and in the direction of the next greatest source of variation in the data. The third is orthogonal to the first and second, etc. and so on. Because all of the axes are orthogonal to one another, they summarize independent variation.</p>
-<section id="pca-loadings" class="level3">
-<h3 class="anchored" data-anchor-id="pca-loadings">PCA Loadings</h3>
+<section id="pca-loadings" class="level2">
+<h2 class="anchored" data-anchor-id="pca-loadings">PCA Loadings</h2>
 <p>Some things to look for in PC analysis: The <strong>loadings</strong> of the variables on the PC axes show <em>how much each variable is correlated with that PC axis</em>. The magnitude of the loading indicates how strong the correlation is, and the sign indicates the <em>direction</em>. The sign of the loading is only informative if variables load with different signs on the same PC axis. For example if variable A and B load positively with PC 2, and variable C loads negatively, this is often interpreted as varying along PC2 in an increasing direction indicating larger A and B but smaller C. In a morphological analysis, the first PC axis often loads positively and nearly equally on all variables, and is therefore considered to indicate size. PC1 also typically explains a large fraction of the variation.</p>
 <p>The amount of variation each PC axis explains is called the <strong>proportion of variance explained</strong>. It is usually expressed as a percent or a fraction. It is not uncommon in morphological analysis for PC1 to explain 90% of the variation in the data.</p>
 <p>It is important to note, however, that the amount of variation does not necessarily indicate it’s <strong>importance</strong>. Many ecological associations or functionally significant variation is reflected in shape variation, which as we said may be only 10% of the variation. However, this might be very functionally relevant. Size may vary a lot, but it might be whether or not you have very long legs relative to your size that tells us if you are a good runner. Long legs (in an absolute sense) may not make you a great runner if you are actually huge in size, so that relative to your body length, your legs are actually relatively short. So one thing to keep in mind is that you often will use only 3 axes, even though you have 10 or more variables. If you have managed to capture 90 or 95% of the variation with the first three variables (sometimes even more), you’re probably in great shape. It’s a tradeoff between keeping the analysis and interpretation manageable, and keeping all the variation in the data. Usually the minor axes have less than 1% of the variation, and are usually not interesting even if you were to keep them. Anyway, to conclude this paragraph, you may want to do a PC analysis on the data with size included, and then do a second analysis on the size-adjusted data (shape). Another strategy is to do a PC analysis on the data with size, and then leave out PC1 in downstream analyses of “shape”.</p>
@@ -276,7 +307,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h1>Example Fisherʻs Iris data</h1>
 <p>Let’s do a PC analysis on Fisher’s Iris data, which is a famous multivariate dataset build into R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;">head</span>(iris)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="fu" style="color: #4758AB;">head</span>(iris)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 1          5.1         3.5          1.4         0.2  setosa
@@ -290,11 +321,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>There are: - Four measurements of sepal and petal length and width - Three species of iris - Fifty individuals are measured for each iris species.</p>
 <p>PC analysis in R uses the <code>princomp</code> function. You can either specify the columns of the data to do a PC analysis, or use the formula representation (with no response variables since it is not a regression). A tilde with a dot indicates all variables, and you can exclude columns with a minus sign as usual. You should only put continuous variables into a PC analysis. So in the iris data, we can exclude species with the minus sign:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">pc.iris <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">princomp</span> (<span class="sc" style="color: #5E5E5E;">~</span> .<span class="sc" style="color: #5E5E5E;">-</span>Species, <span class="at" style="color: #657422;">data=</span>iris, <span class="at" style="color: #657422;">scores=</span>T)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1">pc.iris <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">princomp</span> (<span class="sc" style="color: #5E5E5E;">~</span> .<span class="sc" style="color: #5E5E5E;">-</span>Species, <span class="at" style="color: #657422;">data=</span>iris, <span class="at" style="color: #657422;">scores=</span>T)</span></code></pre></div>
 </div>
 <p>We see the first two PC axes explain more than 97% of the variation, with PC1 explaining 92%, and PC2 5%. Because there are four original variables, we have two more PC axes but they only explain 1.7% and 0.5% of the variation and we will ignore them.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="fu" style="color: #4758AB;">summary</span>(pc.iris)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><span class="fu" style="color: #4758AB;">summary</span>(pc.iris)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Importance of components:
                           Comp.1     Comp.2     Comp.3      Comp.4
@@ -305,7 +336,7 @@ Cumulative Proportion  0.9246187 0.97768521 0.99478782 1.000000000</code></pre>
 </div>
 <p>We can see how the PC axes reflect the original variables by using the loadings accessor function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><span class="fu" style="color: #4758AB;">loadings</span>(pc.iris)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><span class="fu" style="color: #4758AB;">loadings</span>(pc.iris)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Loadings:
@@ -324,7 +355,7 @@ Cumulative Var   0.25   0.50   0.75   1.00</code></pre>
 <p>PC1 reflects variation primarily in petal length as evidenced by it’s high correlation (<strong>0.857</strong>), and to a lesser extent by sepal length and petal width. PC2 indicates variation in sepal width, as well as additional variation in sepal length. Petal length loads in the opposite direction and thus would decrease as sepal length and width increased, but the correlation value is rather low (<strong>0.173</strong>). PC3 actually shows a trade-off between sepal length and both sepal width and petal width (with all loadings having similar magnitudes), but it explains very little of the overall variation.</p>
 <p>The scores are the values of each datapoint along the PC axes in PC space. It is an element of <code>pc.iris$scores</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><span class="fu" style="color: #4758AB;">head</span>(pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><span class="fu" style="color: #4758AB;">head</span>(pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Comp.1     Comp.2      Comp.3       Comp.4
 1 -2.684126  0.3193972  0.02791483  0.002262437
@@ -337,42 +368,42 @@ Cumulative Var   0.25   0.50   0.75   1.00</code></pre>
 </div>
 <p>We can access the PC scores, but it’s long. So for convenience let’s save it as something shorter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1">pc1 <span class="ot" style="color: #003B4F;">&lt;-</span> pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores[,<span class="dv" style="color: #AD0000;">1</span>]</span>
-<span id="cb24-2">pc2 <span class="ot" style="color: #003B4F;">&lt;-</span> pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores[,<span class="dv" style="color: #AD0000;">2</span>]</span>
-<span id="cb24-3">pc3 <span class="ot" style="color: #003B4F;">&lt;-</span> pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores[,<span class="dv" style="color: #AD0000;">3</span>]</span>
-<span id="cb24-4"><span class="fu" style="color: #4758AB;">plot</span>(pc2 <span class="sc" style="color: #5E5E5E;">~</span> pc1, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1">pc1 <span class="ot" style="color: #003B4F;">&lt;-</span> pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores[,<span class="dv" style="color: #AD0000;">1</span>]</span>
+<span id="cb26-2">pc2 <span class="ot" style="color: #003B4F;">&lt;-</span> pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores[,<span class="dv" style="color: #AD0000;">2</span>]</span>
+<span id="cb26-3">pc3 <span class="ot" style="color: #003B4F;">&lt;-</span> pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores[,<span class="dv" style="color: #AD0000;">3</span>]</span>
+<span id="cb26-4"><span class="fu" style="color: #4758AB;">plot</span>(pc2 <span class="sc" style="color: #5E5E5E;">~</span> pc1, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>)</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We can see that there are three distinct groups of points. PC1 seems to contribute the most to separating the species, whereas PC2 seems to reflect variation within species.</p>
 <p>One important point to note is that the axes should be scaled to match each other. One unit on the X axis should occupy the same length of graph as one unit on the Y axis, otherwise the plot will be visually deceptive with regard to how much variation each axis has. Here is how we should scale the Y-axis in order to match the X-axis. Now you can see what the meaning of 97% of the variation being along PC1 is!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><span class="fu" style="color: #4758AB;">plot</span>(pc2 <span class="sc" style="color: #5E5E5E;">~</span> pc1, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>, <span class="at" style="color: #657422;">ylim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>))</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>What about PC3? It had only 1.7% of the variation.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><span class="fu" style="color: #4758AB;">plot</span>(pc3 <span class="sc" style="color: #5E5E5E;">~</span> pc1, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>, <span class="at" style="color: #657422;">ylim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="fu" style="color: #4758AB;">plot</span>(pc2 <span class="sc" style="color: #5E5E5E;">~</span> pc1, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>, <span class="at" style="color: #657422;">ylim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>))</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>What about PC3? It had only 1.7% of the variation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="fu" style="color: #4758AB;">plot</span>(pc3 <span class="sc" style="color: #5E5E5E;">~</span> pc2, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>, <span class="at" style="color: #657422;">ylim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>), <span class="at" style="color: #657422;">xlim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><span class="fu" style="color: #4758AB;">plot</span>(pc3 <span class="sc" style="color: #5E5E5E;">~</span> pc1, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>, <span class="at" style="color: #657422;">ylim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>))</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><span class="fu" style="color: #4758AB;">plot</span>(pc3 <span class="sc" style="color: #5E5E5E;">~</span> pc2, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>, <span class="at" style="color: #657422;">ylim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>), <span class="at" style="color: #657422;">xlim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>))</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>So we see that most of the separation is achieved along PC1, and we can separate the groups pretty well if we just use PC1 with PC2 or PC3. We can see if the separation is significant using MANOVA:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1">manova.iris <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">manova</span>( <span class="fu" style="color: #4758AB;">cbind</span>(pc1, pc2, pc3) <span class="sc" style="color: #5E5E5E;">~</span> Species, <span class="at" style="color: #657422;">data=</span>iris)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1">manova.iris <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">manova</span>( <span class="fu" style="color: #4758AB;">cbind</span>(pc1, pc2, pc3) <span class="sc" style="color: #5E5E5E;">~</span> Species, <span class="at" style="color: #657422;">data=</span>iris)</span></code></pre></div>
 </div>
 <p>We obtain the multivariate significance test (differences amongst species) using:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><span class="fu" style="color: #4758AB;">summary</span>(manova.iris)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><span class="fu" style="color: #4758AB;">summary</span>(manova.iris)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Df Pillai approx F num Df den Df    Pr(&gt;F)    
 Species     2 1.1756   69.402      6    292 &lt; 2.2e-16 ***
@@ -383,7 +414,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>Or we can also see results using Wilks’ lambda:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><span class="fu" style="color: #4758AB;">summary</span>(manova.iris, <span class="at" style="color: #657422;">test=</span><span class="st" style="color: #20794D;">"Wilks"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><span class="fu" style="color: #4758AB;">summary</span>(manova.iris, <span class="at" style="color: #657422;">test=</span><span class="st" style="color: #20794D;">"Wilks"</span>)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Df    Wilks approx F num Df den Df    Pr(&gt;F)    
 Species     2 0.024809   258.53      6    290 &lt; 2.2e-16 ***
@@ -394,7 +425,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>And get univariate statistics here:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><span class="fu" style="color: #4758AB;">summary.aov</span>(manova.iris)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><span class="fu" style="color: #4758AB;">summary.aov</span>(manova.iris)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Response pc1 :
              Df Sum Sq Mean Sq F value    Pr(&gt;F)    
@@ -421,8 +452,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>By comparing results we see that they are actually pretty well separated along each PC axis, with no real improvement gained by using a multivariate method. I should find another example!</p>
 <p>Note: You should decide whether to do PCA using covariance matrices or correlation matrices. The default in R is covariance matrices, and this will preserve the original scale of the data. If we use correlation matrices, then each variable is allowed to contribute equally, irrespective of how wide the range of values within each variable (it’s like they’re all standardized first). So you should only use covariances when all measurements are in the same units, for example all lengths in same units, and it makes sense to relate the magnitude of variation in one to another. Otherwise use correlation matrices.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1">pc.iris.cor <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">princomp</span> (<span class="sc" style="color: #5E5E5E;">~</span> .<span class="sc" style="color: #5E5E5E;">-</span>Species, <span class="at" style="color: #657422;">data=</span>iris, <span class="at" style="color: #657422;">scores=</span>T, <span class="at" style="color: #657422;">cor=</span>T)</span>
-<span id="cb35-2"><span class="fu" style="color: #4758AB;">summary</span>(pc.iris.cor)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1">pc.iris.cor <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">princomp</span> (<span class="sc" style="color: #5E5E5E;">~</span> .<span class="sc" style="color: #5E5E5E;">-</span>Species, <span class="at" style="color: #657422;">data=</span>iris, <span class="at" style="color: #657422;">scores=</span>T, <span class="at" style="color: #657422;">cor=</span>T)</span>
+<span id="cb37-2"><span class="fu" style="color: #4758AB;">summary</span>(pc.iris.cor)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Importance of components:
                           Comp.1    Comp.2     Comp.3      Comp.4
@@ -430,7 +461,7 @@ Standard deviation     1.7083611 0.9560494 0.38308860 0.143926497
 Proportion of Variance 0.7296245 0.2285076 0.03668922 0.005178709
 Cumulative Proportion  0.7296245 0.9581321 0.99482129 1.000000000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><span class="fu" style="color: #4758AB;">loadings</span>(pc.iris.cor)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><span class="fu" style="color: #4758AB;">loadings</span>(pc.iris.cor)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Loadings:
@@ -451,7 +482,7 @@ Cumulative Var   0.25   0.50   0.75   1.00</code></pre>
 <p>Another reason to do canonical discriminant analysis is to obtain scores as in PCA to do further analysis. It just produces scores accounting for group structure, so it is like a multi-group PCA. For example, I used this technique to produce a multivariate multi-group ordination in my studies of sexual dimorphism amongst multiple species. I allowed each species and sex to be a different group, and then tested to see if ecomorphs clustered together.</p>
 <p>To do this analysis, you need to install the package <code>candisc</code>. And produce a multivariate model as in the manova example above.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><span class="fu" style="color: #4758AB;">require</span>(candisc)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><span class="fu" style="color: #4758AB;">require</span>(candisc)</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: candisc</code></pre>
 </div>
@@ -476,9 +507,9 @@ Attaching package: 'candisc'</code></pre>
 
     cancor</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb47" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1">iris.multiv <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">lm</span>( <span class="fu" style="color: #4758AB;">cbind</span>(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) <span class="sc" style="color: #5E5E5E;">~</span> Species, <span class="at" style="color: #657422;">data=</span>iris )</span>
-<span id="cb47-2">iris.can <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">candisc</span>( iris.multiv, <span class="at" style="color: #657422;">term=</span><span class="st" style="color: #20794D;">"Species"</span>)</span>
-<span id="cb47-3">iris.can</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb49" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1">iris.multiv <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">lm</span>( <span class="fu" style="color: #4758AB;">cbind</span>(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) <span class="sc" style="color: #5E5E5E;">~</span> Species, <span class="at" style="color: #657422;">data=</span>iris )</span>
+<span id="cb49-2">iris.can <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">candisc</span>( iris.multiv, <span class="at" style="color: #657422;">term=</span><span class="st" style="color: #20794D;">"Species"</span>)</span>
+<span id="cb49-3">iris.can</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Canonical Discriminant Analysis for Species:
@@ -496,18 +527,18 @@ current row and all that follow are zero
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><span class="fu" style="color: #4758AB;">plot</span>(iris.can, <span class="at" style="color: #657422;">col=</span><span class="fu" style="color: #4758AB;">as.numeric</span>(iris<span class="sc" style="color: #5E5E5E;">$</span>Species))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb51" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><span class="fu" style="color: #4758AB;">plot</span>(iris.can, <span class="at" style="color: #657422;">col=</span><span class="fu" style="color: #4758AB;">as.numeric</span>(iris<span class="sc" style="color: #5E5E5E;">$</span>Species))</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Vector scale factor set to 7.122</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>So you can see that by accounting for within-species variation, we get better separation of species. Again, we see the greatest separation along Can1. But interestingly, we see that three of the variables are contributing the most to Can1 (but all are highly correlated).</p>
 <p>You can see the loadings on the original variables, as well as the percent variance explained using the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1">iris.can<span class="sc" style="color: #5E5E5E;">$</span>structure</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb53" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1">iris.can<span class="sc" style="color: #5E5E5E;">$</span>structure</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   Can1       Can2
 Sepal.Length  0.7918878 0.21759312
@@ -515,11 +546,11 @@ Sepal.Width  -0.5307590 0.75798931
 Petal.Length  0.9849513 0.04603709
 Petal.Width   0.9728120 0.22290236</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb53" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1">iris.can<span class="sc" style="color: #5E5E5E;">$</span>eigenvalues</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb55" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1">iris.can<span class="sc" style="color: #5E5E5E;">$</span>eigenvalues</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.219193e+01 2.853910e-01 8.276011e-16 7.355228e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb55" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1">iris.can<span class="sc" style="color: #5E5E5E;">$</span>pct</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb57" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1">iris.can<span class="sc" style="color: #5E5E5E;">$</span>pct</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 9.912126e+01 8.787395e-01 2.548243e-15 2.264727e-15</code></pre>
 </div>

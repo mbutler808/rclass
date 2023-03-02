@@ -170,6 +170,16 @@ anova(lm.fit)
 
 We can see that species are significantly different in sepal length. Can you make a plot that shows this? 
 
+## ANCOVA
+
+There are many forms of regession and ANOVA. For example, if you want to see if the relationship between Sepal.Length and Sepal.Width differs by species, you woul do an ANCOVA (analysis of covariance):
+
+```{r}
+lm.fit <- with(iris, lm(Sepal.Width ~ Sepal.Length + Species))
+summary(lm.fit)
+```
+
+Which would fit separate Y-intercepts for each species. 
 
 
 # Principal Components Analysis
@@ -180,7 +190,7 @@ PCA is an ordination method that is useful to explore patterns of variation in t
 
 It produces a number of Principal Component axes (the same number as the number of original variables). The first PC axis is along the direction of greatest variation in the data. The second PC  axis is orthogonal (perpendicular) to the first, and in the direction of the next greatest source of variation in the data. The third is orthogonal to the first and second, etc. and so on. Because all of the axes are orthogonal to one another, they summarize independent variation. 
 
-### PCA Loadings
+## PCA Loadings
 
 Some things to look for in PC analysis: The __loadings__ of the variables on the PC axes show _how much each variable is correlated with that PC axis_. The magnitude of the loading indicates how strong the correlation is, and the sign indicates the _direction_.  The sign of the loading is only informative if variables load with different signs on the same PC axis. For example if variable A and B load positively with PC 2, and variable C loads negatively, this is often interpreted as varying along PC2 in an increasing direction indicating larger A and B but smaller C.  In a morphological analysis, the first PC axis often loads positively and nearly equally on all variables, and is therefore considered to indicate size.  PC1 also typically explains a large fraction of the variation. 
 
