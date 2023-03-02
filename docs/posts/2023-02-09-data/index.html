@@ -780,8 +780,8 @@ Good sources for practice manipulating strings:
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">8</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  0.6035840 -0.2962841 -0.8967044  1.3248768 -0.4958451 -0.3829508 -0.3614549
-[8] -1.3265518</code></pre>
+<pre><code>[1] -0.16786634  1.20306018 -0.34653291 -1.56933540  0.52040416 -0.22265788
+[7]  0.04805772  0.56151075</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>goodanswer <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)  <span class="co"># logical</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>goodanswer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -848,9 +848,9 @@ Levels: high low med</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.character</span>(y)  <span class="co"># coerce to character</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "0.603583967065033"  "-0.296284094449709" "-0.896704433798679"
-[4] "1.32487675268472"   "-0.495845125081481" "-0.382950811166559"
-[7] "-0.36145488966505"  "-1.3265518247781"  </code></pre>
+<pre><code>[1] "-0.167866339058837" "1.20306017894534"   "-0.346532911836106"
+[4] "-1.56933539540352"  "0.520404158713562"  "-0.222657881255818"
+[7] "0.0480577180132275" "0.561510750396616" </code></pre>
 </div>
 </div>
 <p>Note that when values are quoted, they are of type character.</p>
@@ -939,15 +939,15 @@ length (arg 1)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>xy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     x          y
-[1,] 1  0.6035840
-[2,] 5 -0.2962841
-[3,] 7 -0.8967044
-[4,] 2  1.3248768
-[5,] 6 -0.4958451
-[6,] 1 -0.3829508
-[7,] 5 -0.3614549
-[8,] 7 -1.3265518</code></pre>
+<pre><code>     x           y
+[1,] 1 -0.16786634
+[2,] 5  1.20306018
+[3,] 7 -0.34653291
+[4,] 2 -1.56933540
+[5,] 6  0.52040416
+[6,] 1 -0.22265788
+[7,] 5  0.04805772
+[8,] 7  0.56151075</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nrow=</span><span class="dv">2</span>)  <span class="co">#create a matrix with 2 rows</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>z</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1072,7 +1072,7 @@ attr(,"names")
 </div>
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>dat[<span class="dv">1</span>,<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.2100909</code></pre>
+<pre><code>[1] 0.07701725</code></pre>
 </div>
 </div>
 </section>
@@ -1130,7 +1130,7 @@ attr(,"names")
 <pre><code>List of 4
  $ species: chr [1:3] "a" "b" "c"
  $ x      : num [1:3] 1 2 4
- $ y      : num [1:3] -0.21 -0.852 -1.686
+ $ y      : num [1:3] 0.077 0.493 -1.311
  $ z      : int [1:2, 1:3] 1 2 3 4 5 6
   ..- attr(*, "names")= chr [1:6] "a" "b" "c" "d" ...
   ..- attr(*, "dimnames")=List of 2

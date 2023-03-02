@@ -2,94 +2,98 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/index.html</loc>
-    <lastmod>2023-02-28T19:20:10.780Z</lastmod>
+    <lastmod>2023-03-02T19:34:23.923Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mbutler808.github.io/posts/2023-03-02-multivariate/index.html</loc>
+    <lastmod>2023-03-02T19:34:25.116Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-01-17-the-big-picture/index.html</loc>
-    <lastmod>2023-02-28T19:20:11.238Z</lastmod>
+    <lastmod>2023-03-02T19:34:25.601Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-01-31-reading-data/index.html</loc>
-    <lastmod>2023-02-28T19:20:12.447Z</lastmod>
+    <lastmod>2023-03-02T19:34:27.074Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-01-26-reproducible-research/index.html</loc>
-    <lastmod>2023-02-28T19:20:12.917Z</lastmod>
+    <lastmod>2023-03-02T19:34:27.748Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-02-16-plotting-systems/index.html</loc>
-    <lastmod>2023-02-28T19:20:13.759Z</lastmod>
+    <lastmod>2023-03-02T19:34:28.743Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-02-14-tidying-exploring-data/index.html</loc>
-    <lastmod>2023-02-28T19:20:14.757Z</lastmod>
+    <lastmod>2023-03-02T19:34:30.231Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-02-21-ggplot2/index.html</loc>
-    <lastmod>2023-02-28T19:20:16.347Z</lastmod>
+    <lastmod>2023-03-02T19:34:32.112Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-01-26-intro-quarto/index.html</loc>
-    <lastmod>2023-02-28T19:20:17.385Z</lastmod>
+    <lastmod>2023-03-02T19:34:33.585Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/index.html</loc>
-    <lastmod>2023-02-28T19:20:18.166Z</lastmod>
+    <lastmod>2023-03-02T19:34:34.493Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-01-24-intro-git-github/index.html</loc>
-    <lastmod>2023-02-28T19:20:18.871Z</lastmod>
+    <lastmod>2023-03-02T19:34:35.484Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-02-09-data/index.html</loc>
-    <lastmod>2023-02-28T19:20:20.152Z</lastmod>
+    <lastmod>2023-03-02T19:34:37.186Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-02-01-reference-management/index.html</loc>
-    <lastmod>2023-02-28T19:20:20.838Z</lastmod>
+    <lastmod>2023-03-02T19:34:38.252Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-02-07-scripts/index.html</loc>
-    <lastmod>2023-02-28T19:20:21.660Z</lastmod>
+    <lastmod>2023-03-02T19:34:39.274Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2023-02-28-dplyr/index.html</loc>
-    <lastmod>2023-02-28T19:20:25.613Z</lastmod>
+    <lastmod>2023-03-02T19:34:40.747Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/projects/2023-01-24-project-0/index.html</loc>
-    <lastmod>2023-02-28T19:20:27.677Z</lastmod>
+    <lastmod>2023-03-02T19:34:43.651Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/projects/2023-02-16-project-1/index.html</loc>
-    <lastmod>2023-02-28T19:20:28.068Z</lastmod>
+    <lastmod>2023-03-02T19:34:44.175Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/projects.html</loc>
-    <lastmod>2023-02-28T19:20:28.501Z</lastmod>
+    <lastmod>2023-03-02T19:34:44.640Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/index.html</loc>
-    <lastmod>2023-02-28T19:20:29.019Z</lastmod>
+    <lastmod>2023-03-02T19:34:45.070Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/about.html</loc>
-    <lastmod>2023-02-28T19:20:29.387Z</lastmod>
+    <lastmod>2023-03-02T19:34:45.449Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/lectures.html</loc>
-    <lastmod>2023-02-28T19:20:30.275Z</lastmod>
+    <lastmod>2023-03-02T19:34:46.525Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/syllabus.html</loc>
-    <lastmod>2023-02-28T19:20:31.923Z</lastmod>
+    <lastmod>2023-03-02T19:34:48.316Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/resources.html</loc>
-    <lastmod>2023-02-28T19:20:32.322Z</lastmod>
+    <lastmod>2023-03-02T19:34:48.717Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/schedule.html</loc>
-    <lastmod>2023-02-28T19:20:34.114Z</lastmod>
+    <lastmod>2023-03-02T19:34:51.223Z</lastmod>
   </url>
 </urlset>
