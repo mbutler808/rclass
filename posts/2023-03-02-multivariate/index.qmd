@@ -80,6 +80,14 @@ This data looks pretty good, except for some deviations along the edges. Most da
 
 However, we do know that this data contains three species -- what happens if you were to look at the data by species? 
 
+
+```{r}
+iris %>% 
+    ggplot( aes(sample=Sepal.Length)) + 
+   stat_qq( aes(col=Species)) +
+   stat_qq_line( aes(col=Species) )
+```   
+
 ### Skew
 
 Deviations from normality are not the end of the world, and often a little is tolerated. What can be more problematic is strong skew. For that you will really want to transform the data:
