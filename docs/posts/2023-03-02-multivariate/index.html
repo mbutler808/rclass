@@ -272,12 +272,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#separating-size-and-shape" id="toc-separating-size-and-shape" class="nav-link" data-scroll-target="#separating-size-and-shape">Separating Size and Shape</a></li>
   </ul></li>
-  <li><a href="#tiny-review-of-univariate-statistics" id="toc-tiny-review-of-univariate-statistics" class="nav-link" data-scroll-target="#tiny-review-of-univariate-statistics">Tiny review of Univariate statistics</a>
-  <ul class="collapse">
-  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression">Linear Regression</a></li>
-  <li><a href="#anova" id="toc-anova" class="nav-link" data-scroll-target="#anova">ANOVA</a></li>
-  <li><a href="#ancova" id="toc-ancova" class="nav-link" data-scroll-target="#ancova">ANCOVA</a></li>
-  </ul></li>
   <li><a href="#principal-components-analysis" id="toc-principal-components-analysis" class="nav-link" data-scroll-target="#principal-components-analysis">Principal Components Analysis</a>
   <ul class="collapse">
   <li><a href="#pca-loadings" id="toc-pca-loadings" class="nav-link" data-scroll-target="#pca-loadings">PCA Loadings</a></li>
@@ -357,15 +351,28 @@ Y \sim X + e
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: ggplot2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">sample=</span>Sepal.Length)) <span class="sc">+</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(magrittr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: magrittr</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">sample=</span>Sepal.Length)) <span class="sc">+</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>This data looks pretty good, except for some deviations along the edges. Most data will not ever be perfectly normal, you will get a sense of what is acceptable with more experience.</p>
 <p>However, we do know that this data contains three species – what happens if you were to look at the data by species?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>( <span class="fu">aes</span>(<span class="at">sample=</span>Sepal.Length)) <span class="sc">+</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_qq</span>( <span class="fu">aes</span>(<span class="at">col=</span>Species)) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_qq_line</span>( <span class="fu">aes</span>(<span class="at">col=</span>Species) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="skew" class="level3">
 <h3 class="anchored" data-anchor-id="skew">Skew</h3>
@@ -430,148 +437,6 @@ There is a huge wealth of literature on size and how to analyze shape.</li>
 </ul>
 </section>
 </section>
-<section id="tiny-review-of-univariate-statistics" class="level1">
-<h1>Tiny review of Univariate statistics</h1>
-<section id="linear-regression" class="level2">
-<h2 class="anchored" data-anchor-id="linear-regression">Linear Regression</h2>
-<p>Linear regression asks whether there is a relationship between X and Y, that is if you know X can you predict the value of Y?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(iris, <span class="fu">plot</span>(Sepal.Width <span class="sc">~</span> Sepal.Length))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">with</span>(iris, <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Sepal.Length))</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lm.fit, <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Linear regression results in two parameters, the best-fit slope and intercept:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>lm.fit </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Sepal.Width ~ Sepal.Length)
-
-Coefficients:
- (Intercept)  Sepal.Length  
-     3.41895      -0.06188  </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Sepal.Width ~ Sepal.Length)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--1.1095 -0.2454 -0.0167  0.2763  1.3338 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   3.41895    0.25356   13.48   &lt;2e-16 ***
-Sepal.Length -0.06188    0.04297   -1.44    0.152    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.4343 on 148 degrees of freedom
-Multiple R-squared:  0.01382,   Adjusted R-squared:  0.007159 
-F-statistic: 2.074 on 1 and 148 DF,  p-value: 0.1519</code></pre>
-</div>
-</div>
-<p>Regression minimizes the <strong>sum of squared errors</strong> (or deviations) from the line. The “errors” are the difference between where Y is, and where Y should be if it followed a perfect line.</p>
-<p>We can illustrate what this means:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> iris<span class="sc">$</span>Sepal.Length</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> iris<span class="sc">$</span>Sepal.Width</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm.fit)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(iris, <span class="fu">plot</span>(Sepal.Width <span class="sc">~</span> Sepal.Length))</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(iris, <span class="fu">abline</span>(lm.fit, <span class="at">col=</span><span class="st">"blue"</span>))</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x))  <span class="fu">lines</span>(x[<span class="fu">c</span>(i,i)],<span class="fu">c</span>(y[i], yhat[i]), <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>The regression line is the best fit line that minimizes the sums of squared deviations from the regression. It turns out that the least-squares fit of the regression line is also provides the Maximum Likelihood fits of the parameters of the line (the slope and intercept).</p>
-</section>
-<section id="anova" class="level2">
-<h2 class="anchored" data-anchor-id="anova">ANOVA</h2>
-<p>Analysis of variance is very closely related to regression. It also works by minimizing sums of squares, but it asks a different question.</p>
-<p>Does the data better fit a model with one group (one regression line?) or multiple groups (multiple regression lines, one for each group)?</p>
-<p>Another way to state ANOVA is - is at least one of these groups different than the others?</p>
-<p>If we want to know whether species are different in sepal length, then we need to have lm fit the model by species. We do this like so:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">with</span>(iris, <span class="fu">lm</span>(Sepal.Length <span class="sc">~</span> Species))</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Sepal.Length ~ Species)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--1.6880 -0.3285 -0.0060  0.3120  1.3120 
-
-Coefficients:
-                  Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)         5.0060     0.0728  68.762  &lt; 2e-16 ***
-Speciesversicolor   0.9300     0.1030   9.033 8.77e-16 ***
-Speciesvirginica    1.5820     0.1030  15.366  &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.5148 on 147 degrees of freedom
-Multiple R-squared:  0.6187,    Adjusted R-squared:  0.6135 
-F-statistic: 119.3 on 2 and 147 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>Notice that now have more parameters estimated. You can specify which parameter values and contrasts you want displayed. Often we just want an ANOVA table:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Variance Table
-
-Response: Sepal.Length
-           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-Species     2 63.212  31.606  119.26 &lt; 2.2e-16 ***
-Residuals 147 38.956   0.265                      
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-</div>
-<p>We can see that species are significantly different in sepal length. Can you make a plot that shows this?</p>
-</section>
-<section id="ancova" class="level2">
-<h2 class="anchored" data-anchor-id="ancova">ANCOVA</h2>
-<p>There are many forms of regession and ANOVA. For example, if you want to see if the relationship between Sepal.Length and Sepal.Width differs by species, you woul do an ANCOVA (analysis of covariance):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">with</span>(iris, <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Sepal.Length <span class="sc">+</span> Species))</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Sepal.Width ~ Sepal.Length + Species)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--0.95096 -0.16522  0.00171  0.18416  0.72918 
-
-Coefficients:
-                  Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)        1.67650    0.23536   7.123 4.46e-11 ***
-Sepal.Length       0.34988    0.04630   7.557 4.19e-12 ***
-Speciesversicolor -0.98339    0.07207 -13.644  &lt; 2e-16 ***
-Speciesvirginica  -1.00751    0.09331 -10.798  &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.289 on 146 degrees of freedom
-Multiple R-squared:  0.5693,    Adjusted R-squared:  0.5604 
-F-statistic: 64.32 on 3 and 146 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>Which would fit separate Y-intercepts for each species.</p>
-</section>
-</section>
 <section id="principal-components-analysis" class="level1">
 <h1>Principal Components Analysis</h1>
 <p>Now you are ready to begin. Often we have many variables measured and we suspect that many of the variables are collinear (or correlated) so that many of them contain the same or similar information. To summarize the variation, we may want to do a Principal Components Analysis.</p>
@@ -588,7 +453,7 @@ F-statistic: 64.32 on 3 and 146 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h1>Example Fisherʻs Iris data</h1>
 <p>Let’s do a PC analysis on Fisher’s Iris data, which is a famous multivariate dataset build into R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 1          5.1         3.5          1.4         0.2  setosa
@@ -602,11 +467,11 @@ F-statistic: 64.32 on 3 and 146 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>There are: - Four measurements of sepal and petal length and width - Three species of iris - Fifty individuals are measured for each iris species.</p>
 <p>PC analysis in R uses the <code>princomp</code> function. You can either specify the columns of the data to do a PC analysis, or use the formula representation (with no response variables since it is not a regression). A tilde with a dot indicates all variables, and you can exclude columns with a minus sign as usual. You should only put continuous variables into a PC analysis. So in the iris data, we can exclude species with the minus sign:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pc.iris <span class="ot">&lt;-</span> <span class="fu">princomp</span> (<span class="sc">~</span> .<span class="sc">-</span>Species, <span class="at">data=</span>iris, <span class="at">scores=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pc.iris <span class="ot">&lt;-</span> <span class="fu">princomp</span> (<span class="sc">~</span> .<span class="sc">-</span>Species, <span class="at">data=</span>iris, <span class="at">scores=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We see the first two PC axes explain more than 97% of the variation, with PC1 explaining 92%, and PC2 5%. Because there are four original variables, we have two more PC axes but they only explain 1.7% and 0.5% of the variation and we will ignore them.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pc.iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pc.iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Importance of components:
                           Comp.1     Comp.2     Comp.3      Comp.4
@@ -617,7 +482,7 @@ Cumulative Proportion  0.9246187 0.97768521 0.99478782 1.000000000</code></pre>
 </div>
 <p>We can see how the PC axes reflect the original variables by using the loadings accessor function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loadings</span>(pc.iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loadings</span>(pc.iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Loadings:
@@ -636,7 +501,7 @@ Cumulative Var   0.25   0.50   0.75   1.00</code></pre>
 <p>PC1 reflects variation primarily in petal length as evidenced by it’s high correlation (<strong>0.857</strong>), and to a lesser extent by sepal length and petal width. PC2 indicates variation in sepal width, as well as additional variation in sepal length. Petal length loads in the opposite direction and thus would decrease as sepal length and width increased, but the correlation value is rather low (<strong>0.173</strong>). PC3 actually shows a trade-off between sepal length and both sepal width and petal width (with all loadings having similar magnitudes), but it explains very little of the overall variation.</p>
 <p>The scores are the values of each datapoint along the PC axes in PC space. It is an element of <code>pc.iris$scores</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pc.iris<span class="sc">$</span>scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pc.iris<span class="sc">$</span>scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Comp.1     Comp.2      Comp.3       Comp.4
 1 -2.684126  0.3193972  0.02791483  0.002262437
@@ -649,42 +514,42 @@ Cumulative Var   0.25   0.50   0.75   1.00</code></pre>
 </div>
 <p>We can access the PC scores, but it’s long. So for convenience let’s save it as something shorter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pc1 <span class="ot">&lt;-</span> pc.iris<span class="sc">$</span>scores[,<span class="dv">1</span>]</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>pc2 <span class="ot">&lt;-</span> pc.iris<span class="sc">$</span>scores[,<span class="dv">2</span>]</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>pc3 <span class="ot">&lt;-</span> pc.iris<span class="sc">$</span>scores[,<span class="dv">3</span>]</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc2 <span class="sc">~</span> pc1, <span class="at">col=</span>iris<span class="sc">$</span>Species, <span class="at">cex=</span><span class="dv">2</span>, <span class="at">pch=</span><span class="dv">16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pc1 <span class="ot">&lt;-</span> pc.iris<span class="sc">$</span>scores[,<span class="dv">1</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>pc2 <span class="ot">&lt;-</span> pc.iris<span class="sc">$</span>scores[,<span class="dv">2</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>pc3 <span class="ot">&lt;-</span> pc.iris<span class="sc">$</span>scores[,<span class="dv">3</span>]</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc2 <span class="sc">~</span> pc1, <span class="at">col=</span>iris<span class="sc">$</span>Species, <span class="at">cex=</span><span class="dv">2</span>, <span class="at">pch=</span><span class="dv">16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We can see that there are three distinct groups of points. PC1 seems to contribute the most to separating the species, whereas PC2 seems to reflect variation within species.</p>
 <p>One important point to note is that the axes should be scaled to match each other. One unit on the X axis should occupy the same length of graph as one unit on the Y axis, otherwise the plot will be visually deceptive with regard to how much variation each axis has. Here is how we should scale the Y-axis in order to match the X-axis. Now you can see what the meaning of 97% of the variation being along PC1 is!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc2 <span class="sc">~</span> pc1, <span class="at">col=</span>iris<span class="sc">$</span>Species, <span class="at">cex=</span><span class="dv">2</span>, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc2 <span class="sc">~</span> pc1, <span class="at">col=</span>iris<span class="sc">$</span>Species, <span class="at">cex=</span><span class="dv">2</span>, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>What about PC3? It had only 1.7% of the variation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc3 <span class="sc">~</span> pc1, <span class="at">col=</span>iris<span class="sc">$</span>Species, <span class="at">cex=</span><span class="dv">2</span>, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc3 <span class="sc">~</span> pc1, <span class="at">col=</span>iris<span class="sc">$</span>Species, <span class="at">cex=</span><span class="dv">2</span>, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc3 <span class="sc">~</span> pc2, <span class="at">col=</span>iris<span class="sc">$</span>Species, <span class="at">cex=</span><span class="dv">2</span>, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">4</span>), <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc3 <span class="sc">~</span> pc2, <span class="at">col=</span>iris<span class="sc">$</span>Species, <span class="at">cex=</span><span class="dv">2</span>, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">4</span>), <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>So we see that most of the separation is achieved along PC1, and we can separate the groups pretty well if we just use PC1 with PC2 or PC3. We can see if the separation is significant using MANOVA:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>manova.iris <span class="ot">&lt;-</span> <span class="fu">manova</span>( <span class="fu">cbind</span>(pc1, pc2, pc3) <span class="sc">~</span> Species, <span class="at">data=</span>iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>manova.iris <span class="ot">&lt;-</span> <span class="fu">manova</span>( <span class="fu">cbind</span>(pc1, pc2, pc3) <span class="sc">~</span> Species, <span class="at">data=</span>iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We obtain the multivariate significance test (differences amongst species) using:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(manova.iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(manova.iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Df Pillai approx F num Df den Df    Pr(&gt;F)    
 Species     2 1.1756   69.402      6    292 &lt; 2.2e-16 ***
@@ -695,7 +560,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>Or we can also see results using Wilks’ lambda:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(manova.iris, <span class="at">test=</span><span class="st">"Wilks"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(manova.iris, <span class="at">test=</span><span class="st">"Wilks"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Df    Wilks approx F num Df den Df    Pr(&gt;F)    
 Species     2 0.024809   258.53      6    290 &lt; 2.2e-16 ***
@@ -706,7 +571,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>And get univariate statistics here:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary.aov</span>(manova.iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary.aov</span>(manova.iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Response pc1 :
              Df Sum Sq Mean Sq F value    Pr(&gt;F)    
@@ -733,8 +598,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>By comparing results we see that they are actually pretty well separated along each PC axis, with no real improvement gained by using a multivariate method. I should find another example!</p>
 <p>Note: You should decide whether to do PCA using covariance matrices or correlation matrices. The default in R is covariance matrices, and this will preserve the original scale of the data. If we use correlation matrices, then each variable is allowed to contribute equally, irrespective of how wide the range of values within each variable (it’s like they’re all standardized first). So you should only use covariances when all measurements are in the same units, for example all lengths in same units, and it makes sense to relate the magnitude of variation in one to another. Otherwise use correlation matrices.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>pc.iris.cor <span class="ot">&lt;-</span> <span class="fu">princomp</span> (<span class="sc">~</span> .<span class="sc">-</span>Species, <span class="at">data=</span>iris, <span class="at">scores=</span>T, <span class="at">cor=</span>T)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pc.iris.cor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pc.iris.cor <span class="ot">&lt;-</span> <span class="fu">princomp</span> (<span class="sc">~</span> .<span class="sc">-</span>Species, <span class="at">data=</span>iris, <span class="at">scores=</span>T, <span class="at">cor=</span>T)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pc.iris.cor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Importance of components:
                           Comp.1    Comp.2     Comp.3      Comp.4
@@ -742,7 +607,7 @@ Standard deviation     1.7083611 0.9560494 0.38308860 0.143926497
 Proportion of Variance 0.7296245 0.2285076 0.03668922 0.005178709
 Cumulative Proportion  0.7296245 0.9581321 0.99482129 1.000000000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loadings</span>(pc.iris.cor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loadings</span>(pc.iris.cor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Loadings:
@@ -763,7 +628,7 @@ Cumulative Var   0.25   0.50   0.75   1.00</code></pre>
 <p>Another reason to do canonical discriminant analysis is to obtain scores as in PCA to do further analysis. It just produces scores accounting for group structure, so it is like a multi-group PCA. For example, I used this technique to produce a multivariate multi-group ordination in my studies of sexual dimorphism amongst multiple species. I allowed each species and sex to be a different group, and then tested to see if ecomorphs clustered together.</p>
 <p>To do this analysis, you need to install the package <code>candisc</code>. And produce a multivariate model as in the manova example above.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(candisc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(candisc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: candisc</code></pre>
 </div>
@@ -788,9 +653,9 @@ Attaching package: 'candisc'</code></pre>
 
     cancor</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>iris.multiv <span class="ot">&lt;-</span> <span class="fu">lm</span>( <span class="fu">cbind</span>(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) <span class="sc">~</span> Species, <span class="at">data=</span>iris )</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>iris.can <span class="ot">&lt;-</span> <span class="fu">candisc</span>( iris.multiv, <span class="at">term=</span><span class="st">"Species"</span>)</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>iris.can</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>iris.multiv <span class="ot">&lt;-</span> <span class="fu">lm</span>( <span class="fu">cbind</span>(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) <span class="sc">~</span> Species, <span class="at">data=</span>iris )</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>iris.can <span class="ot">&lt;-</span> <span class="fu">candisc</span>( iris.multiv, <span class="at">term=</span><span class="st">"Species"</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>iris.can</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Canonical Discriminant Analysis for Species:
@@ -808,18 +673,18 @@ current row and all that follow are zero
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris.can, <span class="at">col=</span><span class="fu">as.numeric</span>(iris<span class="sc">$</span>Species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris.can, <span class="at">col=</span><span class="fu">as.numeric</span>(iris<span class="sc">$</span>Species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Vector scale factor set to 7.122</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>So you can see that by accounting for within-species variation, we get better separation of species. Again, we see the greatest separation along Can1. But interestingly, we see that three of the variables are contributing the most to Can1 (but all are highly correlated).</p>
 <p>You can see the loadings on the original variables, as well as the percent variance explained using the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>iris.can<span class="sc">$</span>structure</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>iris.can<span class="sc">$</span>structure</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   Can1       Can2
 Sepal.Length  0.7918878 0.21759312
@@ -827,11 +692,11 @@ Sepal.Width  -0.5307590 0.75798931
 Petal.Length  0.9849513 0.04603709
 Petal.Width   0.9728120 0.22290236</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>iris.can<span class="sc">$</span>eigenvalues</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>iris.can<span class="sc">$</span>eigenvalues</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.219193e+01 2.853910e-01 8.276011e-16 7.355228e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>iris.can<span class="sc">$</span>pct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>iris.can<span class="sc">$</span>pct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 9.912126e+01 8.787395e-01 2.548243e-15 2.264727e-15</code></pre>
 </div>

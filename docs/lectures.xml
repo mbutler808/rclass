@@ -10,7 +10,347 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023</description>
 <generator>quarto-1.2.313</generator>
-<lastBuildDate>Tue, 28 Feb 2023 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 07 Mar 2023 10:00:00 GMT</lastBuildDate>
+<item>
+  <title>A small review of univariate parametric statistics</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2023-03-07-univariate/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="learning-objectives" class="level1">
+<h1>Learning objectives</h1>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Be able to perform basic univariate statistics</li>
+<li>Be able to design plots to display univariate comparisons</li>
+<li>Be able to relate questions to graphical representations of data</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>A small review of the linear regression and ANOVA</p>
+</section>
+<section id="tiny-review-of-univariate-statistics" class="level1">
+<h1>Tiny review of Univariate statistics</h1>
+<section id="linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="linear-regression">Linear Regression</h2>
+<p>Linear regression asks whether there is a relationship between X and Y, that is if you know X can you predict the value of Y?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">plot</span>(Sepal.Width <span class="sc" style="color: #5E5E5E;">~</span> Sepal.Length))</span>
+<span id="cb1-2">lm.fit <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">lm</span>(Sepal.Width <span class="sc" style="color: #5E5E5E;">~</span> Sepal.Length))</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">abline</span>(lm.fit, <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"blue"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-03-07-univariate/index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Linear regression results in two parameters, the best-fit slope and intercept:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">lm.fit </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Sepal.Width ~ Sepal.Length)
+
+Coefficients:
+ (Intercept)  Sepal.Length  
+     3.41895      -0.06188  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;">summary</span>(lm.fit)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Sepal.Width ~ Sepal.Length)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.1095 -0.2454 -0.0167  0.2763  1.3338 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   3.41895    0.25356   13.48   &lt;2e-16 ***
+Sepal.Length -0.06188    0.04297   -1.44    0.152    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4343 on 148 degrees of freedom
+Multiple R-squared:  0.01382,   Adjusted R-squared:  0.007159 
+F-statistic: 2.074 on 1 and 148 DF,  p-value: 0.1519</code></pre>
+</div>
+</div>
+<p>Regression minimizes the <strong>sum of squared errors</strong> (or deviations) from the line. The “errors” are the difference between where Y is, and where Y should be if it followed a perfect line.</p>
+<p>We can illustrate what this means:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">x <span class="ot" style="color: #003B4F;">&lt;-</span> iris<span class="sc" style="color: #5E5E5E;">$</span>Sepal.Length</span>
+<span id="cb6-2">y <span class="ot" style="color: #003B4F;">&lt;-</span> iris<span class="sc" style="color: #5E5E5E;">$</span>Sepal.Width</span>
+<span id="cb6-3">yhat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">predict</span>(lm.fit)</span>
+<span id="cb6-4"></span>
+<span id="cb6-5"><span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">plot</span>(Sepal.Width <span class="sc" style="color: #5E5E5E;">~</span> Sepal.Length))</span>
+<span id="cb6-6"><span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">abline</span>(lm.fit, <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"blue"</span>))</span>
+<span id="cb6-7"><span class="cf" style="color: #003B4F;">for</span>(i <span class="cf" style="color: #003B4F;">in</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="fu" style="color: #4758AB;">length</span>(x))  <span class="fu" style="color: #4758AB;">lines</span>(x[<span class="fu" style="color: #4758AB;">c</span>(i,i)],<span class="fu" style="color: #4758AB;">c</span>(y[i], yhat[i]), <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"red"</span>, <span class="at" style="color: #657422;">lty=</span><span class="dv" style="color: #AD0000;">2</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-03-07-univariate/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The regression line is the best fit line that minimizes the sums of squared deviations from the regression. It turns out that the least-squares fit of the regression line is also provides the Maximum Likelihood fits of the parameters of the line (the slope and intercept).</p>
+</section>
+<section id="anova" class="level2">
+<h2 class="anchored" data-anchor-id="anova">ANOVA</h2>
+<p>Analysis of variance is very closely related to regression. It also works by minimizing sums of squares, but it asks a different question.</p>
+<p>Does the data better fit a model with one group (one regression line?) or multiple groups (multiple regression lines, one for each group)?</p>
+<p>Graphically, it looks like the plot below with the question <em>Is the data explained better by a single group with a grand mean? or with separate means for each</em> <code>Species</code>?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;">par</span>(<span class="at" style="color: #657422;">mfrow=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">2</span>))</span>
+<span id="cb7-2"><span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">boxplot</span>(Sepal.Length))</span>
+<span id="cb7-3"><span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">plot</span>(Sepal.Length <span class="sc" style="color: #5E5E5E;">~</span> Species))</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-03-07-univariate/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="is-one-of-these-groups-not-like-the-others" class="level3">
+<h3 class="anchored" data-anchor-id="is-one-of-these-groups-not-like-the-others">Is One of these Groups not like the others?</h3>
+<p>Statistically, this is asking whether the sums of squares is minimized by assuming there is only one group (one mean)? Or three groups?</p>
+<p>For this plot we will add an index column (1 to number of observations), and use <code>ggplot2</code>, <code>dplyr</code>, and the pipe from <code>magrittr</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;">require</span>(dplyr)</span>
+<span id="cb8-2"><span class="fu" style="color: #4758AB;">require</span>(magrittr)</span>
+<span id="cb8-3"><span class="fu" style="color: #4758AB;">require</span>(ggplot2)</span>
+<span id="cb8-4"></span>
+<span id="cb8-5">dat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">cbind</span>(iris, <span class="at" style="color: #657422;">id =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="fu" style="color: #4758AB;">length</span>(iris<span class="sc" style="color: #5E5E5E;">$</span>Species))</span>
+<span id="cb8-6">yhat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">mean</span>(iris<span class="sc" style="color: #5E5E5E;">$</span>Sepal.Length)  <span class="co" style="color: #5E5E5E;"># grand mean of Sepal Length</span></span>
+<span id="cb8-7"></span>
+<span id="cb8-8">p <span class="ot" style="color: #003B4F;">&lt;-</span> dat <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>( <span class="at" style="color: #657422;">x =</span> id, <span class="at" style="color: #657422;">y =</span> Sepal.Length, <span class="at" style="color: #657422;">group=</span>Species)) </span>
+<span id="cb8-9"></span>
+<span id="cb8-10">q <span class="ot" style="color: #003B4F;">&lt;-</span> p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>( <span class="at" style="color: #657422;">size=</span><span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb8-11">  <span class="fu" style="color: #4758AB;">geom_hline</span>( <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">yintercept =</span> <span class="fu" style="color: #4758AB;">mean</span>(iris<span class="sc" style="color: #5E5E5E;">$</span>Sepal.Length)) ) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb8-12">  <span class="fu" style="color: #4758AB;">geom_segment</span>( <span class="at" style="color: #657422;">data=</span>dat, <span class="fu" style="color: #4758AB;">aes</span>( <span class="at" style="color: #657422;">x =</span> id, <span class="at" style="color: #657422;">y =</span> Sepal.Length, <span class="at" style="color: #657422;">xend =</span> id, <span class="at" style="color: #657422;">yend =</span> yhat), <span class="at" style="color: #657422;">color=</span><span class="st" style="color: #20794D;">"red"</span>, <span class="at" style="color: #657422;">lty =</span> <span class="dv" style="color: #AD0000;">3</span>)</span>
+<span id="cb8-13"></span>
+<span id="cb8-14">q  </span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-03-07-univariate/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We added two new ggplot2 functions:</p>
+<ul>
+<li><strong>geom_hline()</strong> which adds a horizontal line used for the grand mean. This is similar to base R <code>abline()</code><br>
+</li>
+<li><strong>geom_segment()</strong> which plots line segments indicated by x,y start points and xend,yend end points (this is based on the base R <code>segment()</code> function)</li>
+</ul>
+<p>To add in the group structure, we need to compute means by species, and know where one species ends and the other begins in the data vector. We can do this with <code>group_by()</code> and <code>summarize()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">spmeans  <span class="ot" style="color: #003B4F;">&lt;-</span> dat <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">group_by</span>(Species) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb9-2">        <span class="fu" style="color: #4758AB;">summarise</span>(</span>
+<span id="cb9-3">          <span class="at" style="color: #657422;">sl =</span> <span class="fu" style="color: #4758AB;">mean</span>(Sepal.Length),</span>
+<span id="cb9-4">          <span class="at" style="color: #657422;">n =</span> <span class="fu" style="color: #4758AB;">length</span>(Sepal.Length),</span>
+<span id="cb9-5">          <span class="at" style="color: #657422;">minid =</span> <span class="fu" style="color: #4758AB;">min</span>(id),</span>
+<span id="cb9-6">          <span class="at" style="color: #657422;">maxid =</span> <span class="fu" style="color: #4758AB;">max</span>(id)</span>
+<span id="cb9-7">        )</span>
+<span id="cb9-8"></span>
+<span id="cb9-9">spmeans</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  Species       sl     n minid maxid
+  &lt;fct&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+1 setosa      5.01    50     1    50
+2 versicolor  5.94    50    51   100
+3 virginica   6.59    50   101   150</code></pre>
+</div>
+</div>
+<p>(You should always check that minid and maxid is what you intended)</p>
+<p>We want to include this mean information in the dataframe, so to add it as a vector, we can <code>merge()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">merge</span>(dat, spmeans)</span>
+<span id="cb11-2"><span class="fu" style="color: #4758AB;">head</span>(dat)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Species Sepal.Length Sepal.Width Petal.Length Petal.Width id    sl  n minid
+1  setosa          5.1         3.5          1.4         0.2  1 5.006 50     1
+2  setosa          4.9         3.0          1.4         0.2  2 5.006 50     1
+3  setosa          4.7         3.2          1.3         0.2  3 5.006 50     1
+4  setosa          4.6         3.1          1.5         0.2  4 5.006 50     1
+5  setosa          5.0         3.6          1.4         0.2  5 5.006 50     1
+6  setosa          5.4         3.9          1.7         0.4  6 5.006 50     1
+  maxid
+1    50
+2    50
+3    50
+4    50
+5    50
+6    50</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">dat[<span class="dv" style="color: #AD0000;">45</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">55</span>,]</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Species Sepal.Length Sepal.Width Petal.Length Petal.Width id    sl  n
+45     setosa          5.1         3.8          1.9         0.4 45 5.006 50
+46     setosa          4.8         3.0          1.4         0.3 46 5.006 50
+47     setosa          5.1         3.8          1.6         0.2 47 5.006 50
+48     setosa          4.6         3.2          1.4         0.2 48 5.006 50
+49     setosa          5.3         3.7          1.5         0.2 49 5.006 50
+50     setosa          5.0         3.3          1.4         0.2 50 5.006 50
+51 versicolor          7.0         3.2          4.7         1.4 51 5.936 50
+52 versicolor          6.4         3.2          4.5         1.5 52 5.936 50
+53 versicolor          6.9         3.1          4.9         1.5 53 5.936 50
+54 versicolor          5.5         2.3          4.0         1.3 54 5.936 50
+55 versicolor          6.5         2.8          4.6         1.5 55 5.936 50
+   minid maxid
+45     1    50
+46     1    50
+47     1    50
+48     1    50
+49     1    50
+50     1    50
+51    51   100
+52    51   100
+53    51   100
+54    51   100
+55    51   100</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;">tail</span>(dat)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Species Sepal.Length Sepal.Width Petal.Length Petal.Width  id    sl  n
+145 virginica          6.7         3.3          5.7         2.5 145 6.588 50
+146 virginica          6.7         3.0          5.2         2.3 146 6.588 50
+147 virginica          6.3         2.5          5.0         1.9 147 6.588 50
+148 virginica          6.5         3.0          5.2         2.0 148 6.588 50
+149 virginica          6.2         3.4          5.4         2.3 149 6.588 50
+150 virginica          5.9         3.0          5.1         1.8 150 6.588 50
+    minid maxid
+145   101   150
+146   101   150
+147   101   150
+148   101   150
+149   101   150
+150   101   150</code></pre>
+</div>
+</div>
+<p>Now that we have our dataframe with all of the necessary information, we can plot.</p>
+<p>Note that there are two calls to <code>geom_segment()</code>. For the first, we are plotting the species means, so we use the smmeans dataset. For the second, we are plotting each pointʻs deviation from the species means so we use the full dataset. The rest is telling the function where the start and end points of each segment are:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">r <span class="ot" style="color: #003B4F;">&lt;-</span> p <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>( <span class="at" style="color: #657422;">size=</span><span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb17-2">  <span class="fu" style="color: #4758AB;">geom_segment</span>( <span class="at" style="color: #657422;">data=</span>spmeans, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x=</span>minid, <span class="at" style="color: #657422;">y =</span> sl, <span class="at" style="color: #657422;">xend=</span>maxid, <span class="at" style="color: #657422;">yend=</span>sl, <span class="at" style="color: #657422;">group=</span>Species )) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb17-3">  <span class="fu" style="color: #4758AB;">geom_segment</span>( <span class="at" style="color: #657422;">data=</span>dat, <span class="fu" style="color: #4758AB;">aes</span>( <span class="at" style="color: #657422;">x =</span> id, <span class="at" style="color: #657422;">y =</span> Sepal.Length, <span class="at" style="color: #657422;">xend =</span> id, <span class="at" style="color: #657422;">yend =</span> sl, <span class="at" style="color: #657422;">color=</span>Species), <span class="at" style="color: #657422;">lty =</span> <span class="dv" style="color: #AD0000;">3</span>) </span>
+<span id="cb17-4"></span>
+<span id="cb17-5">r  </span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-03-07-univariate/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Back to our question - is the error sum of squares minimized by accouting for separate species or considering all irises as one group? Another way to state ANOVA is - is at least one of these groups different than the others?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="fu" style="color: #4758AB;">require</span>(cowplot)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: cowplot</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><span class="fu" style="color: #4758AB;">plot_grid</span>(</span>
+<span id="cb20-2">  q, </span>
+<span id="cb20-3">  r <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position=</span><span class="st" style="color: #20794D;">"none"</span>), </span>
+<span id="cb20-4">  <span class="at" style="color: #657422;">labels=</span><span class="st" style="color: #20794D;">"AUTO"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-03-07-univariate/index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>If we want to know whether species are different in sepal length, then we need to have lm fit the model by species. We do this like so:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">lm.fit <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">lm</span>(Sepal.Length <span class="sc" style="color: #5E5E5E;">~</span> Species))</span>
+<span id="cb21-2"><span class="fu" style="color: #4758AB;">summary</span>(lm.fit)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Sepal.Length ~ Species)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.6880 -0.3285 -0.0060  0.3120  1.3120 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         5.0060     0.0728  68.762  &lt; 2e-16 ***
+Speciesversicolor   0.9300     0.1030   9.033 8.77e-16 ***
+Speciesvirginica    1.5820     0.1030  15.366  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5148 on 147 degrees of freedom
+Multiple R-squared:  0.6187,    Adjusted R-squared:  0.6135 
+F-statistic: 119.3 on 2 and 147 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><strong>Interpretation:</strong> One-way ANOVA is like fitting a regression of the individual points against the grand mean of the points vs.&nbsp;separate regressions for each group. The summary shows that the the intercept (the mean of setosa) is about 5 (significantly different than zero), whereas the other species are contrasts against setosa, the first species. Versicolor is 0.93 higher than setosa, and virginica is 1.58 higher than setosa. Both of these contrasts are signficant. So they are actually all significantly different than each other</p>
+<p>Notice that now have more parameters estimated. You can specify which parameter values and contrasts you want displayed. Often we just want an ANOVA table, which tests the hypothesis that <strong>at least one group is different than the others</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><span class="fu" style="color: #4758AB;">anova</span>(lm.fit)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: Sepal.Length
+           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+Species     2 63.212  31.606  119.26 &lt; 2.2e-16 ***
+Residuals 147 38.956   0.265                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>We can see that species are significantly different in sepal length. Can you make a plot that shows this and add the statistics to it?</p>
+</section>
+</section>
+<section id="ancova" class="level2">
+<h2 class="anchored" data-anchor-id="ancova">ANCOVA</h2>
+<p>There are many forms of regession and ANOVA. For example, if you want to see if the relationship between Sepal.Length and Sepal.Width differs by species, you woul do an ANCOVA (analysis of covariance):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1">lm.fit <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">lm</span>(Sepal.Width <span class="sc" style="color: #5E5E5E;">~</span> Sepal.Length <span class="sc" style="color: #5E5E5E;">+</span> Species))</span>
+<span id="cb25-2"><span class="fu" style="color: #4758AB;">summary</span>(lm.fit)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Sepal.Width ~ Sepal.Length + Species)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.95096 -0.16522  0.00171  0.18416  0.72918 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)        1.67650    0.23536   7.123 4.46e-11 ***
+Sepal.Length       0.34988    0.04630   7.557 4.19e-12 ***
+Speciesversicolor -0.98339    0.07207 -13.644  &lt; 2e-16 ***
+Speciesvirginica  -1.00751    0.09331 -10.798  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.289 on 146 degrees of freedom
+Multiple R-squared:  0.5693,    Adjusted R-squared:  0.5604 
+F-statistic: 64.32 on 3 and 146 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Which would fit separate Y-intercepts for each species.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>module 3</category>
+  <category>week 8</category>
+  <category>univariate</category>
+  <category>statistics</category>
+  <category>ggplot2</category>
+  <category>dplyr</category>
+  <guid>https://mbutler808.github.io/posts/2023-03-07-univariate/index.html</guid>
+  <pubDate>Tue, 07 Mar 2023 10:00:00 GMT</pubDate>
+</item>
 <item>
   <title>A small tour of multivariate analysis</title>
   <dc:creator>Marguerite Butler</dc:creator>
@@ -76,15 +416,28 @@ Learning objectives
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: ggplot2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;">ggplot</span>(iris, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">sample=</span>Sepal.Length)) <span class="sc" style="color: #5E5E5E;">+</span> </span>
-<span id="cb4-2">  <span class="fu" style="color: #4758AB;">stat_qq</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb4-3">  <span class="fu" style="color: #4758AB;">stat_qq_line</span>()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;">require</span>(magrittr)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: magrittr</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">ggplot</span>(iris, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">sample=</span>Sepal.Length)) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb6-2">  <span class="fu" style="color: #4758AB;">stat_qq</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-3">  <span class="fu" style="color: #4758AB;">stat_qq_line</span>()</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>This data looks pretty good, except for some deviations along the edges. Most data will not ever be perfectly normal, you will get a sense of what is acceptable with more experience.</p>
 <p>However, we do know that this data contains three species – what happens if you were to look at the data by species?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">iris <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb7-2">    <span class="fu" style="color: #4758AB;">ggplot</span>( <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">sample=</span>Sepal.Length)) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb7-3">   <span class="fu" style="color: #4758AB;">stat_qq</span>( <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb7-4">   <span class="fu" style="color: #4758AB;">stat_qq_line</span>( <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col=</span>Species) )</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="skew" class="level3">
 <h3 class="anchored" data-anchor-id="skew">Skew</h3>
@@ -149,148 +502,6 @@ There is a huge wealth of literature on size and how to analyze shape.</li>
 </ul>
 </section>
 </section>
-<section id="tiny-review-of-univariate-statistics" class="level1">
-<h1>Tiny review of Univariate statistics</h1>
-<section id="linear-regression" class="level2">
-<h2 class="anchored" data-anchor-id="linear-regression">Linear Regression</h2>
-<p>Linear regression asks whether there is a relationship between X and Y, that is if you know X can you predict the value of Y?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">plot</span>(Sepal.Width <span class="sc" style="color: #5E5E5E;">~</span> Sepal.Length))</span>
-<span id="cb5-2">lm.fit <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">lm</span>(Sepal.Width <span class="sc" style="color: #5E5E5E;">~</span> Sepal.Length))</span>
-<span id="cb5-3"><span class="fu" style="color: #4758AB;">abline</span>(lm.fit, <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"blue"</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Linear regression results in two parameters, the best-fit slope and intercept:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">lm.fit </span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Sepal.Width ~ Sepal.Length)
-
-Coefficients:
- (Intercept)  Sepal.Length  
-     3.41895      -0.06188  </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;">summary</span>(lm.fit)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Sepal.Width ~ Sepal.Length)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--1.1095 -0.2454 -0.0167  0.2763  1.3338 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   3.41895    0.25356   13.48   &lt;2e-16 ***
-Sepal.Length -0.06188    0.04297   -1.44    0.152    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.4343 on 148 degrees of freedom
-Multiple R-squared:  0.01382,   Adjusted R-squared:  0.007159 
-F-statistic: 2.074 on 1 and 148 DF,  p-value: 0.1519</code></pre>
-</div>
-</div>
-<p>Regression minimizes the <strong>sum of squared errors</strong> (or deviations) from the line. The “errors” are the difference between where Y is, and where Y should be if it followed a perfect line.</p>
-<p>We can illustrate what this means:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">x <span class="ot" style="color: #003B4F;">&lt;-</span> iris<span class="sc" style="color: #5E5E5E;">$</span>Sepal.Length</span>
-<span id="cb10-2">y <span class="ot" style="color: #003B4F;">&lt;-</span> iris<span class="sc" style="color: #5E5E5E;">$</span>Sepal.Width</span>
-<span id="cb10-3">yhat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">predict</span>(lm.fit)</span>
-<span id="cb10-4"></span>
-<span id="cb10-5"><span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">plot</span>(Sepal.Width <span class="sc" style="color: #5E5E5E;">~</span> Sepal.Length))</span>
-<span id="cb10-6"><span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">abline</span>(lm.fit, <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"blue"</span>))</span>
-<span id="cb10-7"><span class="cf" style="color: #003B4F;">for</span>(i <span class="cf" style="color: #003B4F;">in</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="fu" style="color: #4758AB;">length</span>(x))  <span class="fu" style="color: #4758AB;">lines</span>(x[<span class="fu" style="color: #4758AB;">c</span>(i,i)],<span class="fu" style="color: #4758AB;">c</span>(y[i], yhat[i]), <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"red"</span>, <span class="at" style="color: #657422;">lty=</span><span class="dv" style="color: #AD0000;">2</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>The regression line is the best fit line that minimizes the sums of squared deviations from the regression. It turns out that the least-squares fit of the regression line is also provides the Maximum Likelihood fits of the parameters of the line (the slope and intercept).</p>
-</section>
-<section id="anova" class="level2">
-<h2 class="anchored" data-anchor-id="anova">ANOVA</h2>
-<p>Analysis of variance is very closely related to regression. It also works by minimizing sums of squares, but it asks a different question.</p>
-<p>Does the data better fit a model with one group (one regression line?) or multiple groups (multiple regression lines, one for each group)?</p>
-<p>Another way to state ANOVA is - is at least one of these groups different than the others?</p>
-<p>If we want to know whether species are different in sepal length, then we need to have lm fit the model by species. We do this like so:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">lm.fit <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">lm</span>(Sepal.Length <span class="sc" style="color: #5E5E5E;">~</span> Species))</span>
-<span id="cb11-2"><span class="fu" style="color: #4758AB;">summary</span>(lm.fit)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Sepal.Length ~ Species)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--1.6880 -0.3285 -0.0060  0.3120  1.3120 
-
-Coefficients:
-                  Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)         5.0060     0.0728  68.762  &lt; 2e-16 ***
-Speciesversicolor   0.9300     0.1030   9.033 8.77e-16 ***
-Speciesvirginica    1.5820     0.1030  15.366  &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.5148 on 147 degrees of freedom
-Multiple R-squared:  0.6187,    Adjusted R-squared:  0.6135 
-F-statistic: 119.3 on 2 and 147 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>Notice that now have more parameters estimated. You can specify which parameter values and contrasts you want displayed. Often we just want an ANOVA table:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;">anova</span>(lm.fit)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Variance Table
-
-Response: Sepal.Length
-           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-Species     2 63.212  31.606  119.26 &lt; 2.2e-16 ***
-Residuals 147 38.956   0.265                      
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-</div>
-<p>We can see that species are significantly different in sepal length. Can you make a plot that shows this?</p>
-</section>
-<section id="ancova" class="level2">
-<h2 class="anchored" data-anchor-id="ancova">ANCOVA</h2>
-<p>There are many forms of regession and ANOVA. For example, if you want to see if the relationship between Sepal.Length and Sepal.Width differs by species, you woul do an ANCOVA (analysis of covariance):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">lm.fit <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">with</span>(iris, <span class="fu" style="color: #4758AB;">lm</span>(Sepal.Width <span class="sc" style="color: #5E5E5E;">~</span> Sepal.Length <span class="sc" style="color: #5E5E5E;">+</span> Species))</span>
-<span id="cb15-2"><span class="fu" style="color: #4758AB;">summary</span>(lm.fit)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Sepal.Width ~ Sepal.Length + Species)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--0.95096 -0.16522  0.00171  0.18416  0.72918 
-
-Coefficients:
-                  Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)        1.67650    0.23536   7.123 4.46e-11 ***
-Sepal.Length       0.34988    0.04630   7.557 4.19e-12 ***
-Speciesversicolor -0.98339    0.07207 -13.644  &lt; 2e-16 ***
-Speciesvirginica  -1.00751    0.09331 -10.798  &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.289 on 146 degrees of freedom
-Multiple R-squared:  0.5693,    Adjusted R-squared:  0.5604 
-F-statistic: 64.32 on 3 and 146 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>Which would fit separate Y-intercepts for each species.</p>
-</section>
-</section>
 <section id="principal-components-analysis" class="level1">
 <h1>Principal Components Analysis</h1>
 <p>Now you are ready to begin. Often we have many variables measured and we suspect that many of the variables are collinear (or correlated) so that many of them contain the same or similar information. To summarize the variation, we may want to do a Principal Components Analysis.</p>
@@ -307,7 +518,7 @@ F-statistic: 64.32 on 3 and 146 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h1>Example Fisherʻs Iris data</h1>
 <p>Let’s do a PC analysis on Fisher’s Iris data, which is a famous multivariate dataset build into R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="fu" style="color: #4758AB;">head</span>(iris)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;">head</span>(iris)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 1          5.1         3.5          1.4         0.2  setosa
@@ -321,11 +532,11 @@ F-statistic: 64.32 on 3 and 146 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>There are: - Four measurements of sepal and petal length and width - Three species of iris - Fifty individuals are measured for each iris species.</p>
 <p>PC analysis in R uses the <code>princomp</code> function. You can either specify the columns of the data to do a PC analysis, or use the formula representation (with no response variables since it is not a regression). A tilde with a dot indicates all variables, and you can exclude columns with a minus sign as usual. You should only put continuous variables into a PC analysis. So in the iris data, we can exclude species with the minus sign:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1">pc.iris <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">princomp</span> (<span class="sc" style="color: #5E5E5E;">~</span> .<span class="sc" style="color: #5E5E5E;">-</span>Species, <span class="at" style="color: #657422;">data=</span>iris, <span class="at" style="color: #657422;">scores=</span>T)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">pc.iris <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">princomp</span> (<span class="sc" style="color: #5E5E5E;">~</span> .<span class="sc" style="color: #5E5E5E;">-</span>Species, <span class="at" style="color: #657422;">data=</span>iris, <span class="at" style="color: #657422;">scores=</span>T)</span></code></pre></div>
 </div>
 <p>We see the first two PC axes explain more than 97% of the variation, with PC1 explaining 92%, and PC2 5%. Because there are four original variables, we have two more PC axes but they only explain 1.7% and 0.5% of the variation and we will ignore them.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><span class="fu" style="color: #4758AB;">summary</span>(pc.iris)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;">summary</span>(pc.iris)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Importance of components:
                           Comp.1     Comp.2     Comp.3      Comp.4
@@ -336,7 +547,7 @@ Cumulative Proportion  0.9246187 0.97768521 0.99478782 1.000000000</code></pre>
 </div>
 <p>We can see how the PC axes reflect the original variables by using the loadings accessor function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><span class="fu" style="color: #4758AB;">loadings</span>(pc.iris)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;">loadings</span>(pc.iris)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Loadings:
@@ -355,7 +566,7 @@ Cumulative Var   0.25   0.50   0.75   1.00</code></pre>
 <p>PC1 reflects variation primarily in petal length as evidenced by it’s high correlation (<strong>0.857</strong>), and to a lesser extent by sepal length and petal width. PC2 indicates variation in sepal width, as well as additional variation in sepal length. Petal length loads in the opposite direction and thus would decrease as sepal length and width increased, but the correlation value is rather low (<strong>0.173</strong>). PC3 actually shows a trade-off between sepal length and both sepal width and petal width (with all loadings having similar magnitudes), but it explains very little of the overall variation.</p>
 <p>The scores are the values of each datapoint along the PC axes in PC space. It is an element of <code>pc.iris$scores</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><span class="fu" style="color: #4758AB;">head</span>(pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;">head</span>(pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Comp.1     Comp.2      Comp.3       Comp.4
 1 -2.684126  0.3193972  0.02791483  0.002262437
@@ -368,42 +579,42 @@ Cumulative Var   0.25   0.50   0.75   1.00</code></pre>
 </div>
 <p>We can access the PC scores, but it’s long. So for convenience let’s save it as something shorter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1">pc1 <span class="ot" style="color: #003B4F;">&lt;-</span> pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores[,<span class="dv" style="color: #AD0000;">1</span>]</span>
-<span id="cb26-2">pc2 <span class="ot" style="color: #003B4F;">&lt;-</span> pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores[,<span class="dv" style="color: #AD0000;">2</span>]</span>
-<span id="cb26-3">pc3 <span class="ot" style="color: #003B4F;">&lt;-</span> pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores[,<span class="dv" style="color: #AD0000;">3</span>]</span>
-<span id="cb26-4"><span class="fu" style="color: #4758AB;">plot</span>(pc2 <span class="sc" style="color: #5E5E5E;">~</span> pc1, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">pc1 <span class="ot" style="color: #003B4F;">&lt;-</span> pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores[,<span class="dv" style="color: #AD0000;">1</span>]</span>
+<span id="cb17-2">pc2 <span class="ot" style="color: #003B4F;">&lt;-</span> pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores[,<span class="dv" style="color: #AD0000;">2</span>]</span>
+<span id="cb17-3">pc3 <span class="ot" style="color: #003B4F;">&lt;-</span> pc.iris<span class="sc" style="color: #5E5E5E;">$</span>scores[,<span class="dv" style="color: #AD0000;">3</span>]</span>
+<span id="cb17-4"><span class="fu" style="color: #4758AB;">plot</span>(pc2 <span class="sc" style="color: #5E5E5E;">~</span> pc1, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>)</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We can see that there are three distinct groups of points. PC1 seems to contribute the most to separating the species, whereas PC2 seems to reflect variation within species.</p>
 <p>One important point to note is that the axes should be scaled to match each other. One unit on the X axis should occupy the same length of graph as one unit on the Y axis, otherwise the plot will be visually deceptive with regard to how much variation each axis has. Here is how we should scale the Y-axis in order to match the X-axis. Now you can see what the meaning of 97% of the variation being along PC1 is!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="fu" style="color: #4758AB;">plot</span>(pc2 <span class="sc" style="color: #5E5E5E;">~</span> pc1, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>, <span class="at" style="color: #657422;">ylim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="fu" style="color: #4758AB;">plot</span>(pc2 <span class="sc" style="color: #5E5E5E;">~</span> pc1, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>, <span class="at" style="color: #657422;">ylim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>))</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>What about PC3? It had only 1.7% of the variation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><span class="fu" style="color: #4758AB;">plot</span>(pc3 <span class="sc" style="color: #5E5E5E;">~</span> pc1, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>, <span class="at" style="color: #657422;">ylim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="fu" style="color: #4758AB;">plot</span>(pc3 <span class="sc" style="color: #5E5E5E;">~</span> pc1, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>, <span class="at" style="color: #657422;">ylim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>))</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><span class="fu" style="color: #4758AB;">plot</span>(pc3 <span class="sc" style="color: #5E5E5E;">~</span> pc2, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>, <span class="at" style="color: #657422;">ylim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>), <span class="at" style="color: #657422;">xlim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><span class="fu" style="color: #4758AB;">plot</span>(pc3 <span class="sc" style="color: #5E5E5E;">~</span> pc2, <span class="at" style="color: #657422;">col=</span>iris<span class="sc" style="color: #5E5E5E;">$</span>Species, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>, <span class="at" style="color: #657422;">ylim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>), <span class="at" style="color: #657422;">xlim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>))</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>So we see that most of the separation is achieved along PC1, and we can separate the groups pretty well if we just use PC1 with PC2 or PC3. We can see if the separation is significant using MANOVA:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1">manova.iris <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">manova</span>( <span class="fu" style="color: #4758AB;">cbind</span>(pc1, pc2, pc3) <span class="sc" style="color: #5E5E5E;">~</span> Species, <span class="at" style="color: #657422;">data=</span>iris)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">manova.iris <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">manova</span>( <span class="fu" style="color: #4758AB;">cbind</span>(pc1, pc2, pc3) <span class="sc" style="color: #5E5E5E;">~</span> Species, <span class="at" style="color: #657422;">data=</span>iris)</span></code></pre></div>
 </div>
 <p>We obtain the multivariate significance test (differences amongst species) using:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><span class="fu" style="color: #4758AB;">summary</span>(manova.iris)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><span class="fu" style="color: #4758AB;">summary</span>(manova.iris)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Df Pillai approx F num Df den Df    Pr(&gt;F)    
 Species     2 1.1756   69.402      6    292 &lt; 2.2e-16 ***
@@ -414,7 +625,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>Or we can also see results using Wilks’ lambda:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><span class="fu" style="color: #4758AB;">summary</span>(manova.iris, <span class="at" style="color: #657422;">test=</span><span class="st" style="color: #20794D;">"Wilks"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><span class="fu" style="color: #4758AB;">summary</span>(manova.iris, <span class="at" style="color: #657422;">test=</span><span class="st" style="color: #20794D;">"Wilks"</span>)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Df    Wilks approx F num Df den Df    Pr(&gt;F)    
 Species     2 0.024809   258.53      6    290 &lt; 2.2e-16 ***
@@ -425,7 +636,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>And get univariate statistics here:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><span class="fu" style="color: #4758AB;">summary.aov</span>(manova.iris)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><span class="fu" style="color: #4758AB;">summary.aov</span>(manova.iris)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Response pc1 :
              Df Sum Sq Mean Sq F value    Pr(&gt;F)    
@@ -452,8 +663,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>By comparing results we see that they are actually pretty well separated along each PC axis, with no real improvement gained by using a multivariate method. I should find another example!</p>
 <p>Note: You should decide whether to do PCA using covariance matrices or correlation matrices. The default in R is covariance matrices, and this will preserve the original scale of the data. If we use correlation matrices, then each variable is allowed to contribute equally, irrespective of how wide the range of values within each variable (it’s like they’re all standardized first). So you should only use covariances when all measurements are in the same units, for example all lengths in same units, and it makes sense to relate the magnitude of variation in one to another. Otherwise use correlation matrices.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1">pc.iris.cor <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">princomp</span> (<span class="sc" style="color: #5E5E5E;">~</span> .<span class="sc" style="color: #5E5E5E;">-</span>Species, <span class="at" style="color: #657422;">data=</span>iris, <span class="at" style="color: #657422;">scores=</span>T, <span class="at" style="color: #657422;">cor=</span>T)</span>
-<span id="cb37-2"><span class="fu" style="color: #4758AB;">summary</span>(pc.iris.cor)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1">pc.iris.cor <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">princomp</span> (<span class="sc" style="color: #5E5E5E;">~</span> .<span class="sc" style="color: #5E5E5E;">-</span>Species, <span class="at" style="color: #657422;">data=</span>iris, <span class="at" style="color: #657422;">scores=</span>T, <span class="at" style="color: #657422;">cor=</span>T)</span>
+<span id="cb28-2"><span class="fu" style="color: #4758AB;">summary</span>(pc.iris.cor)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Importance of components:
                           Comp.1    Comp.2     Comp.3      Comp.4
@@ -461,7 +672,7 @@ Standard deviation     1.7083611 0.9560494 0.38308860 0.143926497
 Proportion of Variance 0.7296245 0.2285076 0.03668922 0.005178709
 Cumulative Proportion  0.7296245 0.9581321 0.99482129 1.000000000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><span class="fu" style="color: #4758AB;">loadings</span>(pc.iris.cor)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><span class="fu" style="color: #4758AB;">loadings</span>(pc.iris.cor)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Loadings:
@@ -482,7 +693,7 @@ Cumulative Var   0.25   0.50   0.75   1.00</code></pre>
 <p>Another reason to do canonical discriminant analysis is to obtain scores as in PCA to do further analysis. It just produces scores accounting for group structure, so it is like a multi-group PCA. For example, I used this technique to produce a multivariate multi-group ordination in my studies of sexual dimorphism amongst multiple species. I allowed each species and sex to be a different group, and then tested to see if ecomorphs clustered together.</p>
 <p>To do this analysis, you need to install the package <code>candisc</code>. And produce a multivariate model as in the manova example above.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><span class="fu" style="color: #4758AB;">require</span>(candisc)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><span class="fu" style="color: #4758AB;">require</span>(candisc)</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: candisc</code></pre>
 </div>
@@ -507,9 +718,9 @@ Attaching package: 'candisc'</code></pre>
 
     cancor</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1">iris.multiv <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">lm</span>( <span class="fu" style="color: #4758AB;">cbind</span>(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) <span class="sc" style="color: #5E5E5E;">~</span> Species, <span class="at" style="color: #657422;">data=</span>iris )</span>
-<span id="cb49-2">iris.can <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">candisc</span>( iris.multiv, <span class="at" style="color: #657422;">term=</span><span class="st" style="color: #20794D;">"Species"</span>)</span>
-<span id="cb49-3">iris.can</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb40" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1">iris.multiv <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">lm</span>( <span class="fu" style="color: #4758AB;">cbind</span>(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) <span class="sc" style="color: #5E5E5E;">~</span> Species, <span class="at" style="color: #657422;">data=</span>iris )</span>
+<span id="cb40-2">iris.can <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">candisc</span>( iris.multiv, <span class="at" style="color: #657422;">term=</span><span class="st" style="color: #20794D;">"Species"</span>)</span>
+<span id="cb40-3">iris.can</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Canonical Discriminant Analysis for Species:
@@ -527,18 +738,18 @@ current row and all that follow are zero
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb51" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><span class="fu" style="color: #4758AB;">plot</span>(iris.can, <span class="at" style="color: #657422;">col=</span><span class="fu" style="color: #4758AB;">as.numeric</span>(iris<span class="sc" style="color: #5E5E5E;">$</span>Species))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb42" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><span class="fu" style="color: #4758AB;">plot</span>(iris.can, <span class="at" style="color: #657422;">col=</span><span class="fu" style="color: #4758AB;">as.numeric</span>(iris<span class="sc" style="color: #5E5E5E;">$</span>Species))</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Vector scale factor set to 7.122</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://mbutler808.github.io/posts/2023-03-02-multivariate/index_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>So you can see that by accounting for within-species variation, we get better separation of species. Again, we see the greatest separation along Can1. But interestingly, we see that three of the variables are contributing the most to Can1 (but all are highly correlated).</p>
 <p>You can see the loadings on the original variables, as well as the percent variance explained using the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1">iris.can<span class="sc" style="color: #5E5E5E;">$</span>structure</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb44" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1">iris.can<span class="sc" style="color: #5E5E5E;">$</span>structure</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   Can1       Can2
 Sepal.Length  0.7918878 0.21759312
@@ -546,11 +757,11 @@ Sepal.Width  -0.5307590 0.75798931
 Petal.Length  0.9849513 0.04603709
 Petal.Width   0.9728120 0.22290236</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb55" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1">iris.can<span class="sc" style="color: #5E5E5E;">$</span>eigenvalues</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb46" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1">iris.can<span class="sc" style="color: #5E5E5E;">$</span>eigenvalues</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.219193e+01 2.853910e-01 8.276011e-16 7.355228e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb57" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1">iris.can<span class="sc" style="color: #5E5E5E;">$</span>pct</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb48" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1">iris.can<span class="sc" style="color: #5E5E5E;">$</span>pct</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 9.912126e+01 8.787395e-01 2.548243e-15 2.264727e-15</code></pre>
 </div>
