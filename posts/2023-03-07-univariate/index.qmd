@@ -171,6 +171,7 @@ anova(lm.fit)
 
 We can see that species are significantly different in sepal length. Can you make a plot that shows this and add the statistics to it? 
 
+_And thatʻs how ANOVA is related to regression!_ 
 
 
 ## ANCOVA

@@ -71,6 +71,7 @@ Or the `ggplot2` version:
 
 ```{r}
 require(ggplot2)
+require(magrittr)
 ggplot(iris, aes(sample=Sepal.Length)) + 
   stat_qq() +
   stat_qq_line()
@@ -120,74 +121,6 @@ Will you want to do an analysis of the data along with a size-corrected dataset?
 There is a huge wealth of literature on size and how to analyze shape. 
 
 
-# Tiny review of Univariate statistics
-
-## Linear Regression
-
-Linear regression asks whether there is a relationship between X and Y, that is if you know X can you predict the value of Y?
-
-```{r}
-with(iris, plot(Sepal.Width ~ Sepal.Length))
-lm.fit <- with(iris, lm(Sepal.Width ~ Sepal.Length))
-abline(lm.fit, col="blue")
-```
-
-Linear regression results in two parameters, the best-fit slope and intercept:
-
-```{r}
-lm.fit 
-summary(lm.fit)
-```
-
-Regression minimizes the __sum of squared errors__ (or deviations) from the line. The "errors" are the difference between where Y is, and where Y should be if it followed a perfect line. 
-
-We can illustrate what this means:
-
-```{r}
-x <- iris$Sepal.Length
-y <- iris$Sepal.Width
-yhat <- predict(lm.fit)
-
-with(iris, plot(Sepal.Width ~ Sepal.Length))
-with(iris, abline(lm.fit, col="blue"))
-for(i in 1:length(x))  lines(x[c(i,i)],c(y[i], yhat[i]), col="red", lty=2)
-```
-
-The regression line is the best fit line that minimizes the sums of squared deviations from the regression. It turns out that the least-squares fit of the regression line is also provides the Maximum Likelihood fits of the parameters of the line (the slope and intercept).
-
-## ANOVA
-
-Analysis of variance is very closely related to regression. It also works by minimizing sums of squares, but it asks a different question. 
-
-Does the data better fit a model with one group (one regression line?) or multiple groups (multiple regression lines, one for each group)?
-
-Another way to state ANOVA is - is at least one of these groups different than the others?
-
-If we want to know whether species are different in sepal length, then we need to have lm fit the model by species. We do this like so:
-
-```{r}
-lm.fit <- with(iris, lm(Sepal.Length ~ Species))
-summary(lm.fit)
-```
-
-Notice that now have more parameters estimated. You can specify which parameter values and contrasts you want displayed. Often we just want an ANOVA table:
-
-```{r}
-anova(lm.fit)
-``` 
-
-We can see that species are significantly different in sepal length. Can you make a plot that shows this? 
-
-## ANCOVA
-
-There are many forms of regession and ANOVA. For example, if you want to see if the relationship between Sepal.Length and Sepal.Width differs by species, you woul do an ANCOVA (analysis of covariance):
-
-```{r}
-lm.fit <- with(iris, lm(Sepal.Width ~ Sepal.Length + Species))
-summary(lm.fit)
-```
-
-Which would fit separate Y-intercepts for each species. 
 
 
 # Principal Components Analysis

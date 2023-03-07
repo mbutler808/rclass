@@ -50,6 +50,15 @@ Material for this lecture was borrowed and adopted from
 -   Be able to implement mutational join functions
 :::
 
+## New Packages
+
+You will have to install if you donʻt already have them:
+
+```{r}
+#| eval: FALSE
+install.packages("gapminder")  # a dataset package
+```
+
 # Overview
 
 Last time we talked about tidy data. One common issue is that people sometimes use column names to store data. For example take a look at this built-in dataset that comes with `tidyr` on **religion and income survey data** with the number of respondents with income range in column name.
@@ -59,9 +68,9 @@ Last time we talked about tidy data. One common issue is that people sometimes u
 library(tidyr)
 relig_income
 ```
-:::
 
--   In this case the variables are religion, income bracket, and the number of respondents, which is the third variable, is presented inside the table.
+Take a second to look at this data. 
+-   In this case the variables are religion (a proper vector), income bracket (in the column names), and the number of respondents, which is the third variable, is presented inside the table.
 
 Converting this data to tidy format would give us
 
@@ -73,6 +82,8 @@ relig_income %>%
   mutate(religion = factor(religion), income = factor(income))
 ```
 
+Now we have each variable along the columns and each row corresponds to one observation (or category, here a combination of religion and income bracket). 
+
 # Reshaping data
 
 ### `pivot_longer()`
@@ -80,35 +91,34 @@ relig_income %>%
 The `tidyr` package includes functions to transfer a data frame between *long* and *wide*.
 
 -   **Wide format** data has different attributes or variables describing an observation _placed in separate columns_.
--   **Long format** data tends to have different attributes encoded as _levels of a single variable_, followed by another column that contains _the values_ of the observation at those different levels.
+-   **Long format** data tends to have different attributes encoded as _levels_ of a single variable, followed by another column that contains _the values_ of the observation at those different levels.
 
-::: callout-tip
-### Example
 
 The **key problem** with the tidyness of the original data is that the income variables are not in their own columns, but rather are embedded in the structure of the columns, making it hard to manipuate the income variables.
 
 To **fix this**, you can use the `pivot_longer()` function to **gather values spread across several columns into a single column**, here with the column names gathered into an `income` column.
 
-**Note**: when gathering, exclude any columns that you do not want "gathered" (`religion` in this case) by including the column names with a the minus sign in the `pivot_longer()` function.
 
-For example:
+### For example:
 
 ```{r}
 # Gather everything EXCEPT religion to tidy data
 relig_income %>%
   pivot_longer(-religion, names_to = "income", values_to = "respondents")
 ```
+
+
+::: callout-tip
+### Note
+-  When gathering, exclude any columns that you do not want "gathered" (`religion` in this case) by including the column names with a the __minus sign__ in the `pivot_longer()` function.
+-  Even if your data is in a tidy format, `pivot_longer()` is occasionally useful for pulling data together to take advantage of faceting, or plotting separate plots based on a grouping variable. 
 :::
-
-Even if your data is in a tidy format, `pivot_longer()` is occasionally useful for pulling data together to take advantage of faceting, or plotting separate plots based on a grouping variable. 
-
 
 ### `pivot_wider()`
 
 The `pivot_wider()` function is the opposite function. It is useful for creating summary tables for reports, but generally less commonly needed to tidy data. 
 
-::: callout-tip
-### Example
+It can be flexibly used in combination with __pivot_longer__ as in this example to make a nicer table to print.
 
 You use the `summarize()` function in `dplyr` to summarize the total number of respondents per income category.
 
@@ -122,7 +132,6 @@ relig_income %>%
               values_from = "total_respondents") %>%
   knitr::kable()
 ```
-:::
 
 Notice in this example how `pivot_wider()` has been used at the **very end of the code sequence** to convert the summarized data into a shape that **offers a better tabular presentation for a report**.
 
@@ -130,7 +139,8 @@ Notice in this example how `pivot_wider()` has been used at the **very end of th
 ::: callout-tip
 ### Note
 
-In the `pivot_wider()` call, you first specify the name of the column to use for the new column names (`income` in this example) and then specify the column to use for the cell values (`total_respondents` here).
+-  In the `pivot_wider()` call, you first specify the name of the column to use for the new column names (`income` in this example) and then specify the column to use for the cell values (`total_respondents` here).
+-  Long format is often (but not always) the shape we need for tidy data. The important thing, however, is to __think carefully about the shape you need for your analysis__. 
 :::
 
 ::: callout-tip
@@ -154,7 +164,7 @@ If we wanted to make `lifeExp`, `pop` and `gdpPercap` (all measurements that we 
 ::: callout-tip
 ### Example
 
-One more! Try using `pivot_longer()` to convert the the following data that contains made-up revenues for three companies by quarter for years 2006 to 2009.
+One more! Try using `pivot_longer()` to convert the the following data that contains simulated revenues for three companies by quarter for years 2006 to 2009.
 
 Afterward, use `group_by()` and `summarize()` to calculate the average revenue for each company across all years and all quarters.
 
@@ -182,8 +192,8 @@ df
 
 Still in the`tidyr` package:
 
--   `unite()`: combine contents of two or more columns into a single column
--   `separate()`: separate contents of a column into two or more columns
+-   `unite()`: paste contents of two or more columns into a single column
+-   `separate()`: split contents of a column into two or more columns
 
 First, we combine the first three columns into one new column using `unite()`. This function is similar to `newvar <- paste(A,B,C, sep="_")`
 
@@ -206,7 +216,7 @@ gapminder %>%
            sep="_")
 ```
 
-# Joining data
+# Joining data (a.k.a. Merging)
 
 ## Relational data
 
@@ -354,12 +364,5 @@ tibble(x = c("a,b,c", "d,e", "f,g,i")) %>%
 4.  Compare and contrast `separate()` and `extract()`. Why are there three variations of separation (by position, by separator, and with groups), but only one `unite()`?
 :::
 
-### Additional Resources
-
-::: callout-tip
--   [Tidy Data](https://www.jstatsoft.org/article/view/v059i10) paper published in the Journal of Statistical Software
--   https://r4ds.had.co.nz/tidy-data.html
--   [tidyr cheat sheet from RStudio](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
-:::
 
 
