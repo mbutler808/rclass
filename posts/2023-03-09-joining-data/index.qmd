@@ -79,6 +79,7 @@ Relational data are combined with **merges or joins**.
 Letʻs use the `geospiza` data from the `geiger` package to practice merging with the base R `merge()` function.
 
 ```{r}
+#| warning: false
 require(geiger)
 data(geospiza)   # load the dataset into the workspace
 ls()               # list the objects in the workspace
@@ -99,14 +100,14 @@ The default is to drop all observations that are not in BOTH datasets. Here we m
 
 ```{r}
                     # only maches to both datasets are included
-merge(x=geo["tarsusL"], y=geot[1:5, ], by= "row.names")    
+merge(x=geo[,"tarsusL"], y=geot[1:5, ], by= "row.names")    
 ```
 
 If we want to keep everything, use the `all=T` flag: 
 
 ```{r}
                     # all species in both datasets are included
-merge(x=geo["tarsusL"], y=geot[1:5,], by= "row.names", all=T)    
+merge(x=geo[,"tarsusL"], y=geot[1:5,], by= "row.names", all=T)    
 ```
 
 There is also `all.x` which keeps all values of the first data table but drops non-matching rows of the second table, and `all.y` which keeps all of the second. 
@@ -117,9 +118,9 @@ The results of `merge` are sorted by default on the sort key. To turn it off:
 ```{r}
 geo <- geo[rev(rownames(geo)), ]   # reverse the species order of geo
                      # merge on geo first, then geot
-merge(x=geo["tarsusL"], y=geot[1:5, ], by= "row.names", sort=F)   
+merge(x=geo[,"tarsusL"], y=geot[1:5, ], by= "row.names", sort=F)   
                      # geot first, then geo
-merge(x=geot[1:5,], y=geo["tarsusL"], by= "row.names", sort=F)   
+merge(x=geot[1:5,], y=geo[,"tarsusL"], by= "row.names", sort=F)   
 
 ```
 
@@ -129,24 +130,11 @@ merge(x=geot[1:5,], y=geo["tarsusL"], by= "row.names", sort=F)
 
 Check out the help page for `?merge` for more info. 
 
-## Joining in dpylyr
-
-In `dplyr`, merges are called joins (both are used in database science) and introduces a vocabulary that names each of these situations. 
-
-::: callout-tip
-### Three important families of joins
-
--   [**Mutating joins**](https://r4ds.had.co.nz/relational-data.html#mutating-joins): This is a typical __merge__ operation. It mutates because it adds on. A mutating join **combines variables from two tables**. It first matches observations by their keys, then copies across variables from one table to the other on the right side of the table (similar to `mutate()`). 
-    -   See @sec-mutjoins for Table of mutating joins.
--   [**Filtering joins**](https://r4ds.had.co.nz/relational-data.html#filtering-joins): Filtering joins **match observations** in the same way as mutating joins, **but select the observations that match** (not the variables). In other words, this type of join filters observations from one data frame based on whether or not they match an observation in the other.
-    -   Two types: `semi_join(x, y)` and `anti_join(x, y)`.
--   [**Set operations**](https://r4ds.had.co.nz/relational-data.html#set-operations): Treat **observations as if they were set elements**. Typically used less frequently, but occasionally useful when you want to break a single complex filter into simpler pieces. All these operations work with a complete row, comparing the values of every variable. These expect the x and y inputs to have the same variables, and treat the observations like sets:
-    -   Examples of set operations: `intersect(x, y)`, `union(x, y)`, and `setdiff(x, y)`.
-:::
-
-## Keys
+# Keys
 
 The **variables used to connect each pair of tables** are called **keys**. A key is a variable (or set of variables) that __uniquely identifies an observation__. In simple cases, a single variable is sufficient to identify an observation.
+
+In the example above the key was the __species names__, which was contained in the `row.names` attribute. The key was specified in the merge in the `by=` argument. A merge or join key is a generic concept that is used in many database operations. 
 
 ::: callout-tip
 ### Note
@@ -205,7 +193,34 @@ What is the **primary key** and **foreign key**?
 -   The `subjects$id` is a **foreign key** because it appears in the `subjects` table where it matches each subject to a unique `id`.
 :::
 
-# Mutating joins {#sec-mutjoins}
+
+
+# Joining in `dplyr`
+
+In `dplyr`, merges are called joins (both are used in database science) and introduces a vocabulary that names each of these situations. 
+
+::: callout-tip
+### Three important families of joins
+
+-   [**Mutating joins**](https://r4ds.had.co.nz/relational-data.html#mutating-joins): add new variables to one data frame from matching observations in another.
+
+    -   This is a typical __merge__ operation. A mutating join **combines variables from two tables** into a new table. Observations in the two tables are matched by their keys, with  the variables from the two tables copied into the new table. It is a mutating join because it adds columns with the merge, and in that way is analogous to the `mutate()` function for dataframes.  
+    -   See @sec-mutjoins for Table of mutating joins.
+
+-   [**Filtering joins**](https://r4ds.had.co.nz/relational-data.html#filtering-joins): filter observations from one data frame based on whether or not they match an observation in the other table
+
+    -   Filtering joins are a way to filter one dataset by observations in another dataset (they are more filter and less join). 
+    -   Filtering joins **match observations** by a key, as usual, **but select the observations that match** (not the variables). In other words, this type of join filters observations from one data frame based on whether or not they match an observation in the other.  
+    -   Two types: `semi_join(x, y)` and `anti_join(x, y)`.
+
+-   [**Set operations**](https://r4ds.had.co.nz/relational-data.html#set-operations): treat observations as if they were set elements.
+
+    -   Set operations can be useful when you want to break a single complex filter into simpler pieces. All these operations work with a complete row, comparing the values of every variable. These expect the x and y inputs to have the same variables, and treat the observations like sets:  
+    -   Examples of set operations: `intersect(x, y)`, `union(x, y)`, and `setdiff(x, y)`.
+:::
+
+
+# Types of mutating joins {#sec-mutjoins}
 
 The `dplyr` package provides a set of **functions for joining two data frames** into a single data frame based on a set of key columns.
 

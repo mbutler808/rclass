@@ -275,15 +275,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#relational-data" id="toc-relational-data" class="nav-link" data-scroll-target="#relational-data">Relational data</a></li>
   <li><a href="#example-with-merge" id="toc-example-with-merge" class="nav-link" data-scroll-target="#example-with-merge">Example with <code>merge()</code></a></li>
-  <li><a href="#joining-in-dpylyr" id="toc-joining-in-dpylyr" class="nav-link" data-scroll-target="#joining-in-dpylyr">Joining in dpylyr</a></li>
-  <li><a href="#keys" id="toc-keys" class="nav-link" data-scroll-target="#keys">Keys</a></li>
+  </ul></li>
+  <li><a href="#keys" id="toc-keys" class="nav-link" data-scroll-target="#keys">Keys</a>
+  <ul class="collapse">
   <li><a href="#example-of-keys" id="toc-example-of-keys" class="nav-link" data-scroll-target="#example-of-keys">Example of keys</a>
   <ul class="collapse">
   <li><a href="#the-first-table" id="toc-the-first-table" class="nav-link" data-scroll-target="#the-first-table">The first table</a></li>
   <li><a href="#a-second-table" id="toc-a-second-table" class="nav-link" data-scroll-target="#a-second-table">A second table</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#sec-mutjoins" id="toc-sec-mutjoins" class="nav-link" data-scroll-target="#sec-mutjoins">Mutating joins</a></li>
+  <li><a href="#joining-in-dplyr" id="toc-joining-in-dplyr" class="nav-link" data-scroll-target="#joining-in-dplyr">Joining in <code>dplyr</code></a></li>
+  <li><a href="#sec-mutjoins" id="toc-sec-mutjoins" class="nav-link" data-scroll-target="#sec-mutjoins">Types of mutating joins</a></li>
   <li><a href="#post-lecture-materials" id="toc-post-lecture-materials" class="nav-link" data-scroll-target="#post-lecture-materials">Post-lecture materials</a>
   <ul class="collapse">
   <li><a href="#final-questions" id="toc-final-questions" class="nav-link" data-scroll-target="#final-questions">Final Questions</a></li>
@@ -380,19 +382,13 @@ Learning objectives
 <h2 class="anchored" data-anchor-id="example-with-merge">Example with <code>merge()</code></h2>
 <p>Letʻs use the <code>geospiza</code> data from the <code>geiger</code> package to practice merging with the base R <code>merge()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(geiger)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: geiger</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: ape</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(geospiza)   <span class="co"># load the dataset into the workspace</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()               <span class="co"># list the objects in the workspace</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(geiger)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(geospiza)   <span class="co"># load the dataset into the workspace</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()               <span class="co"># list the objects in the workspace</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "geospiza"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>geospiza</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>geospiza</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$geospiza.tree
 
@@ -444,52 +440,71 @@ Pinaroloxias 4.188600 2.980200 2.311100 1.547500 1.630100
 Platyspiza   4.419686 3.270543 2.331471 2.347471 2.282443
 psittacula   4.235020 3.049120 2.259640 2.230040 2.073940</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>geo <span class="ot">&lt;-</span> geospiza<span class="sc">$</span>dat  <span class="co"># save the morphometric data as geo</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>geo <span class="ot">&lt;-</span> geospiza<span class="sc">$</span>dat  <span class="co"># save the morphometric data as geo</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This is a 5 column dataframe. Letʻs take just the <code>tarsusL</code> data to build our example dataset:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tarsusL <span class="ot">&lt;-</span> geo[,<span class="st">"tarsusL"</span>]  <span class="co"># geo is a matrix, select tarsusL column</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>geot <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(tarsusL, <span class="st">"ecology"</span> <span class="ot">=</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(tarsusL)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tarsusL <span class="ot">&lt;-</span> geo[,<span class="st">"tarsusL"</span>]  <span class="co"># geo is a matrix, select tarsusL column</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>geot <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(tarsusL, <span class="st">"ecology"</span> <span class="ot">=</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(tarsusL)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Often we will be merging data that donʻt perfectly match. Some parts of the data will be missing, for example we may only have ecology data for the first five species. The question is what do you want the merge behavior to be?</p>
 <p>The default is to drop all observations that are not in BOTH datasets. Here we merge the original <code>geo</code> with only the first five rows of <code>geot</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># only maches to both datasets are included</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">merge</span>(<span class="at">x=</span>geo[<span class="st">"tarsusL"</span>], <span class="at">y=</span>geot[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, ], <span class="at">by=</span> <span class="st">"row.names"</span>)    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># only maches to both datasets are included</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">merge</span>(<span class="at">x=</span>geo[,<span class="st">"tarsusL"</span>], <span class="at">y=</span>geot[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, ], <span class="at">by=</span> <span class="st">"row.names"</span>)    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] Row.names x         tarsusL   ecology  
-&lt;0 rows&gt; (or 0-length row.names)</code></pre>
+<pre><code>     Row.names        x  tarsusL ecology
+1  conirostris 2.984200 2.984200       B
+2   difficilis 2.898917 2.898917       C
+3       fortis 2.894717 2.894717       E
+4 magnirostris 3.038950 3.038950       A
+5     scandens 2.929033 2.929033       D</code></pre>
 </div>
 </div>
 <p>If we want to keep everything, use the <code>all=T</code> flag:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># all species in both datasets are included</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">merge</span>(<span class="at">x=</span>geo[<span class="st">"tarsusL"</span>], <span class="at">y=</span>geot[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,], <span class="at">by=</span> <span class="st">"row.names"</span>, <span class="at">all=</span>T)    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># all species in both datasets are included</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">merge</span>(<span class="at">x=</span>geo[,<span class="st">"tarsusL"</span>], <span class="at">y=</span>geot[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,], <span class="at">by=</span> <span class="st">"row.names"</span>, <span class="at">all=</span>T)    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     Row.names  x  tarsusL ecology
-1            1 NA       NA    &lt;NA&gt;
-2  conirostris NA 2.984200       B
-3   difficilis NA 2.898917       C
-4       fortis NA 2.894717       E
-5 magnirostris NA 3.038950       A
-6     scandens NA 2.929033       D</code></pre>
+<pre><code>      Row.names        x  tarsusL ecology
+1   conirostris 2.984200 2.984200       B
+2    difficilis 2.898917 2.898917       C
+3        fortis 2.894717 2.894717       E
+4    fuliginosa 2.806514       NA    &lt;NA&gt;
+5         fusca 2.936536       NA    &lt;NA&gt;
+6  magnirostris 3.038950 3.038950       A
+7       pallida 3.089450       NA    &lt;NA&gt;
+8      parvulus 2.973060       NA    &lt;NA&gt;
+9        pauper 3.035900       NA    &lt;NA&gt;
+10 Pinaroloxias 2.980200       NA    &lt;NA&gt;
+11   Platyspiza 3.270543       NA    &lt;NA&gt;
+12   psittacula 3.049120       NA    &lt;NA&gt;
+13     scandens 2.929033 2.929033       D</code></pre>
 </div>
 </div>
 <p>There is also <code>all.x</code> which keeps all values of the first data table but drops non-matching rows of the second table, and <code>all.y</code> which keeps all of the second.</p>
 <p>The results of <code>merge</code> are sorted by default on the sort key. To turn it off:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>geo <span class="ot">&lt;-</span> geo[<span class="fu">rev</span>(<span class="fu">rownames</span>(geo)), ]   <span class="co"># reverse the species order of geo</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                     <span class="co"># merge on geo first, then geot</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">merge</span>(<span class="at">x=</span>geo[<span class="st">"tarsusL"</span>], <span class="at">y=</span>geot[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, ], <span class="at">by=</span> <span class="st">"row.names"</span>, <span class="at">sort=</span>F)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>geo <span class="ot">&lt;-</span> geo[<span class="fu">rev</span>(<span class="fu">rownames</span>(geo)), ]   <span class="co"># reverse the species order of geo</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                     <span class="co"># merge on geo first, then geot</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">merge</span>(<span class="at">x=</span>geo[,<span class="st">"tarsusL"</span>], <span class="at">y=</span>geot[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, ], <span class="at">by=</span> <span class="st">"row.names"</span>, <span class="at">sort=</span>F)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] Row.names x         tarsusL   ecology  
-&lt;0 rows&gt; (or 0-length row.names)</code></pre>
+<pre><code>     Row.names        x  tarsusL ecology
+1       fortis 2.894717 2.894717       E
+2     scandens 2.929033 2.929033       D
+3   difficilis 2.898917 2.898917       C
+4  conirostris 2.984200 2.984200       B
+5 magnirostris 3.038950 3.038950       A</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>                     <span class="co"># geot first, then geo</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">merge</span>(<span class="at">x=</span>geot[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,], <span class="at">y=</span>geo[<span class="st">"tarsusL"</span>], <span class="at">by=</span> <span class="st">"row.names"</span>, <span class="at">sort=</span>F)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>                     <span class="co"># geot first, then geo</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">merge</span>(<span class="at">x=</span>geot[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,], <span class="at">y=</span>geo[,<span class="st">"tarsusL"</span>], <span class="at">by=</span> <span class="st">"row.names"</span>, <span class="at">sort=</span>F)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] Row.names tarsusL   ecology   y        
-&lt;0 rows&gt; (or 0-length row.names)</code></pre>
+<pre><code>     Row.names  tarsusL ecology        y
+1 magnirostris 3.038950       A 3.038950
+2  conirostris 2.984200       B 2.984200
+3   difficilis 2.898917       C 2.898917
+4     scandens 2.929033       D 2.929033
+5       fortis 2.894717       E 2.894717</code></pre>
 </div>
 </div>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -509,39 +524,11 @@ Note
 </div>
 <p>Check out the help page for <code>?merge</code> for more info.</p>
 </section>
-<section id="joining-in-dpylyr" class="level2">
-<h2 class="anchored" data-anchor-id="joining-in-dpylyr">Joining in dpylyr</h2>
-<p>In <code>dplyr</code>, merges are called joins (both are used in database science) and introduces a vocabulary that names each of these situations.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Three important families of joins
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://r4ds.had.co.nz/relational-data.html#mutating-joins"><strong>Mutating joins</strong></a>: This is a typical <strong>merge</strong> operation. It mutates because it adds on. A mutating join <strong>combines variables from two tables</strong>. It first matches observations by their keys, then copies across variables from one table to the other on the right side of the table (similar to <code>mutate()</code>).
-<ul>
-<li>See <a href="#sec-mutjoins">Section&nbsp;5</a> for Table of mutating joins.</li>
-</ul></li>
-<li><a href="https://r4ds.had.co.nz/relational-data.html#filtering-joins"><strong>Filtering joins</strong></a>: Filtering joins <strong>match observations</strong> in the same way as mutating joins, <strong>but select the observations that match</strong> (not the variables). In other words, this type of join filters observations from one data frame based on whether or not they match an observation in the other.
-<ul>
-<li>Two types: <code>semi_join(x, y)</code> and <code>anti_join(x, y)</code>.</li>
-</ul></li>
-<li><a href="https://r4ds.had.co.nz/relational-data.html#set-operations"><strong>Set operations</strong></a>: Treat <strong>observations as if they were set elements</strong>. Typically used less frequently, but occasionally useful when you want to break a single complex filter into simpler pieces. All these operations work with a complete row, comparing the values of every variable. These expect the x and y inputs to have the same variables, and treat the observations like sets:
-<ul>
-<li>Examples of set operations: <code>intersect(x, y)</code>, <code>union(x, y)</code>, and <code>setdiff(x, y)</code>.</li>
-</ul></li>
-</ul>
-</div>
-</div>
 </section>
-<section id="keys" class="level2">
-<h2 class="anchored" data-anchor-id="keys">Keys</h2>
+<section id="keys" class="level1">
+<h1>Keys</h1>
 <p>The <strong>variables used to connect each pair of tables</strong> are called <strong>keys</strong>. A key is a variable (or set of variables) that <strong>uniquely identifies an observation</strong>. In simple cases, a single variable is sufficient to identify an observation.</p>
+<p>In the example above the key was the <strong>species names</strong>, which was contained in the <code>row.names</code> attribute. The key was specified in the merge in the <code>by=</code> argument. A merge or join key is a generic concept that is used in many database operations.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -560,7 +547,6 @@ Note
 </div>
 </div>
 <p>Let’s consider an example to help us understand the difference between a <strong>primary key</strong> and <strong>foreign key</strong>.</p>
-</section>
 <section id="example-of-keys" class="level2">
 <h2 class="anchored" data-anchor-id="example-of-keys">Example of keys</h2>
 <p>Imagine you are conduct a study and <strong>collecting data on subjects and a health outcome</strong>.</p>
@@ -569,28 +555,28 @@ Note
 <h3 class="anchored" data-anchor-id="the-first-table">The first table</h3>
 <p>This code creates a simple table with some made up data about some hypothetical subjects’ outcomes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>outcomes <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">id =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>), <span class="at">each =</span> <span class="dv">3</span>),</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">visit =</span> <span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">3</span>),</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">outcome =</span> <span class="fu">rnorm</span>(<span class="dv">3</span> <span class="sc">*</span> <span class="dv">3</span>, <span class="dv">3</span>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(outcomes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>outcomes <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">id =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>), <span class="at">each =</span> <span class="dv">3</span>),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">visit =</span> <span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">outcome =</span> <span class="fu">rnorm</span>(<span class="dv">3</span> <span class="sc">*</span> <span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(outcomes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 3
   id    visit outcome
   &lt;chr&gt; &lt;int&gt;   &lt;dbl&gt;
-1 a         0    1.81
-2 a         1    3.09
-3 a         2    3.44
-4 b         0    2.77
-5 b         1    3.37
-6 b         2    1.97
-7 c         0    3.69
-8 c         1    3.28
-9 c         2    2.05</code></pre>
+1 a         0   3.46 
+2 a         1   3.13 
+3 a         2   2.51 
+4 b         0   3.97 
+5 b         1   2.97 
+6 b         2   4.26 
+7 c         0   3.15 
+8 c         1   0.930
+9 c         2   3.43 </code></pre>
 </div>
 </div>
 <p>Note that subjects are labeled by a unique identifer in the <code>id</code> column.</p>
@@ -599,12 +585,12 @@ Note
 <h3 class="anchored" data-anchor-id="a-second-table">A second table</h3>
 <p>Here is some code to create a second table containing data about the hypothetical subjects’ housing type.</p>
 <div class="cell" data-exercise="true">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>subjects <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">id =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>),</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">house =</span> <span class="fu">c</span>(<span class="st">"detached"</span>, <span class="st">"rowhouse"</span>, <span class="st">"rowhouse"</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(subjects)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>subjects <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">id =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>),</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">house =</span> <span class="fu">c</span>(<span class="st">"detached"</span>, <span class="st">"rowhouse"</span>, <span class="st">"rowhouse"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(subjects)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   id    house   
@@ -634,8 +620,45 @@ Question
 </section>
 </section>
 </section>
+<section id="joining-in-dplyr" class="level1">
+<h1>Joining in <code>dplyr</code></h1>
+<p>In <code>dplyr</code>, merges are called joins (both are used in database science) and introduces a vocabulary that names each of these situations.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Three important families of joins
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><a href="https://r4ds.had.co.nz/relational-data.html#mutating-joins"><strong>Mutating joins</strong></a>: add new variables to one data frame from matching observations in another.</p>
+<ul>
+<li>This is a typical <strong>merge</strong> operation. A mutating join <strong>combines variables from two tables</strong> into a new table. Observations in the two tables are matched by their keys, with the variables from the two tables copied into the new table. It is a mutating join because it adds columns with the merge, and in that way is analogous to the <code>mutate()</code> function for dataframes.<br>
+</li>
+<li>See <a href="#sec-mutjoins">Section&nbsp;7</a> for Table of mutating joins.</li>
+</ul></li>
+<li><p><a href="https://r4ds.had.co.nz/relational-data.html#filtering-joins"><strong>Filtering joins</strong></a>: filter observations from one data frame based on whether or not they match an observation in the other table</p>
+<ul>
+<li>Filtering joins are a way to filter one dataset by observations in another dataset (they are more filter and less join).</li>
+<li>Filtering joins <strong>match observations</strong> by a key, as usual, <strong>but select the observations that match</strong> (not the variables). In other words, this type of join filters observations from one data frame based on whether or not they match an observation in the other.<br>
+</li>
+<li>Two types: <code>semi_join(x, y)</code> and <code>anti_join(x, y)</code>.</li>
+</ul></li>
+<li><p><a href="https://r4ds.had.co.nz/relational-data.html#set-operations"><strong>Set operations</strong></a>: treat observations as if they were set elements.</p>
+<ul>
+<li>Set operations can be useful when you want to break a single complex filter into simpler pieces. All these operations work with a complete row, comparing the values of every variable. These expect the x and y inputs to have the same variables, and treat the observations like sets:<br>
+</li>
+<li>Examples of set operations: <code>intersect(x, y)</code>, <code>union(x, y)</code>, and <code>setdiff(x, y)</code>.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
 <section id="sec-mutjoins" class="level1">
-<h1>Mutating joins</h1>
+<h1>Types of mutating joins</h1>
 <p>The <code>dplyr</code> package provides a set of <strong>functions for joining two data frames</strong> into a single data frame based on a set of key columns.</p>
 <p>There are several functions in the <code>*_join()</code> family.</p>
 <ul>
@@ -700,11 +723,11 @@ Questions
 <li><p>What do the extra and fill arguments do in <code>separate()</code>? Experiment with the various options for the following two toy datasets.</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"a,b,c"</span>, <span class="st">"d,e,f,g"</span>, <span class="st">"h,i,j"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(x, <span class="fu">c</span>(<span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span>))</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"a,b,c"</span>, <span class="st">"d,e"</span>, <span class="st">"f,g,i"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(x, <span class="fu">c</span>(<span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"a,b,c"</span>, <span class="st">"d,e,f,g"</span>, <span class="st">"h,i,j"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(x, <span class="fu">c</span>(<span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span>))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"a,b,c"</span>, <span class="st">"d,e"</span>, <span class="st">"f,g,i"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(x, <span class="fu">c</span>(<span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="3" type="1">
 <li><p>Both <code>unite()</code> and <code>separate()</code> have a remove argument. What does it do? Why would you set it to FALSE?</p></li>
