@@ -1,13 +1,13 @@
 ---
-title: "Reshaping and joining data with dplyr"
+title: "Joining data with dplyr"
 author:
   - name: Marguerite Butler
     url: https://butlerlab.org
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
 description: "Add"
-date: 2023-02-28
-categories: [module 3, week 7, tidyr, tidyverse, dplyr, tibble, pipe]
+date: 2023-03-09
+categories: [module 4, week 8, dplyr, tibble, merge, join]
 ---
 
 # Pre-lecture materials
@@ -19,17 +19,14 @@ categories: [module 3, week 7, tidyr, tidyverse, dplyr, tibble, pipe]
 
 **Before class, you can prepare by reading the following materials:**
 
-1.  <https://r4ds.had.co.nz/tidy-data>
-2.  [tidyr cheat sheet from RStudio](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
-3.  <https://r4ds.had.co.nz/relational-data>
-4.  <https://rafalab.github.io/dsbook/joining-tables>
+1.  <https://r4ds.had.co.nz/relational-data>
+2.  <https://rafalab.github.io/dsbook/joining-tables>
 :::
 
 ### Acknowledgements
 
 Material for this lecture was borrowed and adopted from
 
--   <https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-08-tidy-data-and-the-tidyverse/>
 -   <https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-08-joining-data-in-r/>
 -   <https://rdpeng.github.io/Biostat776/lecture-joining-data-in-r-basics>
 -   <https://r4ds.had.co.nz/relational-data>
@@ -42,187 +39,25 @@ Material for this lecture was borrowed and adopted from
 
 **At the end of this lesson you will:**
 
--   Be able to transform wide data into long data
--   Be able to separate character columns into multiple columns
--   Be able to unite/separate multiple character columns into one column
 -   Be able to define relational data and keys
 -   Be able to define the three types of join functions for relational data
 -   Be able to implement mutational join functions
 :::
 
-## New Packages
-
-You will have to install if you donʻt already have them:
-
-```{r}
-#| eval: FALSE
-install.packages("gapminder")  # a dataset package
-```
-
 # Overview
 
-Last time we talked about tidy data. One common issue is that people sometimes use column names to store data. For example take a look at this built-in dataset that comes with `tidyr` on **religion and income survey data** with the number of respondents with income range in column name.
+R data frames are good fundamental data structures, which should be organized around a type of data. A common task is to combine different dataframes. Last time we did a `merge()` on a common key, which is frequent task in the course of data analysis, borrowed from the field of [relational databases](https://aws.amazon.com/relational-database/). This time Weʻll learn about the dplyr `join_()` functions.
 
 
-```{r}
-library(tidyr)
-relig_income
-```
-
-Take a second to look at this data. 
--   In this case the variables are religion (a proper vector), income bracket (in the column names), and the number of respondents, which is the third variable, is presented inside the table.
-
-Converting this data to tidy format would give us
-
-```{r, message=FALSE}
-library(tidyverse)
-
-relig_income %>%
-  pivot_longer(-religion, names_to = "income", values_to = "respondents") %>%
-  mutate(religion = factor(religion), income = factor(income))
-```
-
-Now we have each variable along the columns and each row corresponds to one observation (or category, here a combination of religion and income bracket). 
-
-# Reshaping data
-
-### `pivot_longer()`
-
-The `tidyr` package includes functions to transfer a data frame between *long* and *wide*.
-
--   **Wide format** data has different attributes or variables describing an observation _placed in separate columns_.
--   **Long format** data tends to have different attributes encoded as _levels_ of a single variable, followed by another column that contains _the values_ of the observation at those different levels.
-
-
-The **key problem** with the tidyness of the original data is that the income variables are not in their own columns, but rather are embedded in the structure of the columns, making it hard to manipuate the income variables.
-
-To **fix this**, you can use the `pivot_longer()` function to **gather values spread across several columns into a single column**, here with the column names gathered into an `income` column.
-
-
-### For example:
-
-```{r}
-# Gather everything EXCEPT religion to tidy data
-relig_income %>%
-  pivot_longer(-religion, names_to = "income", values_to = "respondents")
-```
-
-
-::: callout-tip
-### Note
--  When gathering, exclude any columns that you do not want "gathered" (`religion` in this case) by including the column names with a the __minus sign__ in the `pivot_longer()` function.
--  Even if your data is in a tidy format, `pivot_longer()` is occasionally useful for pulling data together to take advantage of faceting, or plotting separate plots based on a grouping variable. 
-:::
-
-### `pivot_wider()`
-
-The `pivot_wider()` function is the opposite function. It is useful for creating summary tables for reports, but generally less commonly needed to tidy data. 
-
-It can be flexibly used in combination with __pivot_longer__ as in this example to make a nicer table to print.
-
-You use the `summarize()` function in `dplyr` to summarize the total number of respondents per income category.
-
-```{r}
-relig_income %>%
-  pivot_longer(-religion, names_to = "income", values_to = "respondents") %>%
-  mutate(religion = factor(religion), income = factor(income)) %>% 
-  group_by(income) %>% 
-  summarize(total_respondents = sum(respondents)) %>%
-  pivot_wider(names_from = "income", 
-              values_from = "total_respondents") %>%
-  knitr::kable()
-```
-
-Notice in this example how `pivot_wider()` has been used at the **very end of the code sequence** to convert the summarized data into a shape that **offers a better tabular presentation for a report**.
-
-
-::: callout-tip
-### Note
-
--  In the `pivot_wider()` call, you first specify the name of the column to use for the new column names (`income` in this example) and then specify the column to use for the cell values (`total_respondents` here).
--  Long format is often (but not always) the shape we need for tidy data. The important thing, however, is to __think carefully about the shape you need for your analysis__. 
-:::
-
-::: callout-tip
-### Example of `pivot_longer()`
-
-Let's try another dataset. This data contain an excerpt of the [Gapminder data](https://cran.r-project.org/web/packages/gapminder/README.html#gapminder) on life expectancy, GDP per capita, and population by country.
-
-```{r}
-library(gapminder)
-gapminder
-```
-
-If we wanted to make `lifeExp`, `pop` and `gdpPercap` (all measurements that we observe) go from a wide table into a long table, what would we do?
-
-```{r}
-# try it yourself
-
-```
-:::
-
-::: callout-tip
-### Example
-
-One more! Try using `pivot_longer()` to convert the the following data that contains simulated revenues for three companies by quarter for years 2006 to 2009.
-
-Afterward, use `group_by()` and `summarize()` to calculate the average revenue for each company across all years and all quarters.
-
-**Bonus**: Calculate a mean revenue for each company AND each year (averaged across all 4 quarters).
-
-```{r, set.seed(123)}
-df <- tibble(
-  "company" = rep(1:3, each=4), 
-  "year"  = rep(2006:2009, 3),
-  "Q1"    = sample(x = 0:100, size = 12),
-  "Q2"    = sample(x = 0:100, size = 12),
-  "Q3"    = sample(x = 0:100, size = 12),
-  "Q4"    = sample(x = 0:100, size = 12),
-)
-df
-```
-
-```{r}
-# try it yourself 
-
-```
-:::
-
-### `separate()` and `unite()` cells within columns of data
-
-Still in the`tidyr` package:
-
--   `unite()`: paste contents of two or more columns into a single column
--   `separate()`: split contents of a column into two or more columns
-
-First, we combine the first three columns into one new column using `unite()`. This function is similar to `newvar <- paste(A,B,C, sep="_")`
-
-```{r}
-gapminder %>% 
-  unite(col="country_continent_year", 
-        country:year, 
-        sep="_")
-```
-
-Next, we show how to separate the columns into three separate columns using `separate()` using the `col`, `into` and `sep` arguments. Note that this works by finding the delimiter, and relies on order of the information. 
-
-```{r}
-gapminder %>% 
-  unite(col="country_continent_year", 
-        country:year, 
-        sep="_") %>% 
-  separate(col="country_continent_year", 
-           into=c("country", "continent", "year"), 
-           sep="_")
-```
-
-# Joining data (a.k.a. Merging)
+# Joining data
 
 ## Relational data
 
 Data analyses rarely involve only a single table of data.
 
-Typically you have many tables of data, and you **must combine the datasets** to answer the questions that you are interested in.  Some examples include morphology and ecology data on the same species, or sequence data and metadata. 
+Typically you have many tables of data, and you **must combine the datasets** to answer the questions that you are interested in.  Some examples include morphology and ecology data on the same species, or sequence data and its associated metadata. 
+
+You might think why not just make one gigantic table? One reason is data maintenance. We may not have unique values for each observation. For example,  if we collected 100 samples from the same site, we may not want to have the same site information repeated for each sample. Instead, we may have a site number and a separate table for the sites with one row for each unique site. Another reason is that the tables may be organized around different concepts or types of data. 
 
 Collectively, **multiple tables of data are called relational data** because it is the *relations*, not just the individual datasets, that are important.
 
@@ -364,5 +199,12 @@ tibble(x = c("a,b,c", "d,e", "f,g,i")) %>%
 4.  Compare and contrast `separate()` and `extract()`. Why are there three variations of separation (by position, by separator, and with groups), but only one `unite()`?
 :::
 
+### Additional Resources
+
+::: callout-tip
+-   [Tidy Data](https://www.jstatsoft.org/article/view/v059i10) paper published in the Journal of Statistical Software
+-   https://r4ds.had.co.nz/tidy-data.html
+-   [tidyr cheat sheet from RStudio](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+:::
 
 
