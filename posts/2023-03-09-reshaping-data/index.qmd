@@ -226,6 +226,8 @@ Still in the`tidyr` package:
 First, we combine the first three columns into one new column using `unite()`. This function is similar to `newvar <- paste(A,B,C, sep="_")`
 
 ```{r}
+names(gapminder)
+
 gapminder %>% 
   unite(col="country_continent_year", 
         country:year, 
@@ -272,5 +274,14 @@ tibble(x = c("a,b,c", "d,e", "f,g,i")) %>%
 4.  Compare and contrast `separate()` and `extract()`. Why are there three variations of separation (by position, by separator, and with groups), but only one `unite()`?
 :::
 
+### Solution for gapminder example
 
+```{r}
+gapminder %>% 
+  pivot_longer(-c(country, continent, year), names_to = "metrics", values_to = "values")
+```
+
+We stacked the three variables `lifeExp`, `pop`, and `gdpPercap` so now the table is a little thinner and three times as long. 
+
+Why did we have to make the non-gathered variables into a vector? 
 
