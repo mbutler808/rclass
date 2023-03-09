@@ -40,22 +40,23 @@ For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring
 | Week 6       | Feb 21 | `r emojifont::emoji('bar_chart')` Plotting with ggplot2 \[[html](posts/2023-02-21-ggplot2/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-02-21-ggplot2/index.qmd)\]| | |
 |              |  Feb 23 | `r emojifont::emoji('bar_chart')` ggplot2 continued \[[html](posts/2023-02-16-plotting-systems/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-02-16-plotting-systems/index.qmd)\]| | |
 ||||||
-| **Module 4** |         | **Nuts and Bolts of R** |||
+| **Module 4** |         | **Tour of Stats in R and Data Wrangling** |||
 ||||||
 |  Week 7       | Feb 28 | `r emojifont::emoji('monkey')` Tidyverse and data wrangling \[[html](posts/2023-02-28-dplyr/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-02-28-dplyr/index.qmd)\] | |
-|              | Mar 2  | `r emojifont::emoji('racehorse')`  A tour of some multivariate methods in R \[[html](posts/2023-03-02-multivariate/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-3-02-multivariate/index.qmd)\]  | `emoji('seedling')` Project 1 due||
+|              | Mar 2  | `r emojifont::emoji('racehorse')`  A tour of some multivariate methods in R \[[html](posts/2023-03-02-multivariate/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-03-02-multivariate/index.qmd)\]  | `r emojifont::emoji('seedling')` Project 1 due||
+||||||
+| Week 8       | Mar 7 | `r emojifont::emoji('calendar')` A tour of some univariate methods in R \[[html](posts/2023-03-07-univariate/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-03-07-univariate/index.qmd)\] | | |
+|              | Mar 9 | `r emojifont::emoji('racehorse')` Joining a.k.a. merging data \[[html](posts/2023-03-09-joining-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-03-09-joining-data/index.qmd)\] | | |
+|              | Mar 9 | `r emojifont::emoji('racehorse')` Reshaping data \[[html](posts/2023-03-09-reshaping-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-03-09-reshaping-data/index.qmd)\] |  | |
 ||||||
 | **Module 5** |         | **Special Data Types** | | |
-||||||
-| Week 8       | Mar 7 | `r emojifont::emoji('calendar')` Dates and Times | | |
-|              | Mar 9 | `r emojifont::emoji('racehorse')` Regular Expressions | `r emojifont::emoji('fallen_leaf')` Project 2 due | |
 ||||||
 | Week 9       | Mar 14 | `r emojifont::emoji('handshake')` Spring Break |||
 |              | Mar 16 | `r emojifont::emoji('sunny')` Spring Break |||
 ||||||
 | Week 10      | Mar 21 | `r emojifont::emoji('mushroom')` Factors | | |
 ||||||
-|              | Mar 23   | `r emojifont::emoji('cactus')` Text Data and Strings |  | |
+|              | Mar 23   | `r emojifont::emoji('cactus')` Text Data and Strings | `r emojifont::emoji('fallen_leaf')` Project 2 due  | |
 ||||||
 | **Module 6** |         | **Intro to Morphometrics** | | |
 ||||||

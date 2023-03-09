@@ -277,6 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#pca-loadings" id="toc-pca-loadings" class="nav-link" data-scroll-target="#pca-loadings">PCA Loadings</a></li>
   </ul></li>
   <li><a href="#example-fisherʻs-iris-data" id="toc-example-fisherʻs-iris-data" class="nav-link" data-scroll-target="#example-fisherʻs-iris-data">Example Fisherʻs Iris data</a></li>
+  <li><a href="#canonical-discriminant-analysis" id="toc-canonical-discriminant-analysis" class="nav-link" data-scroll-target="#canonical-discriminant-analysis">Canonical Discriminant Analysis</a></li>
   </ul>
 </nav>
 </nav>
@@ -351,7 +352,7 @@ Y \sim X + e
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: ggplot2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(magrittr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(magrittr)  <span class="co"># for piping using %&gt;%</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: magrittr</code></pre>
 </div>
@@ -624,6 +625,9 @@ Cumulative Var   0.25   0.50   0.75   1.00</code></pre>
 </div>
 </div>
 <p>You can see that the picture we get is a little different. Now that we use correlation matrices, the dominance of the lengths are reduced (the petals and sepals are much more variable in length than in width). You should go through the analysis yourself.</p>
+</section>
+<section id="canonical-discriminant-analysis" class="level1">
+<h1>Canonical Discriminant Analysis</h1>
 <p>The PCA does not at all account for group structure. When we have multiple groups, we sometimes want to control for within-group structure. One reason is that if we adjust for within-group structure, the groups will be better separated. Another is that the directions of within-group differences might be slightly different than the between-group differences, and we don’t want to blend them together because they have different biological meanings. (In this view, the within-group variance is usually the less-interesting portion, and we really are interested in studying the between-group variance).</p>
 <p>Another reason to do canonical discriminant analysis is to obtain scores as in PCA to do further analysis. It just produces scores accounting for group structure, so it is like a multi-group PCA. For example, I used this technique to produce a multivariate multi-group ordination in my studies of sexual dimorphism amongst multiple species. I allowed each species and sex to be a different group, and then tested to see if ecomorphs clustered together.</p>
 <p>To do this analysis, you need to install the package <code>candisc</code>. And produce a multivariate model as in the manova example above.</p>

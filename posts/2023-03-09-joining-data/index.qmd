@@ -89,8 +89,8 @@ geo <- geospiza$dat  # save the morphometric data as geo
 This is a 5 column dataframe. Letʻs take just the `tarsusL` data to build our example dataset:
 
 ```{r}
-geot <- geo[,"tarsusL"]  # geo is a matrix, select tarsusL column
-geot$ecology <- LETTERS[1:nrow(geot)]   # made-up data, A:M
+tarsusL <- geo[,"tarsusL"]  # geo is a matrix, select tarsusL column
+geot <- data.frame(tarsusL, "ecology" = LETTERS[1:length(tarsusL)])
 ```
 
 Often we will be merging data that donʻt perfectly match. Some parts of the data will be missing, for example we may only have ecology data for the first five species.  The question is what do you want the merge behavior to be? 
