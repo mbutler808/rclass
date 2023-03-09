@@ -19,17 +19,14 @@ categories: [module 3, week 7, tidyr, tidyverse, dplyr, tibble, pipe]
 
 **Before class, you can prepare by reading the following materials:**
 
-1.  <https://r4ds.had.co.nz/tidy-data>
-2.  [tidyr cheat sheet from RStudio](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
-3.  <https://r4ds.had.co.nz/relational-data>
-4.  <https://rafalab.github.io/dsbook/joining-tables>
+1.  <https://r4ds.had.co.nz/relational-data>
+2.  <https://rafalab.github.io/dsbook/joining-tables>
 :::
 
 ### Acknowledgements
 
 Material for this lecture was borrowed and adopted from
 
--   <https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-08-tidy-data-and-the-tidyverse/>
 -   <https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-08-joining-data-in-r/>
 -   <https://rdpeng.github.io/Biostat776/lecture-joining-data-in-r-basics>
 -   <https://r4ds.had.co.nz/relational-data>
@@ -42,9 +39,6 @@ Material for this lecture was borrowed and adopted from
 
 **At the end of this lesson you will:**
 
--   Be able to transform wide data into long data
--   Be able to separate character columns into multiple columns
--   Be able to unite/separate multiple character columns into one column
 -   Be able to define relational data and keys
 -   Be able to define the three types of join functions for relational data
 -   Be able to implement mutational join functions
@@ -80,10 +74,69 @@ Sometimes both elements of a pair can be in the same table! This is needed if, f
 
 Relational data are combined with **merges or joins**.
 
+## Example with `merge()`
+
+Letʻs use the `geospiza` data from the `geiger` package to practice merging with the base R `merge()` function.
+
+```{r}
+require(geiger)
+data(geospiza)   # load the dataset into the workspace
+ls()               # list the objects in the workspace
+geospiza
+geo <- geospiza$dat  # save the morphometric data as geo
+```
+
+This is a 5 column dataframe. Letʻs take just the `tarsusL` data to build our example dataset:
+
+```{r}
+geot <- geo[,"tarsusL"]  # geo is a matrix, select tarsusL column
+geot$ecology <- LETTERS[1:nrow(geot)]   # made-up data, A:M
+```
+
+Often we will be merging data that donʻt perfectly match. Some parts of the data will be missing, for example we may only have ecology data for the first five species.  The question is what do you want the merge behavior to be? 
+
+The default is to drop all observations that are not in BOTH datasets. Here we merge the original `geo` with only the first five rows of `geot`: 
+
+```{r}
+                    # only maches to both datasets are included
+merge(x=geo["tarsusL"], y=geot[1:5, ], by= "row.names")    
+```
+
+If we want to keep everything, use the `all=T` flag: 
+
+```{r}
+                    # all species in both datasets are included
+merge(x=geo["tarsusL"], y=geot[1:5,], by= "row.names", all=T)    
+```
+
+There is also `all.x` which keeps all values of the first data table but drops non-matching rows of the second table, and `all.y` which keeps all of the second. 
+
+
+The results of `merge` are sorted by default on the sort key. To turn it off:
+
+```{r}
+geo <- geo[rev(rownames(geo)), ]   # reverse the species order of geo
+                     # merge on geo first, then geot
+merge(x=geo["tarsusL"], y=geot[1:5, ], by= "row.names", sort=F)   
+                     # geot first, then geo
+merge(x=geot[1:5,], y=geo["tarsusL"], by= "row.names", sort=F)   
+
+```
+
+::: callout-note
+-   In a `merge`, the non-key columns are copied over into the new table. 
+:::
+
+Check out the help page for `?merge` for more info. 
+
+## Joining in dpylyr
+
+In `dplyr`, merges are called joins (both are used in database science) and introduces a vocabulary that names each of these situations. 
+
 ::: callout-tip
 ### Three important families of joins
 
--   [**Mutating joins**](https://r4ds.had.co.nz/relational-data.html#mutating-joins): A mutating join **combines variables from two tables**. It first matches observations by their keys, then copies across variables from one table to the other on the right side of the table (similar to `mutate()`). It mutates because it adds on. This is a typical __merge__ operation.
+-   [**Mutating joins**](https://r4ds.had.co.nz/relational-data.html#mutating-joins): This is a typical __merge__ operation. It mutates because it adds on. A mutating join **combines variables from two tables**. It first matches observations by their keys, then copies across variables from one table to the other on the right side of the table (similar to `mutate()`). 
     -   See @sec-mutjoins for Table of mutating joins.
 -   [**Filtering joins**](https://r4ds.had.co.nz/relational-data.html#filtering-joins): Filtering joins **match observations** in the same way as mutating joins, **but select the observations that match** (not the variables). In other words, this type of join filters observations from one data frame based on whether or not they match an observation in the other.
     -   Two types: `semi_join(x, y)` and `anti_join(x, y)`.

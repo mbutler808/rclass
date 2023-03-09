@@ -71,7 +71,7 @@ Or the `ggplot2` version:
 
 ```{r}
 require(ggplot2)
-require(magrittr)
+require(magrittr)  # for piping using %>%
 ggplot(iris, aes(sample=Sepal.Length)) + 
   stat_qq() +
   stat_qq_line()
@@ -242,7 +242,8 @@ loadings(pc.iris.cor)
 
 You can see that the picture we get is a little different. Now that we use correlation matrices, the dominance of the lengths are reduced (the petals and sepals are much more variable in length than in width). You should go through the analysis yourself. 
 
-\section{Canonical Discriminant Analysis}
+# Canonical Discriminant Analysis
+
 The PCA does not at all account for group structure. When we have multiple groups, we sometimes want to control for within-group structure. One reason is that if we adjust for within-group structure, the groups will be better separated. Another is that the directions of within-group differences might be slightly different than the between-group differences, and we don't want to blend them together because they have different biological meanings. (In this view, the within-group variance is usually the less-interesting portion, and we really are interested in studying the between-group variance). 
 
 Another reason to do canonical discriminant analysis is to obtain scores as in PCA to do further analysis. It just produces scores accounting for group structure, so it is like a multi-group PCA. For example, I used this technique to produce a multivariate multi-group ordination in my studies of sexual dimorphism amongst multiple species. I allowed each species and sex to be a different group, and then tested to see if ecomorphs clustered together. 

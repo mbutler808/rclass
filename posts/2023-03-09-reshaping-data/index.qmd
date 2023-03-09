@@ -43,8 +43,45 @@ Material for this lecture was borrowed and adopted from
 
 # Overview
 
-Common data table reshaping tasks include converting between __short-wide__ to __tall-thin__ formats. People often make tables in short-wide format that end up not being tidy data. When people use column names to store data, it is no longer tidy. For example take a look at this built-in dataset that comes with `tidyr` on **religion and income survey data** with the number of respondents with income range in column name.
+Common data table reshaping tasks include reshaping your matrices or dataframes manually, or converting between __short-wide__ to __tall-thin__ formats. 
 
+## Manual reshaping
+
+Recall from our discussion on data objects that internally, R objects are stored as one huge vector. The various shapes of objects are simply created by R knowing where to break the vector into rows and columns. So it is very easy to reshape matrices:
+
+```{r}
+vv <- 1:10  # a vector
+mm <- matrix( vv, nrow=2)  # a matrix
+mm
+dim(mm) <- NULL
+mm <- matrix( vv, nrow=2, byrow=T)  # a matrix, but cells are now filled by row
+mm
+dim(mm) <- NULL
+mm  # vector is now n a different order because the collapse occurred by column
+```
+
+Load the geospiza data: 
+
+```{r}
+require(geospiza)
+data(geospiza)   # load the dataset into the workspace
+geo <- geospiza$dat  # save the morphometric data as geo
+```
+
+Other means of "collapsing" dataframes are:
+
+```{r}
+unlist(geo)   # produces a vector from the dataframe
+            # the atomic type of a dataframe is a list
+unclass(geo)  # removes the class attribute, turning the dataframe into a 
+            # series of vectors  plus any names attributes, same as setting 
+            # class(geo) <- NULL
+c(geo)  # similar to unclass but without the attributes            
+```
+
+## An example of "untidy" data
+
+People often make tables in short-wide format that end up not being tidy data. When people use column names to store data, it is no longer tidy. For example take a look at this built-in dataset that comes with `tidyr` on **religion and income survey data** with the number of respondents with income range in column name.
 
 ```{r}
 library(tidyr)
