@@ -38,7 +38,7 @@ For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring
 |              | Feb 16 | `r emojifont::emoji('bar_chart')` Plotting Systems (Base R) \[[html](posts/2023-02-16-plotting-systems/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-02-16-plotting-systems/index.qmd)\] | `r emojifont::emoji('seedling')` Project 1 assigned |     |
 ||||||
 | Week 6       | Feb 21 | `r emojifont::emoji('bar_chart')` Plotting with ggplot2 \[[html](posts/2023-02-21-ggplot2/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-02-21-ggplot2/index.qmd)\]| | |
-|              |  Feb 23 | `r emojifont::emoji('bar_chart')` ggplot2 continued \[[html](posts/2023-02-16-plotting-systems/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-02-16-plotting-systems/index.qmd)\]| | |
+|              |  Feb 23 | `r emojifont::emoji('bar_chart')` ggplot2 continued | | |
 ||||||
 | **Module 4** |         | **Tour of Stats in R and Data Wrangling** |||
 ||||||
