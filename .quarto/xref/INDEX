@@ -107,5 +107,14 @@
   },
   "projects/2023-03-22-project-2-3/index.qmd": {
     "index.html": "24df91de"
+  },
+  "posts/2023-03-23-apply/ApplyFunctions.qmd": {
+    "ApplyFunctions.html": "5385ef13"
+  },
+  "posts/2023-03-23-apply/index.qmd": {
+    "index.html": "61ef5049"
+  },
+  "posts/2023-03-23-lists-loops/index.qmd": {
+    "index.html": "19fd8dac"
   }
 }

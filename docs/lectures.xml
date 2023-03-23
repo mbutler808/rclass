@@ -10,7 +10,701 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023</description>
 <generator>quarto-1.2.313</generator>
-<lastBuildDate>Tue, 21 Mar 2023 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 23 Mar 2023 10:00:00 GMT</lastBuildDate>
+<item>
+  <title>Vectorization with Apply Functions</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2023-03-23-apply/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="learning-objectives" class="level1">
+<h1>Learning objectives</h1>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Recognize the different types of apply functions</li>
+<li>Be able to use apply functions to perform operations on objects</li>
+<li>Be introduced to writing functions for apply functions</li>
+<li>Have gained another skill in modular programming</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>Repeated execution on a number of objects is a common task you will have to do. For example, when you want a bootstrap confidence interval on something youʻve estimated, you will run the analysis once, on the original data, and on 100 or 1000 samples of simulated data.</p>
+<p>When you know how many times you want to repeat execution, two common methods are to use <code>for loops</code> and <code>apply</code> functions. <code>apply()</code> functions are special functions that operate on lists, and come in different flavors depending on the type of object you want returned.</p>
+</section>
+<section id="vectorized-computations" class="level1">
+<h1>Vectorized computations</h1>
+<p>Many functions in R are already vectorized in that they will perform the same computation on the entire object (rather than element by element). Basic arithmetic on vectors is a good example.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">x <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">5</span></span>
+<span id="cb1-2">y <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">10</span></span>
+<span id="cb1-3">z <span class="ot" style="color: #003B4F;">&lt;-</span> x <span class="sc" style="color: #5E5E5E;">+</span> y</span>
+<span id="cb1-4">z </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11 12 13 14 15</code></pre>
+</div>
+</div>
+<p>The two vectors, x and y, are added together in parallel because vector arithmetic is vectorized. This allows you to write code that is natural, fast, and easy to read.</p>
+<p>If R were not vectorized (as in Fortran and C), you would have to code operations element by element like so:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">z <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">numeric</span>(<span class="fu" style="color: #4758AB;">length</span>(x))</span>
+<span id="cb3-2"></span>
+<span id="cb3-3"><span class="cf" style="color: #003B4F;">for</span>(i <span class="cf" style="color: #003B4F;">in</span> <span class="fu" style="color: #4758AB;">seq_along</span>(x)) {  <span class="co" style="color: #5E5E5E;"># seq_along(x) same as 1:length(x) </span></span>
+<span id="cb3-4">      z[i] <span class="ot" style="color: #003B4F;">&lt;-</span> x[i] <span class="sc" style="color: #5E5E5E;">+</span> y</span>
+<span id="cb3-5">}</span>
+<span id="cb3-6">z</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11 12 13 14 15</code></pre>
+</div>
+</div>
+<p>Imagine if you had to do this each time you wanted to do anything to any objects! It would take a lot longer to get anything done. <em>Vectorization makes coding much more natural.</em></p>
+<p>When you do find operations that are not vectorized, you can use <code>apply</code> functions (below). But before we get into that, letʻs build up our example with a loop.</p>
+</section>
+<section id="loops" class="level1">
+<h1>Loops</h1>
+<p><code>for</code> loops are straightforward to understand, and are a general feature of every programming language. They are necessary at times, for example when you need the results of the previous iteration for the current one. But they are usually slower in R and sometimes not very elegant (making the code harder to understand). For example, think of a very simple function that calculates the square of a number:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">square <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>( x ) {</span>
+<span id="cb5-2">  <span class="fu" style="color: #4758AB;">return</span> (x<span class="sc" style="color: #5E5E5E;">*</span>x)</span>
+<span id="cb5-3">  }</span></code></pre></div>
+</div>
+<p>If you wanted to apply it to the vector 1:10, using a for loop, it would look like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">xx <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">vector</span>(<span class="at" style="color: #657422;">length=</span><span class="dv" style="color: #AD0000;">10</span>)   <span class="do" style="color: #5E5E5E;
+font-style: italic;">## create a container for output</span></span>
+<span id="cb6-2"></span>
+<span id="cb6-3"><span class="cf" style="color: #003B4F;">for</span> ( i <span class="cf" style="color: #003B4F;">in</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">10</span> ) {       <span class="do" style="color: #5E5E5E;
+font-style: italic;">## step through i from 1 to 10</span></span>
+<span id="cb6-4">  xx[i] <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">square</span>( i )    <span class="do" style="color: #5E5E5E;
+font-style: italic;">## run square function for each i</span></span>
+<span id="cb6-5">}</span>
+<span id="cb6-6"></span>
+<span id="cb6-7">xx  </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
+</div>
+</div>
+<p>This runs the <code>square()</code> function 10 times, once for each value of <code>i</code> from 1 to 10. Importantly, notice that it works by going through <code>i</code> one element at a time.</p>
+</section>
+<section id="apply-functions" class="level1">
+<h1>Apply Functions</h1>
+<p>Another way to repeatedly execute code is via the <code>apply()</code> functions. <code>apply</code> functions are unique to R, and in some situations can operate on an entire object at once, which can make them fast. This is called <strong>vectorization</strong>.</p>
+<p>Letʻs try <code>sapply()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;">sapply</span>( <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">10</span>, square ) </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
+</div>
+</div>
+<p>There are several different <em>flavors</em> of apply functions, but they all have similar forms:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;">sapply</span>( X, FUN, ...)</span></code></pre></div>
+</div>
+<p>Where <code>X</code> is an object, and <code>FUN</code> is a function. The function is applied to each element of <code>X</code>, often simultaneously (whether this happens simultaneously or not depends on whether the function written with vectorization in mind, you have to just try).</p>
+<section id="sapply-and-lapply" class="level2">
+<h2 class="anchored" data-anchor-id="sapply-and-lapply"><code>sapply</code> and <code>lapply</code></h2>
+<p>Another common type is <code>lapply</code>, which operates on list objects and returns a list. <code>sapply</code> (<code>s</code> for simplify) is almost identical to <code>lapply</code>, but tries to make prettier output by returning a vector or a matrix if possible (instead of a list):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;">sapply</span>( <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">5</span>, square ) </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1  4  9 16 25</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;">lapply</span>( <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">5</span>, square )</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 1
+
+[[2]]
+[1] 4
+
+[[3]]
+[1] 9
+
+[[4]]
+[1] 16
+
+[[5]]
+[1] 25</code></pre>
+</div>
+</div>
+<ul>
+<li><p>There is also <code>apply()</code> which works on matrices or arrays, and has an index argument for whether it should apply the function over rows or columns.</p></li>
+<li><p><code>tapply</code> to apply the function across a grouping index or treatments.</p></li>
+<li><p><code>mapply</code> to apply to multiple lists simultaneously.</p></li>
+<li><p><code>outer</code> which applies the function to an outer product of two arrays, and more.</p></li>
+<li><p><code>aggregate</code> is actually a user-friendly wrapper for <code>tapply</code>, used to apply a function across groups.</p></li>
+</ul>
+<p>All of the <code>apply</code> functions work in the same way. Donʻt get overwhelmed - I mainly use <code>sapply</code> or <code>lapply</code>, and <code>aggregate</code>, and occasionally <code>apply</code> if I need to work over rows. Thatʻs all you need to remember, consult the help page when you need.</p>
+</section>
+</section>
+<section id="example-of-calculating-summary-statistics-using-aggregate-and-merge" class="level1">
+<h1>Example of calculating summary statistics using aggregate and merge</h1>
+<p>Letʻs calculate the mean and standard error of sexual size dimorphism (log(male size/female size)) in <em>Anolis</em> lizards, and make a nice table:</p>
+<p>The data are included in the GitHub repo for this course. There are 23 species, with each species belonging to one of five ecomorph groups. We can aggregate by mean over ecomorph groups:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">anolis <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">"https://raw.githubusercontent.com/mbutler808/rclass/main/data/anolisSSD.csv"</span>)</span>
+<span id="cb15-2"></span>
+<span id="cb15-3"><span class="fu" style="color: #4758AB;">aggregate</span>(anolis<span class="sc" style="color: #5E5E5E;">$</span>logSSD, <span class="at" style="color: #657422;">by=</span><span class="fu" style="color: #4758AB;">list</span>(anolis<span class="sc" style="color: #5E5E5E;">$</span>ecomorph), mean)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Group.1         x
+1  crown-giant 0.1391750
+2   grass-bush 0.1437525
+3        trunk 0.1467167
+4  trunk-crown 0.2626575
+5 trunk-ground 0.3339650
+6         twig 0.0848450</code></pre>
+</div>
+</div>
+<p>Calculate the mean and the sd by ecomorph group, and this time save them:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">anolis.mean <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">aggregate</span>(anolis<span class="sc" style="color: #5E5E5E;">$</span>logSSD, <span class="at" style="color: #657422;">by=</span><span class="fu" style="color: #4758AB;">list</span>(anolis<span class="sc" style="color: #5E5E5E;">$</span>ecomorph), mean)</span>
+<span id="cb17-2">anolis.sd <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">aggregate</span>(anolis<span class="sc" style="color: #5E5E5E;">$</span>logSSD, <span class="at" style="color: #657422;">by=</span><span class="fu" style="color: #4758AB;">list</span>(anolis<span class="sc" style="color: #5E5E5E;">$</span>ecomorph), sd)</span>
+<span id="cb17-3">anolis.sd</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Group.1          x
+1  crown-giant 0.09909567
+2   grass-bush 0.06924584
+3        trunk 0.02136480
+4  trunk-crown 0.09968872
+5 trunk-ground 0.06966130
+6         twig 0.07107131</code></pre>
+</div>
+</div>
+<p>Give the results of aggregate meaningful column names:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="fu" style="color: #4758AB;">names</span>(anolis.mean)   <span class="co" style="color: #5E5E5E;"># check that this is what we want to modify</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Group.1" "x"      </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><span class="fu" style="color: #4758AB;">names</span>(anolis.mean) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"ecomorph"</span>, <span class="st" style="color: #20794D;">"mean"</span>)</span>
+<span id="cb21-2"><span class="fu" style="color: #4758AB;">names</span>(anolis.sd) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"ecomorph"</span>, <span class="st" style="color: #20794D;">"sd"</span>)</span></code></pre></div>
+</div>
+<p>While we’re at it, let’s get the sample size so that we can calculate the standard error, which is the standard deviation divided by the square root of the sample size.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">anolis.N <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">aggregate</span>(anolis<span class="sc" style="color: #5E5E5E;">$</span>logSSD, <span class="at" style="color: #657422;">by=</span><span class="fu" style="color: #4758AB;">list</span>(anolis<span class="sc" style="color: #5E5E5E;">$</span>ecomorph), length)</span>
+<span id="cb22-2"><span class="fu" style="color: #4758AB;">names</span>(anolis.N) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"ecomorph"</span>, <span class="st" style="color: #20794D;">"N"</span>)</span></code></pre></div>
+</div>
+<p>To put the columns together, use <code>merge()</code>. Here there is only one matching column (ecomorph), so the <code>by=</code> is optional, but itʻs good practice:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1">out <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">merge</span>(anolis.mean, anolis.sd, <span class="at" style="color: #657422;">by=</span><span class="st" style="color: #20794D;">"ecomorph"</span>)</span>
+<span id="cb23-2">out <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">merge</span>(out, anolis.N, <span class="at" style="color: #657422;">by=</span><span class="st" style="color: #20794D;">"ecomorph"</span>)</span></code></pre></div>
+</div>
+<p>Merging works two by two so we have to do it a second time to add the <code>N</code>. There are also options for <code>by.x=</code> and <code>by.y=</code> in case your columns have different names in the two objects – you can tell R which two columns to match.</p>
+<p>Now itʻs easy to add the standard error, and we can use the <code>print()</code> function to reduce the number of digits displayed:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1">out<span class="sc" style="color: #5E5E5E;">$</span>se <span class="ot" style="color: #003B4F;">&lt;-</span> out<span class="sc" style="color: #5E5E5E;">$</span>sd <span class="sc" style="color: #5E5E5E;">/</span> <span class="fu" style="color: #4758AB;">sqrt</span>(out<span class="sc" style="color: #5E5E5E;">$</span>N)</span>
+<span id="cb24-2"><span class="fu" style="color: #4758AB;">print</span>(out, <span class="at" style="color: #657422;">digits=</span><span class="dv" style="color: #AD0000;">2</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      ecomorph  mean    sd N    se
+1  crown-giant 0.139 0.099 4 0.050
+2   grass-bush 0.144 0.069 4 0.035
+3        trunk 0.147 0.021 3 0.012
+4  trunk-crown 0.263 0.100 4 0.050
+5 trunk-ground 0.334 0.070 4 0.035
+6         twig 0.085 0.071 4 0.036</code></pre>
+</div>
+</div>
+<p>Or rearrange for our paper format:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1">out <span class="ot" style="color: #003B4F;">&lt;-</span> out[<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"ecomorph"</span>, <span class="st" style="color: #20794D;">"N"</span>, <span class="st" style="color: #20794D;">"mean"</span>, <span class="st" style="color: #20794D;">"se"</span>)]</span>
+<span id="cb26-2"><span class="fu" style="color: #4758AB;">print</span>(out, <span class="at" style="color: #657422;">digits=</span><span class="dv" style="color: #AD0000;">2</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      ecomorph N  mean    se
+1  crown-giant 4 0.139 0.050
+2   grass-bush 4 0.144 0.035
+3        trunk 3 0.147 0.012
+4  trunk-crown 4 0.263 0.050
+5 trunk-ground 4 0.334 0.035
+6         twig 4 0.085 0.036</code></pre>
+</div>
+</div>
+<p>We can save it for later as well:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><span class="fu" style="color: #4758AB;">write.csv</span>(out, <span class="st" style="color: #20794D;">"anolis.summary.csv"</span>, <span class="at" style="color: #657422;">row.names=</span><span class="cn" style="color: #8f5902;">FALSE</span>)</span>
+<span id="cb28-2"><span class="fu" style="color: #4758AB;">saveRDS</span>(out, <span class="st" style="color: #20794D;">"anolis.summmary.rds"</span>)</span></code></pre></div>
+</div>
+</section>
+<section id="additional-arguments-to-apply-functions" class="level1">
+<h1>Additional Arguments to <code>apply</code> functions</h1>
+<p>If the function needs additional arguments, you just provide them separated by commas:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><span class="fu" style="color: #4758AB;">sapply</span>( X, FUN, arg1, arg2, ...)</span></code></pre></div>
+</div>
+<p>For example, letʻs say we wanted to sample with replacement from the vector <code>1:5</code>. To do it once, we would do:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><span class="fu" style="color: #4758AB;">sample</span>(<span class="dv" style="color: #AD0000;">5</span>, <span class="at" style="color: #657422;">replace=</span>T)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 1 3 5 4</code></pre>
+</div>
+</div>
+<p>To do it 4 times, you could do:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><span class="fu" style="color: #4758AB;">sapply</span>( <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">5</span>, <span class="dv" style="color: #AD0000;">5</span>, <span class="dv" style="color: #AD0000;">5</span>, <span class="dv" style="color: #AD0000;">5</span>), sample, <span class="at" style="color: #657422;">replace=</span>T)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    4    5    3    4
+[2,]    1    5    2    5
+[3,]    2    2    2    5
+[4,]    3    3    4    2
+[5,]    5    2    5    1</code></pre>
+</div>
+</div>
+<p><code>sapply</code> took the vector of fives and created a sample for each one.</p>
+</section>
+<section id="using-homemade-functions" class="level1">
+<h1>Using homemade functions</h1>
+<p>Sometimes the function that you want to run inside of an apply function is more complicated and requires many lines. Suppose you wanted to run several functions or have many lines of code. You have two choices. First, you can write a function definition and then pass it to an apply function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1">myfunction <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span> (file, <span class="at" style="color: #657422;">y=</span><span class="cn" style="color: #8f5902;">NULL</span>, <span class="at" style="color: #657422;">z=</span><span class="cn" style="color: #8f5902;">NULL</span>) {</span>
+<span id="cb34-2">  xx <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span>(file)</span>
+<span id="cb34-3">  <span class="fu" style="color: #4758AB;">plot</span>(xx, ...) </span>
+<span id="cb34-4">  zz <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">some_other_function</span> (x,y,z)</span>
+<span id="cb34-5">  ... </span>
+<span id="cb34-6">  <span class="fu" style="color: #4758AB;">return</span> (out)</span>
+<span id="cb34-7">  }</span>
+<span id="cb34-8"><span class="fu" style="color: #4758AB;">sapply</span>(  list_of_filenames ,  myfunction, <span class="at" style="color: #657422;">y=</span>blah1, <span class="at" style="color: #657422;">z=</span>blah2) </span></code></pre></div>
+</div>
+<p>Alternatively you could define the function within the apply function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><span class="fu" style="color: #4758AB;">sapply</span>( input, <span class="cf" style="color: #003B4F;">function</span>(x) {</span>
+<span id="cb35-2">  ...lines_of_code... </span>
+<span id="cb35-3">  })</span></code></pre></div>
+</div>
+<p>Where <code>x</code> is a single element of the <code>input</code> object, so if <code>input</code> is a vector, <code>x</code> would be one element of the vector. But if <code>input</code> is a list, it would be the first list element, etc. Apply functions work really nicely with lists, and many times they handle dataframes nicely as well.</p>
+<p>To return to one of our first examples, to code the <code>square</code> function inside of the <code>sapply</code> it would simply be:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><span class="fu" style="color: #4758AB;">sapply</span> ( <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">10</span>, <span class="cf" style="color: #003B4F;">function</span>(x)  x<span class="sc" style="color: #5E5E5E;">*</span>x )</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
+</div>
+</div>
+<p>Where <code>{}</code> around <code>{x*x}</code> are optional here because itʻs only one line. This is much cleaner and more elegant than:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1">xx <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">vector</span>(<span class="at" style="color: #657422;">length=</span><span class="dv" style="color: #AD0000;">10</span>)   <span class="do" style="color: #5E5E5E;
+font-style: italic;">## create a container for output</span></span>
+<span id="cb38-2"></span>
+<span id="cb38-3"><span class="cf" style="color: #003B4F;">for</span> ( i <span class="cf" style="color: #003B4F;">in</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">10</span> ) {       <span class="do" style="color: #5E5E5E;
+font-style: italic;">## step through i`s from 1 to 10</span></span>
+<span id="cb38-4">  xx[i] <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">square</span>( i )    <span class="do" style="color: #5E5E5E;
+font-style: italic;">## run square function for each i</span></span>
+<span id="cb38-5">  }</span>
+<span id="cb38-6"></span>
+<span id="cb38-7">xx  </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
+</div>
+</div>
+<p>Furthermore, itʻs often easier to understand assigning the output object, because the entire object is returned, not filled element by element:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1">xx <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sapply</span> ( <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">10</span>, <span class="cf" style="color: #003B4F;">function</span>(x)  x<span class="sc" style="color: #5E5E5E;">*</span>x )</span></code></pre></div>
+</div>
+<p>This is another advantage of thinking of the manipulation on the whole object rather than pieces of it.</p>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<ol type="1">
+<li>Perform the following computation using an apply function.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1">mylist <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">vector</span>(<span class="st" style="color: #20794D;">"list"</span>)   <span class="do" style="color: #5E5E5E;
+font-style: italic;">## creates a null (empty) list</span></span>
+<span id="cb41-2"><span class="cf" style="color: #003B4F;">for</span> (i <span class="cf" style="color: #003B4F;">in</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">4</span>) {</span>
+<span id="cb41-3">   mylist[i] <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">list</span>(<span class="fu" style="color: #4758AB;">data.frame</span>(<span class="at" style="color: #657422;">x=</span><span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">3</span>), <span class="at" style="color: #657422;">y=</span><span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">3</span>)))  </span>
+<span id="cb41-4">}</span></code></pre></div>
+</div>
+<ol start="2" type="1">
+<li>Plot <code>x</code> as a function of <code>y</code> for each dataframe using an apply function.</li>
+<li>Using an apply function, compute an anova on <code>x ~ y</code> on each dataframe, and save the anova output (there should be 4 of them) to a list or dataframe.</li>
+<li>Write a for loop that finds the sum of the sequence of integers from 1 to 100, then accomplish the same computation with an apply function.</li>
+</ol>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>module 5</category>
+  <category>week 10</category>
+  <category>apply</category>
+  <category>lists</category>
+  <category>for loops</category>
+  <category>programming</category>
+  <guid>https://mbutler808.github.io/posts/2023-03-23-apply/index.html</guid>
+  <pubDate>Thu, 23 Mar 2023 10:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Lists and For-Loops</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2023-03-23-lists-loops/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="learning-objectives" class="level1">
+<h1>Learning objectives</h1>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Understand the special features of lists</li>
+<li>Be able to access list elements and write to lists</li>
+<li>Be able to construct a for loop for repeated computation</li>
+<li>Have gained another skill in modular programming</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>We’ve been introduced to <em>lists</em>, but here we will gain a better understanding of some of their special features and how to use them to write more powerful code. Lists and counted loops (for loops) work really well together when you want to scale up to <strong>repeated computation</strong>.</p>
+<p>Lists are commonly returned from functions because functions can only return one object. Any collection of objects can be put together into a single list. Functions (and any other R element) can be used together with for loops to improve modularity and readabilty.</p>
+<p>R also has special functions that operate along lists, called <code>apply()</code> functions, which we will learn about in the next lesson.</p>
+</section>
+<section id="lists" class="level1">
+<h1>Lists</h1>
+<p>Lists in R are vectors like any other vector, but more flexible in that elements of a list can have different data types. This has at least three consequences.</p>
+<ul>
+<li>First any operation that you can perform on a vector can also be done on a list.</li>
+<li>Second, any types of objects can be organized together into a list, which are very convenient for things like model fits, where you may want to store the model formula, the data, the coefficients, any likelihood values, and any other relevant information together into one data object.</li>
+<li>Third, you can use lists as containers for containers, which can be nested indefinitely.</li>
+</ul>
+<p>The elements of lists can be <strong>named</strong>, either upon creation, or using the <code>names()</code> function. Naming list elements is always a good idea because it gives you another way of accessing their elements:</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">applicant <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">list</span>(<span class="at" style="color: #657422;">fullname=</span><span class="st" style="color: #20794D;">"Mickey Mouse"</span>, <span class="at" style="color: #657422;">address=</span><span class="st" style="color: #20794D;">"123 Main St."</span>,  <span class="at" style="color: #657422;">state=</span><span class="st" style="color: #20794D;">"CA"</span>)</span>
+<span id="cb1-2">applicant</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fullname
+[1] "Mickey Mouse"
+
+$address
+[1] "123 Main St."
+
+$state
+[1] "CA"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;">names</span>(applicant) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"fullname"</span>, <span class="st" style="color: #20794D;">"address"</span>, <span class="st" style="color: #20794D;">"state"</span>)</span>
+<span id="cb3-2">applicant</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fullname
+[1] "Mickey Mouse"
+
+$address
+[1] "123 Main St."
+
+$state
+[1] "CA"</code></pre>
+</div>
+</div>
+<p>We can also use all of the standard functions that work on vectors, such as the combine function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">applicant <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(applicant, <span class="fu" style="color: #4758AB;">list</span>(<span class="at" style="color: #657422;">scores=</span><span class="fu" style="color: #4758AB;">matrix</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">10</span>, <span class="at" style="color: #657422;">nrow=</span><span class="dv" style="color: #AD0000;">2</span>)))</span>
+<span id="cb5-2">applicant</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fullname
+[1] "Mickey Mouse"
+
+$address
+[1] "123 Main St."
+
+$state
+[1] "CA"
+
+$scores
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    3    5    7    9
+[2,]    2    4    6    8   10</code></pre>
+</div>
+</div>
+<p>If we had multiple applicants, we could put them all together in a list of lists.</p>
+<section id="accessing-list-elements" class="level2">
+<h2 class="anchored" data-anchor-id="accessing-list-elements">Accessing list elements</h2>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+A lot of people get tripped up working with lists, but the same rules apply to lists as other objects.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are just a couple of additional things:</p>
+<ul>
+<li>The double bracket, and<br>
+</li>
+<li>The heirarchy of objects.</li>
+</ul>
+<p>Once you understand that, itʻs simply applying the rules.</p>
+</div>
+</div>
+<p><strong>List elements</strong> can be accessed with the usual operators for vectors:</p>
+<ul>
+<li><strong>$</strong> If the list is named</li>
+<li><strong>[ ]</strong> By number or name of the list element with single brackets. Returns a list. Can use a vector of indices or names.</li>
+<li><strong>[[ ]]</strong> By number or name with double brackets. Returns the element inside the list slot. Must be a single index or name.</li>
+</ul>
+<p><strong>By name</strong> This is why itʻs a good idea to name list elements.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">applicant<span class="sc" style="color: #5E5E5E;">$</span>fullname</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mickey Mouse"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">applicant[<span class="dv" style="color: #AD0000;">1</span>]   <span class="do" style="color: #5E5E5E;
+font-style: italic;">## returns a list of length one</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fullname
+[1] "Mickey Mouse"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">applicant[[<span class="dv" style="color: #AD0000;">1</span>]]  <span class="do" style="color: #5E5E5E;
+font-style: italic;">## returns the object within applicant[1]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mickey Mouse"</code></pre>
+</div>
+</div>
+<p><strong>Single brackets return lists</strong>. We can select multiple elements within single brackets:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">applicant[<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">2</span>]</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fullname
+[1] "Mickey Mouse"
+
+$address
+[1] "123 Main St."</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">applicant[<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"fullname"</span>, <span class="st" style="color: #20794D;">"address"</span>)]  </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fullname
+[1] "Mickey Mouse"
+
+$address
+[1] "123 Main St."</code></pre>
+</div>
+</div>
+<p><strong>Double brackets return the element within the list slot</strong>. But we can only select one:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">applicant[[<span class="dv" style="color: #AD0000;">1</span>]]</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mickey Mouse"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1">applicant[[<span class="st" style="color: #20794D;">"fullname"</span>]]</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mickey Mouse"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">applicant[[<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">2</span>]]  <span class="do" style="color: #5E5E5E;
+font-style: italic;">## cannot subset [[]] with more than one index</span></span></code></pre></div>
+</div>
+<p>Error in applicant[[1:2]] : subscript out of bounds Error in applicant[[1:2]] : subscript out of bounds</p>
+<p><strong>Exclusion index (drops the <code>state</code> slot)</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">applicant[<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>]</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fullname
+[1] "Mickey Mouse"
+
+$address
+[1] "123 Main St."
+
+$scores
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    3    5    7    9
+[2,]    2    4    6    8   10</code></pre>
+</div>
+</div>
+<p><strong>Accessing elements inside an object within a list</strong>: Here we want to access elements of a matrix which is in a list.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1">applicant[<span class="dv" style="color: #AD0000;">4</span>]</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$scores
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    3    5    7    9
+[2,]    2    4    6    8   10</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1">applicant[[<span class="dv" style="color: #AD0000;">4</span>]][<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">1</span>]  <span class="co" style="color: #5E5E5E;"># Take the scores matrix, and grab row 2, column 1.</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1">applicant[[<span class="dv" style="color: #AD0000;">4</span>]][,<span class="dv" style="color: #AD0000;">3</span>]  <span class="co" style="color: #5E5E5E;"># Take the scores matrix, and grab all of column 3.</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 6</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="for-loops" class="level1">
+<h1>For loops</h1>
+<p>Because of the flexibility of lists, they are useful containers for the output of loops or other repeated operations on data. What is a loop you may ask? It is a set of code that you want to execute repeatedly. For example, you may have a large number of datasets that you want to perform the same set of operations on.</p>
+<p>The easiest type of loop to understand is the <code>for</code> loop. It is a <strong>counted loop</strong>, or repeated a fixed number of times. You may be familiar with for loops (or for-next loops) from other computing languages. In R the for loop operates over a vector, once for each element of the vector. The syntax is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><span class="cf" style="color: #003B4F;">for</span> (var <span class="cf" style="color: #003B4F;">in</span> seq) expr</span></code></pre></div>
+</div>
+<p>Where <code>var</code> is a variable which takes on values of the vector <code>seq</code> and evaluates a block of code <code>expr</code>. The loop is evaluated once for each value of <code>seq</code>. If we need <code>expr</code> to span more than one line, we can do this by enclosing the loop with <code>{}</code> (even if itʻs only one line itʻs often nice for readability).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><span class="cf" style="color: #003B4F;">for</span> (i <span class="cf" style="color: #003B4F;">in</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">3</span>) { </span>
+<span id="cb31-2">   <span class="fu" style="color: #4758AB;">print</span>(<span class="fu" style="color: #4758AB;">paste</span>(<span class="st" style="color: #20794D;">"This is a for loop"</span>, i))</span>
+<span id="cb31-3">}   </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "This is a for loop 1"
+[1] "This is a for loop 2"
+[1] "This is a for loop 3"</code></pre>
+</div>
+</div>
+<p>It is traditional to use <code>i</code>, <code>j</code>, or <code>k</code> as the variable to remember that itʻs a counting index, but it is often convenient to use names that are meaningful to understand the code. For example, in the context of our earlier example, it might be helpful to iterate over each applicant in our applicant list:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><span class="cf" style="color: #003B4F;">for</span> (applicant <span class="cf" style="color: #003B4F;">in</span> applicant_list) expr</span></code></pre></div>
+</div>
+<section id="saving-loop-output-to-lists" class="level3">
+<h3 class="anchored" data-anchor-id="saving-loop-output-to-lists">Saving loop output to lists</h3>
+<p>Often we want to save the result or output of the code to a list. But we donʻt want to create a list with each iteration of the loop, we just want to fill the list element or add on to the list. So in order to do this, we need to create the list <strong>outside</strong> of the loop and then modify it <strong>inside</strong> the loop.</p>
+<p>One strategy is to fill the list element by element using the counter <code>i</code> (note that we donʻt have to tell R how long the list is when we create it. We can just make an empty list, R will just keep adding to <code>mylist</code>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1">mylist <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">vector</span>(<span class="st" style="color: #20794D;">"list"</span>)   <span class="do" style="color: #5E5E5E;
+font-style: italic;">## creates a null (empty) list</span></span>
+<span id="cb34-2">mylist</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>list()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><span class="cf" style="color: #003B4F;">for</span> (i <span class="cf" style="color: #003B4F;">in</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">4</span>) {</span>
+<span id="cb36-2">   mylist[i] <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">list</span>(<span class="fu" style="color: #4758AB;">data.frame</span>(<span class="at" style="color: #657422;">x=</span><span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">3</span>), <span class="at" style="color: #657422;">y=</span><span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">3</span>)))  <span class="do" style="color: #5E5E5E;
+font-style: italic;">## why does this have to be a list object?</span></span>
+<span id="cb36-3">}</span>
+<span id="cb36-4">mylist</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+           x         y
+1 -1.7263950 0.6481564
+2 -0.6013918 0.2222366
+3 -0.5961741 1.9362035
+
+[[2]]
+           x         y
+1  0.5848591 -1.830745
+2 -0.1817905 -1.739007
+3 -1.8887220  3.259660
+
+[[3]]
+            x          y
+1 -0.41679868  1.1316357
+2 -1.53859929  1.6786411
+3  0.03206055 -0.2948545
+
+[[4]]
+            x          y
+1  0.95184731  0.4991119
+2 -0.02823968  0.5471838
+3  0.16363490 -0.1766082</code></pre>
+</div>
+</div>
+<p>This code does the same thing, but uses the <code>c()</code> function to add on to <code>mylist</code> (what happens when you add on to a null list?):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1">mylist <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">vector</span>(<span class="st" style="color: #20794D;">"list"</span>)   <span class="do" style="color: #5E5E5E;
+font-style: italic;">## creates a null (empty) list</span></span>
+<span id="cb38-2"><span class="cf" style="color: #003B4F;">for</span> (i <span class="cf" style="color: #003B4F;">in</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">4</span>) {</span>
+<span id="cb38-3">   mylist <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(mylist, <span class="fu" style="color: #4758AB;">list</span>(<span class="fu" style="color: #4758AB;">data.frame</span>(<span class="at" style="color: #657422;">x=</span><span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">3</span>), <span class="at" style="color: #657422;">y=</span><span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">3</span>))))</span>
+<span id="cb38-4">}</span>
+<span id="cb38-5">mylist</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+            x          y
+1 -0.38241743  0.5645779
+2  0.66244788 -0.4939633
+3 -0.07128512  1.0290206
+
+[[2]]
+          x          y
+1 2.7509007 -0.6316569
+2 0.8467325  0.8879843
+3 1.1694098  2.3165810
+
+[[3]]
+           x          y
+1 -0.2816809  2.2235912
+2 -1.8733641 -0.1192452
+3 -0.4045759  1.9047164
+
+[[4]]
+           x         y
+1 -0.5773772 1.5670042
+2 -0.9762400 0.4054583
+3  1.6231700 1.1012945</code></pre>
+</div>
+</div>
+</section>
+<section id="reshaping-lists" class="level3">
+<h3 class="anchored" data-anchor-id="reshaping-lists">Reshaping lists</h3>
+<p>You often want to reshape list output in scientific programming. For example, you may fit models many times on many permutations of your data, for example, and you want to flatten your list and make a dataframe. When you know that your output is regular, it is often convenient to use the <code>unlist()</code> function. Unlist will also work on dataframes, because you know, dataframes are lists of vectors all of the same length.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1">lm.out <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">lm</span>( mylist[[<span class="dv" style="color: #AD0000;">1</span>]]<span class="sc" style="color: #5E5E5E;">$</span>x  <span class="sc" style="color: #5E5E5E;">~</span> mylist[[<span class="dv" style="color: #AD0000;">1</span>]]<span class="sc" style="color: #5E5E5E;">$</span>y )  <span class="do" style="color: #5E5E5E;
+font-style: italic;">## calculate a linear regression on dataframe 1 x as a function of y</span></span>
+<span id="cb40-2">aov.out <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">anova</span>(lm.out)   <span class="do" style="color: #5E5E5E;
+font-style: italic;">## run anova, save to aov.out</span></span>
+<span id="cb40-3">aov.out</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: mylist[[1]]$x
+              Df  Sum Sq Mean Sq F value Pr(&gt;F)
+mylist[[1]]$y  1 0.39411 0.39411   2.171 0.3796
+Residuals      1 0.18153 0.18153               </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><span class="fu" style="color: #4758AB;">unlist</span>(aov.out)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Df1       Df2   Sum Sq1   Sum Sq2  Mean Sq1 
+1.0000000 1.0000000 0.3941076 0.1815294 0.3941076 
+ Mean Sq2  F value1  F value2   Pr(&gt;F)1   Pr(&gt;F)2 
+0.1815294 2.1710404        NA 0.3796002        NA </code></pre>
+</div>
+</div>
+</section>
+<section id="exercises" class="level3">
+<h3 class="anchored" data-anchor-id="exercises">Exercises</h3>
+<ol type="1">
+<li>Take mylist above and name its elements (the dataframes).<br>
+</li>
+<li>Write another <code>for</code> loop to return the maximum value of x and y in each dataframe. How can you make the code flexible to make it work if mylist has a different length?</li>
+<li>Write a <code>for</code> loop to loop over <code>mylist</code>. Within this loop, for each dataset compute an anova on <code>x ~ y</code>, <code>unlist</code> the anova output, and add as a row to a final dataframe.</li>
+</ol>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>module 5</category>
+  <category>week 10</category>
+  <category>lists</category>
+  <category>for loops</category>
+  <category>programming</category>
+  <guid>https://mbutler808.github.io/posts/2023-03-23-lists-loops/index.html</guid>
+  <pubDate>Thu, 23 Mar 2023 10:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Writing your own functions</title>
   <dc:creator>Marguerite Butler</dc:creator>
@@ -9259,18 +9953,6 @@ Tip
   <category>shell</category>
   <guid>https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/index.html</guid>
   <pubDate>Thu, 19 Jan 2023 10:00:00 GMT</pubDate>
-</item>
-<item>
-  <title></title>
-  <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2023-01-17-the-big-picture/index.html</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>module 1</category>
-  <category>week 1</category>
-  <category>introduction</category>
-  <guid>https://mbutler808.github.io/posts/2023-01-17-the-big-picture/index.html</guid>
-  <pubDate>Tue, 17 Jan 2023 10:00:00 GMT</pubDate>
-  <media:content url="https://mbutler808.github.io/posts/2023-01-17-the-big-picture/whole-game.png" medium="image" type="image/png" height="49" width="144"/>
 </item>
 </channel>
 </rss>

@@ -17,7 +17,7 @@ For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring
 ||||||
 | Week 1       | Jan 17  | `r emojifont::emoji('wave')` Installing R/RStudio, GitHub \[[html](posts/2023-01-17-the-big-picture/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-17-the-big-picture/index.qmd)\] |  ||
 |              | Jan 19  | `r emojifont::emoji('woman_technologist')` Shell scripts, File Organization \[[html](posts/2023-01-19-your-computer-filesystems/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-19-your-computer-filesystems/index.qmd)\] |||
-| Week 2       | Jan 24 | `r emojifont::emoji('octocat')`  Intro to Git and GitHub \[[html](posts/2023-01-24-intro-git-github/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-24-intro-git-github/index.qmd)\] |  `r emojifont::emoji('palm_tree')` Project 0 \[[html](projects/2023-01-24-project-0/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/blob/main/projects/2023-01-24-project-0/index.qmd)\]  | |
+| Week 2       | Jan 24 | `r emojifont::emoji('octopus')`  Intro to Git and GitHub \[[html](posts/2023-01-24-intro-git-github/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-24-intro-git-github/index.qmd)\] |  `r emojifont::emoji('palm_tree')` Project 0 \[[html](projects/2023-01-24-project-0/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/blob/main/projects/2023-01-24-project-0/index.qmd)\]  | |
 ||||||
 | **Module 2** |         | **Reproducible Research** |||
 ||||||
@@ -49,14 +49,16 @@ For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring
 |              | Mar 9 | `r emojifont::emoji('racehorse')` Joining a.k.a. merging data \[[html](posts/2023-03-09-joining-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-03-09-joining-data/index.qmd)\] | | |
 |              | Mar 9 | `r emojifont::emoji('racehorse')` Reshaping data \[[html](posts/2023-03-09-reshaping-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-03-09-reshaping-data/index.qmd)\] |  | |
 ||||||
-| **Module 5** |         | **Special Data Types** | | |
+| **Module 5** |         | **Programming Elements** | | |
 ||||||
 | Week 9       | Mar 14 | `r emojifont::emoji('handshake')` Spring Break |||
 |              | Mar 16 | `r emojifont::emoji('sunny')` Spring Break |||
 ||||||
 | Week 10      | Mar 21 | `r emojifont::emoji('mushroom')` Functions \[[html](posts/2023-03-21-functions/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-03-21-functions/index.qmd)\] | | |
 ||||||
-|              | Mar 23   | `r emojifont::emoji('cactus')` Text Data and Strings |   | |
+|              | Mar 23   | `r emojifont::emoji('cactus')` Lists and For Loops \[[html](posts/2023-03-23-lists-loops/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-03-23-lists-loops/index.qmd)\] |   | |
+||||||
+|              | Mar 23   | `r emojifont::emoji('cactus')` Apply Functions \[[html](posts/2023-03-23-apply/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-03-23-apply/index.qmd)\]|   | |
 ||||||
 | **Module 6** |         | **Intro to Morphometrics** | | |
 ||||||
