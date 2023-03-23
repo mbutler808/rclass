@@ -55,7 +55,7 @@ Grading for will follow [the rubric](https://github.com/mbutler808/Project-templ
 # Project 3
 
 **Project 3 Data Check due: April 7, 11:59pm**  
-**Project 3 Peer review: April 28, 11:59pm**  
+**Project 3 Peer review: April 21, 11:59pm**  
 **Project 3 Presentation: May 2 in class**  
 **Project 3 Due date: May 5, 11:59pm**  
 

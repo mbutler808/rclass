@@ -7,17 +7,17 @@ tbl-colwidths: [15,10, 55, 25]
 
 ## Schedule and course materials
 
-For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring/markdown-basics.html) which are cross-language executable code), go to the [course GitHub repository](https://github.com/mbutler808/mbutler808.github.io/) and navigate the directories, or best of all clone the repo and navigate within RStudio or your text browser and R console.
+For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring/markdown-basics.html) which are cross-language executable code), go to the [course GitHub repository](https://github.com/mbutler808/mbutler808.github.io/) and navigate the directories, or best of all clone the repo and navigate within RStudio or your text browser and R console.  
 
 
 ::: column-page
-| Week         | Dates   | Topics                                                                                                                                                                                                                                                                                                 | Projects                                                                                                                                                                                                            |     |
+| Week         | Dates   | Topics | Projects |     |
 |---------------|---------------|---------------|---------------|---------------|
 | **Module 1** |         | **Computational Tools for Data Science** |||
 ||||||
 | Week 1       | Jan 17  | `r emojifont::emoji('wave')` Installing R/RStudio, GitHub \[[html](posts/2023-01-17-the-big-picture/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-17-the-big-picture/index.qmd)\] |  ||
 |              | Jan 19  | `r emojifont::emoji('woman_technologist')` Shell scripts, File Organization \[[html](posts/2023-01-19-your-computer-filesystems/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-19-your-computer-filesystems/index.qmd)\] |||
-| Week 2       | Jan 24 | `r emojifont::emoji('octopus')`  Intro to Git and GitHub \[[html](posts/2023-01-24-intro-git-github/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-24-intro-git-github/index.qmd)\] |  `r emojifont::emoji('palm_tree')` Project 0 \[[html](projects/2023-01-24-project-0/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/blob/main/projects/2023-01-24-project-0/index.qmd)\]  | |
+| Week 2       | Jan 24 | `r emojifont::emoji('octocat')`  Intro to Git and GitHub \[[html](posts/2023-01-24-intro-git-github/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-01-24-intro-git-github/index.qmd)\] |  `r emojifont::emoji('palm_tree')` Project 0 \[[html](projects/2023-01-24-project-0/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/blob/main/projects/2023-01-24-project-0/index.qmd)\]  | |
 ||||||
 | **Module 2** |         | **Reproducible Research** |||
 ||||||
@@ -65,7 +65,7 @@ For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring
 |              | Mar 30  | `r emojifont::emoji('triangular_ruler')` Landmark-based Morphometrics |`r emojifont::emoji('fallen_leaf')` Project 2 due||
 ||||||
 | Week 12      | Apr 4  | `r emojifont::emoji('skull')` 3D Morphometrics |||
-|              | Apr 6  | `r emojifont::emoji('feet')` 3D Morphometrics |`r emojifont::emoji('chestnut')` Project 3 dataset due||
+|              | Apr 6  | `r emojifont::emoji('feet')` 3D Morphometrics |`r emojifont::emoji('chestnut')` Project 3 data check due||
 ||||||
 | **Module 7** |         | **Phylogenetic Trees** | | |
 ||||||
@@ -74,16 +74,21 @@ For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring
 ||||||
 | Week 14      | Apr 18 | `r emojifont::emoji('deciduous_tree')` Reshaping Trees |||
 ||||||
-|              | Apr 20 | `r emojifont::emoji('hibiscus')` Annotating Tree Plots |||
+|              | Apr 20 | `r emojifont::emoji('hibiscus')` Annotating Tree Plots |`r emojifont::emoji('memo')` Project 3 peer review due||
 ||||||
 | **Module 8** |         | **Other Topics** | | |
 ||||||
 | Week 15      | Apr 25  | `r emojifont::emoji('snake')` Parsing Data from any Format |||
 ||||||
-|              | Apr 27  | `r emojifont::emoji('chestnut')` Student choice topic |||
+|              | Apr 27  | `r emojifont::emoji('chestnut')` Student choice topic | ||
 ||||||
-|  Week 16     | May 2  | `r emojifont::emoji('trophy')` Final Presentations | `r emojifont::emoji('confetti_ball')` Project 3 due | |
+|  Week 16     | May 2  | `r emojifont::emoji('trophy')` Final Presentations | `r emojifont::emoji('bouquet')` Project 3 presentation (in class) | |
+||||||
+|              | May 5  |  | `r emojifont::emoji('confetti_ball')` Project 3 due | |
 ||||||
 :::
+
+
+
 
 
