@@ -145,7 +145,7 @@ font-style: italic;">## do this if none of the above is true</span></span>
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">x <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">runif</span>(<span class="at" style="color: #657422;">n=</span><span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">min=</span><span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">max=</span><span class="dv" style="color: #AD0000;">10</span>)  </span>
 <span id="cb4-2">x</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.84435</code></pre>
+<pre><code>[1] 2.917375</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="cf" style="color: #003B4F;">if</span>(x <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">6</span>) {</span>
 <span id="cb6-2">    y <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">10</span></span>
@@ -154,11 +154,11 @@ font-style: italic;">## do this if none of the above is true</span></span>
 <span id="cb6-5">  } <span class="cf" style="color: #003B4F;">else</span> { y <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">0</span> }</span>
 <span id="cb6-6">x</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.84435</code></pre>
+<pre><code>[1] 2.917375</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">y</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 5</code></pre>
+<pre><code>[1] 0</code></pre>
 </div>
 </div>
 <p>With the if-else structure we can test multiple conditions on the same variable. Here, three ranges of values for x. Of course, the <code>else</code> conditional is not necessary. You could just have a string of ifs:</p>
@@ -397,9 +397,7 @@ font-style: italic;">## Stop loop after 20 iterations</span></span>
   <category>week 11</category>
   <category>control structures</category>
   <category>if else</category>
-  <category>do</category>
-  <category>do until</category>
-  <category>do while</category>
+  <category>(do) while</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-03-28-program-flow/index.html</guid>
   <pubDate>Thu, 23 Mar 2023 10:00:00 GMT</pubDate>

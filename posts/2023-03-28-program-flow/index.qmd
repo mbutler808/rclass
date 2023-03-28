@@ -7,7 +7,7 @@ author:
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
 description: "Control the flow of your program using programming control statements"
 date: 2023-03-23
-categories: [module 5, week 11, control structures, if else, do, do until, do while, programming]
+categories: [module 5, week 11, control structures, if else, (do) while, programming]
 ---
 
 ### Acknowledgements

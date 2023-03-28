@@ -62,7 +62,9 @@ For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring
 ||||||
 | **Module 6** |         | **Intro to Morphometrics** | | |
 ||||||
-| Week 11      | Mar 28   | `r emojifont::emoji('straight_ruler')` Linear Morphometrics, Size, Shape |||
+| Week 11      | Mar 28   | `r emojifont::emoji('ferris_wheel')` Program Flow  \[[html](posts/2023-03-28-program-flow/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-03-28-program-flow/index.qmd)\]|||
+||||||
+|              | Mar 30   | `r emojifont::emoji('straight_ruler')` Linear Morphometrics, Size, Shape |||
 ||||||
 |              | Mar 30  | `r emojifont::emoji('triangular_ruler')` Landmark-based Morphometrics |`r emojifont::emoji('fallen_leaf')` Project 2 due||
 ||||||
