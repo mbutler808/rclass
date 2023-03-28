@@ -12,6 +12,400 @@
 <generator>quarto-1.2.313</generator>
 <lastBuildDate>Thu, 23 Mar 2023 10:00:00 GMT</lastBuildDate>
 <item>
+  <title>Program Flow</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2023-03-28-program-flow/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="acknowledgements" class="level3">
+<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-22-control-structures" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-22-control-structures</a></li>
+</ul>
+</section>
+<section id="learning-objectives" class="level1">
+<h1>Learning objectives</h1>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Be able to use commonly used control structures including <code>if</code>, <code>while</code>, <code>repeat</code>, and <code>for</code></li>
+<li>Be able to skip an iteration of a loop using <code>next</code></li>
+<li>Be able to exit a loop immediately using <code>break</code></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p><strong>R</strong> is not only a collection of functions for data analysis and matrix math, but also a fully-featured programming language with all of the usual <strong>conditional statements</strong>.</p>
+<p>There are times when we want to go beyond simply a linear step through the code, but to make execution conditional, in order to <strong>control the flow of execution of the code</strong>.</p>
+<p>A basic conditional statement:</p>
+<p><img src="https://mbutler808.github.io/images/ProgramFlow_decision_point.png" class="img-fluid"></p>
+</section>
+<section id="when-conditional-statements-are-needed" class="level1">
+<h1>When conditional statements are needed:</h1>
+<p>Anytime in the code where decisions need to be made:</p>
+<ul>
+<li><p><strong>Optimzation</strong>: A common task is to decide when to exit out of a loop. For example when we are approximatig a solution and we donʻt know how many iterations it will take to get “close enough” to the true solution. In this case, we would want to repeat until we reach the condition then stop and return the answer.</p></li>
+<li><p><strong>Flexibility</strong>: Depending on a value, you may want to execute different code. For example, if we are writing a function with multiple options. The function will do the same general computation but we may want to provide different options depending on the users needs. We can add optional arguments. If the user changes them, the function will execude the extra option.</p></li>
+</ul>
+</section>
+<section id="program-flow" class="level1">
+<h1>Program Flow</h1>
+<p>The flow of execution can be diagrammed in a flowchart, and is really helpful for seeing the logical structure of the project. It also encourages <strong>modularity</strong> and <strong>reusablility</strong> of your code.</p>
+<p><em>A flowchart can be really helpful for visualizing your computations</em>, and in particular where a function or loop would be helpful, or where variables need to be updated or sent to output. For example for computing the sum using a loop:</p>
+<p><img src="https://mbutler808.github.io/images/ProgramFlow_flowchart.png" class="img-fluid"></p>
+<p>The different types of actions are represented by shapes, with the direction of flow indicated by arrows connecting the shapes:</p>
+<ul>
+<li><strong>Executable statement</strong>: rectangle<br>
+</li>
+<li><strong>Input/ Output</strong>: usually a trapezoid (or a torn page, old-timey)</li>
+<li><strong>Conditional statement</strong> - a decision point: diamond</li>
+<li><strong>Start/End/connection to another subroutine</strong>: circle</li>
+</ul>
+<p>Imagine if you were to flowchart this code below. Anytime you find yourself cutting and pasting code, it is a clue that you should consider a loop or a function.</p>
+<p><img src="https://mbutler808.github.io/images/ProgramFlowForLoops_repeated1.png" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p><em>You</em> should <strong>code it only once</strong>, make the <em>computer</em> repeat!</p>
+</blockquote>
+<p><img src="https://mbutler808.github.io/images/ProgramFlowForLoops_repeated2.png" class="img-fluid"></p>
+</section>
+<section id="conditional-statements-include" class="level1">
+<h1>Conditional statements include:</h1>
+<ul>
+<li><p><code>if</code> and <code>else</code>: testing a condition and acting on it</p></li>
+<li><p><code>ifelse</code>: a variant of <code>if</code> and <code>else</code> in one line</p></li>
+<li><p><code>switch</code>: a convenience conditional for multiple executable options</p></li>
+<li><p><code>for</code>: execute a loop a fixed number of times</p></li>
+<li><p><code>while</code>: repeat a loop <em>while</em> a condition is true</p></li>
+<li><p><code>repeat</code>: execute an infinite loop (must <code>break</code> out of it to stop)</p></li>
+<li><p><code>break</code>: break the execution of a loop</p></li>
+<li><p><code>next</code>: skip an interation of a loop</p></li>
+</ul>
+<section id="if-else" class="level2">
+<h2 class="anchored" data-anchor-id="if-else"><code>if</code>-<code>else</code></h2>
+<p><code>if</code>-<code>else</code> is the most commonly used conditional statement in programming. If a condition is true, a statement is executed:</p>
+<p><img src="https://mbutler808.github.io/images/ProgramFlow_ifelse.png" class="img-fluid"></p>
+<p><code>if</code>-<code>else</code> comes in many flavors:</p>
+<section id="just-if" class="level3">
+<h3 class="anchored" data-anchor-id="just-if">Just <code>if</code></h3>
+<p>If the condition is <code>TRUE</code>, execution happens. If <code>FALSE</code>, nothing happens:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="cf" style="color: #003B4F;">if</span>(<span class="sc" style="color: #5E5E5E;">&lt;</span>condition<span class="sc" style="color: #5E5E5E;">&gt;</span>) {</span>
+<span id="cb1-2">        <span class="do" style="color: #5E5E5E;
+font-style: italic;">## do something</span></span>
+<span id="cb1-3">} </span>
+<span id="cb1-4"><span class="do" style="color: #5E5E5E;
+font-style: italic;">## Continue with rest of code</span></span></code></pre></div>
+</section>
+<section id="if-else-1" class="level3">
+<h3 class="anchored" data-anchor-id="if-else-1"><code>if</code>-<code>else</code></h3>
+<p>If-else allows for a different action when the condition is false:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="cf" style="color: #003B4F;">if</span>(<span class="sc" style="color: #5E5E5E;">&lt;</span>condition<span class="sc" style="color: #5E5E5E;">&gt;</span>) {</span>
+<span id="cb2-2">        <span class="do" style="color: #5E5E5E;
+font-style: italic;">## do something</span></span>
+<span id="cb2-3">} </span>
+<span id="cb2-4"><span class="cf" style="color: #003B4F;">else</span> {</span>
+<span id="cb2-5">        <span class="do" style="color: #5E5E5E;
+font-style: italic;">## do something else</span></span>
+<span id="cb2-6">}</span></code></pre></div>
+<p><code>if</code> and <code>else</code> can be daisy-chained:</p>
+</section>
+<section id="if-else-if-else-if-else-etc." class="level3">
+<h3 class="anchored" data-anchor-id="if-else-if-else-if-else-etc."><code>if</code>-<code>else</code> <code>if</code>-<code>else</code> <code>if</code>-<code>else</code> etc.</h3>
+<p>You can have a series of tests, which will stop and execute the statement at the condition that is <code>TRUE</code>. (Everything following will be ignored):</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="cf" style="color: #003B4F;">if</span>(<span class="sc" style="color: #5E5E5E;">&lt;</span>condition1<span class="sc" style="color: #5E5E5E;">&gt;</span>) {</span>
+<span id="cb3-2">        <span class="do" style="color: #5E5E5E;
+font-style: italic;">## do something</span></span>
+<span id="cb3-3">} <span class="cf" style="color: #003B4F;">else</span> <span class="cf" style="color: #003B4F;">if</span>(<span class="sc" style="color: #5E5E5E;">&lt;</span>condition2<span class="sc" style="color: #5E5E5E;">&gt;</span>)  { </span>
+<span id="cb3-4">        <span class="do" style="color: #5E5E5E;
+font-style: italic;">## do something different</span></span>
+<span id="cb3-5">} <span class="cf" style="color: #003B4F;">else</span> <span class="cf" style="color: #003B4F;">if</span>(<span class="sc" style="color: #5E5E5E;">&lt;</span>condition2<span class="sc" style="color: #5E5E5E;">&gt;</span>) {</span>
+<span id="cb3-6">        <span class="do" style="color: #5E5E5E;
+font-style: italic;">## do something different</span></span>
+<span id="cb3-7">} <span class="cf" style="color: #003B4F;">else</span> { </span>
+<span id="cb3-8">        <span class="do" style="color: #5E5E5E;
+font-style: italic;">## do this if none of the above is true</span></span>
+<span id="cb3-9">}        </span></code></pre></div>
+<section id="example-draw-a-random-value-between-zero-and-10-then-test-for-values-greater-than-3." class="level4">
+<h4 class="anchored" data-anchor-id="example-draw-a-random-value-between-zero-and-10-then-test-for-values-greater-than-3."><strong>Example</strong>: Draw a random value between zero and 10, then test for values greater than 3.</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">x <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">runif</span>(<span class="at" style="color: #657422;">n=</span><span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">min=</span><span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">max=</span><span class="dv" style="color: #AD0000;">10</span>)  </span>
+<span id="cb4-2">x</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.84435</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="cf" style="color: #003B4F;">if</span>(x <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">6</span>) {</span>
+<span id="cb6-2">    y <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">10</span></span>
+<span id="cb6-3">  } <span class="cf" style="color: #003B4F;">else</span> <span class="cf" style="color: #003B4F;">if</span> (x <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">3</span>){</span>
+<span id="cb6-4">    y <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">5</span></span>
+<span id="cb6-5">  } <span class="cf" style="color: #003B4F;">else</span> { y <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">0</span> }</span>
+<span id="cb6-6">x</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.84435</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">y</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+<p>With the if-else structure we can test multiple conditions on the same variable. Here, three ranges of values for x. Of course, the <code>else</code> conditional is not necessary. You could just have a string of ifs:</p>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="cf" style="color: #003B4F;">if</span>(<span class="sc" style="color: #5E5E5E;">&lt;</span>condition1<span class="sc" style="color: #5E5E5E;">&gt;</span>) {</span>
+<span id="cb10-2"></span>
+<span id="cb10-3">}</span>
+<span id="cb10-4"></span>
+<span id="cb10-5"><span class="cf" style="color: #003B4F;">if</span>(<span class="sc" style="color: #5E5E5E;">&lt;</span>condition2<span class="sc" style="color: #5E5E5E;">&gt;</span>) {</span>
+<span id="cb10-6"></span>
+<span id="cb10-7">}</span></code></pre></div>
+<p>As long as your logic is sound (and you have them in the right order), you could be OK.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note-TESTING
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>NOTE it is always important to <strong><em>TEST your code against several datasets for which you can verify the answers</em></strong>. Be sure to try cases where your code might get tripped up. Anticipating the errors will have you a lot of headache.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="while-loops" class="level2">
+<h2 class="anchored" data-anchor-id="while-loops"><code>while</code> Loops</h2>
+<p><strong><code>while</code> loops</strong> begin by <strong>testing a condition</strong>.</p>
+<ul>
+<li>If it is <code>TRUE</code>, then they execute the code contained within the loop.<br>
+</li>
+<li>If <code>FALSE</code> the loop is exited (no execution).</li>
+</ul>
+<p><img src="https://mbutler808.github.io/images/ProgramFlow_while.png" class="img-fluid"></p>
+<section id="example" class="level3">
+<h3 class="anchored" data-anchor-id="example">Example:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">count <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">0</span></span>
+<span id="cb11-2"><span class="cf" style="color: #003B4F;">while</span>(count <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="dv" style="color: #AD0000;">10</span>) {</span>
+<span id="cb11-3">        <span class="fu" style="color: #4758AB;">print</span>(count)</span>
+<span id="cb11-4">        count <span class="ot" style="color: #003B4F;">&lt;-</span> count <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb11-5">}</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0
+[1] 1
+[1] 2
+[1] 3
+[1] 4
+[1] 5
+[1] 6
+[1] 7
+[1] 8
+[1] 9</code></pre>
+</div>
+</div>
+<p><code>while</code> loops can potentially result in infinite loops if not written properly. <strong>Use with care!</strong></p>
+<p>Sometimes there will be more than one condition in the test.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">z <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">5</span></span>
+<span id="cb13-2"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb13-3"></span>
+<span id="cb13-4"><span class="cf" style="color: #003B4F;">while</span>(z <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">3</span> <span class="sc" style="color: #5E5E5E;">&amp;&amp;</span> z <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">10</span>) {</span>
+<span id="cb13-5">        coin <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">rbinom</span>(<span class="dv" style="color: #AD0000;">1</span>, <span class="dv" style="color: #AD0000;">1</span>, <span class="fl" style="color: #AD0000;">0.5</span>)</span>
+<span id="cb13-6">        </span>
+<span id="cb13-7">        <span class="cf" style="color: #003B4F;">if</span>(coin <span class="sc" style="color: #5E5E5E;">==</span> <span class="dv" style="color: #AD0000;">1</span>) {  <span class="do" style="color: #5E5E5E;
+font-style: italic;">## random walk</span></span>
+<span id="cb13-8">                z <span class="ot" style="color: #003B4F;">&lt;-</span> z <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb13-9">        } <span class="cf" style="color: #003B4F;">else</span> {</span>
+<span id="cb13-10">                z <span class="ot" style="color: #003B4F;">&lt;-</span> z <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb13-11">        } </span>
+<span id="cb13-12">}</span>
+<span id="cb13-13"><span class="fu" style="color: #4758AB;">print</span>(z)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Pro-tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>&amp;</code> is the logical <strong>and</strong> - both conditions must be true in order to return <code>TRUE</code></p>
+<p><code>|</code> is the logical <strong>or</strong> - only one condition must be true in order to return <code>TRUE</code></p>
+<p>What’s the difference between using one <code>&amp;</code> or two <code>&amp;&amp;</code> (or one <code>|</code> vs.&nbsp;<code>||</code>)?</p>
+<p>If you use only one <code>&amp;</code>, these are <strong>vectorized</strong> operations, meaning they will evaluate the <em>logical conditional on the vector</em>, and can <strong>return a vector</strong>, like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">2</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">2</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -2 -1  0  1  2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">((<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">2</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">0</span>) <span class="sc" style="color: #5E5E5E;">&amp;</span> ((<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">2</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">0</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE FALSE  TRUE FALSE FALSE</code></pre>
+</div>
+</div>
+<p>If you use two <code>&amp;&amp;</code>, then these are operations on single values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="dv" style="color: #AD0000;">2</span> <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">0</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">(<span class="dv" style="color: #AD0000;">2</span> <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">0</span>) <span class="sc" style="color: #5E5E5E;">&amp;&amp;</span> (<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">2</span> <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">0</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1">(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">2</span> <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">0</span>) <span class="sc" style="color: #5E5E5E;">&amp;&amp;</span> (<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">2</span> <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">0</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="repeat-loops" class="level2">
+<h2 class="anchored" data-anchor-id="repeat-loops"><code>repeat</code> Loops</h2>
+<p><strong><code>repeat</code> initiates an infinite loop</strong> right from the start. These are <strong>not commonly used</strong> in statistical or data analysis applications, but they do have their uses.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+IMPORTANT (READ THIS AND DON’T FORGET… I’M SERIOUS… YOU WANT TO REMEMBER THIS.. FOR REALZ PLZ REMEMBER THIS)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The only way to exit a <code>repeat</code> loop is to call <code>break</code>.</p>
+</div>
+</div>
+<p>One possible paradigm might be in an iterative algorithm where you may be searching for a solution and you do not want to stop until you are close enough to the solution.</p>
+<p>In this kind of situation, you often don’t know in advance how many iterations it’s going to take to get “close enough” to the solution.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1">x0 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb25-2">tol <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fl" style="color: #AD0000;">1e-8</span></span>
+<span id="cb25-3"></span>
+<span id="cb25-4"><span class="cf" style="color: #003B4F;">repeat</span> {</span>
+<span id="cb25-5">        x1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">computeEstimate</span>()</span>
+<span id="cb25-6">        </span>
+<span id="cb25-7">        <span class="cf" style="color: #003B4F;">if</span>(<span class="fu" style="color: #4758AB;">abs</span>(x1 <span class="sc" style="color: #5E5E5E;">-</span> x0) <span class="sc" style="color: #5E5E5E;">&lt;</span> tol) {  <span class="do" style="color: #5E5E5E;
+font-style: italic;">## Close enough?</span></span>
+<span id="cb25-8">                <span class="cf" style="color: #003B4F;">break</span></span>
+<span id="cb25-9">        } <span class="cf" style="color: #003B4F;">else</span> {</span>
+<span id="cb25-10">                x0 <span class="ot" style="color: #003B4F;">&lt;-</span> x1</span>
+<span id="cb25-11">        } </span>
+<span id="cb25-12">}</span></code></pre></div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The above code will not run if the <code>computeEstimate()</code> function is not defined (I just made it up for the purposes of this demonstration).</p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Pro-tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The loop above is a bit <strong>dangerous</strong> because there is no guarantee it will stop.</p>
+<p>You could get in a situation where the values of <code>x0</code> and <code>x1</code> oscillate back and forth and never converge.</p>
+<p>Better to set a hard limit on the number of iterations by using a <code>for</code> loop and then report whether convergence was achieved or not.</p>
+</div>
+</div>
+</section>
+<section id="next-break" class="level2">
+<h2 class="anchored" data-anchor-id="next-break"><code>next</code>, <code>break</code></h2>
+<p><code>next</code> is used to skip an iteration of a loop.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><span class="cf" style="color: #003B4F;">for</span>(i <span class="cf" style="color: #003B4F;">in</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">100</span>) {</span>
+<span id="cb26-2">        <span class="cf" style="color: #003B4F;">if</span>(i <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">20</span>) {</span>
+<span id="cb26-3">                <span class="do" style="color: #5E5E5E;
+font-style: italic;">## Skip the first 20 iterations</span></span>
+<span id="cb26-4">                <span class="cf" style="color: #003B4F;">next</span>                 </span>
+<span id="cb26-5">        }</span>
+<span id="cb26-6">        <span class="do" style="color: #5E5E5E;
+font-style: italic;">## Do something here</span></span>
+<span id="cb26-7">}</span></code></pre></div>
+</div>
+<p><code>break</code> is used to exit a loop immediately, regardless of what iteration the loop may be on.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="cf" style="color: #003B4F;">for</span>(i <span class="cf" style="color: #003B4F;">in</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">100</span>) {</span>
+<span id="cb27-2">      <span class="fu" style="color: #4758AB;">print</span>(i)</span>
+<span id="cb27-3"></span>
+<span id="cb27-4">      <span class="cf" style="color: #003B4F;">if</span>(i <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">20</span>) {</span>
+<span id="cb27-5">              <span class="do" style="color: #5E5E5E;
+font-style: italic;">## Stop loop after 20 iterations</span></span>
+<span id="cb27-6">              <span class="cf" style="color: #003B4F;">break</span>  </span>
+<span id="cb27-7">      }   </span>
+<span id="cb27-8">}</span></code></pre></div>
+</div>
+<section id="another-example" class="level3">
+<h3 class="anchored" data-anchor-id="another-example">Another example</h3>
+<p>Both flowcharts and pseudocode can help to diagram the logic and modularity of the code:</p>
+<p><img src="https://mbutler808.github.io/images/ProgramFlow_flowchart_pseudocode.png" class="img-fluid"></p>
+</section>
+</section>
+</section>
+<section id="summary" class="level1">
+<h1>Summary</h1>
+<ul>
+<li>Control structures like <code>if</code>, <code>while</code>, and <code>for</code> allow you to control the flow of an R program</li>
+<li>Infinite loops should generally be avoided, even if (you believe) they are theoretically correct.</li>
+<li>Control structures mentioned here are primarily useful for writing programs; for command-line interactive work, the “apply” functions are more useful.</li>
+<li>Flow charts and pseudocode can help you diagram the logic of your program.</li>
+</ul>
+</section>
+<section id="excercise" class="level1">
+<h1>Excercise</h1>
+<p>Letʻs write a program to calculate the square root of a number, following the Fortran Coloring Book:</p>
+<p><img src="https://mbutler808.github.io/images/sqrtN_flowchart.png" class="img-fluid"></p>
+
+
+</section>
+
+ ]]></description>
+  <category>module 5</category>
+  <category>week 11</category>
+  <category>control structures</category>
+  <category>if else</category>
+  <category>do</category>
+  <category>do until</category>
+  <category>do while</category>
+  <category>programming</category>
+  <guid>https://mbutler808.github.io/posts/2023-03-28-program-flow/index.html</guid>
+  <pubDate>Thu, 23 Mar 2023 10:00:00 GMT</pubDate>
+  <media:content url="https://mbutler808.github.io/images/ProgramFlow_decision_point.png" medium="image" type="image/png" height="81" width="144"/>
+</item>
+<item>
   <title>Vectorization with Apply Functions</title>
   <dc:creator>Marguerite Butler</dc:creator>
   <link>https://mbutler808.github.io/posts/2023-03-23-apply/index.html</link>
@@ -9463,496 +9857,6 @@ Tip
   <category>GitHub</category>
   <guid>https://mbutler808.github.io/posts/2023-01-24-intro-git-github/index.html</guid>
   <pubDate>Tue, 24 Jan 2023 10:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Introduction to your computerʻs terminal utilities</title>
-  <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<!-- Add interesting quote -->
-<section id="pre-lecture-materials" class="level1">
-<h1>Pre-lecture materials</h1>
-<section id="read-ahead" class="level3">
-<h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Read ahead
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>For future lectures, Iʻll give you some reading or podcasts to prepare</strong></p>
-</div>
-</div>
-</section>
-<section id="acknowledgements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
-<p>Material for this lecture was borrowed and adopted from</p>
-<ul>
-<li><a href="https://academind.com/tutorials/terminal-zsh-basics" class="uri">https://academind.com/tutorials/terminal-zsh-basics</a></li>
-</ul>
-</section>
-</section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Learning objectives
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>At the end of this lesson you will:</strong></p>
-<ul>
-<li>Know the shell used in your computer`s operating system.</li>
-<li>Know basic shell commands and when you might want to use them.</li>
-<li>Know how to traverse your computer`s filesystem, grab input or put output anywhere.</li>
-<li>Understand the difference between relative and absolute file paths.</li>
-<li>Know how to create and manipulate files through the shell.</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="introduction-to-the-shell" class="level1">
-<h1>Introduction to the shell</h1>
-<p>This document gives a brief explanation of your computerʻs filesystems and how we will use the command line for this course.</p>
-<section id="the-kernel" class="level2">
-<h2 class="anchored" data-anchor-id="the-kernel">The kernel</h2>
-<p>The <em>kernel</em> is the part of your computerʻs operating system that loads first once you start up. It is kind of like your computerʻs autonomic nervous system. It recognizes all of the physical hardware attached to it, enables communication between components (and device drivers), and monitors maintenance functions like turning on the fan when it gets hot, manages virtual memory, gives warnings when the hard drive gets full, manages multitasking, and manages security and file permissions. In the mac this is the XNU kernel, in modern Windows machines it is the Windows NT kernel.</p>
-<div class="cell fig-cap-location-top">
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/https:/www.linuxandubuntu.com/ezoimgfmt/i0.wp.com/www.linuxandubuntu.com/wp-content/uploads/2019/07/macos-kernel-resources.jpg?w=1295&amp;ssl=1&amp;ezimgfmt=rs:275x519/rscb34/ngcb34/notWebP.png" class="img-fluid"></p>
-</div>
-</div>
-<p>[<a href="https://www.linuxandubuntu.com/home/difference-between-linux-kernel-mac-kernel">Source: Map of MacOS: the heart of everything is called Darwin; and within it, we have separate system utilities (the shell) and the XNU kernel, which is composed in parts by the Mach kernel and by the BSD kernel.</a>]</p>
-</section>
-<section id="the-shell" class="level2">
-<h2 class="anchored" data-anchor-id="the-shell">The shell</h2>
-<p>The <strong>shell</strong> is another key part of the core operating system (note in the diagram above it is part of the <strong>System Utilities</strong>, and the partner of the kernel). The shell is a software (an app) that allows humans to control the computer. You are already familiar with the <em>GUI</em> interface, or the <em>Graphical User Interface</em>. It is important that you are comfortable using the <em>Command Line Interface</em> as well.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-There are many reasons to be proficient in the shell:
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Data analysis increasingly uses many files. The shell provides a simple but very powerful means to do all kinds of operations on files: move, delete, organize, combine, rename, etc.</li>
-<li>Using the shell encourages you to understand your computerʻs filesystem, and helps you to more precisely control input and output to any place along your file paths.</li>
-<li>Shell operations are fast.</li>
-<li>You can use wildcards to control matching or excluding many files.</li>
-<li>The shell can be used to execute (run) software.</li>
-<li>The shell is probably the oldest app, so it is very stable with lasting power.</li>
-<li>It is part of the OS, so when your apps fail or you are having some issues, you would turn to the shell to kill troublesome processes (programs) or diagnose and fix the issues.</li>
-</ul>
-</div>
-</div>
-<p>Macs use the same terminal utilities as UNIX/Linux systems. On the Mac, the command line interface app is called <em>Terminal</em>, which you will find in your <em>Application</em> folder, in the <em>Utilities</em> subfolder (here is a screentshot of our GUI Interface).</p>
-<div class="cell fig-cap-location-top">
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/terminal.png" class="img-fluid" width="986"></p>
-</div>
-</div>
-<p>On a PC you would use the <em>Command Prompt</em> otherwise known as the <em>Windows Command Processor</em> or <em>CMD</em>. If you used a pre-Windows machine, you would be familiar with MS-DOS. To open CMD:</p>
-<ol type="1">
-<li>Open the Start Menu and type “command prompt” or</li>
-<li>Press <strong>Win + R</strong> and type “cmd” in the run box or</li>
-<li>Press <strong>Win + X</strong> and select Command Prompt from the menu.</li>
-</ol>
-<p>Note: you may see <em>Windows PowerShell</em> or <em>Windows Terminal</em> instead, these are similar apps.</p>
-</section>
-</section>
-<section id="the-working-directory" class="level1">
-<h1>The Working Directory</h1>
-<p>By default, the working directory on a Mac and UNIX/Linux systems is your home user directory “~”. On a PC the default working directory may looks something like a subdirectory of your C drive “C:[Username]".</p>
-<p>This is where you currently are in your computerʻs file structure.</p>
-<p>First, lets check where we are by listing the files in our current directory. Note that some shell commands differ between different shells (i.e.&nbsp;UNIX vs.&nbsp;PC). Listing the contents of a directory is done with <strong>ls</strong> in UNIX and <strong>dir</strong> in PC:</p>
-<div class="panel-tabset">
-<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" aria-controls="tabset-1-1" aria-selected="true">Mac/UNIX</a></li><li class="nav-item"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" aria-controls="tabset-1-2" aria-selected="false">PC</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" aria-labelledby="tabset-1-1-tab">
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb1-1"><span class="fu" style="color: #4758AB;">ls</span></span></code></pre></div>
-</div>
-<div id="tabset-1-2" class="tab-pane" aria-labelledby="tabset-1-2-tab">
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1">dir</span></code></pre></div>
-</div>
-</div>
-</div>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-An important principle of programming is <strong>VERIFICATION</strong>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><strong>Always check that it worked</strong> – at each step!</li>
-<li>You should check the new commands that you are learning against something that you KNOW WORKS.</li>
-<li>Here, since you are familiar with the GUI, as you are doing these new command line operations, keep a GUI window open to verify.</li>
-<li>You should also check on the command line by listing the directory after you add or move files etc.</li>
-</ul>
-</div>
-</div>
-<p>Please make a folder for your work in a convenient place and call it “Rclass”. On a Mac you may want to put it in “Documents”. Start by navigating into your Documents folder or other such folder where you want your Rclass work to be saved. <strong>cd</strong> is for <em>change directory</em>, and the syntax is <strong>cd Foldername</strong>:</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb3-1"><span class="bu" style="color: null;">cd</span> Documents</span></code></pre></div>
-</section>
-<section id="making-a-new-folder-from-the-command-line" class="level1">
-<h1>Making a new folder from the command Line</h1>
-<p>In both systems, the <strong>mkdir</strong> command for <em>make directory</em> will create a new folder, and <strong>cd</strong> will change directories. :</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb4-1"><span class="fu" style="color: #4758AB;">mkdir</span> Rclass</span>
-<span id="cb4-2"><span class="bu" style="color: null;">cd</span> Rclass</span>
-<span id="cb4-3"><span class="fu" style="color: #4758AB;">ls</span>  <span class="co" style="color: #5E5E5E;"># or dir in PC</span></span></code></pre></div>
-<p>You have now created the Rclass directory, changed directory again into Rclass, and listed files. (It should be empty.)</p>
-<p>This seems like a lot of trouble, when you can just point and click in the GUI. But the beauty of the shell is its power. We can automate actions, execute code, and use wildcards to do many at once (coming up below).</p>
-<p>Letʻs say you wanted to create files in a new subfolder. <strong>touch</strong> is a command that creates a new (empty) file, or alters the timestamp of existing files.</p>
-<div class="panel-tabset">
-<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" aria-controls="tabset-2-1" aria-selected="true">Mac/UNIX</a></li><li class="nav-item"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" aria-controls="tabset-2-2" aria-selected="false">PC</a></li></ul>
-<div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" aria-labelledby="tabset-2-1-tab">
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb5-1"><span class="fu" style="color: #4758AB;">mkdir</span> shell</span>
-<span id="cb5-2"><span class="bu" style="color: null;">cd</span> shell</span>
-<span id="cb5-3"><span class="fu" style="color: #4758AB;">touch</span> dat.txt  <span class="co" style="color: #5E5E5E;"># PC does not have the touch function</span></span></code></pre></div>
-</div>
-<div id="tabset-2-2" class="tab-pane" aria-labelledby="tabset-2-2-tab">
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb6-1"><span class="fu" style="color: #4758AB;">mkdir</span> shell</span>
-<span id="cb6-2"><span class="bu" style="color: null;">cd</span> shell</span>
-<span id="cb6-3"><span class="bu" style="color: null;">type</span> nul <span class="op" style="color: #5E5E5E;">&gt;</span> dat.txt  <span class="co" style="color: #5E5E5E;"># for PC use type nul with pipe instead of touch</span></span></code></pre></div>
-</div>
-</div>
-</div>
-<p>Check that you have a subfolder within Rclass that has one file named dat.txt.</p>
-<p>Suppose we wanted to create 10 files. You can so easily in the UNIX shell:</p>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb7-1"><span class="fu" style="color: #4758AB;">touch</span> dat<span class="dt" style="color: #AD0000;">{</span><span class="dv" style="color: #AD0000;">1</span><span class="dt" style="color: #AD0000;">..</span><span class="dv" style="color: #AD0000;">10</span><span class="dt" style="color: #AD0000;">}</span>.txt  <span class="co" style="color: #5E5E5E;"># for PC type nul &gt; dat1.txt multiple times</span></span></code></pre></div>
-<div class="panel-tabset">
-<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" aria-controls="tabset-3-1" aria-selected="true">Mac/UNIX</a></li><li class="nav-item"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" aria-controls="tabset-3-2" aria-selected="false">PC</a></li></ul>
-<div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" aria-labelledby="tabset-3-1-tab">
-<p>To check your files timestamps list files with the -l flag:</p>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb8-1"><span class="fu" style="color: #4758AB;">ls</span> <span class="at" style="color: #657422;">-l</span></span></code></pre></div>
-<p>The -a flag shows hidden files. You can do both at once:</p>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb9-1"><span class="fu" style="color: #4758AB;">ls</span> <span class="at" style="color: #657422;">-la</span></span></code></pre></div>
-</div>
-<div id="tabset-3-2" class="tab-pane" aria-labelledby="tabset-3-2-tab">
-<p>The <strong>dir</strong> command provides the timestamp as well as other information.</p>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb10-1"><span class="fu" style="color: #4758AB;">dir</span></span></code></pre></div>
-</div>
-</div>
-</div>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Exercise:
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Create 20 files with the .jpg file extension.</li>
-<li>List your files now.</li>
-<li>Create 2 subdirectories, one called “Data” and one called “Images”</li>
-</ol>
-</div>
-</div>
-</section>
-<section id="more-useful-commands-move-copy-remove-and-friends" class="level1">
-<h1>More useful commands <strong>move</strong> <strong>copy</strong> <strong>remove</strong> and friends</h1>
-<p>Some additional very useful commands are those for moving, copying, and removing (deleting) files. These can operate on your current directory, or you can add the <em>path</em> to your file. For example, to move your file into the Data subdirectory:</p>
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb11-1"><span class="fu" style="color: #4758AB;">mv</span> dat1.txt Data/dat1.txt</span>
-<span id="cb11-2"><span class="fu" style="color: #4758AB;">ls</span></span>
-<span id="cb11-3"><span class="fu" style="color: #4758AB;">ls</span> Data</span></code></pre></div>
-<p>Anywhere where you can indicate a filename, you can also add a path to that file.</p>
-<table class="table">
-<colgroup>
-<col style="width: 22%">
-<col style="width: 25%">
-<col style="width: 33%">
-<col style="width: 18%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>function</th>
-<th>UNIX</th>
-<th>Windows CMD</th>
-<th>example</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>move</td>
-<td>mv filename newlocation</td>
-<td>move filename newlocation</td>
-<td>mv dat1.txt Data</td>
-</tr>
-<tr class="even">
-<td>copy</td>
-<td>cp filename newfilename</td>
-<td>copy filename newfilename</td>
-<td>cp dat1.txt catcat.txt</td>
-</tr>
-<tr class="odd">
-<td>remove</td>
-<td>rm filename</td>
-<td>del filename</td>
-<td>rm dat1.txt</td>
-</tr>
-<tr class="even">
-<td>remove directory</td>
-<td>rmdir Directory</td>
-<td>rmdir Directory</td>
-<td>rmdir Data</td>
-</tr>
-<tr class="odd">
-<td>concatenate (combine)</td>
-<td>cat file1 file2</td>
-<td>cat file1 file2</td>
-<td>cat dat1.txt dat2.txt</td>
-</tr>
-<tr class="even">
-<td>concatenate to new file</td>
-<td>cat file1 file2 &gt; file3</td>
-<td>cat file1 file2 &gt; file3</td>
-<td>cat dat1.txt dat2.txt &gt; alldat.txt</td>
-</tr>
-<tr class="odd">
-<td>list files</td>
-<td>ls</td>
-<td>dir</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>get working directory</td>
-<td>pwd</td>
-<td>cd</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><em>Note: UNIX commands are case-sensitive, Windows commands are not.</em> <em>Apologies in advance for any Windows command errors - Iʻm really not an expert. Please let me know so I can fix it. Thank you!</em></p>
-</section>
-<section id="wildcards" class="level1">
-<h1>Wildcards</h1>
-<p>You can also select multiple files at once using wildcards. If you want to grab all of the .txt files, for example, you can do:</p>
-<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb12-1"><span class="fu" style="color: #4758AB;">cp</span> <span class="pp" style="color: #AD0000;">*</span>.txt Data</span>
-<span id="cb12-2"><span class="fu" style="color: #4758AB;">ls</span>  <span class="co" style="color: #5E5E5E;"># PC: use dir</span></span>
-<span id="cb12-3"><span class="fu" style="color: #4758AB;">ls</span> Data <span class="co" style="color: #5E5E5E;"># PC: use dir Data</span></span></code></pre></div>
-<p>And you should have copied <em>all</em> files that end in .txt into Data. You could alternatively used dat* which will select all files that begin with “dat” but can end in anything else. The * will match any characters (zero or more).</p>
-<p>There are a lot of other wildcards that you can use.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Exercise:
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Move all of your data files into Data, and all of your image files into Images.</li>
-<li>Remove any straggler files from the top level of shell, if you used the copy command.</li>
-<li>List files from shell, Data, and Images.</li>
-</ol>
-</div>
-</div>
-</section>
-<section id="relative-paths-vs.-absolute-paths" class="level1">
-<h1>Relative paths vs.&nbsp;Absolute paths</h1>
-<p>In the Mac, there are two important <em>shortcuts</em>:</p>
-<ul>
-<li>“/” : The root directory of your entire computer, indicated by “/”.</li>
-<li>“~” : The root of your user directory, which for me is “marguerite”. From the root directory, it will be “/Users/username”</li>
-</ul>
-<p>In PCs, your root user directory in CMD is usually something like:</p>
-<ul>
-<li>“C:\User\username" : this would be the root of your user Directory</li>
-<li>The root of the C drive is “C:"</li>
-</ul>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Note:
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>On PCs pay attention to the direction of the slashes when you type <strong>dir</strong> is it “/” or “\” ? When you type your filepaths, be sure to use the right type of slash.</p>
-</div>
-</div>
-<p>Check out what is in these directories:</p>
-<div class="panel-tabset">
-<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" aria-controls="tabset-4-1" aria-selected="true">Mac/UNIX</a></li><li class="nav-item"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" aria-controls="tabset-4-2" aria-selected="false">PC</a></li></ul>
-<div class="tab-content">
-<div id="tabset-4-1" class="tab-pane active" aria-labelledby="tabset-4-1-tab">
-<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb13-1"><span class="fu" style="color: #4758AB;">ls</span> /</span>
-<span id="cb13-2"><span class="fu" style="color: #4758AB;">ls</span> ~</span></code></pre></div>
-</div>
-<div id="tabset-4-2" class="tab-pane" aria-labelledby="tabset-4-2-tab">
-<p>Shortcuts in Windows are called Windows Environment Path Variables:</p>
-<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb14-1"><span class="fu" style="color: #4758AB;">dir</span> %UserProfile%  <span class="co" style="color: #5E5E5E;"># is this C:\\Users\\{username} ?</span></span>
-<span id="cb14-2"><span class="fu" style="color: #4758AB;">dir</span> %SystemDrive%   <span class="co" style="color: #5E5E5E;"># is this C: ?</span></span></code></pre></div>
-<p>With the advent of the OneDrive, there is now a parallel user directory in OneDrive that also has Documents, etc.</p>
-<p>Donʻt get confused! “C:" drive is not the”OneDrive”. (the OneDrive is a location on your hard drive, sometimes on C:, sometimes on D:) Windows makes use of a lot of symbolic links to make it easier for the user. These are different directories, sometims on different drives or partitions, but to the user it looks like theyʻre in the same folder). Symbolic links can be generally used in filepaths, but it can be very confusing if you accidentally end up with a circular reference or when you need to find the actual location on the hard drive.</p>
-<p>Use the “\ad” flag with <strong>dir</strong> to see all of the symbolic links too. They call these symbolic links <em>namespace junctions</em>.</p>
-<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb15-1"><span class="fu" style="color: #4758AB;">dir</span> %UserProfile% <span class="dt" style="color: #AD0000;">\\</span>ad</span></code></pre></div>
-</div>
-</div>
-</div>
-<p>You can use these as shortcuts as starting points for your path to basically write an absolute path. This becomes important when you write a script that may be moved to different locations or shared with different people on different computers.</p>
-<p>For example, “cd ~/Documents” will take you to the Documents folder inside your user directory, regardless of where you are currently because it is an <strong>absolute path</strong>.</p>
-<p>A <strong>relative path</strong> will traverse the file directory <em>relative</em> to where you are currently. For example “Documents” will start at current working directory and look for a subfolder called Documents:</p>
-<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb16-1"><span class="fu" style="color: #4758AB;">ls</span> Documents  <span class="co" style="color: #5E5E5E;"># relative path, is there a Documents folder here?</span></span></code></pre></div>
-<p>In contrast, an absolute path will start from the very beginning of your root directory and contain the complete path.</p>
-<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb17-1"><span class="fu" style="color: #4758AB;">ls</span> <span class="pp" style="color: #AD0000;">~</span><span class="dt" style="color: #AD0000;">\D</span>ocuments <span class="co" style="color: #5E5E5E;"># this is an absolute path because ~ = "\Users\marguerite"</span></span></code></pre></div>
-<p>On the Mac, an asbolute path will start with “" (or a shortcut that contains a starting”"), whereas on a PC an absolute path will start with “C:”</p>
-</section>
-<section id="navigating-your-filedirectories" class="level1">
-<h1>Navigating your filedirectories</h1>
-<section id="the-dots" class="level2">
-<h2 class="anchored" data-anchor-id="the-dots">The dots</h2>
-<ul>
-<li>“.” is the current working directory (where you are currently)</li>
-<li>“..” is the directory one level up</li>
-<li>“./foldername” will take you to the folder one level down, for example “./Data”</li>
-</ul>
-<p>You can use these paths to move directories using <em>cd</em> or to list the contents of the directories using <em>ls</em> or to make new directories using <em>mkdir</em></p>
-<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb18-1"><span class="fu" style="color: #4758AB;">ls</span> .</span>
-<span id="cb18-2"><span class="fu" style="color: #4758AB;">ls</span> ./Data</span>
-<span id="cb18-3"><span class="fu" style="color: #4758AB;">mkdir</span> ./Data/A</span></code></pre></div>
-<p>Make multiple directories:</p>
-<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb19-1"><span class="fu" style="color: #4758AB;">mkdir</span> ./Data/B ./Data/C</span></code></pre></div>
-<p>List the files one level up or two levels up:</p>
-<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb20-1"><span class="fu" style="color: #4758AB;">ls</span> ..  <span class="co" style="color: #5E5E5E;"># for PC use dir ..</span></span>
-<span id="cb20-2"><span class="fu" style="color: #4758AB;">ls</span> ../..</span></code></pre></div>
-<p>Up one level, and over to another directory:</p>
-<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb21-1"><span class="fu" style="color: #4758AB;">ls</span> ../AnotherDirectory</span></code></pre></div>
-<p>You can wander anywhere along your computerʻs file directory! Just add more steps to the path.</p>
-</section>
-</section>
-<section id="executing-software-from-the-command-line" class="level1">
-<h1>Executing software from the command Line</h1>
-<p>coming soon</p>
-</section>
-<section id="piping-commands" class="level1">
-<h1>Piping commands</h1>
-<p>You can redirect output using <em>&gt;</em> and <em>&lt;</em> with the point indicating the direction. Here is an example. First letʻs put some contents into the files, and check the contents with the command “less” (there is also “more”):</p>
-<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb22-1"><span class="bu" style="color: null;">echo</span> <span class="st" style="color: #20794D;">"A"</span> <span class="op" style="color: #5E5E5E;">&gt;</span> dat1.txt</span>
-<span id="cb22-2"><span class="fu" style="color: #4758AB;">less</span> dat1.txt</span></code></pre></div>
-<p><em>&gt;</em> pipes (or sends) output to the file named “dat1.txt”. If the file doesnʻt exist, it will create it. If it already exists, it will <em>replace</em> the file.</p>
-<p>If you want to add on to the file, use “&gt;&gt;”</p>
-<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb23-1"><span class="bu" style="color: null;">echo</span> <span class="st" style="color: #20794D;">"Another letter B"</span> <span class="op" style="color: #5E5E5E;">&gt;&gt;</span> dat1.txt</span>
-<span id="cb23-2"><span class="fu" style="color: #4758AB;">less</span> dat1.txt</span></code></pre></div>
-<p>Output to multiple files:</p>
-<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb24-1"><span class="bu" style="color: null;">echo</span> <span class="st" style="color: #20794D;">"c"</span> <span class="op" style="color: #5E5E5E;">&gt;</span>dat2.txt <span class="op" style="color: #5E5E5E;">&gt;</span>dat3.txt</span>
-<span id="cb24-2"><span class="fu" style="color: #4758AB;">less</span> dat2.txt</span>
-<span id="cb24-3"><span class="fu" style="color: #4758AB;">less</span> dat3.txt</span></code></pre></div>
-<p>Concatenate (combine) multiple files using <em>cat</em> and send it to file</p>
-<div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb25-1"><span class="fu" style="color: #4758AB;">cat</span> dat1.txt dat2.txt dat3.txt</span>
-<span id="cb25-2"><span class="fu" style="color: #4758AB;">cat</span> dat1.txt dat2.txt dat3.txt <span class="op" style="color: #5E5E5E;">&gt;</span>all.txt</span>
-<span id="cb25-3"><span class="fu" style="color: #4758AB;">less</span> all.txt</span></code></pre></div>
-</section>
-<section id="post-lecture-materials" class="level1">
-<h1>Post-lecture materials</h1>
-<section id="final-questions" class="level3">
-<h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
-<p>Here are some post-lecture questions to help you think about the material discussed.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Questions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><p>What is a command line interface?</p></li>
-<li><p>How can using the command line help with file organization or reorganization?</p></li>
-<li><p>What is the importance of choosing a good file naming system?</p></li>
-<li><p>What is the difference between a relative path and an absolute path?</p></li>
-</ol>
-</div>
-</div>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-For additional practice:
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><p>Practice making directories with subdirectories A, B, etc. with several levels A1 A2 etc.</p></li>
-<li><p>Practice moving files between different directories and at different levels.</p></li>
-<li><p>Practice moving junk lying around in your downloads folder into the trash using the command line (or at least putting them into a common folder “opala” folder which you can then manually put into the trash). (FYI on the Mac Trash is in “~/.Trash” so it is a hidden folder)</p></li>
-</ol>
-</div>
-</div>
-</section>
-<section id="additional-resources" class="level3">
-<h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://academind.com/tutorials/terminal-zsh-basics">A tutorial for zsh on Macs</a></li>
-<li><a href="https://www.educative.io/blog/bash-shell-command-cheat-sheet">Bash shell cheat sheet (mostly works for zsh too)</a></li>
-<li><a href="https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/">A tutorial for CMD on PCs</a></li>
-<li><a href="https://serverspace.us/support/help/windows-cmd-commands-cheat-sheet/">Windows CMD cheat sheet</a></li>
-</ul>
-</div>
-</div>
-</section>
-<section id="rtistry" class="level2">
-<h2 class="anchored" data-anchor-id="rtistry">rtistry</h2>
-<div class="cell fig-cap-location-top">
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/https:/github.com/djnavarro/art/raw/master/static/gallery/flametree/extra/001_flametree_20_13.jpg" class="img-fluid"></p>
-</div>
-</div>
-<p>[‘Flametree’ from Danielle Navarro <a href="https://art.djnavarro.net" class="uri">https://art.djnavarro.net</a>]</p>
-
-
-</section>
-</section>
-
- ]]></description>
-  <category>module 1</category>
-  <category>week 1</category>
-  <category>programming</category>
-  <category>filesystem</category>
-  <category>shell</category>
-  <guid>https://mbutler808.github.io/posts/2023-01-19-your-computer-filesystems/index.html</guid>
-  <pubDate>Thu, 19 Jan 2023 10:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
