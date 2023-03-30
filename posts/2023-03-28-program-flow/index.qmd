@@ -6,7 +6,7 @@ author:
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
 description: "Control the flow of your program using programming control statements"
-date: 2023-03-23
+date: 2023-03-28
 categories: [module 5, week 11, control structures, if else, (do) while, programming]
 ---
 
@@ -335,7 +335,7 @@ Both flowcharts and pseudocode can help to diagram the logic and modularity of t
 -    Flow charts and pseudocode can help you diagram the logic of your program. 
 
 
-# Excercise
+# Exercise
 
 Letʻs write a program to calculate the square root of a number, following the Fortran Coloring Book:
 

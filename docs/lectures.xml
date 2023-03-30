@@ -10,7 +10,265 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023</description>
 <generator>quarto-1.2.313</generator>
-<lastBuildDate>Thu, 23 Mar 2023 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 30 Mar 2023 10:00:00 GMT</lastBuildDate>
+<item>
+  <title>Intro to Morphometrics</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2023-03-30-morphometrics/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="acknowledgements" class="level3">
+<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><p><a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-22-control-structures" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-22-control-structures</a></p></li>
+<li><p><a href="https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/" class="uri">https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/</a></p></li>
+<li><p>&lt;&gt;</p></li>
+</ul>
+</section>
+<section id="learning-objectives" class="level1">
+<h1>Learning objectives</h1>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Be able to estimate measurement error and repeatability</li>
+<li></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+</section>
+<section id="measurement-error-and-repeatability" class="level1">
+<h1>Measurement Error and Repeatability</h1>
+<p>Morphometrics is all about assessing variability, within and between individuals. One of those sources of variability is measurement error.</p>
+<p>Measurement Error (ME) itself comes from many potential sources:</p>
+<ul>
+<li>the measurement device (precision)</li>
+<li>definition of the measure</li>
+<li>quality of the measured material</li>
+<li>the measurer</li>
+<li>the environment of the measurer (hopefully small!)</li>
+<li>measurement protocol</li>
+</ul>
+<p>We try to minimize ME so that we can reveal the underlying patterns we are interested in, but there will always be some ME. So it is important to quantify at least once at the beginning of the study.</p>
+<section id="protocol-for-assessing-me" class="level2">
+<h2 class="anchored" data-anchor-id="protocol-for-assessing-me">Protocol for assessing ME</h2>
+<p>The percentage of measurement error is defined as the within-group component of variance divided by the total (within + betwee group) variance <span class="citation" data-cites="Claude:2008">(Claude 2008)</span>:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5C%25ME%20=%20%5Cfrac%7Bs%5E%7B2%7D_%7Bwithin%7D%7D%7Bs%5E%7B2%7D_%7Bwithin%7D%20+%20s%5E%7B2%7D_%7Bamong%7D%7D%20%5Ctimes%20100%0A"></p>
+<p>We can get the componets of variance <img src="https://latex.codecogs.com/png.latex?s%5E%7B2%7D"> from the mean squares (<img src="https://latex.codecogs.com/png.latex?MSS">) of an ANOVA considering the individual (as a factor) source of variation. Individual here represents the within-group variation. The among and within variance can be estimated from the mean sum of squares and <img src="https://latex.codecogs.com/png.latex?m"> the number of repeated measurements:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0As%5E%7B2%7D_%7Bamong%7D%20=%20%5Cfrac%7BMSS_%7Bamong%7D%20-%20MSS_%7Bwithin%7D%7D%7Bm%7D%0A"></p>
+<p>and</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0As%5E%7B2%7D_%7Bwithin%7D%20=%20MSS_%7Bwithin%7D%0A"></p>
+</section>
+<section id="example" class="level2">
+<h2 class="anchored" data-anchor-id="example">Example</h2>
+<p>Let’s say you are taking photographs of your specimens. They are rather rounded and so it is hard to place them flat on the table to photograph from above. Issue 1 here is whether the shape variation we observe in the photo is real or due to placing the specimen at slightly different angles. Then, when once you have the photograph you need to digitize the landmarks. Issue 2 is whether you put the landmarks in the same place every time (i.e.&nbsp;is your criteria for the landmark robust enough that its obvious where it should be placed on each specimen, and if you came back to the data a month or year later?)</p>
+<p>To assess measurement error in this instance we could take two sets of pictures, each time removing and positioning the specimen. And we could digitize each image twice, preferably in different sessions (another day or week). This would give us 4 sets of landmark data for each specimen, allowing us to asses both error associated with the digitization as well as error in capturing the shapes via the photographs.</p>
+<p>Alternatively, if we were interested in inter-observer error vs.&nbsp;repeatability within observer, we could take one photograph and have it measured by two different people, each person taking two sets of measurements (preferably in different sessions).</p>
+<section id="simulated-example" class="level3">
+<h3 class="anchored" data-anchor-id="simulated-example">Simulated example:</h3>
+<p>Repeat a set of five measurements, (measure twice), once in each of two sessions on different days. How repeatable are the measurements?</p>
+<p>Simulate the data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">true_m <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">5</span>,<span class="dv" style="color: #AD0000;">20</span>,<span class="dv" style="color: #AD0000;">3</span>)  <span class="co" style="color: #5E5E5E;"># true values</span></span>
+<span id="cb1-2">m1 <span class="ot" style="color: #003B4F;">&lt;-</span> true_m <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">5</span>,<span class="dv" style="color: #AD0000;">0</span>,<span class="dv" style="color: #AD0000;">1</span>) <span class="co" style="color: #5E5E5E;"># measurements set 1</span></span>
+<span id="cb1-3">m2 <span class="ot" style="color: #003B4F;">&lt;-</span> true_m <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">5</span>,<span class="dv" style="color: #AD0000;">0</span>,<span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb1-4">session <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">gl</span>(<span class="dv" style="color: #AD0000;">2</span>, <span class="dv" style="color: #AD0000;">5</span>)</span>
+<span id="cb1-5">individual <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as.factor</span>(<span class="fu" style="color: #4758AB;">rep</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">5</span>,<span class="dv" style="color: #AD0000;">2</span>))</span>
+<span id="cb1-6">total_m <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(m1, m2)</span>
+<span id="cb1-7"><span class="fu" style="color: #4758AB;">cbind</span>(individual, total_m, session)  <span class="co" style="color: #5E5E5E;"># the data</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      individual  total_m session
+ [1,]          1 12.76855       1
+ [2,]          2 20.25977       1
+ [3,]          3 18.74746       1
+ [4,]          4 18.29310       1
+ [5,]          5 14.11296       1
+ [6,]          1 10.62845       2
+ [7,]          2 22.00059       2
+ [8,]          3 19.65037       2
+ [9,]          4 21.34816       2
+[10,]          5 12.86987       2</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(total_m <span class="sc" style="color: #5E5E5E;">~</span> session))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
+session      1   0.54   0.536   0.029   0.87
+Residuals    8 149.60  18.700               </code></pre>
+</div>
+</div>
+<p>There is no difference between sessions (yay)!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">mod <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(total_m <span class="sc" style="color: #5E5E5E;">~</span> individual))</span>
+<span id="cb5-2">mod </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)   
+individual   4 140.49   35.12   18.19 0.0035 **
+Residuals    5   9.65    1.93                  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>The specimens measured (individuals) are significantly different.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">s2within <span class="ot" style="color: #003B4F;">&lt;-</span> MSwithin <span class="ot" style="color: #003B4F;">&lt;-</span> mod[[<span class="dv" style="color: #AD0000;">1</span>]][<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">3</span>]</span>
+<span id="cb7-2">MSamong <span class="ot" style="color: #003B4F;">&lt;-</span> mod[[<span class="dv" style="color: #AD0000;">1</span>]][<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">3</span>]</span>
+<span id="cb7-3">s2among <span class="ot" style="color: #003B4F;">&lt;-</span> (MSamong<span class="sc" style="color: #5E5E5E;">-</span>MSwithin)<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">2</span></span>
+<span id="cb7-4">pME <span class="ot" style="color: #003B4F;">&lt;-</span> s2within<span class="sc" style="color: #5E5E5E;">/</span>(s2within<span class="sc" style="color: #5E5E5E;">+</span>s2among)<span class="sc" style="color: #5E5E5E;">*</span><span class="dv" style="color: #AD0000;">100</span></span>
+<span id="cb7-5">pME</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10.42025</code></pre>
+</div>
+</div>
+<p>And the percent measurement error is represented by <code>pME</code>. As a rough rule of thumb we want this to be less than 5%. If it is very high, we either want to practice more, or take multiple measurements of each variable and average them.</p>
+</section>
+</section>
+</section>
+<section id="calculating-morphometric-parameters" class="level1">
+<h1>Calculating morphometric parameters</h1>
+<p>Your raw data may be in lengths for linear morphometrics or coordinate for landmark-based morphometrics. You will often have to calcuate quantities from your raw data such as distances and angles.</p>
+<section id="calculating-distances" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-distances">Calculating distances</h2>
+<p>You may need to calculate distances between your landmarks, or you may have species centroids (the means in multiple dimensions), and you want to know the distance between species in morphospace.</p>
+<p>The distance between two points (in k dimensions) is given by the square root of the sum of the squared differences between the points.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ad_%7BAB%7D%20=%20%5Csqrt%7B%5Csum_%7Bi=1%7D%5E%7Bk%7D%7D%20(A_i%20-%20B_i)%5E2%20%20%0A"></p>
+<p>This is analogous to calcuating the length of the hypotenuse in a right triangle. If there is more than one dimension, these squared differences are computed dimension by dimension, summed, then the entire quantity is square rooted.</p>
+<p>A 2-D example in R is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">A <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">4</span>)</span>
+<span id="cb9-2">B <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">6</span>,<span class="dv" style="color: #AD0000;">8</span>)</span>
+<span id="cb9-3"><span class="fu" style="color: #4758AB;">plot</span>( <span class="fu" style="color: #4758AB;">c</span>(A[<span class="dv" style="color: #AD0000;">1</span>], B[<span class="dv" style="color: #AD0000;">1</span>]),<span class="fu" style="color: #4758AB;">c</span>(A[<span class="dv" style="color: #AD0000;">2</span>], B[<span class="dv" style="color: #AD0000;">2</span>]), <span class="at" style="color: #657422;">xlim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">0</span>,<span class="dv" style="color: #AD0000;">10</span>), <span class="at" style="color: #657422;">ylim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">0</span>,<span class="dv" style="color: #AD0000;">10</span>), </span>
+<span id="cb9-4">      <span class="at" style="color: #657422;">xlab=</span><span class="st" style="color: #20794D;">"X"</span>, <span class="at" style="color: #657422;">ylab=</span><span class="st" style="color: #20794D;">"Y"</span>, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">4</span>,  <span class="at" style="color: #657422;">pch=</span><span class="dv" style="color: #AD0000;">16</span>, <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"red"</span>)</span>
+<span id="cb9-5"><span class="fu" style="color: #4758AB;">lines</span>( <span class="fu" style="color: #4758AB;">c</span>(A[<span class="dv" style="color: #AD0000;">1</span>], B[<span class="dv" style="color: #AD0000;">1</span>]),<span class="fu" style="color: #4758AB;">c</span>(A[<span class="dv" style="color: #AD0000;">2</span>], B[<span class="dv" style="color: #AD0000;">2</span>]), <span class="at" style="color: #657422;">lty=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"red"</span> )</span>
+<span id="cb9-6"><span class="fu" style="color: #4758AB;">lines</span>( <span class="fu" style="color: #4758AB;">c</span>(A[<span class="dv" style="color: #AD0000;">1</span>], B[<span class="dv" style="color: #AD0000;">1</span>]),<span class="fu" style="color: #4758AB;">c</span>(A[<span class="dv" style="color: #AD0000;">2</span>], A[<span class="dv" style="color: #AD0000;">2</span>]), <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"grey"</span> )</span>
+<span id="cb9-7"><span class="fu" style="color: #4758AB;">lines</span>( <span class="fu" style="color: #4758AB;">c</span>(B[<span class="dv" style="color: #AD0000;">1</span>], B[<span class="dv" style="color: #AD0000;">1</span>]),<span class="fu" style="color: #4758AB;">c</span>(A[<span class="dv" style="color: #AD0000;">2</span>], B[<span class="dv" style="color: #AD0000;">2</span>]), <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"grey"</span> )</span>
+<span id="cb9-8"><span class="fu" style="color: #4758AB;">text</span>(A[<span class="dv" style="color: #AD0000;">1</span>], A[<span class="dv" style="color: #AD0000;">2</span>], <span class="st" style="color: #20794D;">"A"</span>)</span>
+<span id="cb9-9"><span class="fu" style="color: #4758AB;">text</span>(B[<span class="dv" style="color: #AD0000;">1</span>], B[<span class="dv" style="color: #AD0000;">2</span>], <span class="st" style="color: #20794D;">"B"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-03-30-morphometrics/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Compute the distance:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">A<span class="sc" style="color: #5E5E5E;">-</span>B</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -5 -4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="fu" style="color: #4758AB;">sum</span>((A<span class="sc" style="color: #5E5E5E;">-</span>B)<span class="sc" style="color: #5E5E5E;">^</span><span class="dv" style="color: #AD0000;">2</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 41</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="fu" style="color: #4758AB;">sqrt</span>(<span class="fu" style="color: #4758AB;">sum</span>((A<span class="sc" style="color: #5E5E5E;">-</span>B)<span class="sc" style="color: #5E5E5E;">^</span><span class="dv" style="color: #AD0000;">2</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.403124</code></pre>
+</div>
+</div>
+<p>We can create a function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">distance <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>( A, B ) { <span class="fu" style="color: #4758AB;">sqrt</span>(<span class="fu" style="color: #4758AB;">sum</span>((A<span class="sc" style="color: #5E5E5E;">-</span>B)<span class="sc" style="color: #5E5E5E;">^</span><span class="dv" style="color: #AD0000;">2</span>)) }</span>
+<span id="cb16-2"><span class="fu" style="color: #4758AB;">distance</span>( A, B )</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.403124</code></pre>
+</div>
+</div>
+<p>Try it on a 3-D set of coordinates. Does it work?</p>
+</section>
+<section id="angle-between-two-vectors" class="level2">
+<h2 class="anchored" data-anchor-id="angle-between-two-vectors">Angle between two vectors</h2>
+<p>The angle <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> between two vectors <img src="https://latex.codecogs.com/png.latex?%5Coverrightarrow%7BAB%7D"> and <img src="https://latex.codecogs.com/png.latex?%5Coverrightarrow%7BCD%7D"> can be calculated using the dot product and the rule of cosines.</p>
+<p>Suppose we have two vectors <img src="https://latex.codecogs.com/png.latex?V_1%20=%20(x_1,y_1)">, and <img src="https://latex.codecogs.com/png.latex?V2%20=%20(x_2,y_2)">. We can use our coordinates A, B above to calculate our first vector, and make up a second one. From geometry, we can think of vectors as originating at <code>(0,0)</code> with the vector coordinates indicating the head of the vector.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1">V1 <span class="ot" style="color: #003B4F;">&lt;-</span> AB <span class="ot" style="color: #003B4F;">&lt;-</span> B <span class="sc" style="color: #5E5E5E;">-</span> A  <span class="co" style="color: #5E5E5E;"># using our A,B landmarks above</span></span>
+<span id="cb18-2">V1 </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1">V2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">4</span>)  <span class="co" style="color: #5E5E5E;"># another vector</span></span></code></pre></div>
+</div>
+<p>The dot product is then:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AV_1V_2%20=%20x_1x_2%20+%20y_1y_2%20=%20%7CV_1%7C%20%5Ccdot%20%7CV_2%7C%20cos(%5Ctheta)%0A"></p>
+<p>Rearranging:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Acos(%5Ctheta)%20=%20%5Cfrac%7B%20x_1x_2%20+%20y_1y_2%20%7D%20%7B%20%7CV_1%7C%20%5Ccdot%20%7CV_2%7C%20%7D%0A"></p>
+<p>Also <img src="https://latex.codecogs.com/png.latex?%0A%7CV_1%7C%20=%20%5Csqrt%7B%20%20x_1%5E2%20+%20y_1%5E2%7D%0A"></p>
+<p>And similarly for <img src="https://latex.codecogs.com/png.latex?V_2">.</p>
+<p>So all we have to do is take the inverse cosine, arc cosine, or <code>acos()</code> to solve for the angle theta (<img src="https://latex.codecogs.com/png.latex?%5Ctheta">).</p>
+<section id="calculating-the-angle-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="calculating-the-angle-in-r">Calculating the angle in R</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">V1 <span class="sc" style="color: #5E5E5E;">%*%</span> V2  <span class="co" style="color: #5E5E5E;"># the dot product. what is the difference with V1 * V2?</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]
+[1,]   26</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1">           <span class="co" style="color: #5E5E5E;"># same as sum(V1*V2) </span></span>
+<span id="cb23-2"></span>
+<span id="cb23-3">theta <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">acos</span>( (V1 <span class="sc" style="color: #5E5E5E;">%*%</span> V2) <span class="sc" style="color: #5E5E5E;">/</span> (<span class="fu" style="color: #4758AB;">sqrt</span>( V1<span class="sc" style="color: #5E5E5E;">%*%</span>V1) <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">sqrt</span>(V2<span class="sc" style="color: #5E5E5E;">%*%</span>V2)) )</span>
+<span id="cb23-4">theta</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          [,1]
+[1,] 0.4324078</code></pre>
+</div>
+</div>
+<p>Where the result is in radians, not degrees.</p>
+<p>Note: I should change this to using the arc tangent, to preserve the angle in case it is outside of 0,pi.</p>
+<p>To covert to degrees, remember that a 360 degree circle is 2pi radians (or 180 degrees is 1pi radians):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1">theta_degrees <span class="ot" style="color: #003B4F;">&lt;-</span> theta<span class="sc" style="color: #5E5E5E;">/</span> pi <span class="sc" style="color: #5E5E5E;">*</span> <span class="dv" style="color: #AD0000;">180</span></span>
+<span id="cb25-2">theta_degrees</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         [,1]
+[1,] 24.77514</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="landmarks-and-pseudolandmarks" class="level1">
+<h1>Landmarks and Pseudolandmarks</h1>
+<p><img src="https://mbutler808.github.io/images/rodentmandible.jpg" class="img-fluid" alt="Rodent lower jaw (mandible)"> <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.7557">Source</a></p>
+<p>Acquiring landmarks usually involves some digitizing by hand.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="co" style="color: #5E5E5E;">#require(imager)  # install if you need to</span></span>
+<span id="cb27-2"></span>
+<span id="cb27-3"><span class="co" style="color: #5E5E5E;">#jaw &lt;- load.image("../../images/rodentmandible.jpg")</span></span>
+<span id="cb27-4"><span class="co" style="color: #5E5E5E;">#plot(jaw)</span></span></code></pre></div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Claude:2008" class="csl-entry">
+Claude, Julien. 2008. <em>Morphometrics with r</em>. 1. Aufl. New York, NY: Springer-Verlag.
+</div>
+</div></section></div> ]]></description>
+  <category>module 6</category>
+  <category>week 11</category>
+  <category>control structures</category>
+  <category>if else</category>
+  <category>(do) while</category>
+  <category>programming</category>
+  <guid>https://mbutler808.github.io/posts/2023-03-30-morphometrics/index.html</guid>
+  <pubDate>Thu, 30 Mar 2023 10:00:00 GMT</pubDate>
+  <media:content url="https://mbutler808.github.io/images/rodentmandible.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Program Flow</title>
   <dc:creator>Marguerite Butler</dc:creator>
@@ -145,7 +403,7 @@ font-style: italic;">## do this if none of the above is true</span></span>
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">x <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">runif</span>(<span class="at" style="color: #657422;">n=</span><span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">min=</span><span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">max=</span><span class="dv" style="color: #AD0000;">10</span>)  </span>
 <span id="cb4-2">x</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.917375</code></pre>
+<pre><code>[1] 2.992286</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="cf" style="color: #003B4F;">if</span>(x <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">6</span>) {</span>
 <span id="cb6-2">    y <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">10</span></span>
@@ -154,7 +412,7 @@ font-style: italic;">## do this if none of the above is true</span></span>
 <span id="cb6-5">  } <span class="cf" style="color: #003B4F;">else</span> { y <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">0</span> }</span>
 <span id="cb6-6">x</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.917375</code></pre>
+<pre><code>[1] 2.992286</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">y</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -384,8 +642,8 @@ font-style: italic;">## Stop loop after 20 iterations</span></span>
 <li>Flow charts and pseudocode can help you diagram the logic of your program.</li>
 </ul>
 </section>
-<section id="excercise" class="level1">
-<h1>Excercise</h1>
+<section id="exercise" class="level1">
+<h1>Exercise</h1>
 <p>Letʻs write a program to calculate the square root of a number, following the Fortran Coloring Book:</p>
 <p><img src="https://mbutler808.github.io/images/sqrtN_flowchart.png" class="img-fluid"></p>
 
@@ -400,7 +658,7 @@ font-style: italic;">## Stop loop after 20 iterations</span></span>
   <category>(do) while</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-03-28-program-flow/index.html</guid>
-  <pubDate>Thu, 23 Mar 2023 10:00:00 GMT</pubDate>
+  <pubDate>Tue, 28 Mar 2023 10:00:00 GMT</pubDate>
   <media:content url="https://mbutler808.github.io/images/ProgramFlow_decision_point.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
@@ -9365,496 +9623,6 @@ Tip
   <guid>https://mbutler808.github.io/posts/2023-01-26-intro-quarto/index.html</guid>
   <pubDate>Thu, 26 Jan 2023 10:00:00 GMT</pubDate>
   <media:content url="https://mbutler808.github.io/images/dspipeline.png" medium="image" type="image/png" height="88" width="144"/>
-</item>
-<item>
-  <title>Introduction to git/GitHub</title>
-  <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2023-01-24-intro-git-github/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<!-- Add interesting quote -->
-<section id="lecture-materials" class="level1">
-<h1>Lecture materials</h1>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Helpful references for this lecture
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><a href="https://happygitwithr.com">Happy Git with R</a> from Jenny Bryan</li>
-<li><a href="https://rafalab.github.io/dsbook/git.html">Chapter on git and GitHub in <code>dsbook</code></a> from Rafael Irizarry</li>
-<li><a href="https://andreashandel.github.io/MADAcourse">GitHub introduction in module 1</a> from Andreas Handel</li>
-</ol>
-</div>
-</div>
-<section id="acknowledgements" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
-<p>Material for this lecture was borrowed and adopted from</p>
-<ul>
-<li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/</a></li>
-<li><a href="https://andreashandel.github.io/MADAcourse/Tools_Github_Introduction.html" class="uri">https://andreashandel.github.io/MADAcourse/Tools_Github_Introduction.html</a></li>
-</ul>
-</section>
-</section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Learning objectives
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Last time, you should have created and set up a GitHub account.</p>
-<p><strong>At the end of this lesson you will:</strong></p>
-<ul>
-<li>Know what Git and GitHub are.</li>
-<li>Know why one might want to use them.</li>
-<li>Have created a repo and executed basic push/pull commands.</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="introduction-to-gitgithub" class="level1">
-<h1>Introduction to git/GitHub</h1>
-<p>This document gives a brief explanation of GitHub and how we will use it for this course.</p>
-<section id="git" class="level2">
-<h2 class="anchored" data-anchor-id="git">git</h2>
-<p><strong>Git</strong> is software that implements what is called a <em>version control system</em> for a repository of files (also known as a <em>repo</em>). The main idea is that as you (and your collaborators) work on a project, the git software tracks, and records any changes made by anyone.</p>
-<p><strong>GitHub</strong> is an online server and user interface that provides powerful tools for distribution of your repository, bug tracking, collaboration, and also allows you to create easy websites for each repository.</p>
-<p><strong>Git</strong> and <strong>GitHub</strong> together provide an organized way to track your projects, and all of the tools you will need in this course are free.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://mbutler808.github.io/images/A-Solo-work-with-DIY-version-control-via-filename-B-Collaborative-work-with-DIY_W640.jpeg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figure 1. Whether working solo (A) or collaborating in a group (B) version tracking by naming files is a mess when you want to retrace the steps of the analysis (C). Git and GitHub track all changes and the complete branching tree of the project (D). The commit history is a powerful tool to retrace the development of the project or can be used to roll back to any prior version.</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>[<a href="https://peerj.com/preprints/3159/">Source: Jenny Bryan</a>]</p>
-<p>It is very well suited for collaborative work, as it was developed by Linus Torvalds (in about 10 days of coding!) for collaborative software development of the Linux kernel <a href="https://www.linuxfoundation.org/blog/blog/10-years-of-git-an-interview-with-git-creator-linus-torvalds">pretty interesting interview with Torvalds</a>. What it did really well was <em>distributed control</em>, and allowing everyone to have their <em>own copy of the repository</em>.</p>
-<p><em>Git</em>/<em>GitHub</em> is now the dominant version control system with <em>GitHub</em> hosting over 200 million repositories worldwide! It is used very broadly for all kinds of repos now including data science projects, book projects, courses, and anything that needs collaborative management of mostly text files.</p>
-<p>Another great and fun read about Git/GitHub and why it is a great tool for data analysis is in this article by <a href="https://peerj.com/preprints/3159/">Jenny Bryan</a>.</p>
-</section>
-<section id="what-to-not-use-gitgithub-for" class="level2">
-<h2 class="anchored" data-anchor-id="what-to-not-use-gitgithub-for">What to (not) use Git/GitHub for</h2>
-<p><strong>GitHub is ideal if</strong> you have a project with (possibly many) smallish files, and most of those files are text files (such as R code, LaTeX, Quarto/(R)Markdown, etc.) and different people work on different parts of the project.</p>
-<p><strong>GitHub is less useful if</strong> you have a lot of non-text files (e.g.&nbsp;Word or PowerPoint) and different team members might want to edit the same document at the same time. In that instance, a solution like Google Docs, Word+Dropbox, Word+Onedrive, etc. might be better.</p>
-<p><strong>GitHub also has a problem with <em>large files</em></strong>. Anything above around 50MB can lead to very slow syncing and sometimes outright failure. Unfortunately, once GitHub has choked on a large file, it can be quite tricky to fix the repository to work again. <em>This is because the ENTIRE history is saved, including the addition of the huge file.</em> Therefore keep large (&gt;50MB) files out of your GitHub repositories. If you have to work with such files, try to reduce them first before placing into the GitHub repository. Or as alternative, place those files in another sync service (e.g.&nbsp;Dropbox, OneDrive, GoogleDrive) and load them from there.</p>
-<p><strong>Finally, if you have <em>data</em></strong>, you need to be careful since by default, GitHub repositories are public. You can set the repository to private, but you need to be careful that you don’t accidentally expose confidential data to the public. It is in general not a good idea to have confidential data on GitHub. First anonymize your data (ensure that it is not at risk of identifiability), then you can place it in a private repository. If you put it in a public repo, be very careful!! (And you may need IRB approval, check with your institutional research office.)</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Git/GitHub has version control features like a turbo-charged version of “track changes” but more rigorous, powerful, and scaled up to multiple files</li>
-<li>Great for solo or collaborative work</li>
-<li>Saves the entire history of every change made</li>
-<li>Allows for multiple verisions or “branches” to be developed and later merged</li>
-<li>GitHub allows distributed collaboration (potentially among complete strangers) and has greatly promoted open-source software development, collaboration, distribution, and bug/issue tracking for users to get help</li>
-<li>GitHub allows <em>webpages</em> for your projects or repositories</li>
-</ul>
-</div>
-</div>
-<p>Note that other interfaces to <em>Git</em> exist, e.g., <em>Bitbucket</em>, but <em>GitHub</em> is the most widely used one.</p>
-</section>
-<section id="why-use-gitgithub" class="level2">
-<h2 class="anchored" data-anchor-id="why-use-gitgithub">Why use git/GitHub?</h2>
-<p>You want to use <em>GitHub</em> to avoid this:</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://mbutler808.github.io/images/phdversioncontrol.gif" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">How not to use GitHub <a href="http://phdcomics.com/comics/archive_print.php?comicid=1531">image from PhD Comics</a></figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>To learn a bit more about Git/GitHub and why you might want to use it, <a href="https://peerj.com/preprints/3159/">read this article by Jenny Bryan</a>.</p>
-<p><strong>Note her explanation of what’s special with the <code>README.md</code> file on GitHub.</strong></p>
-</section>
-<section id="how-to-use-gitgithub" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-use-gitgithub">How to use Git/GitHub</h2>
-<p>Git/GitHub is fundamentally <strong>based on commands you type into the command line</strong>. Lots of online resources show you how to use the command line. This is the most powerful, and the way I almost always interact with git/GitHub. However, many folks find this the most confusing way to use git/GitHub. Alternatively, there are graphical interfaces.</p>
-<ul>
-<li><a href="https://desktop.github.com/">GitHub itself</a> provides a grapical interface with basic functionality.</li>
-<li>RStudio also has <a href="https://happygitwithr.com/rstudio-git-github.html">Git/GitHub integration</a>. Of course this only works for R project GitHub integration.</li>
-<li>There are also third party GitHub clients with many advanced features, most of which you won’t need initially, but might eventually.</li>
-</ul>
-<p><strong>Note</strong>: As student, you can (and should) upgrade to the Pro version of GitHub for free (i.e.&nbsp;access to unlimited private repositories is one benefit), see the <a href="https://education.github.com/pack">GitHub student developer pack</a> on how to do this.</p>
-</section>
-</section>
-<section id="getting-started-with-git" class="level1">
-<h1>Getting Started with git</h1>
-<p>One of my favorite resources for getting started with git/GitHub is the Happy Git with R from Jenny Bryan (especially for Rstudio users):</p>
-<ul>
-<li><a href="https://happygitwithr.com" class="uri">https://happygitwithr.com</a></li>
-</ul>
-<p>It is one of the <strong>most comprehensive resources</strong> out there for getting started with git/GitHub. I will encourage all of you to go read through the online book. Some of you may only need to skim it, others will need to spend some time reading through it. Either way, I hope you will agree it is a worthwhile investment to understand the basics as well as to know you can get help.</p>
-<section id="sec-profile" class="level2">
-<h2 class="anchored" data-anchor-id="sec-profile">Set up your profile in git on your computer</h2>
-<p>Before making changes to your repository, GitHub will want to verify your identity.</p>
-<p>In order for your computer to talk to GitHub smoothly, you will need to set up your <strong>username</strong> and <strong>email</strong> in the <strong>git profile</strong> stored on your computer.</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Be sure to match</strong> your GitHub account <code>username</code> and <code>email</code>! Otherwise <em>GitHub</em> wonʻt know who you are</p>
-</div>
-</div>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="fu" style="color: #4758AB;">git</span> config <span class="at" style="color: #657422;">--global</span> user.name <span class="st" style="color: #20794D;">'GitHubUsername'</span></span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;">git</span> config <span class="at" style="color: #657422;">--global</span> user.email <span class="st" style="color: #20794D;">'GitHub_email@example.com'</span></span>
-<span id="cb1-3"><span class="fu" style="color: #4758AB;">git</span> config <span class="at" style="color: #657422;">--global</span> <span class="at" style="color: #657422;">--list</span></span></code></pre></div>
-</div>
-<p>That last line will show all of your current <code>git config</code> settings.</p>
-<p>If you are using Rstudio, easy directions are provided here <a href="https://happygitwithr.com/hello-git.html" class="uri">https://happygitwithr.com/hello-git.html</a></p>
-</section>
-<section id="sec-token" class="level2">
-<h2 class="anchored" data-anchor-id="sec-token">Set up your Personal Authentication Token on your computer</h2>
-<p>GitHub will also want to check your credentials to authenticate you are really you before writing changes to your repo.</p>
-<p>There are several ways to do this, but the easiest is the protocol for HTTP authentication. You will generate a <em>Personal Access Token</em> for HTTPS from your GitHub account which will be stored on your personal machine.</p>
-<p>I prefer the GithHub command line interface or <code>gh</code> to do this. To install the CLI, follow <a href="https://github.com/cli/cli#installation">the instructions here for your operating system</a>. For Mac users, I suggest that you install <code>homebrew</code>, it is a command-line general software manager for many different software packages.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Storing your Personal Access Token
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>From GitHub: Generate your personal access token <a href="https://happygitwithr.com/https-pat.html#get-a-pat">instructions</a>
-<ol type="a">
-<li>Find the token generator on GitHub under your <em>User Icon &gt; settings &gt; developer settings (left side bar) &gt; Personal access tokens &gt; Tokens (classic) &gt; Generate new Token &gt; classic</em> <strong>note this menu may change</strong></li>
-<li>Select at least these scopes: “admin:org”,“repo”, “user”, “gist”, and “workflow”</li>
-</ol></li>
-<li>From your Command Line: Use <code>gh auth login</code> to store your token and follow the prompts.
-<ol type="a">
-<li>select <code>HTTPS</code> for your preferred protocol</li>
-<li>select <code>Y</code> for authenticate with GitHub credentials</li>
-<li>Alternatively if you want to do this all from the command line you can run the following line (if your token is saved in <code>mytoken.txt</code>):</li>
-</ol>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;">gh</span> auth login <span class="at" style="color: #657422;">--with-token</span> <span class="op" style="color: #5E5E5E;">&lt;</span> mytoken.txt</span></code></pre></div>
-</div></li>
-</ol>
-</div>
-</div>
-<p>Many more details are explained nicely here <a href="https://happygitwithr.com/https-pat.html" class="uri">https://happygitwithr.com/https-pat.html</a></p>
-<p>You only have to store your credentials once for each computer (or PAT expiration date), then you can push and pull from GitHub to your heartʻs content. It really is a nice way to do things securely.</p>
-</section>
-<section id="configuring-your-default-git-editor" class="level2">
-<h2 class="anchored" data-anchor-id="configuring-your-default-git-editor">Configuring your default git editor</h2>
-<p>You may want to set your default git editor to something you know how to use (it will come up when you have a merge conflict).</p>
-<p>For example the nano editor is easy to use on the command line for a Unix shell:</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Mac/Linux</strong></pre>
-</div>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;">$</span> git config <span class="at" style="color: #657422;">--global</span> core.editor <span class="st" style="color: #20794D;">"nano -w"</span></span></code></pre></div>
-</div>
-<p><em>The Carpentries</em> provide a <a href="https://swcarpentry.github.io/git-novice/02-setup/#line-endings">full list of editors</a> by operating system, a great resource.</p>
-</section>
-</section>
-<section id="using-gitgithub-in-our-course" class="level1">
-<h1>Using git/GitHub in our course</h1>
-<p>In this course, you will use git/GitHub in the following ways:</p>
-<ol type="1">
-<li>Project 0 (optional) - You will create a website introducing yourself to folks in the course and deploy it on GitHub.</li>
-<li>Projects 1-4 - You can practice using git locally (on your compute environment) to track your changes over time and, if you wish (but highly suggested), you can practice pushing your project solutions to a private GitHub repository on your GitHub account (i.e.&nbsp;<code>git add</code>, <code>git commit</code>, <code>git push</code>, <code>git pull</code>, etc) .</li>
-</ol>
-<p>Learning these skills will be useful down the road if you ever work collaboratively on a project (i.e.&nbsp;writing code as a group). In this scenario, you will use the skills you have been practicing in your projects to work together as a team in a single GitHub repository.</p>
-</section>
-<section id="clone-a-repo-to-your-local-directory---easy" class="level1">
-<h1>Clone a repo to your local directory - Easy!</h1>
-<p>Cloning an existing repo from GitHub is easy. Letʻs clone the <strong>rclassdata</strong> repo to our local git folder within your Documents folder. 1. Go to <a href="https://github.com/mbutler808/rclassdata" class="uri">https://github.com/mbutler808/rclassdata</a> and click on the green <strong>&lt;&gt;Code</strong> button and copy the URL.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://mbutler808.github.io/images/github_cloning.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Cloning from an existing repo</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<ol start="2" type="1">
-<li>In your Terminal or CMD prompt, navigate to your git folder (create one in Documents if you donʻt have one already), and clone the repo:</li>
-</ol>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal(Mac/Linux)</strong></pre>
-</div>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="bu" style="color: null;">pwd</span></span>
-<span id="cb4-2"><span class="bu" style="color: null;">cd</span> ~/Documents/git  <span class="co" style="color: #5E5E5E;"># navigate to your git folder</span></span>
-<span id="cb4-3"><span class="fu" style="color: #4758AB;">git</span> clone https://github.com/mbutler808/rclassdata.git</span></code></pre></div>
-</div>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>CMD(Windows)</strong></pre>
-</div>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;">dir</span></span>
-<span id="cb5-2"><span class="bu" style="color: null;">cd</span> ~/Documents/git  <span class="co" style="color: #5E5E5E;"># navigate to your git folder</span></span>
-<span id="cb5-3"><span class="fu" style="color: #4758AB;">git</span> clone https://github.com/mbutler808/rclassdata.git</span></code></pre></div>
-</div>
-<p>If you set up your personal access token, it should appear on your computer! If not, go back to Section&nbsp;4.2 and try again.</p>
-</section>
-<section id="make-a-github-repo-started-from-your-local-files" class="level1">
-<h1>Make a GitHub repo started from your local files</h1>
-<p>Suppose you have some files on your computer and youʻd like to make them into a repo. For this example, weʻre going to make a repo called <strong>test</strong></p>
-<ol type="1">
-<li>Create a folder in your <code>Documents/git</code> directory called <code>test</code> and copy some files there.</li>
-<li>Go to your GitHub account and create a new repository. Click on the small black + on the top right corner</li>
-</ol>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://mbutler808.github.io/images/git_newrepo.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Create a new repo button</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<ol start="3" type="1">
-<li>Give your new repo a name (“test”) and choose to create a blank repo with no README.md or .gitignore. We can add them later.</li>
-</ol>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://mbutler808.github.io/images/git_create_new_repo.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Set up a blank repo</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<ol start="4" type="1">
-<li>You will see the following page giving you helpful hints for linking your GitHub repo with your local repo. We will follow the first set of instructions, slightly modified.</li>
-</ol>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/images/github_quicksetup.png" class="img-fluid" style="width:100.0%"></p>
-</div>
-</div>
-<p>Explantations for each line of code:</p>
-<ul>
-<li><code>echo "# test" &gt;&gt; README.md</code> Write <code># test</code> to <code>README.md</code> which will be created since it doesnʻt already exist</li>
-<li><code>git init</code> Intializes the local repo to set up git tracking (only need to to this once)</li>
-<li><code>git add .</code> Adds (. = all) our files and commits any changes to the repo</li>
-<li><code>git commit -m "first commit"</code> Commit message</li>
-<li><code>git branch -M main</code> Renames the local branch to main</li>
-<li><code>git remote add origin URL</code> Connect the remote repo (=“origin” on GitHub) to our local repo. Be sure to copy the appropriate URL for your own GitHub repo.</li>
-<li><code>git push -u origin main</code> Push our local changes (in main) up to the remote (to a parallel branch main on origin).</li>
-</ul>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="bu" style="color: null;">echo</span> <span class="st" style="color: #20794D;">"# test"</span> <span class="op" style="color: #5E5E5E;">&gt;&gt;</span> README.md</span>
-<span id="cb6-2"><span class="fu" style="color: #4758AB;">git</span> init</span>
-<span id="cb6-3"><span class="fu" style="color: #4758AB;">git</span> add .</span>
-<span id="cb6-4"><span class="fu" style="color: #4758AB;">git</span> commit <span class="at" style="color: #657422;">-m</span> <span class="st" style="color: #20794D;">"first commit"</span></span>
-<span id="cb6-5"><span class="fu" style="color: #4758AB;">git</span> branch <span class="at" style="color: #657422;">-M</span> main</span>
-<span id="cb6-6"><span class="fu" style="color: #4758AB;">git</span> remote add origin https://github.com/mbutler808/test.git</span>
-<span id="cb6-7"><span class="fu" style="color: #4758AB;">git</span> push <span class="at" style="color: #657422;">-u</span> origin main</span></code></pre></div>
-</div>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-GitHub requires authentication to overwrite your repository (this is a good thing 😃👍)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Did <em>GitHub</em> complain that it doesnʻt know your <strong>username</strong> or <strong>email</strong>?</li>
-</ul>
-<p>This might be because the defaults on your computer donʻt match what you used to register for your GitHub account. Not to worry, just set it to match your GitHub account here: Section&nbsp;4.1</p>
-<ul>
-<li>Did <em>GitHub</em> complain that your <strong>authentication</strong> failed?</li>
-</ul>
-<p>Donʻt worry, just try it again: Section&nbsp;4.2. Nice bonus, you only have to do it once for each computer.</p>
-</div>
-</div>
-<ol start="5" type="1">
-<li>Check your remote repo. The files from your computer should be there!</li>
-<li>Now try pushing up another change. Make some edits to one or more local files.</li>
-<li>Add, Commit, Push:</li>
-</ol>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;">git</span> add .</span>
-<span id="cb7-2"><span class="fu" style="color: #4758AB;">git</span> commit <span class="at" style="color: #657422;">-m</span> <span class="st" style="color: #20794D;">"made a small change"</span></span>
-<span id="cb7-3"><span class="fu" style="color: #4758AB;">git</span> push origin main</span></code></pre></div>
-</div>
-<p>Check your remote repo. Did it go up? Well done! 😍</p>
-<p>Your local files and your GitHub repository files are now synced!</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://mbutler808.github.io/images/With-Git-all-contributors-have-a-copy-of-the-repo-with-all-files-and-the-full-history_W640.jpeg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Everyone is one with the repo</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>[<a href="https://peerj.com/preprints/3159/">Source: Jenny Bryan</a>]</p>
-<ol start="8" type="1">
-<li>The nuclear option</li>
-</ol>
-<p>If you need to start over you can delete and remake your repos. (For example if you canʻt get your local and remote repos to communicate and you canʻt figure out why.)</p>
-<p>Since your GitHub repo is empty and youʻre just getting started, there is really no harm in deleting it and starting over. From your repo on github.com, go to <code>settings</code>, then scrolll all the way down until you reach <code>The Danger Zone</code> where you will find the <code>Delete this repository</code> button.</p>
-<p>If you just want to delete your local git tracking without deleting all of the files you created, you can just delete your local hidden <code>.git</code> directory, leaving the rest of the files and directories in place. From your command line:</p>
-<div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-NOTE: This will delete your local git history, and is not reversible.
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="fu" style="color: #4758AB;">rm</span> <span class="at" style="color: #657422;">-rf</span> .git</span></code></pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="a-word-about-merge-conflicts" class="level1">
-<h1>A word about merge conflicts</h1>
-<p>Sooner or later, you will encounter a merge conflict. That happens if the same file(s) changed both locally and on GitHub.com. That can happen if multiple people work on the same files, or if you work on multiple computers and forget to always push/pull before and after you work on a project. Donʻt get discouraged, this is solvable!</p>
-<p>Sometimes you have to do it manually. Moving the offending files out of your local repository, then doing the merge and after that adding the updates again can help. If you know that one source is the definite one, you can force a push or pull. A more advanced approach is to use branches.</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="fu" style="color: #4758AB;">git</span> push <span class="at" style="color: #657422;">--force</span></span></code></pre></div>
-</div>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>The main danger is that a force push or pull will force git to write over a conflict, and can possibly destroy someone elseʻs work. If youʻre the only one on the repo, then itʻs only your changes that youʻll lose</li>
-<li>Just be aware but donʻt be afraid to practice. You can always revert back.</li>
-<li>See the help page for <a href="https://git-scm.com/docs/git-push">git push</a>. See the -f or –force flag. Itʻs terse computer help, but if you make the effort it will start to make sense.</li>
-<li>Iʻll link a more tutorial type resource later</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="forking-a-repo" class="level1">
-<h1>Forking a repo</h1>
-<p>When you want to build on someone elseʻs repo, that is a great time to <strong>fork</strong> a repo. This happens when you donʻt have write permission to the repo, but you want provide suggestions (for example if you want to fix a bug). Or if you want to use that repo as a template or a launching off point for your own project.</p>
-<p>After you fork and clone the repo to your computer, you can edit, add, and commit the changes. When you are ready to submit the suggestions to the repo owner, start a <strong>pull request</strong>. They will then read over your suggested edits, and if they approve they can merge the changes into the working repo.</p>
-<p><strong>Forks</strong> are nice because they remain connected to the parent repo in GitHub. So you can seamlessly work on your own private copy and send it back to the original project when you are ready.</p>
-<p><strong>Branches</strong> work in a similar way. The idea is simple. If you have a working repo, you donʻt want to made edits or experimental changes to <strong>main</strong> that may break the functionality. Branches are a way to make a “development branch” where you can work on your ideas in private without breaking anything. When youʻre sure you have everything ironed out and working, you can merge your branch back to <strong>main</strong>, and delete your branch. They are meant to be an ephemeral scratch copy to keep the project clean, organized, and working perfectly.</p>
-</section>
-<section id="post-lecture-materials" class="level1">
-<h1>Post-lecture materials</h1>
-<section id="final-questions" class="level3">
-<h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
-<p>Here are some post-lecture questions to help you think about the material discussed.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Questions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><p>What is version control?</p></li>
-<li><p>What is the difference between git and GitHub?</p></li>
-<li><p>What are some benefits and case uses for repositories with version control using git and GitHub?</p></li>
-</ol>
-</div>
-</div>
-</section>
-<section id="additional-resources" class="level3">
-<h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://rafalab.github.io/dsbook/git.html">git and GitHub in the <code>dsbook</code></a> by Rafael Irizarry</li>
-</ul>
-</div>
-</div>
-
-
-</section>
-</section>
-
- ]]></description>
-  <category>module 1</category>
-  <category>week 2</category>
-  <category>programming</category>
-  <category>version control</category>
-  <category>git</category>
-  <category>GitHub</category>
-  <guid>https://mbutler808.github.io/posts/2023-01-24-intro-git-github/index.html</guid>
-  <pubDate>Tue, 24 Jan 2023 10:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
