@@ -60,15 +60,15 @@ For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring
 ||||||
 |              | Mar 23   | `r emojifont::emoji('cactus')` Apply Functions \[[html](posts/2023-03-23-apply/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-03-23-apply/index.qmd)\]|   | |
 ||||||
-| **Module 6** |         | **Intro to Morphometrics** | | |
-||||||
 | Week 11      | Mar 28   | `r emojifont::emoji('ferris_wheel')` Program Flow  \[[html](posts/2023-03-28-program-flow/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-03-28-program-flow/index.qmd)\]|||
 ||||||
-|              | Mar 30   | `r emojifont::emoji('straight_ruler')` Linear Morphometrics, Size, Shape |||
+| **Module 6** |         | **Intro to Morphometrics** | | |
 ||||||
-|              | Mar 30  | `r emojifont::emoji('triangular_ruler')` Landmark-based Morphometrics |`r emojifont::emoji('fallen_leaf')` Project 2 due||
+|              | Mar 30   | `r emojifont::emoji('straight_ruler')` Intro to Morphometrics \[[html](posts/2023-03-30-morphometrics/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass/tree/main/posts/2023-03-30-morphometrics/index.qmd)\]|||
 ||||||
-| Week 12      | Apr 4  | `r emojifont::emoji('skull')` 3D Morphometrics |||
+|  Week 12     | Apr 4  | `r emojifont::emoji('triangular_ruler')` Landmark-based Morphometrics |`r emojifont::emoji('fallen_leaf')` Project 2 due||
+||||||
+|              | Apr 4  | `r emojifont::emoji('skull')` 3D Morphometrics |||
 |              | Apr 6  | `r emojifont::emoji('feet')` 3D Morphometrics |`r emojifont::emoji('chestnut')` Project 3 data check due||
 ||||||
 | **Module 7** |         | **Phylogenetic Trees** | | |

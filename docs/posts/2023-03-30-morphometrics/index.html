@@ -391,24 +391,24 @@ s^{2}_{within} = MSS_{within}
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(individual, total_m, session)  <span class="co"># the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      individual  total_m session
- [1,]          1 12.76855       1
- [2,]          2 20.25977       1
- [3,]          3 18.74746       1
- [4,]          4 18.29310       1
- [5,]          5 14.11296       1
- [6,]          1 10.62845       2
- [7,]          2 22.00059       2
- [8,]          3 19.65037       2
- [9,]          4 21.34816       2
-[10,]          5 12.86987       2</code></pre>
+ [1,]          1 18.85593       1
+ [2,]          2 20.71261       1
+ [3,]          3 23.77681       1
+ [4,]          4 20.31391       1
+ [5,]          5 16.46462       1
+ [6,]          1 19.81328       2
+ [7,]          2 19.75126       2
+ [8,]          3 22.70361       2
+ [9,]          4 21.99283       2
+[10,]          5 15.27847       2</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(total_m <span class="sc">~</span> session))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
-session      1   0.54   0.536   0.029   0.87
-Residuals    8 149.60  18.700               </code></pre>
+session      1   0.03   0.034   0.004  0.949
+Residuals    8  62.30   7.788               </code></pre>
 </div>
 </div>
 <p>There is no difference between sessions (yay)!</p>
@@ -416,9 +416,9 @@ Residuals    8 149.60  18.700               </code></pre>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">aov</span>(total_m <span class="sc">~</span> individual))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mod </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)   
-individual   4 140.49   35.12   18.19 0.0035 **
-Residuals    5   9.65    1.93                  
+<pre><code>            Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+individual   4  58.73  14.682   20.34 0.00271 **
+Residuals    5   3.61   0.722                   
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -431,7 +431,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>pME <span class="ot">&lt;-</span> s2within<span class="sc">/</span>(s2within<span class="sc">+</span>s2among)<span class="sc">*</span><span class="dv">100</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>pME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 10.42025</code></pre>
+<pre><code>[1] 9.371885</code></pre>
 </div>
 </div>
 <p>And the percent measurement error is represented by <code>pME</code>. As a rough rule of thumb we want this to be less than 5%. If it is very high, we either want to practice more, or take multiple measurements of each variable and average them.</p>
@@ -547,8 +547,9 @@ cos(\theta) = \frac{ x_1x_2 + y_1y_2 } { |V_1| \cdot |V_2| }
 </section>
 <section id="landmarks-and-pseudolandmarks" class="level1">
 <h1>Landmarks and Pseudolandmarks</h1>
-<p><img src="../../images/rodentmandible.jpg" class="img-fluid" alt="Rodent lower jaw (mandible)"> <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.7557">Source</a></p>
+<p><img src="../../images/rodentmandible.jpg" class="img-fluid" alt="Rodent lower jaw (mandible). Lateral view of a Nectomys squamipes mandible, showing the 10 landmarks used in this work. 1) Anterior edge of the incisive alveolus; 2) Most posterior point of the diastema; 3) Junction between the mandible and the m1 root; 4) Junction between the molar base and the coronoid process; 5) Most posterior point at the articular process; 6) Most anterior point in the angular notch; 7) Most posterior point at the angular process; 8) Angular process base; 9) Inner edge of the mandibular symphysis; 10) Posterior edge of the incisive alveolus"> <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.7557">Source</a></p>
 <p>Acquiring landmarks usually involves some digitizing by hand.</p>
+<p><a href="https://russellboneatlas.wordpress.com/home/red-fox-bone-atlas/red-fox-mandible/" class="uri">https://russellboneatlas.wordpress.com/home/red-fox-bone-atlas/red-fox-mandible/</a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#require(imager)  # install if you need to</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>

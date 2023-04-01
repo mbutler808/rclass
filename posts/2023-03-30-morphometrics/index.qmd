@@ -214,16 +214,20 @@ theta_degrees
 
 # Landmarks and Pseudolandmarks
 
-![Rodent lower jaw (mandible)](../../images/rodentmandible.jpg)
+![Rodent lower jaw (mandible). Lateral view of a Nectomys squamipes mandible, showing the 10 landmarks used in this work. 1) Anterior edge of the incisive alveolus; 2) Most posterior point of the diastema; 3) Junction between the mandible and the m1 root; 4) Junction between the molar base and the coronoid process; 5) Most posterior point at the articular process; 6) Most anterior point in the angular notch; 7) Most posterior point at the angular process; 8) Angular process base; 9) Inner edge of the mandibular symphysis; 10) Posterior edge of the incisive alveolus](../../images/rodentmandible.jpg)
 [Source](https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.7557)
 
 Acquiring landmarks usually involves some digitizing by hand. 
+
+
+<https://russellboneatlas.wordpress.com/home/red-fox-bone-atlas/red-fox-mandible/>
 
 ```{r}
 #require(imager)  # install if you need to
 
 #jaw <- load.image("../../images/rodentmandible.jpg")
 #plot(jaw)
+
 ```
 
 
