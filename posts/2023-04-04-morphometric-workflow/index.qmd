@@ -26,8 +26,8 @@ Material for this lecture was borrowed and adopted from
 
 **At the end of this lesson you will:**
 
--   Be able to estimate measurement error and repeatability
--   
+-   Understand the overview of a morphometrics analysis
+  
 :::
 
 # Overview

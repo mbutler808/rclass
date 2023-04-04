@@ -42,8 +42,7 @@ Learning objectives
 <div class="callout-body-container callout-body">
 <p><strong>At the end of this lesson you will:</strong></p>
 <ul>
-<li>Be able to estimate measurement error and repeatability</li>
-<li></li>
+<li>Understand the overview of a morphometrics analysis</li>
 </ul>
 </div>
 </div>
@@ -354,7 +353,6 @@ Learning objectives
 <p><strong>At the end of this lesson you will:</strong></p>
 <ul>
 <li>Be able to estimate measurement error and repeatability</li>
-<li></li>
 </ul>
 </div>
 </div>
@@ -463,53 +461,53 @@ Learning objectives
 <span id="cb3-14"><span class="fu" style="color: #4758AB;">cbind</span>(id, total_m, photo, rep)  <span class="co" style="color: #5E5E5E;"># the data</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      id  total_m photo rep
- [1,]  1 35.39748     1   1
- [2,]  2 37.30217     1   1
- [3,]  3 46.00803     1   1
- [4,]  4 53.12722     1   1
- [5,]  5 40.37326     1   1
- [6,]  6 48.54945     1   1
- [7,]  7 46.50575     1   1
- [8,]  8 31.60134     1   1
- [9,]  9 37.17727     1   1
-[10,] 10 40.36666     1   1
-[11,]  1 35.62908     2   1
-[12,]  2 37.36254     2   1
-[13,]  3 45.91070     2   1
-[14,]  4 53.45772     2   1
-[15,]  5 40.71606     2   1
-[16,]  6 48.55707     2   1
-[17,]  7 46.20721     2   1
-[18,]  8 31.78617     2   1
-[19,]  9 37.04354     2   1
-[20,] 10 40.20327     2   1
-[21,]  1 35.42613     1   2
-[22,]  2 37.24099     1   2
-[23,]  3 45.98112     1   2
-[24,]  4 53.26413     1   2
-[25,]  5 40.41467     1   2
-[26,]  6 48.48049     1   2
-[27,]  7 46.49152     1   2
-[28,]  8 31.58885     1   2
-[29,]  9 37.16410     1   2
-[30,] 10 40.30348     1   2
-[31,]  1 35.63525     2   2
-[32,]  2 37.45346     2   2
-[33,]  3 45.87819     2   2
-[34,]  4 53.38298     2   2
-[35,]  5 40.66658     2   2
-[36,]  6 48.54141     2   2
-[37,]  7 46.33105     2   2
-[38,]  8 31.82383     2   2
-[39,]  9 37.04875     2   2
-[40,] 10 40.21751     2   2</code></pre>
+ [1,]  1 40.11538     1   1
+ [2,]  2 42.42157     1   1
+ [3,]  3 32.73244     1   1
+ [4,]  4 37.86507     1   1
+ [5,]  5 38.78142     1   1
+ [6,]  6 48.82775     1   1
+ [7,]  7 41.92898     1   1
+ [8,]  8 38.39788     1   1
+ [9,]  9 50.01078     1   1
+[10,] 10 35.08417     1   1
+[11,]  1 39.83372     2   1
+[12,]  2 42.20379     2   1
+[13,]  3 32.41119     2   1
+[14,]  4 37.78738     2   1
+[15,]  5 38.81378     2   1
+[16,]  6 49.04787     2   1
+[17,]  7 42.01132     2   1
+[18,]  8 38.36371     2   1
+[19,]  9 50.04171     2   1
+[20,] 10 35.11095     2   1
+[21,]  1 40.10641     1   2
+[22,]  2 42.43758     1   2
+[23,]  3 32.68187     1   2
+[24,]  4 37.89703     1   2
+[25,]  5 38.74568     1   2
+[26,]  6 48.94730     1   2
+[27,]  7 41.97864     1   2
+[28,]  8 38.33407     1   2
+[29,]  9 50.08791     1   2
+[30,] 10 35.10127     1   2
+[31,]  1 39.77175     2   2
+[32,]  2 42.32029     2   2
+[33,]  3 32.55381     2   2
+[34,]  4 37.88457     2   2
+[35,]  5 38.74259     2   2
+[36,]  6 49.01269     2   2
+[37,]  7 41.99022     2   2
+[38,]  8 38.25065     2   2
+[39,]  9 50.10979     2   2
+[40,] 10 35.24191     2   2</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(<span class="fu" style="color: #4758AB;">lm</span> ( total_m <span class="sc" style="color: #5E5E5E;">~</span> id<span class="sc" style="color: #5E5E5E;">:</span>photo<span class="sc" style="color: #5E5E5E;">:</span>rep)))</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Df Sum Sq Mean Sq
-id:photo:rep 39   1612   41.34</code></pre>
+id:photo:rep 39   1099   28.18</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">msi <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(<span class="fu" style="color: #4758AB;">lm</span> ( total_m <span class="sc" style="color: #5E5E5E;">~</span> id)))[[<span class="dv" style="color: #AD0000;">1</span>]][<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">3</span>]</span>
 <span id="cb7-2">msip <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(<span class="fu" style="color: #4758AB;">lm</span> ( total_m <span class="sc" style="color: #5E5E5E;">~</span> id<span class="sc" style="color: #5E5E5E;">:</span>photo)))[[<span class="dv" style="color: #AD0000;">1</span>]][<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">3</span>]</span>
@@ -523,7 +521,7 @@ id:photo:rep 39   1612   41.34</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">((msi <span class="sc" style="color: #5E5E5E;">-</span> msipr)<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">/</span> (msi<span class="sc" style="color: #5E5E5E;">+</span>msip<span class="sc" style="color: #5E5E5E;">+</span>msipr)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2256166</code></pre>
+<pre><code>[1] 0.2256171</code></pre>
 </div>
 </div>
 <p>And the percent measurement error is represented by <code>pME</code>. As a rough rule of thumb we want this to be less than 5%. If it is very high, we either want to practice more, or take multiple measurements of each variable and average them.</p>
