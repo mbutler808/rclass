@@ -1,0 +1,65 @@
+---
+title: "Morphometrics Overview"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Getting started with some issues in morphometrics"
+date: 2023-04-04
+categories: [module 6, week 12, control structures, if else, (do) while, programming]
+bibliography: refs.bib
+---
+
+### Acknowledgements
+
+Material for this lecture was borrowed and adopted from
+
+- <https://digitalcommons.pace.edu/cgi/viewcontent.cgi?article=1003&context=oer>
+- [Emma Sherratʻs quick guide to Geomorph](https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf)
+
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Be able to estimate measurement error and repeatability
+-   
+:::
+
+# Overview
+
+# Morphometric Workflow
+
+::: {.callout-tip}
+## Typical Morphometric Worflow
+-  Ask interesting question, develop hypotheses, collect specimens
+-  Take photos/images of the specimens
+-  Place landmarks on the specimens in the photos at key locations. Choose landmarks that are:
+  +  Present on all specimens
+  +  Relevant to question
+  +  Clearly defined
+-  Analyze how the landmarks vary in relation to each other among specimens
+-  Perform statistical analyses to test for significant differences in body shape among
+populations, species, or whatever aspect that is relevant to your hypotheses
+-  Plot components of variation in shape that are not correlated with each other (i.e. the principal component scores).
+:::
+
+
+
+# Types of Questions that Morphometrics can Answer (not exhaustive)
+
+1. Relationship of parts to other parts. 
+2. Allometry - relationship of shape to size
+3. Comparison among groups
+4. Covariation of shape with other factors
+5. Covariation of morphology with phylogeny
+6. Morpholgical integration 
+7. Modularity 
+
+
+
+

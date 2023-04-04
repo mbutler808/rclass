@@ -125,5 +125,14 @@
   },
   "posts/2023-03-30-morphometrics/index.qmd": {
     "index.html": "b21ba9f2"
+  },
+  "posts/2023-04-04-morphometric-workflow/index.qmd": {
+    "index.html": "bff4140f"
+  },
+  "posts/2023-04-04-measurement-error/index.qmd": {
+    "index.html": "333ecfaa"
+  },
+  "posts/2023-04-04-morphometrics-landmarks/index.qmd": {
+    "index.html": "cf2d52ad"
   }
 }

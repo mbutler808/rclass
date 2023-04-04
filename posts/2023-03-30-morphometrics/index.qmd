@@ -202,11 +202,37 @@ theta <- acos( (V1 %*% V2) / (sqrt( V1%*%V1) * sqrt(V2%*%V2)) )
 theta
 ```
 
-Where the result is in radians, not degrees. 
+Where the result is in radians, not degrees (see the help page `?acos`, all of Rʻs trig functions are in radians). 
 
 Note: I should change this to using the arc tangent, to preserve the angle in case it is outside of 0,pi.
 
-To covert to degrees, remember that a 360 degree circle is 2pi radians (or 180 degrees is 1pi radians): 
+#### Radians to degrees
+
+Degrees and radians are different units of measure for an __angle__. To covert to degrees, remember that a _360 degree circle_ is _2pi radians_ (or a half circle 180 degrees is pi radians): 
+
+To remember how to do this conversion, recall that the formula for the circumference of a circle is: 
+
+$$
+Circumference = 2 \pi r
+$$
+
+A few key facts:
+
+-  _Arc length_ : the distance along a curved line (the arc length of the entire circle is the circumference).
+-  _Radian_ : the angle measured in relation to the radius. If you take the radius and lay it along the circle, the _angle defined by the arc length of one radius_ is _one radian_.  
+  -  To complete the circle, we need an arc length of $2\pi r$ (which is the circumferemce), or a little over 6 radians (because $2\pi ~= 6$). 
+-  _Degrees_ : another unit of measure for angles, defined by one circle having 360 degrees. 
+-  
+
+Therefore, the angle of a full circle is $360^\circ$, or equivalently, $2\pi$ radians:
+
+$180^\circ = \pi$ radians  
+
+If we take a measurement M in radians:
+$$
+M (rad)\frac{180^\circ}{\pi rad} = (M\frac{180}{\pi} )^\circ
+$$
+
 ```{r}
 theta_degrees <- theta/ pi * 180
 theta_degrees

@@ -71,7 +71,8 @@ ul.task-list li input[type="checkbox"] {
 
     const options = {
       valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
+      page: 25,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
 
@@ -176,7 +177,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(23)</span></div><div class="category" data-category="(do) while">(do) while <span class="quarto-category-count">(2)</span></div><div class="category" data-category="BibTeX">BibTeX <span class="quarto-category-count">(1)</span></div><div class="category" data-category="GitHub">GitHub <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Markdown">Markdown <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Quarto">Quarto <span class="quarto-category-count">(2)</span></div><div class="category" data-category="R">R <span class="quarto-category-count">(4)</span></div><div class="category" data-category="apply">apply <span class="quarto-category-count">(1)</span></div><div class="category" data-category="authoring">authoring <span class="quarto-category-count">(1)</span></div><div class="category" data-category="control structures">control structures <span class="quarto-category-count">(2)</span></div><div class="category" data-category="data">data <span class="quarto-category-count">(4)</span></div><div class="category" data-category="data mining">data mining <span class="quarto-category-count">(1)</span></div><div class="category" data-category="data structures">data structures <span class="quarto-category-count">(2)</span></div><div class="category" data-category="data visualization">data visualization <span class="quarto-category-count">(2)</span></div><div class="category" data-category="dplyr">dplyr <span class="quarto-category-count">(4)</span></div><div class="category" data-category="filesystem">filesystem <span class="quarto-category-count">(1)</span></div><div class="category" data-category="for loops">for loops <span class="quarto-category-count">(2)</span></div><div class="category" data-category="formats">formats <span class="quarto-category-count">(1)</span></div><div class="category" data-category="functions">functions <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ggplot2">ggplot2 <span class="quarto-category-count">(3)</span></div><div class="category" data-category="git">git <span class="quarto-category-count">(1)</span></div><div class="category" data-category="if else">if else <span class="quarto-category-count">(2)</span></div><div class="category" data-category="input">input <span class="quarto-category-count">(1)</span></div><div class="category" data-category="introduction">introduction <span class="quarto-category-count">(1)</span></div><div class="category" data-category="lattice">lattice <span class="quarto-category-count">(1)</span></div><div class="category" data-category="lists">lists <span class="quarto-category-count">(2)</span></div><div class="category" data-category="methods">methods <span class="quarto-category-count">(1)</span></div><div class="category" data-category="module 1">module 1 <span class="quarto-category-count">(7)</span></div><div class="category" data-category="module 2">module 2 <span class="quarto-category-count">(4)</span></div><div class="category" data-category="module 3">module 3 <span class="quarto-category-count">(6)</span></div><div class="category" data-category="module 4">module 4 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="module 5">module 5 <span class="quarto-category-count">(3)</span></div><div class="category" data-category="module 6">module 6 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="multivariate">multivariate <span class="quarto-category-count">(1)</span></div><div class="category" data-category="objects">objects <span class="quarto-category-count">(2)</span></div><div class="category" data-category="output">output <span class="quarto-category-count">(1)</span></div><div class="category" data-category="pipe">pipe <span class="quarto-category-count">(2)</span></div><div class="category" data-category="plotting">plotting <span class="quarto-category-count">(2)</span></div><div class="category" data-category="programming">programming <span class="quarto-category-count">(10)</span></div><div class="category" data-category="questions">questions <span class="quarto-category-count">(1)</span></div><div class="category" data-category="reproducibility">reproducibility <span class="quarto-category-count">(2)</span></div><div class="category" data-category="scope">scope <span class="quarto-category-count">(1)</span></div><div class="category" data-category="scripts">scripts <span class="quarto-category-count">(1)</span></div><div class="category" data-category="shell">shell <span class="quarto-category-count">(1)</span></div><div class="category" data-category="statistics">statistics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="tibble">tibble <span class="quarto-category-count">(3)</span></div><div class="category" data-category="tidyr">tidyr <span class="quarto-category-count">(3)</span></div><div class="category" data-category="tidyverse">tidyverse <span class="quarto-category-count">(3)</span></div><div class="category" data-category="univariate">univariate <span class="quarto-category-count">(1)</span></div><div class="category" data-category="version control">version control <span class="quarto-category-count">(1)</span></div><div class="category" data-category="week 1">week 1 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="week 10">week 10 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="week 11">week 11 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="week 2">week 2 <span class="quarto-category-count">(3)</span></div><div class="category" data-category="week 3">week 3 <span class="quarto-category-count">(4)</span></div><div class="category" data-category="week 4">week 4 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="week 6">week 6 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="week 7">week 7 <span class="quarto-category-count">(4)</span></div><div class="category" data-category="week 8">week 8 <span class="quarto-category-count">(3)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(26)</span></div><div class="category" data-category="(do) while">(do) while <span class="quarto-category-count">(5)</span></div><div class="category" data-category="BibTeX">BibTeX <span class="quarto-category-count">(1)</span></div><div class="category" data-category="GitHub">GitHub <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Markdown">Markdown <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Quarto">Quarto <span class="quarto-category-count">(2)</span></div><div class="category" data-category="R">R <span class="quarto-category-count">(4)</span></div><div class="category" data-category="apply">apply <span class="quarto-category-count">(1)</span></div><div class="category" data-category="authoring">authoring <span class="quarto-category-count">(1)</span></div><div class="category" data-category="control structures">control structures <span class="quarto-category-count">(5)</span></div><div class="category" data-category="data">data <span class="quarto-category-count">(4)</span></div><div class="category" data-category="data mining">data mining <span class="quarto-category-count">(1)</span></div><div class="category" data-category="data structures">data structures <span class="quarto-category-count">(2)</span></div><div class="category" data-category="data visualization">data visualization <span class="quarto-category-count">(2)</span></div><div class="category" data-category="dplyr">dplyr <span class="quarto-category-count">(4)</span></div><div class="category" data-category="filesystem">filesystem <span class="quarto-category-count">(1)</span></div><div class="category" data-category="for loops">for loops <span class="quarto-category-count">(2)</span></div><div class="category" data-category="formats">formats <span class="quarto-category-count">(1)</span></div><div class="category" data-category="functions">functions <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ggplot2">ggplot2 <span class="quarto-category-count">(3)</span></div><div class="category" data-category="git">git <span class="quarto-category-count">(1)</span></div><div class="category" data-category="if else">if else <span class="quarto-category-count">(5)</span></div><div class="category" data-category="input">input <span class="quarto-category-count">(1)</span></div><div class="category" data-category="introduction">introduction <span class="quarto-category-count">(1)</span></div><div class="category" data-category="lattice">lattice <span class="quarto-category-count">(1)</span></div><div class="category" data-category="lists">lists <span class="quarto-category-count">(2)</span></div><div class="category" data-category="methods">methods <span class="quarto-category-count">(1)</span></div><div class="category" data-category="module 1">module 1 <span class="quarto-category-count">(7)</span></div><div class="category" data-category="module 2">module 2 <span class="quarto-category-count">(4)</span></div><div class="category" data-category="module 3">module 3 <span class="quarto-category-count">(6)</span></div><div class="category" data-category="module 4">module 4 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="module 5">module 5 <span class="quarto-category-count">(3)</span></div><div class="category" data-category="module 6">module 6 <span class="quarto-category-count">(4)</span></div><div class="category" data-category="multivariate">multivariate <span class="quarto-category-count">(1)</span></div><div class="category" data-category="objects">objects <span class="quarto-category-count">(2)</span></div><div class="category" data-category="output">output <span class="quarto-category-count">(1)</span></div><div class="category" data-category="pipe">pipe <span class="quarto-category-count">(2)</span></div><div class="category" data-category="plotting">plotting <span class="quarto-category-count">(2)</span></div><div class="category" data-category="programming">programming <span class="quarto-category-count">(13)</span></div><div class="category" data-category="questions">questions <span class="quarto-category-count">(1)</span></div><div class="category" data-category="reproducibility">reproducibility <span class="quarto-category-count">(2)</span></div><div class="category" data-category="scope">scope <span class="quarto-category-count">(1)</span></div><div class="category" data-category="scripts">scripts <span class="quarto-category-count">(1)</span></div><div class="category" data-category="shell">shell <span class="quarto-category-count">(1)</span></div><div class="category" data-category="statistics">statistics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="tibble">tibble <span class="quarto-category-count">(3)</span></div><div class="category" data-category="tidyr">tidyr <span class="quarto-category-count">(3)</span></div><div class="category" data-category="tidyverse">tidyverse <span class="quarto-category-count">(3)</span></div><div class="category" data-category="univariate">univariate <span class="quarto-category-count">(1)</span></div><div class="category" data-category="version control">version control <span class="quarto-category-count">(1)</span></div><div class="category" data-category="week 1">week 1 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="week 10">week 10 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="week 11">week 11 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="week 12">week 12 <span class="quarto-category-count">(3)</span></div><div class="category" data-category="week 2">week 2 <span class="quarto-category-count">(3)</span></div><div class="category" data-category="week 3">week 3 <span class="quarto-category-count">(4)</span></div><div class="category" data-category="week 4">week 4 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="week 6">week 6 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="week 7">week 7 <span class="quarto-category-count">(4)</span></div><div class="category" data-category="week 8">week 8 <span class="quarto-category-count">(3)</span></div></div></div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
 
@@ -203,7 +204,165 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-lectures">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="module 6,week 11,control structures,if else,(do) while,programming" data-listing-date-sort="1680170400000" data-listing-file-modified-sort="1680315097682" data-listing-reading-time-sort="5.83">
+<div class="quarto-post image-right" data-index="0" data-categories="module 6,week 12,control structures,if else,(do) while,programming" data-listing-date-sort="1680602400000" data-listing-file-modified-sort="1680631839000" data-listing-reading-time-sort="0.965">
+<div class="thumbnail">
+<a href="./posts/2023-04-04-morphometric-workflow/index.html">
+<div class="thumbnail-image">
+
+</div>
+</a><p><a href="./posts/2023-04-04-morphometric-workflow/index.html"></a></p>
+</div>
+<div class="body">
+<a href="./posts/2023-04-04-morphometric-workflow/index.html">
+<h3 class="no-anchor listing-title">
+Morphometrics Overview
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('module 6'); return false;">
+module 6
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('week 12'); return false;">
+week 12
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('control structures'); return false;">
+control structures
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('if else'); return false;">
+if else
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('(do) while'); return false;">
+(do) while
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
+programming
+</div>
+</div>
+<a href="./posts/2023-04-04-morphometric-workflow/index.html">
+<div class="listing-description">
+<p>Getting started with some issues in morphometrics</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/2023-04-04-morphometric-workflow/index.html">
+<div class="listing-date">
+Apr 4, 2023
+</div>
+<div class="listing-author">
+Marguerite Butler
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="module 6,week 12,control structures,if else,(do) while,programming" data-listing-date-sort="1680602400000" data-listing-file-modified-sort="1680638722158" data-listing-reading-time-sort="5.7">
+<div class="thumbnail">
+<p><a href="./posts/2023-04-04-morphometrics-landmarks/index.html"> <img src="./images/rodentmandible.jpg" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/2023-04-04-morphometrics-landmarks/index.html">
+<h3 class="no-anchor listing-title">
+Intro to Geometric Morphometrics
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('module 6'); return false;">
+module 6
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('week 12'); return false;">
+week 12
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('control structures'); return false;">
+control structures
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('if else'); return false;">
+if else
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('(do) while'); return false;">
+(do) while
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
+programming
+</div>
+</div>
+<a href="./posts/2023-04-04-morphometrics-landmarks/index.html">
+<div class="listing-description">
+<p>Getting started with some issues in morphometrics</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/2023-04-04-morphometrics-landmarks/index.html">
+<div class="listing-date">
+Apr 4, 2023
+</div>
+<div class="listing-author">
+Marguerite Butler
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="module 6,week 12,control structures,if else,(do) while,programming" data-listing-date-sort="1680170400000" data-listing-file-modified-sort="1680603964645" data-listing-reading-time-sort="6.635">
+<div class="thumbnail">
+<a href="./posts/2023-04-04-measurement-error/index.html">
+<div class="thumbnail-image">
+
+</div>
+</a><p><a href="./posts/2023-04-04-measurement-error/index.html"></a></p>
+</div>
+<div class="body">
+<a href="./posts/2023-04-04-measurement-error/index.html">
+<h3 class="no-anchor listing-title">
+Measurement Error
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('module 6'); return false;">
+module 6
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('week 12'); return false;">
+week 12
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('control structures'); return false;">
+control structures
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('if else'); return false;">
+if else
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('(do) while'); return false;">
+(do) while
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
+programming
+</div>
+</div>
+<a href="./posts/2023-04-04-measurement-error/index.html">
+<div class="listing-description">
+<p>Getting started with some issues in morphometrics</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/2023-04-04-measurement-error/index.html">
+<div class="listing-date">
+Mar 30, 2023
+</div>
+<div class="listing-author">
+Marguerite Butler
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="module 6,week 11,control structures,if else,(do) while,programming" data-listing-date-sort="1680170400000" data-listing-file-modified-sort="1680553711000" data-listing-reading-time-sort="6.78">
 <div class="thumbnail">
 <p><a href="./posts/2023-03-30-morphometrics/index.html"> <img src="./images/rodentmandible.jpg" class="thumnail-image"> </a></p>
 </div>
@@ -253,7 +412,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="module 5,week 11,control structures,if else,(do) while,programming" data-listing-date-sort="1679997600000" data-listing-file-modified-sort="1680166302000" data-listing-reading-time-sort="8.685">
+<div class="quarto-post image-right" data-index="4" data-categories="module 5,week 11,control structures,if else,(do) while,programming" data-listing-date-sort="1679997600000" data-listing-file-modified-sort="1680166302648" data-listing-reading-time-sort="8.685">
 <div class="thumbnail">
 <p><a href="./posts/2023-03-28-program-flow/index.html"> <img src="./images/ProgramFlow_decision_point.png" class="thumnail-image"> </a></p>
 </div>
@@ -303,7 +462,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="module 5,week 10,apply,lists,for loops,programming" data-listing-date-sort="1679565600000" data-listing-file-modified-sort="1679601528674" data-listing-reading-time-sort="7.835">
+<div class="quarto-post image-right" data-index="5" data-categories="module 5,week 10,apply,lists,for loops,programming" data-listing-date-sort="1679565600000" data-listing-file-modified-sort="1679601528000" data-listing-reading-time-sort="7.835">
 <div class="thumbnail">
 <a href="./posts/2023-03-23-apply/index.html">
 <div class="thumbnail-image">
@@ -357,7 +516,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="module 5,week 10,lists,for loops,programming" data-listing-date-sort="1679565600000" data-listing-file-modified-sort="1679600169419" data-listing-reading-time-sort="6.32">
+<div class="quarto-post image-right" data-index="6" data-categories="module 5,week 10,lists,for loops,programming" data-listing-date-sort="1679565600000" data-listing-file-modified-sort="1679600169000" data-listing-reading-time-sort="6.32">
 <div class="thumbnail">
 <a href="./posts/2023-03-23-lists-loops/index.html">
 <div class="thumbnail-image">
@@ -408,7 +567,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="module 4,week 8,programming,functions,methods,scope" data-listing-date-sort="1679392800000" data-listing-file-modified-sort="1679944509000" data-listing-reading-time-sort="11.33">
+<div class="quarto-post image-right" data-index="7" data-categories="module 4,week 8,programming,functions,methods,scope" data-listing-date-sort="1679392800000" data-listing-file-modified-sort="1679944509499" data-listing-reading-time-sort="11.33">
 <div class="thumbnail">
 <a href="./posts/2023-03-21-functions/index.html">
 <div class="thumbnail-image">
@@ -462,7 +621,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="module 3,week 7,tidyr,tidyverse,dplyr,tibble,pipe" data-listing-date-sort="1678356000000" data-listing-file-modified-sort="1678402121931" data-listing-reading-time-sort="9.495">
+<div class="quarto-post image-right" data-index="8" data-categories="module 3,week 7,tidyr,tidyverse,dplyr,tibble,pipe" data-listing-date-sort="1678356000000" data-listing-file-modified-sort="1678402121000" data-listing-reading-time-sort="9.495">
 <div class="thumbnail">
 <p><a href="./posts/2023-03-09-joining-data/index.html"> <img src="https://d33wubrfki0l68.cloudfront.net/aeab386461820b029b7e7606ccff1286f623bae1/ef0d4/diagrams/join-venn.png" class="thumnail-image"> </a></p>
 </div>
@@ -515,7 +674,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="module 4,week 8,tidyr,tidyverse,dplyr,tibble" data-listing-date-sort="1678356000000" data-listing-file-modified-sort="1678402577700" data-listing-reading-time-sort="7.325">
+<div class="quarto-post image-right" data-index="9" data-categories="module 4,week 8,tidyr,tidyverse,dplyr,tibble" data-listing-date-sort="1678356000000" data-listing-file-modified-sort="1678402577000" data-listing-reading-time-sort="7.325">
 <div class="thumbnail">
 <a href="./posts/2023-03-09-reshaping-data/index.html">
 <div class="thumbnail-image">
@@ -569,7 +728,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="module 3,week 8,univariate,statistics,ggplot2,dplyr" data-listing-date-sort="1678183200000" data-listing-file-modified-sort="1678218216000" data-listing-reading-time-sort="5">
+<div class="quarto-post image-right" data-index="10" data-categories="module 3,week 8,univariate,statistics,ggplot2,dplyr" data-listing-date-sort="1678183200000" data-listing-file-modified-sort="1678218216000" data-listing-reading-time-sort="5">
 <div class="thumbnail">
 <a href="./posts/2023-03-07-univariate/index.html">
 <div class="thumbnail-image">
@@ -623,7 +782,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="module 3,week 7,multivariate,statistics,R" data-listing-date-sort="1677578400000" data-listing-file-modified-sort="1678387464628" data-listing-reading-time-sort="11.85">
+<div class="quarto-post image-right" data-index="11" data-categories="module 3,week 7,multivariate,statistics,R" data-listing-date-sort="1677578400000" data-listing-file-modified-sort="1678387464000" data-listing-reading-time-sort="11.85">
 <div class="thumbnail">
 <p><a href="./posts/2023-03-02-multivariate/index.html"> <img src="./images/skew.gif" class="thumnail-image"> </a></p>
 </div>
@@ -670,7 +829,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="module 3,week 7,tidyr,tidyverse,dplyr,tibble,pipe" data-listing-date-sort="1677578400000" data-listing-file-modified-sort="1677612200000" data-listing-reading-time-sort="13.93">
+<div class="quarto-post image-right" data-index="12" data-categories="module 3,week 7,tidyr,tidyverse,dplyr,tibble,pipe" data-listing-date-sort="1677578400000" data-listing-file-modified-sort="1677612200696" data-listing-reading-time-sort="13.93">
 <div class="thumbnail">
 <p><a href="./posts/2023-02-28-dplyr/index.html"> <img src="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/tidydata_1.jpg" class="thumnail-image"> </a></p>
 </div>
@@ -723,7 +882,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="module 3,week 7,R,programming,plotting,ggplot2,data visualization" data-listing-date-sort="1676973600000" data-listing-file-modified-sort="1677183092000" data-listing-reading-time-sort="20.52">
+<div class="quarto-post image-right" data-index="13" data-categories="module 3,week 7,R,programming,plotting,ggplot2,data visualization" data-listing-date-sort="1676973600000" data-listing-file-modified-sort="1677183092672" data-listing-reading-time-sort="20.52">
 <div class="thumbnail">
 <p><a href="./posts/2023-02-21-ggplot2/index.html"> <img src="https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf" class="thumnail-image"> </a></p>
 </div>
@@ -776,7 +935,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="module 3,week 6,plotting,ggplot2,lattice,data visualization" data-listing-date-sort="1676541600000" data-listing-file-modified-sort="1676578394133" data-listing-reading-time-sort="8.14">
+<div class="quarto-post image-right" data-index="14" data-categories="module 3,week 6,plotting,ggplot2,lattice,data visualization" data-listing-date-sort="1676541600000" data-listing-file-modified-sort="1676578394000" data-listing-reading-time-sort="8.14">
 <div class="thumbnail">
 <a href="./posts/2023-02-16-plotting-systems/index.html">
 <div class="thumbnail-image">
@@ -830,7 +989,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="module 2,week 4,data,data structures,objects" data-listing-date-sort="1676368800000" data-listing-file-modified-sort="1676578293804" data-listing-reading-time-sort="12.84">
+<div class="quarto-post image-right" data-index="15" data-categories="module 2,week 4,data,data structures,objects" data-listing-date-sort="1676368800000" data-listing-file-modified-sort="1676578293000" data-listing-reading-time-sort="12.84">
 <div class="thumbnail">
 <p><a href="./posts/2023-02-14-tidying-exploring-data/index.html"> <img src="./images/penguins.png" class="thumnail-image"> </a></p>
 </div>
@@ -877,7 +1036,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="module 2,week 4,data,data structures,objects" data-listing-date-sort="1675936800000" data-listing-file-modified-sort="1676367943000" data-listing-reading-time-sort="23.37">
+<div class="quarto-post image-right" data-index="16" data-categories="module 2,week 4,data,data structures,objects" data-listing-date-sort="1675936800000" data-listing-file-modified-sort="1676367943408" data-listing-reading-time-sort="23.37">
 <div class="thumbnail">
 <a href="./posts/2023-02-09-data/index.html">
 <div class="thumbnail-image">
@@ -928,7 +1087,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-categories="module 1,week 3,R,scripts,reproducibility" data-listing-date-sort="1675764000000" data-listing-file-modified-sort="1676506004000" data-listing-reading-time-sort="12.42">
+<div class="quarto-post image-right" data-index="17" data-categories="module 1,week 3,R,scripts,reproducibility" data-listing-date-sort="1675764000000" data-listing-file-modified-sort="1676506004616" data-listing-reading-time-sort="12.42">
 <div class="thumbnail">
 <a href="./posts/2023-02-07-scripts/index.html">
 <div class="thumbnail-image">
@@ -979,7 +1138,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="15" data-categories="module 2,week 3,data,questions,data mining" data-listing-date-sort="1675159200000" data-listing-file-modified-sort="1675196288603" data-listing-reading-time-sort="2.585">
+<div class="quarto-post image-right" data-index="18" data-categories="module 2,week 3,data,questions,data mining" data-listing-date-sort="1675159200000" data-listing-file-modified-sort="1675196288000" data-listing-reading-time-sort="2.585">
 <div class="thumbnail">
 <p><a href="./posts/2023-01-31-what-is-the-question/index.html"> <img src="http://www.posterwire.com/wp-content/images/wizard_of_oz.jpg" class="thumnail-image"> </a></p>
 </div>
@@ -1026,7 +1185,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="16" data-categories="module 2,week 3,data,input,output,formats" data-listing-date-sort="1675159200000" data-listing-file-modified-sort="1675392796582" data-listing-reading-time-sort="19.44">
+<div class="quarto-post image-right" data-index="19" data-categories="module 2,week 3,data,input,output,formats" data-listing-date-sort="1675159200000" data-listing-file-modified-sort="1675392796000" data-listing-reading-time-sort="19.44">
 <div class="thumbnail">
 <p><a href="./posts/2023-01-31-reading-data/index.html"> <img src="./posts/2023-01-31-reading-data/ascii1.png" class="thumnail-image"> </a></p>
 </div>
@@ -1076,7 +1235,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="17" data-categories="module 1,week 3,Quarto,authoring,BibTeX,programming" data-listing-date-sort="1675159200000" data-listing-file-modified-sort="1675797373000" data-listing-reading-time-sort="8.875">
+<div class="quarto-post image-right" data-index="20" data-categories="module 1,week 3,Quarto,authoring,BibTeX,programming" data-listing-date-sort="1675159200000" data-listing-file-modified-sort="1675797373706" data-listing-reading-time-sort="8.875">
 <div class="thumbnail">
 <a href="./posts/2023-02-01-reference-management/index.html">
 <div class="thumbnail-image">
@@ -1130,7 +1289,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="18" data-categories="module 1,week 2,R,reproducibility" data-listing-date-sort="1674727200000" data-listing-file-modified-sort="1674761626266" data-listing-reading-time-sort="7.375">
+<div class="quarto-post image-right" data-index="21" data-categories="module 1,week 2,R,reproducibility" data-listing-date-sort="1674727200000" data-listing-file-modified-sort="1674761626000" data-listing-reading-time-sort="7.375">
 <div class="thumbnail">
 <a href="./posts/2023-01-26-reproducible-research/index.html">
 <div class="thumbnail-image">
@@ -1178,7 +1337,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="19" data-categories="module 1,week 2,Markdown,Quarto,programming" data-listing-date-sort="1674727200000" data-listing-file-modified-sort="1675338640000" data-listing-reading-time-sort="17.74">
+<div class="quarto-post image-right" data-index="22" data-categories="module 1,week 2,Markdown,Quarto,programming" data-listing-date-sort="1674727200000" data-listing-file-modified-sort="1675338640011" data-listing-reading-time-sort="17.74">
 <div class="thumbnail">
 <p><a href="./posts/2023-01-26-intro-quarto/index.html"> <img src="./images/dspipeline.png" class="thumnail-image"> </a></p>
 </div>
@@ -1225,7 +1384,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="20" data-categories="module 1,week 2,programming,version control,git,GitHub" data-listing-date-sort="1674554400000" data-listing-file-modified-sort="1674885995000" data-listing-reading-time-sort="14.925">
+<div class="quarto-post image-right" data-index="23" data-categories="module 1,week 2,programming,version control,git,GitHub" data-listing-date-sort="1674554400000" data-listing-file-modified-sort="1674885995759" data-listing-reading-time-sort="14.925">
 <div class="thumbnail">
 <a href="./posts/2023-01-24-intro-git-github/index.html">
 <div class="thumbnail-image">
@@ -1279,7 +1438,7 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="21" data-categories="module 1,week 1,programming,filesystem,shell" data-listing-date-sort="1674122400000" data-listing-file-modified-sort="1674697965302" data-listing-reading-time-sort="11.44">
+<div class="quarto-post image-right" data-index="24" data-categories="module 1,week 1,programming,filesystem,shell" data-listing-date-sort="1674122400000" data-listing-file-modified-sort="1674697965000" data-listing-reading-time-sort="11.44">
 <div class="thumbnail">
 <a href="./posts/2023-01-19-your-computer-filesystems/index.html">
 <div class="thumbnail-image">
@@ -1330,9 +1489,9 @@ Marguerite Butler
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="22" data-categories="module 1,week 1,introduction" data-listing-date-sort="1673949600000" data-listing-file-modified-sort="1674697965298" data-listing-reading-time-sort="1.17">
+<div class="quarto-post image-right" data-index="25" data-categories="module 1,week 1,introduction" data-listing-date-sort="1673949600000" data-listing-file-modified-sort="1674697965000" data-listing-reading-time-sort="1.17">
 <div class="thumbnail">
-<p><a href="./posts/2023-01-17-the-big-picture/index.html"> <img src="./posts/2023-01-17-the-big-picture/whole-game.png" class="thumnail-image"> </a></p>
+<p><a href="./posts/2023-01-17-the-big-picture/index.html"> <img data-src="./posts/2023-01-17-the-big-picture/whole-game.png" class="thumnail-image"> </a></p>
 </div>
 <div class="body">
 <a href="./posts/2023-01-17-the-big-picture/index.html">
@@ -1375,6 +1534,9 @@ Marguerite Butler
 <div class="listing-no-matching d-none">
 No matching items
 </div>
+<nav id="lectures-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
