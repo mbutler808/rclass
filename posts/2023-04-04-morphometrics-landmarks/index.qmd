@@ -26,7 +26,7 @@ References for this Material:
 **At the end of this lesson you will:**
 
 -   Be able to collect landmark data
--   Be able to perform a Procrustes superposition
+-   Understand the terminology for landmark data
 
 :::
 
