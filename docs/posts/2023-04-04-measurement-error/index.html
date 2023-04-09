@@ -8,7 +8,7 @@
 
 <meta name="author" content="Marguerite Butler">
 <meta name="dcterms.date" content="2023-03-30">
-<meta name="description" content="Getting started with some issues in morphometrics">
+<meta name="description" content="No measurements are perfect, so quantifying repeatability is important">
 
 <title>ZOOL710 Data Science in R for Biologists - Measurement Error</title>
 <style>
@@ -231,7 +231,7 @@ div.csl-indent {
       <h1 class="title">Measurement Error</h1>
                   <div>
         <div class="description">
-          Getting started with some issues in morphometrics
+          No measurements are perfect, so quantifying repeatability is important
         </div>
       </div>
                           <div class="quarto-categories">
@@ -291,7 +291,7 @@ div.csl-indent {
   <li><a href="#plan-your-data-management" id="toc-plan-your-data-management" class="nav-link" data-scroll-target="#plan-your-data-management">Plan your data management</a></li>
   <li><a href="#statistical-methods-for-measurement-error" id="toc-statistical-methods-for-measurement-error" class="nav-link" data-scroll-target="#statistical-methods-for-measurement-error">Statistical methods for Measurement Error:</a></li>
   <li><a href="#analyze-with-anova" id="toc-analyze-with-anova" class="nav-link" data-scroll-target="#analyze-with-anova">Analyze with ANOVA:</a></li>
-  <li><a href="#simulated-example" id="toc-simulated-example" class="nav-link" data-scroll-target="#simulated-example">Simulated example:</a></li>
+  <li><a href="#simplifed-simulated-example" id="toc-simplifed-simulated-example" class="nav-link" data-scroll-target="#simplifed-simulated-example">Simplifed Simulated example:</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -421,94 +421,99 @@ s^{2}_{within} = MSS_{within}
 <p>Then we calculate the ratio of this value to the total MS: <strong>((MS(id) – MS(id:photo:rep))/2 ) / (MS(id)+MS(id:photo)+MS(id:photo:rep))</strong></p>
 <p>The result is the <strong>repeatability</strong>, which in good circumstances is somewhere above 0.95; and thus 5% <strong>measurement error</strong>.</p>
 </section>
-<section id="simulated-example" class="level3">
-<h3 class="anchored" data-anchor-id="simulated-example">Simulated example:</h3>
-<p>Measure 5 specimens (single measurement). Take two photos of each specimen, digitized twice (once in each of two sessions on different days). How repeatable are the measurements?</p>
+<section id="simplifed-simulated-example" class="level3">
+<h3 class="anchored" data-anchor-id="simplifed-simulated-example">Simplifed Simulated example:</h3>
+<p>Simplifed example: 20 specimens, 1 photo, 2 digitzing reps:</p>
+<p>20 specimens: (single measurement dataset). 2 repetitons: Digitize each photo twice (once in each of two sessions on different days).<br>
+How repeatable are the measurements?</p>
 <p>Simulate the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>true_m <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">3</span>)  <span class="co"># true values for 10 specimens</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> true_m <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">10</span>,<span class="dv">0</span>,.<span class="dv">1</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> true_m <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">10</span>,<span class="dv">0</span>,.<span class="dv">1</span>)</span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>true_m <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">20</span>,<span class="dv">3</span>)  <span class="co"># true values for  specimens</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> true_m <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">0</span>,<span class="fl">0.5</span>)  <span class="co"># measurement 1</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> true_m <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">0</span>,<span class="fl">0.5</span>)  <span class="co"># measurement 2</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>p1m1 <span class="ot">&lt;-</span> true_m <span class="sc">+</span> p1 <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">10</span>,<span class="dv">0</span>,.<span class="dv">05</span>) <span class="co"># photo 1 measurements set 1</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>p1m2 <span class="ot">&lt;-</span> true_m <span class="sc">+</span> p1 <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">10</span>,<span class="dv">0</span>,.<span class="dv">05</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>p2m1 <span class="ot">&lt;-</span> true_m <span class="sc">+</span> p2 <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">10</span>,<span class="dv">0</span>,.<span class="dv">05</span>) <span class="co"># photo 2 measurements set 1</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>p2m2 <span class="ot">&lt;-</span> true_m <span class="sc">+</span> p2 <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">10</span>,<span class="dv">0</span>,.<span class="dv">05</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">times=</span><span class="dv">4</span>))</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>photo <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">rep</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">each=</span><span class="dv">10</span>), <span class="at">times=</span><span class="dv">2</span>))</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>rep <span class="ot">&lt;-</span> <span class="fu">gl</span>(<span class="dv">2</span>, <span class="dv">20</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>total_m <span class="ot">&lt;-</span> <span class="fu">c</span>(p1m1, p2m1, p1m2, p2m2)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(id, total_m, photo, rep)  <span class="co"># the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">times=</span><span class="dv">2</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>rep <span class="ot">&lt;-</span> <span class="fu">gl</span>(<span class="dv">2</span>, <span class="dv">20</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>total_m <span class="ot">&lt;-</span> <span class="fu">c</span>(m1, m2)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(id, total_m, rep)  <span class="co"># the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      id  total_m photo rep
- [1,]  1 40.11538     1   1
- [2,]  2 42.42157     1   1
- [3,]  3 32.73244     1   1
- [4,]  4 37.86507     1   1
- [5,]  5 38.78142     1   1
- [6,]  6 48.82775     1   1
- [7,]  7 41.92898     1   1
- [8,]  8 38.39788     1   1
- [9,]  9 50.01078     1   1
-[10,] 10 35.08417     1   1
-[11,]  1 39.83372     2   1
-[12,]  2 42.20379     2   1
-[13,]  3 32.41119     2   1
-[14,]  4 37.78738     2   1
-[15,]  5 38.81378     2   1
-[16,]  6 49.04787     2   1
-[17,]  7 42.01132     2   1
-[18,]  8 38.36371     2   1
-[19,]  9 50.04171     2   1
-[20,] 10 35.11095     2   1
-[21,]  1 40.10641     1   2
-[22,]  2 42.43758     1   2
-[23,]  3 32.68187     1   2
-[24,]  4 37.89703     1   2
-[25,]  5 38.74568     1   2
-[26,]  6 48.94730     1   2
-[27,]  7 41.97864     1   2
-[28,]  8 38.33407     1   2
-[29,]  9 50.08791     1   2
-[30,] 10 35.10127     1   2
-[31,]  1 39.77175     2   2
-[32,]  2 42.32029     2   2
-[33,]  3 32.55381     2   2
-[34,]  4 37.88457     2   2
-[35,]  5 38.74259     2   2
-[36,]  6 49.01269     2   2
-[37,]  7 41.99022     2   2
-[38,]  8 38.25065     2   2
-[39,]  9 50.10979     2   2
-[40,] 10 35.24191     2   2</code></pre>
+<pre><code>      id  total_m rep
+ [1,]  1 17.10225   1
+ [2,]  2 15.93986   1
+ [3,]  3 16.19714   1
+ [4,]  4 21.44124   1
+ [5,]  5 21.54744   1
+ [6,]  6 16.44169   1
+ [7,]  7 18.90075   1
+ [8,]  8 20.44293   1
+ [9,]  9 25.09316   1
+[10,] 10 20.39886   1
+[11,] 11 25.94884   1
+[12,] 12 18.35997   1
+[13,] 13 21.62585   1
+[14,] 14 19.90764   1
+[15,] 15 27.66315   1
+[16,] 16 21.11648   1
+[17,] 17 16.21200   1
+[18,] 18 19.97062   1
+[19,] 19 20.03302   1
+[20,] 20 15.84359   1
+[21,]  1 17.12800   2
+[22,]  2 17.28850   2
+[23,]  3 16.03851   2
+[24,]  4 21.87341   2
+[25,]  5 20.78227   2
+[26,]  6 16.73352   2
+[27,]  7 17.15422   2
+[28,]  8 20.67574   2
+[29,]  9 24.17468   2
+[30,] 10 20.15450   2
+[31,] 11 26.62219   2
+[32,] 12 18.34595   2
+[33,] 13 21.26133   2
+[34,] 14 20.48446   2
+[35,] 15 27.57298   2
+[36,] 16 20.05384   2
+[37,] 17 17.00963   2
+[38,] 18 21.46221   2
+[39,] 19 20.56191   2
+[40,] 20 14.67021   2</code></pre>
 </div>
 </div>
+<p>Is there a difference between the measurement sessions?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(<span class="fu">lm</span> ( total_m <span class="sc">~</span> id<span class="sc">:</span>photo<span class="sc">:</span>rep)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(<span class="fu">lm</span> ( total_m <span class="sc">~</span> rep)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             Df Sum Sq Mean Sq
-id:photo:rep 39   1099   28.18</code></pre>
+<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
+rep          1      0    0.00       0  0.995
+Residuals   38    434   11.42               </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>msi <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">aov</span>(<span class="fu">lm</span> ( total_m <span class="sc">~</span> id)))[[<span class="dv">1</span>]][<span class="dv">1</span>,<span class="dv">3</span>]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>msip <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">aov</span>(<span class="fu">lm</span> ( total_m <span class="sc">~</span> id<span class="sc">:</span>photo)))[[<span class="dv">1</span>]][<span class="dv">1</span>,<span class="dv">3</span>]</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>msipr <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">aov</span>(<span class="fu">lm</span> ( total_m <span class="sc">~</span> id<span class="sc">:</span>photo<span class="sc">:</span>rep)))[[<span class="dv">1</span>]][<span class="dv">1</span>,<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>To calculate the repeatability of our digitizing ability, we subtract the MS of the id:photo:rep term from the id term and divide by two (because we have two replicates):</p>
-<p>(MS(id) – MS(id:photo:rep))/2</p>
-<p>Then we calculate the ratio of this value to the total MS:</p>
-<p>((MS(id) – MS(id:photo:rep))/2 ) / (MS(id)+MS(id:photo)+MS(id:photo:rep))</p>
-<p>The result is a value, which in good circumstances is somewhere above 0.95; a repeatability of 0.95 and thus 5% error.</p>
+<p>No (<em>thatʻs good!</em>)</p>
+<p>Is there a difference between individual specimens?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>((msi <span class="sc">-</span> msipr)<span class="sc">/</span><span class="dv">2</span>) <span class="sc">/</span> (msi<span class="sc">+</span>msip<span class="sc">+</span>msipr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">aov</span>(<span class="fu">lm</span>( total_m <span class="sc">~</span> id )))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2256171</code></pre>
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+id          19  427.3  22.491   67.72 4.01e-14 ***
+Residuals   20    6.6   0.332                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>And the percent measurement error is represented by <code>pME</code>. As a rough rule of thumb we want this to be less than 5%. If it is very high, we either want to practice more, or take multiple measurements of each variable and average them.</p>
-<p>Alternatively, if we were interested in inter-observer error vs.&nbsp;repeatability within observer, we could take one photograph and have it measured by two different people, each person taking two sets of measurements (preferably in different sessions).</p>
-<p>The same can be done for the photos (ind:photo) but of course remember digitizing error is also in this term. This post is inspired by Chapter 9 of the Green Book, which I strongly recommend reading.</p>
-<p>Remember, all this can be done by accessing the parts of the ANOVA table using regular R indexing. Dump the output of procD.lm into an object e.g.&nbsp;called res then res[,3] will be the MS values.</p>
+<p>Yes, and the resigual mean squared error looks small too (good!). How big is the measurement error?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>s2_within <span class="ot">&lt;-</span> ms_within <span class="ot">&lt;-</span> mod[[<span class="dv">1</span>]][<span class="dv">2</span>,<span class="dv">3</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>s2_within</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3321015</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ms_among <span class="ot">&lt;-</span> mod[[<span class="dv">1</span>]][<span class="dv">1</span>,<span class="dv">3</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>s2_among <span class="ot">&lt;-</span> (ms_among<span class="sc">-</span>ms_within)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ME <span class="ot">&lt;-</span> s2_within<span class="sc">/</span>(s2_within<span class="sc">+</span>s2_among) <span class="sc">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Not bad. A rule of thumb is that 5% ME is good (95% repeatability). If we want to reduce ME, we can use the average of the two measurements in our analyses.</p>
 
 
 

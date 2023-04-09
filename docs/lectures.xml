@@ -10,7 +10,426 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023</description>
 <generator>quarto-1.2.313</generator>
-<lastBuildDate>Tue, 04 Apr 2023 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 11 Apr 2023 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Procrustes Superimposition and Analyses</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2023-04-11-geometric-morphometrics-analyses/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="acknowledgements" class="level3">
+<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>References for this Material:</p>
+<ul>
+<li>Bardua et al (2019) A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses<a href="https://academic.oup.com/iob/article/1/1/obz016/5526881" class="uri">https://academic.oup.com/iob/article/1/1/obz016/5526881</a></li>
+<li><a href="https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf">Emma Sherratʻs quick guide to Geomorph</a></li>
+</ul>
+</section>
+<section id="learning-objectives" class="level1">
+<h1>Learning objectives</h1>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Be able to create shape data from geometric morphometric data</li>
+<li>Understand the general concepts for Procrustes superimposition</li>
+<li>Be able to perform basic analyses on geometric morphometric data</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="size-adjustment-with-procrustes-superimposition" class="level1">
+<h1>Size Adjustment with Procrustes Superimposition</h1>
+<p>Procrustes superimposition is the most widely used method to create size and shape variables from landmark data. The basic idea is that larger objects should have landmarks that are farther apart than the same landmarks in smaller objects.</p>
+<section id="centroid" class="level3">
+<h3 class="anchored" data-anchor-id="centroid">Centroid</h3>
+<p>A key concept is the <strong>centroid</strong>, which the center point of all of the landmarks. It is easily calculated for each specimen by taking the average of all of the landmark coordinates along each axis. For <em>p</em> landmarks in two dimensions the coordinates of the centroid would be:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AC_%7Bx%7D%20=%20%5Cfrac%7BX_1+X_2+X_3+%20...%20+%20X_p%7D%7Bp%7D%0A"> <img src="https://latex.codecogs.com/png.latex?%0AC_%7By%7D%20=%20%5Cfrac%7BY_1+Y_2+Y_3%20...%20+%20Y_p%7D%7Bp%7D%0A"></p>
+</section>
+<section id="centroid-size" class="level3">
+<h3 class="anchored" data-anchor-id="centroid-size">Centroid size</h3>
+<p>The concept of <strong>centroid size</strong> describes geometric size. It is calculated from the distances of each landmark from the centroid, but it is a geometric mean because it is caculated by taking the square-root of the sums of squared distances of each landmark from the centroid.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://mbutler808.github.io/images/Triangle.Centroid.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">The centroid of a triangle (with landmarks at the vertices) is the point in the center.</figcaption><p></p>
+</figure>
+</div>
+<p>[Source: Wikipedia]</p>
+</section>
+<section id="shape-variables" class="level3">
+<h3 class="anchored" data-anchor-id="shape-variables">Shape Variables</h3>
+<p>Shape variables calculated from Procrustes superimposition mathematically separate scale (size) from shape by applying shape-preserving transformations to make the landmarks as similar as possible.</p>
+<p>The concept: In order to compare differences in shape, we can remove size (in other words, normalize by size or bring all of the specimens to the same size) with the following transformations:</p>
+<ul>
+<li><strong>Scale</strong>: Bring each set of landmarks to the same size by magnifing or reducing the distances of the landmarks around their centroid.<br>
+</li>
+<li><strong>Translate</strong>: Shift the landmarks in the coordinate space to place the centroids at a common point.<br>
+</li>
+<li><strong>Rotate</strong>: Rotate the landmarks with an angular transformation to bring them into a common orientation.</li>
+</ul>
+<p>At the end of Procrustes superimposition, the landmarks for the different specimens will be scaled to the same size and their coordinates will lie as close together as possible while preserving the differences in shape. The figure below illustrates these steps.</p>
+<p>The mathematics of these transofrmations come from basic linear algebra operations on matrices, which are beyond the scope of the class, but to understand what is happening we can analogize it to univariate arithmetic.</p>
+<p><em>Scaling</em> is like dividing each variable by a size variable to put all of the individuals on the same baseline with regard to size (magnitude).</p>
+<p><em>Translation</em> brings the centers of all of the landmarks into alignment. Think of a situation where we measured the length of specimens according to wherever they fell within the picture frame, for example if one specimen started at 2 and extended to 10, and another started at 6 and extended to 12. We could translate (or slide) each of these to place their midpoint at zero by subtracting the mean value from each of their endpoints. For the first specimen, we would subtract 6, translating the specimen from (2,10) to (-4,4), and for the second we would subtract 9, tanslating the specimen from (6,12) to (-3,3).</p>
+<p><em>Rotation</em> is an angular rotation to bring a 2 or 3D object into a common orientation. For a more thorough discussion please see <span class="citation" data-cites="Zelditch:2004">(Zelditch 2004)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://mbutler808.github.io/images/Procrustes_superimposition.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure: Procrustes superimposition. The figure shows the three transformation steps of an ordinary Procrustes fit for two configurations of landmarks. (a) Scaling of both configurations to the same size; (b) Translation to the same position of the center of gravity; (c) Rotation to the orientation that provides the minimum sum of squared distances between corresponding landmarks.</figcaption><p></p>
+</figure>
+</div>
+<p><a href="https://commons.wikimedia.org/wiki/File:Procrustes_superimposition.png">Source: Christian Klingenberg</a></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+From the documentation for <code>gpagen()</code> in <code>geomorph</code>:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>GPA translates all specimens to the origin, scales them to unit-centroid size, and optimally rotates them (using a least-squares criterion) until the coordinates of corresponding points align as closely as possible. The resulting aligned Procrustes coordinates represent the shape of each specimen, and are found in a curved space related to Kendall’s shape space (Kendall 1984). Typically, these are projected into a linear tangent space yielding Kendall’s tangent space coordinates (i.e., Procrustes shape variables), which are used for subsequent multivariate analyses (Dryden and Mardia 1993, Rohlf 1999).</p>
+</div>
+</div>
+</section>
+</section>
+<section id="geomorph-package" class="level1">
+<h1>Geomorph Package</h1>
+<section id="data-structures" class="level3">
+<h3 class="anchored" data-anchor-id="data-structures">Data Structures</h3>
+<p>The package <code>geomorph</code> is written to work with standard geomorphic morphometrics data file types such as TPS and NTS, as well as others.</p>
+<p><code>readland.tps()</code> reads morphometric data in TPS format. It returns an array for storing landmark data: <em>p</em> landmarks X <em>k</em> dimensions X <em>N</em> specimens</p>
+<p>The third dimension of this array contains names for each specimen, which are obtained from the image names in the <em>.tps</em> file.</p>
+</section>
+<section id="built-in-example" class="level3">
+<h3 class="anchored" data-anchor-id="built-in-example">Built-in Example</h3>
+<p>Letʻs look again at the built-in dataset <code>plethodon</code> that comes with <code>geomorph</code>. It has skull landmark data for 40 specimens of two species of plethdon salamanders. <code>plethodon</code> is a list.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">require</span>(geomorph)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: geomorph</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: RRPP</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: rgl</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Matrix</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">data</span>(plethodon) </span>
+<span id="cb6-2"><span class="fu" style="color: #4758AB;">class</span>(plethodon)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;">attributes</span>(plethodon)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$names
+[1] "land"    "links"   "species" "site"    "outline"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;">table</span>(plethodon<span class="sc" style="color: #5E5E5E;">$</span>species)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Jord Teyah 
+   20    20 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="fu" style="color: #4758AB;">dim</span>(plethodon<span class="sc" style="color: #5E5E5E;">$</span>land)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12  2 40</code></pre>
+</div>
+</div>
+<p>The landmarks are in <code>plethodon$land</code>. There are twenty of each species, and from the dimensions of <code>plethodon$land</code> we see that each of the 40 specimens has 12 landmarks in two dimensions. <code>plotAllSpecimens</code> plots the coordinates of all samples, so we can start to look at variation.</p>
+<section id="shape-general-procrustes-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="shape-general-procrustes-analysis">Shape: General Procrustes Analysis</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="co" style="color: #5E5E5E;">#|warning: false</span></span>
+<span id="cb14-2"><span class="fu" style="color: #4758AB;">plotAllSpecimens</span>(plethodon<span class="sc" style="color: #5E5E5E;">$</span>land)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-11-geometric-morphometrics-analyses/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">Y.gpa <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">gpagen</span>(plethodon<span class="sc" style="color: #5E5E5E;">$</span>land, <span class="at" style="color: #657422;">PrinAxes =</span> <span class="cn" style="color: #8f5902;">FALSE</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Performing GPA
+
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |==================                                                    |  25%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |======================================================================| 100%
+
+Making projections... Finished!</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="fu" style="color: #4758AB;">summary</span>(Y.gpa)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+gpagen(A = plethodon$land, PrinAxes = FALSE) 
+
+
+
+Generalized Procrustes Analysis
+with Partial Procrustes Superimposition
+
+12 fixed landmarks
+0 semilandmarks (sliders)
+2-dimensional landmarks
+2 GPA iterations to converge
+
+
+Consensus (mean) Configuration
+
+             X            Y
+1   0.15263287 -0.023350400
+2   0.19445064 -0.092643121
+3  -0.03361223 -0.007346212
+4  -0.28069721 -0.092850147
+5  -0.30998751 -0.061672264
+6  -0.32557841 -0.036112255
+7  -0.31804390  0.036125318
+8  -0.18947114  0.098010902
+9   0.02036829  0.099112877
+10  0.18852641  0.077278061
+11  0.35134314  0.065866346
+12  0.55006905 -0.062419105</code></pre>
+</div>
+</div>
+<p>The summary provides the mean for each of the coordinates after GPA. We can see the mean of the coordinates among the individual coordinates by plotting:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="fu" style="color: #4758AB;">plot</span>(Y.gpa)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-11-geometric-morphometrics-analyses/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Letʻs compare the plot of all specimens before and after Generalized Procrustes Analysis. The below plot is before GPA, on the raw landmarks <code>plethodon$land</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><span class="fu" style="color: #4758AB;">plotAllSpecimens</span>(plethodon<span class="sc" style="color: #5E5E5E;">$</span>land)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-11-geometric-morphometrics-analyses/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Plotting again after alignment with Generalized Procrustes Analysis gives a good representation of shape variation. Plotting links between the landmarks helps with visualization.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><span class="fu" style="color: #4758AB;">plotAllSpecimens</span>(Y.gpa<span class="sc" style="color: #5E5E5E;">$</span>coords,<span class="at" style="color: #657422;">links=</span>plethodon<span class="sc" style="color: #5E5E5E;">$</span>links)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-11-geometric-morphometrics-analyses/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="principal-components-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="principal-components-analysis">Principal Components Analysis</h4>
+<p>PCA on the procrustes coordinates (size-adjusted or shape variables) can be done with:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">pleth.pca <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">gm.prcomp</span>(Y.gpa<span class="sc" style="color: #5E5E5E;">$</span>coords)</span>
+<span id="cb22-2">pleth.pca </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Ordination type: Principal Component Analysis 
+Centering by OLS mean
+Orthogonal projection of OLS residuals
+Number of observations: 40 
+Number of vectors 20 
+
+Importance of Components:
+                             Comp1       Comp2        Comp3        Comp4
+Eigenvalues            0.001855441 0.001566597 0.0004141056 0.0002278444
+Proportion of Variance 0.367433295 0.310233333 0.0820053761 0.0451200584
+Cumulative Proportion  0.367433295 0.677666628 0.7596720044 0.8047920628
+                              Comp5        Comp6        Comp7        Comp8
+Eigenvalues            0.0001725997 0.0001672575 0.0001549008 0.0001251132
+Proportion of Variance 0.0341799312 0.0331220169 0.0306750315 0.0247761773
+Cumulative Proportion  0.8389719940 0.8720940109 0.9027690424 0.9275452197
+                              Comp9       Comp10       Comp11       Comp12
+Eigenvalues            8.468503e-05 6.869926e-05 5.430853e-05 4.423148e-05
+Proportion of Variance 1.677019e-02 1.360452e-02 1.075473e-02 8.759165e-03
+Cumulative Proportion  9.443154e-01 9.579199e-01 9.686747e-01 9.774338e-01
+                             Comp13       Comp14       Comp15       Comp16
+Eigenvalues            0.0000261742 0.0000192644 1.741769e-05 1.715141e-05
+Proportion of Variance 0.0051832795 0.0038149309 3.449226e-03 3.396495e-03
+Cumulative Proportion  0.9826170994 0.9864320303 9.898813e-01 9.932778e-01
+                             Comp17       Comp18       Comp19       Comp20
+Eigenvalues            1.555244e-05 9.253679e-06 5.336746e-06 3.802714e-06
+Proportion of Variance 3.079853e-03 1.832507e-03 1.056837e-03 7.530520e-04
+Cumulative Proportion  9.963576e-01 9.981901e-01 9.992469e-01 1.000000e+00</code></pre>
+</div>
+</div>
+<p>There are 20 PC axes, with 67% of the total shape variation in the first two axes. A plot on PC1 vs PC2 reveals several distinct clusters, suggesting shape differences. The scores are in <code>pleth.pca$x</code>. There is a plot method for geomorph pca results:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1">pleth.pca.plot <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">plot</span>(pleth.pca)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-11-geometric-morphometrics-analyses/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The specimens are from two species in two distinct environments, and there seems to be some separation between the points along PC1 vs.&nbsp;PC2. These points correspond to specimens of two different species in the original TPS data that information is in <code>plethodon$species</code>. Because the species names are a factor, we can use this to do a quick and dirty plot colored by species. We can plot additional PC axes by specifying the axes to plot:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><span class="fu" style="color: #4758AB;">class</span>(plethodon<span class="sc" style="color: #5E5E5E;">$</span>species)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="fu" style="color: #4758AB;">par</span>(<span class="at" style="color: #657422;">mfrow=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">2</span>)) <span class="co" style="color: #5E5E5E;"># set up 2x2 plots</span></span>
+<span id="cb27-2"><span class="fu" style="color: #4758AB;">plot</span>(pleth.pca, <span class="at" style="color: #657422;">main =</span> <span class="st" style="color: #20794D;">"PCA"</span>, </span>
+<span id="cb27-3">      <span class="at" style="color: #657422;">col=</span>plethodon<span class="sc" style="color: #5E5E5E;">$</span>species <span class="co" style="color: #5E5E5E;"># color points by species</span></span>
+<span id="cb27-4">    )</span>
+<span id="cb27-5"><span class="fu" style="color: #4758AB;">plot</span>(pleth.pca, <span class="at" style="color: #657422;">main =</span> <span class="st" style="color: #20794D;">"PCA"</span>, </span>
+<span id="cb27-6">      <span class="at" style="color: #657422;">axis1 =</span> <span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">axis2 =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="co" style="color: #5E5E5E;"># plot PC axes 1 vs 3</span></span>
+<span id="cb27-7">      <span class="at" style="color: #657422;">col=</span>plethodon<span class="sc" style="color: #5E5E5E;">$</span>species </span>
+<span id="cb27-8">    )</span>
+<span id="cb27-9"><span class="fu" style="color: #4758AB;">plot</span>(pleth.pca, <span class="at" style="color: #657422;">main =</span> <span class="st" style="color: #20794D;">"PCA"</span>, </span>
+<span id="cb27-10">      <span class="at" style="color: #657422;">axis1 =</span> <span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">axis2 =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="co" style="color: #5E5E5E;"># PC 2 vs PC3</span></span>
+<span id="cb27-11">      <span class="at" style="color: #657422;">col=</span>plethodon<span class="sc" style="color: #5E5E5E;">$</span>species</span>
+<span id="cb27-12">    ) </span>
+<span id="cb27-13"><span class="fu" style="color: #4758AB;">plot</span>(pleth.pca, <span class="at" style="color: #657422;">main =</span> <span class="st" style="color: #20794D;">"PCA"</span>, </span>
+<span id="cb27-14">      <span class="at" style="color: #657422;">axis1 =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">axis2 =</span> <span class="dv" style="color: #AD0000;">4</span>, <span class="co" style="color: #5E5E5E;"># PC3 vs PC4</span></span>
+<span id="cb27-15">      <span class="at" style="color: #657422;">col=</span>plethodon<span class="sc" style="color: #5E5E5E;">$</span>species</span>
+<span id="cb27-16">    ) </span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-11-geometric-morphometrics-analyses/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>All of the separation between species comes from PC1 vs.&nbsp;2, with no additional separation by adding PC3 or PC4.</p>
+</section>
+<section id="statistical-test-for-differences-among-species-and-sites" class="level4">
+<h4 class="anchored" data-anchor-id="statistical-test-for-differences-among-species-and-sites">Statistical test for differences among species and sites</h4>
+<p>We can test the shape variables (GPA coordinates) as explanatory variables for phenotypic varation. Because there are multiple pheontypic (Y) variables, we use MANOVA (multivariate ANOVA).</p>
+<p><code>geomorph</code> has a helper function <code>geomorph.data.frame</code> that creates an object of class <code>geomorph.data.frame</code> from your procrustes shape coordinates that includes the centroid size (<code>Csize</code>), and allows you to associate your metadata such as species and site together with the shape data. The idea is keep it organized in a data-frame like manner, even though it is a list (it makes sure that all the elements have the same length).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1">gdf <span class="ot" style="color: #003B4F;">&lt;-</span><span class="fu" style="color: #4758AB;">geomorph.data.frame</span>(Y.gpa<span class="sc" style="color: #5E5E5E;">$</span>coords)</span>
+<span id="cb28-2"><span class="fu" style="color: #4758AB;">attributes</span>(gdf) </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$class
+[1] "geomorph.data.frame"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1">gdf <span class="ot" style="color: #003B4F;">&lt;-</span><span class="fu" style="color: #4758AB;">geomorph.data.frame</span>(Y.gpa, </span>
+<span id="cb30-2">              <span class="at" style="color: #657422;">species =</span> plethodon<span class="sc" style="color: #5E5E5E;">$</span>species, </span>
+<span id="cb30-3">              <span class="at" style="color: #657422;">site =</span> plethodon<span class="sc" style="color: #5E5E5E;">$</span>site</span>
+<span id="cb30-4">              )</span>
+<span id="cb30-5"><span class="fu" style="color: #4758AB;">attributes</span>(gdf) </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$names
+[1] "coords"  "Csize"   "species" "site"   
+
+$class
+[1] "geomorph.data.frame"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1">lm.fit <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">procD.lm</span>(coords<span class="sc" style="color: #5E5E5E;">~</span>species <span class="sc" style="color: #5E5E5E;">*</span> site, <span class="at" style="color: #657422;">data=</span>gdf)</span>
+<span id="cb32-2"><span class="fu" style="color: #4758AB;">summary</span>(lm.fit)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Analysis of Variance, using Residual Randomization
+Permutation procedure: Randomization of null model residuals 
+Number of permutations: 1000 
+Estimation method: Ordinary Least Squares 
+Sums of Squares and Cross-products: Type I 
+Effect sizes (Z) based on F distributions
+
+             Df       SS       MS     Rsq      F      Z Pr(&gt;F)   
+species       1 0.029258 0.029258 0.14856 14.544 4.2241  0.001 **
+site          1 0.064375 0.064375 0.32688 32.000 5.2101  0.001 **
+species:site  1 0.030885 0.030885 0.15682 15.352 5.4075  0.001 **
+Residuals    36 0.072422 0.002012 0.36774                        
+Total        39 0.196940                                         
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Call: procD.lm(f1 = coords ~ species * site, data = gdf)</code></pre>
+</div>
+</div>
+<p>The MANOVA reveals significant shape differences between species, between sites, and in the interaction between the two factors (species and site).</p>
+<p>We can also look at variation with centroid size:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><span class="fu" style="color: #4758AB;">anova</span>(<span class="fu" style="color: #4758AB;">procD.lm</span>(coords <span class="sc" style="color: #5E5E5E;">~</span> Csize <span class="sc" style="color: #5E5E5E;">+</span> species <span class="sc" style="color: #5E5E5E;">*</span> site, <span class="at" style="color: #657422;">data =</span> gdf))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Analysis of Variance, using Residual Randomization
+Permutation procedure: Randomization of null model residuals 
+Number of permutations: 1000 
+Estimation method: Ordinary Least Squares 
+Sums of Squares and Cross-products: Type I 
+Effect sizes (Z) based on F distributions
+
+             Df       SS       MS     Rsq       F      Z Pr(&gt;F)   
+Csize         1 0.010409 0.010409 0.05286  5.2986 2.8820  0.001 **
+species       1 0.025661 0.025661 0.13030 13.0625 4.0712  0.001 **
+site          1 0.063018 0.063018 0.31999 32.0780 5.3722  0.001 **
+species:site  1 0.029093 0.029093 0.14773 14.8093 5.2418  0.001 **
+Residuals    35 0.068758 0.001965 0.34913                         
+Total        39 0.196940                                          
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Call: procD.lm(f1 = coords ~ Csize + species * site, data = gdf)</code></pre>
+</div>
+</div>
+<p>There is signficant multivariate difference among the shape data by size as well as by species and site. This is a good place to note that while size and shape are <em>mathematically</em> uncorrelated by GPA, there could still be some <em>biological</em> variation that produces some pattern of shape variation with size.</p>
+</section>
+<section id="relative-warps" class="level4">
+<h4 class="anchored" data-anchor-id="relative-warps">Relative Warps</h4>
+<p>We can look at the relative shape change between the specimens. This is a common technique you will see in the literature using <em>relative warps analysis</em>. It uses a shape analysis technique called <strong>thin plate splines</strong> which is a smoothing method that is forced to go through the landmarks, but will fit a surface between them (in as many diemsions as there are in the data).</p>
+<p><strong>Relative warps analysis</strong> will show the shape deformation needed to move from a reference shape to a another shape.</p>
+<p>First we calcuate the mean shape in all of the data as the reference shape.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1">ref<span class="ot" style="color: #003B4F;">&lt;-</span><span class="fu" style="color: #4758AB;">mshape</span>(gdf<span class="sc" style="color: #5E5E5E;">$</span>coords)</span></code></pre></div>
+</div>
+<p>Calculate the mean shape of <em>Plethodon jordanii</em>, and we can compare this species to the mean of both species:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1">gp1.mn<span class="ot" style="color: #003B4F;">&lt;-</span><span class="fu" style="color: #4758AB;">mshape</span>(gdf<span class="sc" style="color: #5E5E5E;">$</span>coords[,,gdf<span class="sc" style="color: #5E5E5E;">$</span>species<span class="sc" style="color: #5E5E5E;">==</span><span class="st" style="color: #20794D;">"Jord"</span>])</span>
+<span id="cb37-2"><span class="fu" style="color: #4758AB;">plotRefToTarget</span>(ref,gp1.mn,<span class="at" style="color: #657422;">mag=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">links=</span>plethodon<span class="sc" style="color: #5E5E5E;">$</span>links)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-11-geometric-morphometrics-analyses/index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><span class="fu" style="color: #4758AB;">plotAllSpecimens</span>(gdf<span class="sc" style="color: #5E5E5E;">$</span>coords,<span class="at" style="color: #657422;">links=</span>plethodon<span class="sc" style="color: #5E5E5E;">$</span>links)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-11-geometric-morphometrics-analyses/index_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can see that most of the shape change between <em>P. jordanii</em> and the mean shape is around the jaw hinge and top of the skull near the orbit (where the eyes would be).</p>
+<p>Can you do the same but comparing the mean of the two species against each other?</p>
+</section>
+</section>
+</section>
+<section id="more-geomorphic-morphometrics-software" class="level1">
+<h1>More geomorphic morphometrics software</h1>
+<p><a href="https://academic.oup.com/view-large/223239151" class="uri">https://academic.oup.com/view-large/223239151</a></p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Zelditch:2004" class="csl-entry">
+Zelditch, Miriam. 2004. <em>Geometric Morphometrics for Biologists a Primer</em>. Amsterdam ; Elsevier Academic Press.
+</div>
+</div></section></div> ]]></description>
+  <category>module 6</category>
+  <category>week 13</category>
+  <category>geometric morphometrics</category>
+  <category>GPA</category>
+  <category>procrustes superimposition</category>
+  <category>size</category>
+  <category>shape</category>
+  <guid>https://mbutler808.github.io/posts/2023-04-11-geometric-morphometrics-analyses/index.html</guid>
+  <pubDate>Tue, 11 Apr 2023 04:00:00 GMT</pubDate>
+  <media:content url="https://mbutler808.github.io/images/Triangle.Centroid.png" medium="image" type="image/png" height="116" width="144"/>
+</item>
 <item>
   <title>Morphometrics Overview</title>
   <dc:creator>Marguerite Butler</dc:creator>
@@ -99,7 +518,7 @@ Typical Morphometric Worflow
   <category>(do) while</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-04-04-morphometric-workflow/index.html</guid>
-  <pubDate>Tue, 04 Apr 2023 10:00:00 GMT</pubDate>
+  <pubDate>Tue, 04 Apr 2023 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Intro to Geometric Morphometrics</title>
@@ -140,7 +559,8 @@ Learning objectives
 <section id="preparation" class="level3">
 <h3 class="anchored" data-anchor-id="preparation">Preparation</h3>
 <p>Packages:<br>
-<strong>geomorph</strong> <strong>rgl</strong><br>
+<strong>geomorph</strong><br>
+<strong>rgl</strong><br>
 <strong>Matrix</strong><br>
 Please install if you donʻt have them. <code>install.packages(c("geomorph","rgl","Matrix"), dependencies=T)</code></p>
 <p>Mac Users: Please also install Xquartz <a href="https://www.xquartz.org" class="uri">https://www.xquartz.org</a>, a windowing system for <code>rgl</code>.</p>
@@ -190,8 +610,8 @@ Please install if you donʻt have them. <code>install.packages(c("geomorph","rgl
 </ul>
 <p>Errors and distortions can be fixed with software, but it is much easier to minimize them at the start.</p>
 </section>
-<section id="landmarks-and-pseudolandmarks" class="level1">
-<h1>Landmarks and Pseudolandmarks</h1>
+<section id="landmarks" class="level1">
+<h1>Landmarks</h1>
 <p>Essential features of good landmarks:</p>
 <p>Choose landmarks that are:</p>
 <ul>
@@ -205,27 +625,43 @@ Please install if you donʻt have them. <code>install.packages(c("geomorph","rgl
 </ul>
 <p>Here is an example of typical landmarks:</p>
 <p><img src="https://mbutler808.github.io/images/rodentmandible.jpg" class="img-fluid" alt="Rodent lower jaw (mandible). Lateral view of a Nectomys squamipes mandible, showing the 10 landmarks used in this work. 1) Anterior edge of the incisive alveolus; 2) Most posterior point of the diastema; 3) Junction between the mandible and the m1 root; 4) Junction between the molar base and the coronoid process; 5) Most posterior point at the articular process; 6) Most anterior point in the angular notch; 7) Most posterior point at the angular process; 8) Angular process base; 9) Inner edge of the mandibular symphysis; 10) Posterior edge of the incisive alveolus"> <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.7557">Source</a></p>
-<p>Acquiring landmarks usually involves some digitizing by hand (with computer assistance). For 2D landmark data:</p>
+<section id="digitizing-landmarks-on-images" class="level3">
+<h3 class="anchored" data-anchor-id="digitizing-landmarks-on-images">Digitizing Landmarks on Images</h3>
+<p>Acquiring landmarks usually involves some digitizing by hand (with computer assistance). For 2D landmark data the workflow is:</p>
 <ul>
 <li>Read in the image file<br>
 </li>
-<li>Set the scale (translation between pixels and known distance)<br>
+<li>Set the scale<br>
 </li>
 <li>Digitize landmarks, collecting X-Y coordinate data</li>
 </ul>
+<p>Image files are rows and columns of pixels, the number of which is determined by the file size and resolution. Pixels therefore, form a grid which we can digitize, meaning we can indicate at which pixel our landmark of interest is. We translate the pixel coordinates into real-world distances, typically by ditigizing an object of known dimensions such as a ruler. Digitizing software typically asks the user to indicate the points on the screen and the known distances they correspond to.</p>
 <p>Easy-to use software for this purpose include <code>ImageJ</code> and <code>FIJI</code>, as well as the <code>geomorph</code> package in R. Before doing a large project, I would try them all to see which serves your purpose the best.</p>
-<p>For <code>geomorph</code>, Emma Sherratʻs <a href="https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf">Emma Sherratʻs quick guide to Geomorph</a> provides an excellent walk-through in Chapter 15.</p>
-<p>For a quick example, letʻs do a 2D landmark collection on the Red Fox Mandible using <code>digitize2d()</code>.</p>
-<p>The syntax is:</p>
+</section>
+</section>
+<section id="geomorph-package" class="level1">
+<h1><code>geomorph</code> package</h1>
+<p>The package <code>geomorph</code> is widely used for geometric morphometrics, and will serve as a good example to illustrate the geometric morphometrics workflow all in R (depending on the project and the material, however, you may find it more convenient or efficient to use other software for digitizing).</p>
+<section id="digitizing-landmarks-in-geomorph" class="level3">
+<h3 class="anchored" data-anchor-id="digitizing-landmarks-in-geomorph">Digitizing landmarks in <code>geomorph</code></h3>
+<p>For a quick example, letʻs do a 2D landmark collection on the Red Fox Mandible using <code>digitize2d()</code>. Emma Sherratʻs <a href="https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf">quick guide to Geomorph</a> provides a more thorough walk-through for capturing landmarks in Chapter 15.</p>
+<p>The syntax for <code>digitize2d()</code> is:</p>
 <p><code>digitize2d(filelist, nlandmarks, scale = NULL, tpsfile, verbose = TRUE)</code></p>
 <p>Where:</p>
-<p><code>filelist</code> : vector of filenames.<br>
-<code>nlandmarks</code> : number of landmarks to digitize <code>scale</code> : length of scale to use (optional) <code>tpsfile</code> : name of output file to create or read (to edit)</p>
+<ul>
+<li><code>filelist</code> : a vector of filenames of image files</li>
+<li><code>nlandmarks</code> : the number of landmarks to digitize<br>
+</li>
+<li><code>scale</code> : the length of scale to use (optional)<br>
+</li>
+<li><code>tpsfile</code> : the name of an output file to create or read</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">require</span>(geomorph)</span>
 <span id="cb1-2"></span>
 <span id="cb1-3">files <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"red-fox-mandible-lateral.jpg"</span>)</span>
-<span id="cb1-4"><span class="co" style="color: #5E5E5E;"># files &lt;- list.files(pattern = "*.jpg") # for multiple files in your image directory</span></span></code></pre></div>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;"># files &lt;- list.files(pattern = "*.jpg") </span></span>
+<span id="cb1-5">             <span class="co" style="color: #5E5E5E;"># for multiple files in your image directory</span></span></code></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;">digitize2d</span>( files, </span>
@@ -234,8 +670,15 @@ Please install if you donʻt have them. <code>install.packages(c("geomorph","rgl
 <span id="cb2-4">            <span class="at" style="color: #657422;">tpsfile =</span> <span class="st" style="color: #20794D;">"mandible-lat.tps"</span>, </span>
 <span id="cb2-5">            <span class="at" style="color: #657422;">verbose =</span> <span class="cn" style="color: #8f5902;">TRUE</span>) </span></code></pre></div>
 </div>
-<p>In verbose mode, it will ask you to confirm each landmark (this can be turned off). If a landmark is missing, choose <code>a</code> for absent. Make a mistake and choose <code>n</code> - it will ask you to redigitize it.</p>
-<p>The output will be sent to the tps file:</p>
+<p>R will now wait for you to digitize the first landmark. In verbose mode, it will ask you to <em>confirm</em> each landmark (this can be turned off). If a landmark is missing, choose <code>a</code> for absent. If you make a mistake and choose <code>n</code>, it will ask you to redigitize it. The output will be sent to a <code>.tps</code>file.</p>
+</section>
+</section>
+<section id="tps-format" class="level1">
+<h1>TPS format</h1>
+<p>TPS format is a standard morphometric data format for storing landmark coordinate data.</p>
+<p><code>readland.tps()</code> reads TPS format and returns an array: <em>p</em> landmarks by <em>k</em> dimensions by <em>N</em> specimens.</p>
+<p>Remember an array is simply a multidimensional dataframe. Think of it here as a stack of spreadsheets. Each spreadsheet has rows for landmarks and columns for dimensions. We have a separate spreadsheet for each specimen, making this a 3-dimensional array.</p>
+<p>The third dimension of this array contains names for each specimen, which are obtained from the image names in the <em>.tps</em> file. We can read in the data that we digitized above:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">readland.tps</span>(<span class="st" style="color: #20794D;">"mandible-lat.tps"</span>, <span class="at" style="color: #657422;">specID =</span> <span class="st" style="color: #20794D;">"ID"</span>, <span class="at" style="color: #657422;">readcurves =</span> <span class="cn" style="color: #8f5902;">FALSE</span>, <span class="at" style="color: #657422;">warnmsg =</span> <span class="cn" style="color: #8f5902;">TRUE</span>)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -259,7 +702,7 @@ No curves detected; all points appear to be fixed landmarks.</code></pre>
 [10,] 113.50334 107.91870</code></pre>
 </div>
 </div>
-<p>For another example, check out the <code>plethodon</code> data included with <code>geomorph</code></p>
+<p>Note that the name saved with the data in this case was the file name. For another example, check out the <code>plethodon</code> data included with <code>geomorph</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;">data</span>(plethodon)</span>
 <span id="cb7-2"><span class="fu" style="color: #4758AB;">attributes</span>(plethodon)</span></code></pre></div>
@@ -281,37 +724,41 @@ No curves detected; all points appear to be fixed landmarks.</code></pre>
  $ outline: num [1:3631, 1:2] 0.399 0.4 0.401 0.403 0.404 ...</code></pre>
 </div>
 </div>
-<p>3D coordinates in tps format contain 3D arrays (one table per specimen).</p>
-<p><img src="https://mbutler808.github.io/geomorphdataarrays.png" class="img-fluid"> <a href="https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf">Source: Emma Sherratʻs quick guide to Geomorph</a></p>
+<p>3D coordinates in tps format simply have a third dimension (z in addition to x and y) in each spreadsheet (one spreadsheet or table per specimen).</p>
+<p><img src="https://mbutler808.github.io/images/geomorphdataarrays.png" class="img-fluid"></p>
+<p><a href="https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf">Source: Emma Sherratʻs quick guide to Geomorph</a></p>
 </section>
 <section id="semi-landmarks" class="level1">
 <h1>Semi-Landmarks</h1>
-<p>Oftentimes, there is more shape variation than distinct landmarks. For example, there is no distinct landmark that you can reliable digitize on the curve of a shell, for example. In this case, semi-landmarks can be helpful.</p>
+<p>Oftentimes, there is more shape variation than what is captured by the landmarks themselves, which are only points. In addition, sometimes curves and surfaces have no distinct feature that can be reliably captured as the same homologous point from specimen to specimen. For example, the curvature of a smooth shell may lack any distinct landmarks. In both of these cases, semi-landmarks can be helpful.</p>
 <p><strong>Semi-landmarks</strong> are regularly spaced points between two landmarks or along a curve or a surface.<br>
 <strong>Sliding semi-landmarks</strong> are spaced linearly along a curve.<br>
 <strong>Surface semi-landmarks</strong> are spread out evenly in 3D along a surface.</p>
-<p>NOTE: One thing to note is that any error in the landmarks will also be propagated through the semilandmarks.</p>
+<p>NOTE: One thing to note is that any error in the landmarks will also be propagated to the semilandmarks.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://mbutler808.github.io/images/caecelian_skull_semilandmarks.jpeg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure: Landmark and semilandmark data displayed on the caecilian Siphonops annulatus BMNH 1956.1.15.88. Points are colored as follows: landmarks (red), sliding semilandmarks (“curve points,” yellow), and surface semilandmarks (“surface points,” blue). For information regarding each cranial region, see Bardua et al.&nbsp;(2019). BMNH, Natural History Museum, London, UK.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure: Landmark and semilandmark data displayed on the caecilian <em>Siphonops annulatus</em> BMNH 1956.1.15.88. Points are colored as follows: landmarks (red), sliding semilandmarks (“curve points,” yellow), and surface semilandmarks (“surface points,” blue). For information regarding each cranial region, see Bardua et al.&nbsp;(2019). BMNH, Natural History Museum, London, UK.</figcaption><p></p>
 </figure>
 </div>
 <p><a href="https://academic.oup.com/iob/article/1/1/obz016/5526881">Source: Bardua et al 2019</a></p>
+<p>See <span class="citation" data-cites="Bardua:2019">(Bardua et al. 2019)</span> for an excellent review article and practical guide.</p>
 <p>Annotated 3D version of this figure available at: <a href="https://sketchfab.com/3d-models/add35e2e8af94839b1f577bfcee32e54" class="uri">https://sketchfab.com/3d-models/add35e2e8af94839b1f577bfcee32e54</a></p>
 <p>Letʻs practice digitizing 3D landmarks with the geomorph vignette: <a href="https://cran.r-project.org/web/packages/geomorph/vignettes/geomorph.digitize3D.html" class="uri">https://cran.r-project.org/web/packages/geomorph/vignettes/geomorph.digitize3D.html</a></p>
 </section>
-<section id="procrustes-analysis" class="level1">
-<h1>Procrustes Analysis</h1>
-</section>
-<section id="more-software" class="level1">
-<h1>More software</h1>
+<section id="more-geomorphic-morphometrics-software" class="level1">
+<h1>More geomorphic morphometrics software</h1>
 <p><a href="https://academic.oup.com/view-large/223239151" class="uri">https://academic.oup.com/view-large/223239151</a></p>
 
 
+
 </section>
 
- ]]></description>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Bardua:2019" class="csl-entry">
+Bardua, C, R N Felice, A Watanabe, A -C Fabre, and A Goswami. 2019. <span>“<span class="nocase">A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses</span>.”</span> <em>Integrative Organismal Biology</em> 1 (1). <a href="https://doi.org/10.1093/iob/obz016">https://doi.org/10.1093/iob/obz016</a>.
+</div>
+</div></section></div> ]]></description>
   <category>module 6</category>
   <category>week 12</category>
   <category>control structures</category>
@@ -319,7 +766,7 @@ No curves detected; all points appear to be fixed landmarks.</code></pre>
   <category>(do) while</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-04-04-morphometrics-landmarks/index.html</guid>
-  <pubDate>Tue, 04 Apr 2023 10:00:00 GMT</pubDate>
+  <pubDate>Tue, 04 Apr 2023 04:00:00 GMT</pubDate>
   <media:content url="https://mbutler808.github.io/images/rodentmandible.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
@@ -440,94 +887,99 @@ Learning objectives
 <p>Then we calculate the ratio of this value to the total MS: <strong>((MS(id) – MS(id:photo:rep))/2 ) / (MS(id)+MS(id:photo)+MS(id:photo:rep))</strong></p>
 <p>The result is the <strong>repeatability</strong>, which in good circumstances is somewhere above 0.95; and thus 5% <strong>measurement error</strong>.</p>
 </section>
-<section id="simulated-example" class="level3">
-<h3 class="anchored" data-anchor-id="simulated-example">Simulated example:</h3>
-<p>Measure 5 specimens (single measurement). Take two photos of each specimen, digitized twice (once in each of two sessions on different days). How repeatable are the measurements?</p>
+<section id="simplifed-simulated-example" class="level3">
+<h3 class="anchored" data-anchor-id="simplifed-simulated-example">Simplifed Simulated example:</h3>
+<p>Simplifed example: 20 specimens, 1 photo, 2 digitzing reps:</p>
+<p>20 specimens: (single measurement dataset). 2 repetitons: Digitize each photo twice (once in each of two sessions on different days).<br>
+How repeatable are the measurements?</p>
 <p>Simulate the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">true_m <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">10</span>,<span class="dv" style="color: #AD0000;">20</span>,<span class="dv" style="color: #AD0000;">3</span>)  <span class="co" style="color: #5E5E5E;"># true values for 10 specimens</span></span>
-<span id="cb3-2">p1 <span class="ot" style="color: #003B4F;">&lt;-</span> true_m <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">10</span>,<span class="dv" style="color: #AD0000;">0</span>,.<span class="dv" style="color: #AD0000;">1</span>)</span>
-<span id="cb3-3">p2 <span class="ot" style="color: #003B4F;">&lt;-</span> true_m <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">10</span>,<span class="dv" style="color: #AD0000;">0</span>,.<span class="dv" style="color: #AD0000;">1</span>)</span>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">true_m <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">20</span>,<span class="dv" style="color: #AD0000;">20</span>,<span class="dv" style="color: #AD0000;">3</span>)  <span class="co" style="color: #5E5E5E;"># true values for  specimens</span></span>
+<span id="cb3-2">m1 <span class="ot" style="color: #003B4F;">&lt;-</span> true_m <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">20</span>,<span class="dv" style="color: #AD0000;">0</span>,<span class="fl" style="color: #AD0000;">0.5</span>)  <span class="co" style="color: #5E5E5E;"># measurement 1</span></span>
+<span id="cb3-3">m2 <span class="ot" style="color: #003B4F;">&lt;-</span> true_m <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">20</span>,<span class="dv" style="color: #AD0000;">0</span>,<span class="fl" style="color: #AD0000;">0.5</span>)  <span class="co" style="color: #5E5E5E;"># measurement 2</span></span>
 <span id="cb3-4"></span>
-<span id="cb3-5">p1m1 <span class="ot" style="color: #003B4F;">&lt;-</span> true_m <span class="sc" style="color: #5E5E5E;">+</span> p1 <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">10</span>,<span class="dv" style="color: #AD0000;">0</span>,.<span class="dv" style="color: #AD0000;">05</span>) <span class="co" style="color: #5E5E5E;"># photo 1 measurements set 1</span></span>
-<span id="cb3-6">p1m2 <span class="ot" style="color: #003B4F;">&lt;-</span> true_m <span class="sc" style="color: #5E5E5E;">+</span> p1 <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">10</span>,<span class="dv" style="color: #AD0000;">0</span>,.<span class="dv" style="color: #AD0000;">05</span>)</span>
-<span id="cb3-7">p2m1 <span class="ot" style="color: #003B4F;">&lt;-</span> true_m <span class="sc" style="color: #5E5E5E;">+</span> p2 <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">10</span>,<span class="dv" style="color: #AD0000;">0</span>,.<span class="dv" style="color: #AD0000;">05</span>) <span class="co" style="color: #5E5E5E;"># photo 2 measurements set 1</span></span>
-<span id="cb3-8">p2m2 <span class="ot" style="color: #003B4F;">&lt;-</span> true_m <span class="sc" style="color: #5E5E5E;">+</span> p2 <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">10</span>,<span class="dv" style="color: #AD0000;">0</span>,.<span class="dv" style="color: #AD0000;">05</span>)</span>
-<span id="cb3-9"></span>
-<span id="cb3-10">id <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as.factor</span>(<span class="fu" style="color: #4758AB;">rep</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">10</span>, <span class="at" style="color: #657422;">times=</span><span class="dv" style="color: #AD0000;">4</span>))</span>
-<span id="cb3-11">photo <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as.factor</span>(<span class="fu" style="color: #4758AB;">rep</span>(<span class="fu" style="color: #4758AB;">rep</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">each=</span><span class="dv" style="color: #AD0000;">10</span>), <span class="at" style="color: #657422;">times=</span><span class="dv" style="color: #AD0000;">2</span>))</span>
-<span id="cb3-12">rep <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">gl</span>(<span class="dv" style="color: #AD0000;">2</span>, <span class="dv" style="color: #AD0000;">20</span>)</span>
-<span id="cb3-13">total_m <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(p1m1, p2m1, p1m2, p2m2)</span>
-<span id="cb3-14"><span class="fu" style="color: #4758AB;">cbind</span>(id, total_m, photo, rep)  <span class="co" style="color: #5E5E5E;"># the data</span></span></code></pre></div>
+<span id="cb3-5">id <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as.factor</span>(<span class="fu" style="color: #4758AB;">rep</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">20</span>, <span class="at" style="color: #657422;">times=</span><span class="dv" style="color: #AD0000;">2</span>))</span>
+<span id="cb3-6">rep <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">gl</span>(<span class="dv" style="color: #AD0000;">2</span>, <span class="dv" style="color: #AD0000;">20</span>)</span>
+<span id="cb3-7">total_m <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(m1, m2)</span>
+<span id="cb3-8"><span class="fu" style="color: #4758AB;">cbind</span>(id, total_m, rep)  <span class="co" style="color: #5E5E5E;"># the data</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      id  total_m photo rep
- [1,]  1 40.11538     1   1
- [2,]  2 42.42157     1   1
- [3,]  3 32.73244     1   1
- [4,]  4 37.86507     1   1
- [5,]  5 38.78142     1   1
- [6,]  6 48.82775     1   1
- [7,]  7 41.92898     1   1
- [8,]  8 38.39788     1   1
- [9,]  9 50.01078     1   1
-[10,] 10 35.08417     1   1
-[11,]  1 39.83372     2   1
-[12,]  2 42.20379     2   1
-[13,]  3 32.41119     2   1
-[14,]  4 37.78738     2   1
-[15,]  5 38.81378     2   1
-[16,]  6 49.04787     2   1
-[17,]  7 42.01132     2   1
-[18,]  8 38.36371     2   1
-[19,]  9 50.04171     2   1
-[20,] 10 35.11095     2   1
-[21,]  1 40.10641     1   2
-[22,]  2 42.43758     1   2
-[23,]  3 32.68187     1   2
-[24,]  4 37.89703     1   2
-[25,]  5 38.74568     1   2
-[26,]  6 48.94730     1   2
-[27,]  7 41.97864     1   2
-[28,]  8 38.33407     1   2
-[29,]  9 50.08791     1   2
-[30,] 10 35.10127     1   2
-[31,]  1 39.77175     2   2
-[32,]  2 42.32029     2   2
-[33,]  3 32.55381     2   2
-[34,]  4 37.88457     2   2
-[35,]  5 38.74259     2   2
-[36,]  6 49.01269     2   2
-[37,]  7 41.99022     2   2
-[38,]  8 38.25065     2   2
-[39,]  9 50.10979     2   2
-[40,] 10 35.24191     2   2</code></pre>
+<pre><code>      id  total_m rep
+ [1,]  1 17.10225   1
+ [2,]  2 15.93986   1
+ [3,]  3 16.19714   1
+ [4,]  4 21.44124   1
+ [5,]  5 21.54744   1
+ [6,]  6 16.44169   1
+ [7,]  7 18.90075   1
+ [8,]  8 20.44293   1
+ [9,]  9 25.09316   1
+[10,] 10 20.39886   1
+[11,] 11 25.94884   1
+[12,] 12 18.35997   1
+[13,] 13 21.62585   1
+[14,] 14 19.90764   1
+[15,] 15 27.66315   1
+[16,] 16 21.11648   1
+[17,] 17 16.21200   1
+[18,] 18 19.97062   1
+[19,] 19 20.03302   1
+[20,] 20 15.84359   1
+[21,]  1 17.12800   2
+[22,]  2 17.28850   2
+[23,]  3 16.03851   2
+[24,]  4 21.87341   2
+[25,]  5 20.78227   2
+[26,]  6 16.73352   2
+[27,]  7 17.15422   2
+[28,]  8 20.67574   2
+[29,]  9 24.17468   2
+[30,] 10 20.15450   2
+[31,] 11 26.62219   2
+[32,] 12 18.34595   2
+[33,] 13 21.26133   2
+[34,] 14 20.48446   2
+[35,] 15 27.57298   2
+[36,] 16 20.05384   2
+[37,] 17 17.00963   2
+[38,] 18 21.46221   2
+[39,] 19 20.56191   2
+[40,] 20 14.67021   2</code></pre>
 </div>
 </div>
+<p>Is there a difference between the measurement sessions?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(<span class="fu" style="color: #4758AB;">lm</span> ( total_m <span class="sc" style="color: #5E5E5E;">~</span> id<span class="sc" style="color: #5E5E5E;">:</span>photo<span class="sc" style="color: #5E5E5E;">:</span>rep)))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(<span class="fu" style="color: #4758AB;">lm</span> ( total_m <span class="sc" style="color: #5E5E5E;">~</span> rep)))</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             Df Sum Sq Mean Sq
-id:photo:rep 39   1099   28.18</code></pre>
+<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
+rep          1      0    0.00       0  0.995
+Residuals   38    434   11.42               </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">msi <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(<span class="fu" style="color: #4758AB;">lm</span> ( total_m <span class="sc" style="color: #5E5E5E;">~</span> id)))[[<span class="dv" style="color: #AD0000;">1</span>]][<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">3</span>]</span>
-<span id="cb7-2">msip <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(<span class="fu" style="color: #4758AB;">lm</span> ( total_m <span class="sc" style="color: #5E5E5E;">~</span> id<span class="sc" style="color: #5E5E5E;">:</span>photo)))[[<span class="dv" style="color: #AD0000;">1</span>]][<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">3</span>]</span>
-<span id="cb7-3">msipr <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(<span class="fu" style="color: #4758AB;">lm</span> ( total_m <span class="sc" style="color: #5E5E5E;">~</span> id<span class="sc" style="color: #5E5E5E;">:</span>photo<span class="sc" style="color: #5E5E5E;">:</span>rep)))[[<span class="dv" style="color: #AD0000;">1</span>]][<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">3</span>]</span></code></pre></div>
 </div>
-<p>To calculate the repeatability of our digitizing ability, we subtract the MS of the id:photo:rep term from the id term and divide by two (because we have two replicates):</p>
-<p>(MS(id) – MS(id:photo:rep))/2</p>
-<p>Then we calculate the ratio of this value to the total MS:</p>
-<p>((MS(id) – MS(id:photo:rep))/2 ) / (MS(id)+MS(id:photo)+MS(id:photo:rep))</p>
-<p>The result is a value, which in good circumstances is somewhere above 0.95; a repeatability of 0.95 and thus 5% error.</p>
+<p>No (<em>thatʻs good!</em>)</p>
+<p>Is there a difference between individual specimens?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">((msi <span class="sc" style="color: #5E5E5E;">-</span> msipr)<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">/</span> (msi<span class="sc" style="color: #5E5E5E;">+</span>msip<span class="sc" style="color: #5E5E5E;">+</span>msipr)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">mod <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(<span class="fu" style="color: #4758AB;">lm</span>( total_m <span class="sc" style="color: #5E5E5E;">~</span> id )))</span>
+<span id="cb7-2">mod</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2256171</code></pre>
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+id          19  427.3  22.491   67.72 4.01e-14 ***
+Residuals   20    6.6   0.332                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>And the percent measurement error is represented by <code>pME</code>. As a rough rule of thumb we want this to be less than 5%. If it is very high, we either want to practice more, or take multiple measurements of each variable and average them.</p>
-<p>Alternatively, if we were interested in inter-observer error vs.&nbsp;repeatability within observer, we could take one photograph and have it measured by two different people, each person taking two sets of measurements (preferably in different sessions).</p>
-<p>The same can be done for the photos (ind:photo) but of course remember digitizing error is also in this term. This post is inspired by Chapter 9 of the Green Book, which I strongly recommend reading.</p>
-<p>Remember, all this can be done by accessing the parts of the ANOVA table using regular R indexing. Dump the output of procD.lm into an object e.g.&nbsp;called res then res[,3] will be the MS values.</p>
+<p>Yes, and the resigual mean squared error looks small too (good!). How big is the measurement error?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">s2_within <span class="ot" style="color: #003B4F;">&lt;-</span> ms_within <span class="ot" style="color: #003B4F;">&lt;-</span> mod[[<span class="dv" style="color: #AD0000;">1</span>]][<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">3</span>]</span>
+<span id="cb9-2">s2_within</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3321015</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">ms_among <span class="ot" style="color: #003B4F;">&lt;-</span> mod[[<span class="dv" style="color: #AD0000;">1</span>]][<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">3</span>]</span>
+<span id="cb11-2">s2_among <span class="ot" style="color: #003B4F;">&lt;-</span> (ms_among<span class="sc" style="color: #5E5E5E;">-</span>ms_within)<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">2</span></span>
+<span id="cb11-3">ME <span class="ot" style="color: #003B4F;">&lt;-</span> s2_within<span class="sc" style="color: #5E5E5E;">/</span>(s2_within<span class="sc" style="color: #5E5E5E;">+</span>s2_among) <span class="sc" style="color: #5E5E5E;">*</span> <span class="dv" style="color: #AD0000;">100</span></span></code></pre></div>
+</div>
+<p>Not bad. A rule of thumb is that 5% ME is good (95% repeatability). If we want to reduce ME, we can use the average of the two measurements in our analyses.</p>
 
 
 
@@ -547,7 +999,7 @@ Claude, Julien. 2008. <em>Morphometrics with r</em>. 1. Aufl. New York, NY: Spri
   <category>(do) while</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-04-04-measurement-error/index.html</guid>
-  <pubDate>Thu, 30 Mar 2023 10:00:00 GMT</pubDate>
+  <pubDate>Thu, 30 Mar 2023 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Intro to Morphometrics</title>
@@ -562,9 +1014,7 @@ Claude, Julien. 2008. <em>Morphometrics with r</em>. 1. Aufl. New York, NY: Spri
 <h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
-<li><p><a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-22-control-structures" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-22-control-structures</a></p></li>
-<li><p><a href="https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/" class="uri">https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/</a></p></li>
-<li><p>&lt;&gt;</p></li>
+<li><a href="https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/" class="uri">https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/</a></li>
 </ul>
 </section>
 <section id="learning-objectives" class="level1">
@@ -582,7 +1032,6 @@ Learning objectives
 <p><strong>At the end of this lesson you will:</strong></p>
 <ul>
 <li>Be able to estimate measurement error and repeatability</li>
-<li></li>
 </ul>
 </div>
 </div>
@@ -614,7 +1063,7 @@ Learning objectives
 </section>
 <section id="example" class="level2">
 <h2 class="anchored" data-anchor-id="example">Example</h2>
-<p>Let’s say you are taking photographs of your specimens. They are rather rounded and so it is hard to place them flat on the table to photograph from above. Issue 1 here is whether the shape variation we observe in the photo is real or due to placing the specimen at slightly different angles. Then, when once you have the photograph you need to digitize the landmarks. Issue 2 is whether you put the landmarks in the same place every time (i.e.&nbsp;is your criteria for the landmark robust enough that its obvious where it should be placed on each specimen, and if you came back to the data a month or year later?)</p>
+<p>Let’s say you are taking photographs of your specimens and you want to quantify the error assocated with placing your landmarks in the same place every time (i.e.&nbsp;is your criteria for the landmark robust enough that its obvious where it should be placed on each specimen, and if you came back to the data a month or year later?)</p>
 <p>To assess measurement error in this instance we could take two sets of pictures, each time removing and positioning the specimen. And we could digitize each image twice, preferably in different sessions (another day or week). This would give us 4 sets of landmark data for each specimen, allowing us to asses both error associated with the digitization as well as error in capturing the shapes via the photographs.</p>
 <p>Alternatively, if we were interested in inter-observer error vs.&nbsp;repeatability within observer, we could take one photograph and have it measured by two different people, each person taking two sets of measurements (preferably in different sessions).</p>
 <section id="simulated-example" class="level3">
@@ -631,24 +1080,24 @@ Learning objectives
 <span id="cb1-7"><span class="fu" style="color: #4758AB;">cbind</span>(individual, total_m, session)  <span class="co" style="color: #5E5E5E;"># the data</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      individual  total_m session
- [1,]          1 20.22235       1
- [2,]          2 22.19588       1
- [3,]          3 21.60974       1
- [4,]          4 22.35029       1
- [5,]          5 18.32830       1
- [6,]          1 23.66583       2
- [7,]          2 19.94666       2
- [8,]          3 19.29870       2
- [9,]          4 22.57861       2
-[10,]          5 17.51251       2</code></pre>
+ [1,]          1 20.44919       1
+ [2,]          2 21.85592       1
+ [3,]          3 23.57399       1
+ [4,]          4 23.66764       1
+ [5,]          5 15.82221       1
+ [6,]          1 20.61579       2
+ [7,]          2 22.73522       2
+ [8,]          3 22.57645       2
+ [9,]          4 23.67244       2
+[10,]          5 13.60084       2</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(total_m <span class="sc" style="color: #5E5E5E;">~</span> session))</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
-session      1   0.29    0.29   0.064  0.807
-Residuals    8  36.32    4.54               </code></pre>
+session      1   0.47    0.47   0.035  0.857
+Residuals    8 108.45   13.56               </code></pre>
 </div>
 </div>
 <p>There is no difference between sessions (yay)!</p>
@@ -656,9 +1105,11 @@ Residuals    8  36.32    4.54               </code></pre>
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">mod <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(total_m <span class="sc" style="color: #5E5E5E;">~</span> individual))</span>
 <span id="cb5-2">mod </span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
-individual   4  25.12   6.280   2.733   0.15
-Residuals    5  11.49   2.298               </code></pre>
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+individual   4 105.55  26.388   39.21 0.000574 ***
+Residuals    5   3.37   0.673                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <p>The specimens measured (individuals) are significantly different.</p>
@@ -669,7 +1120,7 @@ Residuals    5  11.49   2.298               </code></pre>
 <span id="cb7-4">pME <span class="ot" style="color: #003B4F;">&lt;-</span> s2within<span class="sc" style="color: #5E5E5E;">/</span>(s2within<span class="sc" style="color: #5E5E5E;">+</span>s2among)<span class="sc" style="color: #5E5E5E;">*</span><span class="dv" style="color: #AD0000;">100</span></span>
 <span id="cb7-5">pME</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 53.56951</code></pre>
+<pre><code>[1] 4.974382</code></pre>
 </div>
 </div>
 <p>And the percent measurement error is represented by <code>pME</code>. As a rough rule of thumb we want this to be less than 5%. If it is very high, we either want to practice more, or take multiple measurements of each variable and average them.</p>
@@ -788,24 +1239,12 @@ Residuals    5  11.49   2.298               </code></pre>
 [1,] 24.77514</code></pre>
 </div>
 </div>
-</section>
-</section>
-</section>
-</section>
-<section id="landmarks-and-pseudolandmarks" class="level1">
-<h1>Landmarks and Pseudolandmarks</h1>
-<p><img src="https://mbutler808.github.io/images/rodentmandible.jpg" class="img-fluid" alt="Rodent lower jaw (mandible). Lateral view of a Nectomys squamipes mandible, showing the 10 landmarks used in this work. 1) Anterior edge of the incisive alveolus; 2) Most posterior point of the diastema; 3) Junction between the mandible and the m1 root; 4) Junction between the molar base and the coronoid process; 5) Most posterior point at the articular process; 6) Most anterior point in the angular notch; 7) Most posterior point at the angular process; 8) Angular process base; 9) Inner edge of the mandibular symphysis; 10) Posterior edge of the incisive alveolus"> <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.7557">Source</a></p>
-<p>Acquiring landmarks usually involves some digitizing by hand.</p>
-<p><a href="https://russellboneatlas.wordpress.com/home/red-fox-bone-atlas/red-fox-mandible/" class="uri">https://russellboneatlas.wordpress.com/home/red-fox-bone-atlas/red-fox-mandible/</a></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="co" style="color: #5E5E5E;">#require(imager)  # install if you need to</span></span>
-<span id="cb27-2"></span>
-<span id="cb27-3"><span class="co" style="color: #5E5E5E;">#jaw &lt;- load.image("../../images/rodentmandible.jpg")</span></span>
-<span id="cb27-4"><span class="co" style="color: #5E5E5E;">#plot(jaw)</span></span></code></pre></div>
-</div>
 
 
 
+</section>
+</section>
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
@@ -820,8 +1259,7 @@ Claude, Julien. 2008. <em>Morphometrics with r</em>. 1. Aufl. New York, NY: Spri
   <category>(do) while</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-03-30-morphometrics/index.html</guid>
-  <pubDate>Thu, 30 Mar 2023 10:00:00 GMT</pubDate>
-  <media:content url="https://mbutler808.github.io/images/rodentmandible.jpg" medium="image" type="image/jpeg"/>
+  <pubDate>Thu, 30 Mar 2023 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Program Flow</title>
@@ -957,7 +1395,7 @@ font-style: italic;">## do this if none of the above is true</span></span>
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">x <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">runif</span>(<span class="at" style="color: #657422;">n=</span><span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">min=</span><span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">max=</span><span class="dv" style="color: #AD0000;">10</span>)  </span>
 <span id="cb4-2">x</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.992286</code></pre>
+<pre><code>[1] 9.765364</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="cf" style="color: #003B4F;">if</span>(x <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">6</span>) {</span>
 <span id="cb6-2">    y <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">10</span></span>
@@ -966,11 +1404,11 @@ font-style: italic;">## do this if none of the above is true</span></span>
 <span id="cb6-5">  } <span class="cf" style="color: #003B4F;">else</span> { y <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">0</span> }</span>
 <span id="cb6-6">x</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.992286</code></pre>
+<pre><code>[1] 9.765364</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">y</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
+<pre><code>[1] 10</code></pre>
 </div>
 </div>
 <p>With the if-else structure we can test multiple conditions on the same variable. Here, three ranges of values for x. Of course, the <code>else</code> conditional is not necessary. You could just have a string of ifs:</p>
@@ -1212,7 +1650,7 @@ font-style: italic;">## Stop loop after 20 iterations</span></span>
   <category>(do) while</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-03-28-program-flow/index.html</guid>
-  <pubDate>Tue, 28 Mar 2023 10:00:00 GMT</pubDate>
+  <pubDate>Tue, 28 Mar 2023 04:00:00 GMT</pubDate>
   <media:content url="https://mbutler808.github.io/images/ProgramFlow_decision_point.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
@@ -1453,7 +1891,7 @@ font-style: italic;">## run square function for each i</span></span>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><span class="fu" style="color: #4758AB;">sample</span>(<span class="dv" style="color: #AD0000;">5</span>, <span class="at" style="color: #657422;">replace=</span>T)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 5 1 3 5 4</code></pre>
+<pre><code>[1] 4 5 4 4 1</code></pre>
 </div>
 </div>
 <p>To do it 4 times, you could do:</p>
@@ -1461,11 +1899,11 @@ font-style: italic;">## run square function for each i</span></span>
 <div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><span class="fu" style="color: #4758AB;">sapply</span>( <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">5</span>, <span class="dv" style="color: #AD0000;">5</span>, <span class="dv" style="color: #AD0000;">5</span>, <span class="dv" style="color: #AD0000;">5</span>), sample, <span class="at" style="color: #657422;">replace=</span>T)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3] [,4]
-[1,]    4    5    3    4
-[2,]    1    5    2    5
-[3,]    2    2    2    5
-[4,]    3    3    4    2
-[5,]    5    2    5    1</code></pre>
+[1,]    2    1    4    3
+[2,]    5    1    1    1
+[3,]    1    1    4    5
+[4,]    3    5    5    2
+[5,]    5    2    3    3</code></pre>
 </div>
 </div>
 <p><code>sapply</code> took the vector of fives and created a sample for each one.</p>
@@ -1548,7 +1986,7 @@ font-style: italic;">## creates a null (empty) list</span></span>
   <category>for loops</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-03-23-apply/index.html</guid>
-  <pubDate>Thu, 23 Mar 2023 10:00:00 GMT</pubDate>
+  <pubDate>Thu, 23 Mar 2023 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Lists and For-Loops</title>
@@ -1802,28 +2240,28 @@ font-style: italic;">## why does this have to be a list object?</span></span>
 <span id="cb36-4">mylist</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-           x         y
-1 -1.7263950 0.6481564
-2 -0.6013918 0.2222366
-3 -0.5961741 1.9362035
+           x          y
+1 -1.5891006  1.0447945
+2 -0.9289017  0.7709087
+3  0.3724301 -0.4045960
 
 [[2]]
-           x         y
-1  0.5848591 -1.830745
-2 -0.1817905 -1.739007
-3 -1.8887220  3.259660
+           x          y
+1  0.1793252 -0.1167686
+2  0.8126721  0.4296348
+3 -1.6203481 -0.8756523
 
 [[3]]
-            x          y
-1 -0.41679868  1.1316357
-2 -1.53859929  1.6786411
-3  0.03206055 -0.2948545
+           x          y
+1 -0.9860967 -0.3711503
+2  0.8975715 -0.4703146
+3 -1.0199470  1.2916043
 
 [[4]]
-            x          y
-1  0.95184731  0.4991119
-2 -0.02823968  0.5471838
-3  0.16363490 -0.1766082</code></pre>
+          x          y
+1  1.359747 -0.9601006
+2  1.236366 -0.6644286
+3 -1.495295 -0.3078295</code></pre>
 </div>
 </div>
 <p>This code does the same thing, but uses the <code>c()</code> function to add on to <code>mylist</code> (what happens when you add on to a null list?):</p>
@@ -1836,28 +2274,28 @@ font-style: italic;">## creates a null (empty) list</span></span>
 <span id="cb38-5">mylist</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-            x          y
-1 -0.38241743  0.5645779
-2  0.66244788 -0.4939633
-3 -0.07128512  1.0290206
+           x          y
+1 -1.4285965 -0.6116601
+2  1.4485142 -0.3044112
+3 -0.1127297 -0.2419247
 
 [[2]]
           x          y
-1 2.7509007 -0.6316569
-2 0.8467325  0.8879843
-3 1.1694098  2.3165810
+1 0.2545869 -0.7306861
+2 0.1032878  1.1283951
+3 2.0754615 -0.1501652
 
 [[3]]
            x          y
-1 -0.2816809  2.2235912
-2 -1.8733641 -0.1192452
-3 -0.4045759  1.9047164
+1 -0.3170322 -0.3139040
+2 -1.0130806 -0.4275128
+3  0.2439555  0.1655069
 
 [[4]]
-           x         y
-1 -0.5773772 1.5670042
-2 -0.9762400 0.4054583
-3  1.6231700 1.1012945</code></pre>
+          x         y
+1 0.8218255 0.9689341
+2 0.5789347 0.1230913
+3 1.8513586 1.7753243</code></pre>
 </div>
 </div>
 </section>
@@ -1874,16 +2312,16 @@ font-style: italic;">## run anova, save to aov.out</span></span>
 <pre><code>Analysis of Variance Table
 
 Response: mylist[[1]]$x
-              Df  Sum Sq Mean Sq F value Pr(&gt;F)
-mylist[[1]]$y  1 0.39411 0.39411   2.171 0.3796
-Residuals      1 0.18153 0.18153               </code></pre>
+              Df Sum Sq Mean Sq F value Pr(&gt;F)
+mylist[[1]]$y  1 2.2984  2.2984   1.242 0.4656
+Residuals      1 1.8506  1.8506               </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb42" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><span class="fu" style="color: #4758AB;">unlist</span>(aov.out)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Df1       Df2   Sum Sq1   Sum Sq2  Mean Sq1 
-1.0000000 1.0000000 0.3941076 0.1815294 0.3941076 
+1.0000000 1.0000000 2.2983557 1.8505623 2.2983557 
  Mean Sq2  F value1  F value2   Pr(&gt;F)1   Pr(&gt;F)2 
-0.1815294 2.1710404        NA 0.3796002        NA </code></pre>
+1.8505623 1.2419769        NA 0.4655777        NA </code></pre>
 </div>
 </div>
 </section>
@@ -1907,7 +2345,7 @@ Residuals      1 0.18153 0.18153               </code></pre>
   <category>for loops</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-03-23-lists-loops/index.html</guid>
-  <pubDate>Thu, 23 Mar 2023 10:00:00 GMT</pubDate>
+  <pubDate>Thu, 23 Mar 2023 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Writing your own functions</title>
@@ -2123,8 +2561,8 @@ $names
  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j"
 
 $eco
- [1] -0.1592926  0.8130517 -0.9135572 -1.1173282  0.9514580  0.7268061
- [7]  0.1617491 -0.4349032  0.4562898  0.4130124</code></pre>
+ [1] -0.9572213 -0.3388834 -0.9815275  1.5341439 -0.3236124 -2.0562527
+ [7] -0.5141652 -0.8511749 -0.3397510 -0.5002090</code></pre>
 </div>
 </div>
 <p>This may seem like a silly example (and it is), but it is kept simple so you can see what’s going on. These default arguments are very useful for making your functions <strong>flexible</strong> so that they can be more <em>generic</em> and <em>reusable</em> for many purposes.</p>
@@ -2151,7 +2589,7 @@ $eco
 <div class="cell-output cell-output-stdout">
 <pre><code>function (object, ...) 
 UseMethod("summary")
-&lt;bytecode: 0x7fb311d5f098&gt;
+&lt;bytecode: 0x7fefc0814670&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -2205,7 +2643,7 @@ see '?methods' for accessing help and source code</code></pre>
         c(tt, `NA's` = sum(nas))
     else tt
 }
-&lt;bytecode: 0x7fb312899708&gt;
+&lt;bytecode: 0x7fefba4bf1d0&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -2322,7 +2760,7 @@ see '?methods' for accessing help and source code</code></pre>
   <category>methods</category>
   <category>scope</category>
   <guid>https://mbutler808.github.io/posts/2023-03-21-functions/index.html</guid>
-  <pubDate>Tue, 21 Mar 2023 10:00:00 GMT</pubDate>
+  <pubDate>Tue, 21 Mar 2023 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Joining data with dplyr</title>
@@ -2599,15 +3037,15 @@ Note
 <pre><code># A tibble: 9 × 3
   id    visit outcome
   &lt;chr&gt; &lt;int&gt;   &lt;dbl&gt;
-1 a         0   3.46 
-2 a         1   3.13 
-3 a         2   2.51 
-4 b         0   3.97 
-5 b         1   2.97 
-6 b         2   4.26 
-7 c         0   3.15 
-8 c         1   0.930
-9 c         2   3.43 </code></pre>
+1 a         0    4.41
+2 a         1    1.55
+3 a         2    3.73
+4 b         0    4.40
+5 b         1    3.13
+6 b         2    3.77
+7 c         0    2.43
+8 c         1    2.09
+9 c         2    3.17</code></pre>
 </div>
 </div>
 <p>Note that subjects are labeled by a unique identifer in the <code>id</code> column.</p>
@@ -2780,7 +3218,7 @@ Questions
   <category>tibble</category>
   <category>pipe</category>
   <guid>https://mbutler808.github.io/posts/2023-03-09-joining-data/index.html</guid>
-  <pubDate>Thu, 09 Mar 2023 10:00:00 GMT</pubDate>
+  <pubDate>Thu, 09 Mar 2023 05:00:00 GMT</pubDate>
   <media:content url="https://d33wubrfki0l68.cloudfront.net/aeab386461820b029b7e7606ccff1286f623bae1/ef0d4/diagrams/join-venn.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -2968,8 +3406,7 @@ psittacula   4.235020 3.049120 2.259640 2.230040 2.073940</code></pre>
 18 Unaffiliated      217     299     374     365     341     528     407     321
 # … with 2 more variables: `&gt;150k` &lt;dbl&gt;, `Don't know/refused` &lt;dbl&gt;, and
 #   abbreviated variable names ¹​`$10-20k`, ²​`$20-30k`, ³​`$30-40k`, ⁴​`$40-50k`,
-#   ⁵​`$50-75k`, ⁶​`$75-100k`, ⁷​`$100-150k`
-# ℹ Use `colnames()` to see all variable names</code></pre>
+#   ⁵​`$50-75k`, ⁶​`$75-100k`, ⁷​`$100-150k`</code></pre>
 </div>
 </div>
 <p>Take a second to look at this data. In this case the variables are religion (a proper vector), income bracket (in the column names), and the number of respts, which is the third variable, is presented inside the table. onden Converting this data to tidy format would give us</p>
@@ -2992,8 +3429,7 @@ psittacula   4.235020 3.049120 2.259640 2.230040 2.073940</code></pre>
  8 Agnostic $100-150k                  109
  9 Agnostic &gt;150k                       84
 10 Agnostic Don't know/refused          96
-# … with 170 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 170 more rows</code></pre>
 </div>
 </div>
 <p>Now we have each variable along the columns and each row corresponds to one observation (or category, here a combination of religion and income bracket).</p>
@@ -3031,8 +3467,7 @@ psittacula   4.235020 3.049120 2.259640 2.230040 2.073940</code></pre>
  8 Agnostic $100-150k                  109
  9 Agnostic &gt;150k                       84
 10 Agnostic Don't know/refused          96
-# … with 170 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 170 more rows</code></pre>
 </div>
 </div>
 <div class="callout-tip callout callout-style-default callout-captioned">
@@ -3179,8 +3614,7 @@ Example of <code>pivot_longer()</code>
  8 Afghanistan Asia       1987    40.8 13867957      852.
  9 Afghanistan Asia       1992    41.7 16317921      649.
 10 Afghanistan Asia       1997    41.8 22227415      635.
-# … with 1,694 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 1,694 more rows</code></pre>
 </div>
 </div>
 <p>If we wanted to make <code>lifeExp</code>, <code>pop</code> and <code>gdpPercap</code> (all measurements that we observe) go from a wide table into a long table, what would we do?</p>
@@ -3216,18 +3650,18 @@ Example
 <pre><code># A tibble: 12 × 6
    company  year    Q1    Q2    Q3    Q4
      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
- 1       1  2006    81    70    22    62
- 2       1  2007     2    11    68    56
- 3       1  2008    14    63    94    18
- 4       1  2009    34     2    97    32
- 5       2  2006    96   100    57    70
- 6       2  2007    15    46    14    30
- 7       2  2008    76    53    81    98
- 8       2  2009    61    30    31    99
- 9       3  2006    86    16    33     0
-10       3  2007    68    23    67    28
-11       3  2008    54    25    10    20
-12       3  2009    94    98    39    67</code></pre>
+ 1       1  2006    77     4    95    88
+ 2       1  2007     0    22    70    45
+ 3       1  2008    53     7    87    97
+ 4       1  2009    64    80    33     8
+ 5       2  2006     3    33    50    14
+ 6       2  2007    98    39    11    37
+ 7       2  2008   100    35    88    22
+ 8       2  2009    38    96    78    89
+ 9       3  2006    61     6    14    87
+10       3  2007    11    52    28    58
+11       3  2008    46    37    29    18
+12       3  2009    23    82    56    59</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -3267,8 +3701,7 @@ Example
  8 Afghanistan_Asia_1987     40.8 13867957      852.
  9 Afghanistan_Asia_1992     41.7 16317921      649.
 10 Afghanistan_Asia_1997     41.8 22227415      635.
-# … with 1,694 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 1,694 more rows</code></pre>
 </div>
 </div>
 <p>Next, we show how to separate the columns into three separate columns using <code>separate()</code> using the <code>col</code>, <code>into</code> and <code>sep</code> arguments. Note that this works by finding the delimiter, and relies on order of the information.</p>
@@ -3294,8 +3727,7 @@ Example
  8 Afghanistan Asia      1987     40.8 13867957      852.
  9 Afghanistan Asia      1992     41.7 16317921      649.
 10 Afghanistan Asia      1997     41.8 22227415      635.
-# … with 1,694 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 1,694 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -3352,8 +3784,7 @@ Questions
  8 Afghanistan Asia       1962 pop       10267083  
  9 Afghanistan Asia       1962 gdpPercap      853. 
 10 Afghanistan Asia       1967 lifeExp         34.0
-# … with 5,102 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 5,102 more rows</code></pre>
 </div>
 </div>
 <p>We stacked the three variables <code>lifeExp</code>, <code>pop</code>, and <code>gdpPercap</code> so now the table is a little thinner and three times as long.</p>
@@ -3371,7 +3802,7 @@ Questions
   <category>dplyr</category>
   <category>tibble</category>
   <guid>https://mbutler808.github.io/posts/2023-03-09-reshaping-data/index.html</guid>
-  <pubDate>Thu, 09 Mar 2023 10:00:00 GMT</pubDate>
+  <pubDate>Thu, 09 Mar 2023 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>A small review of univariate parametric statistics</title>
@@ -3712,7 +4143,7 @@ F-statistic: 64.32 on 3 and 146 DF,  p-value: &lt; 2.2e-16</code></pre>
   <category>ggplot2</category>
   <category>dplyr</category>
   <guid>https://mbutler808.github.io/posts/2023-03-07-univariate/index.html</guid>
-  <pubDate>Tue, 07 Mar 2023 10:00:00 GMT</pubDate>
+  <pubDate>Tue, 07 Mar 2023 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>A small tour of multivariate analysis</title>
@@ -4144,7 +4575,7 @@ Petal.Width   0.9728120 0.22290236</code></pre>
   <category>statistics</category>
   <category>R</category>
   <guid>https://mbutler808.github.io/posts/2023-03-02-multivariate/index.html</guid>
-  <pubDate>Tue, 28 Feb 2023 10:00:00 GMT</pubDate>
+  <pubDate>Tue, 28 Feb 2023 05:00:00 GMT</pubDate>
   <media:content url="https://mbutler808.github.io/images/skew.gif" medium="image" type="image/gif"/>
 </item>
 <item>
@@ -5216,16 +5647,16 @@ Example
 <pre><code># A tibble: 10 × 16
    name      height  mass hair  skin  eye   birth…¹ sex   gender homew…² species
    &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;  
- 1 Jek Tono…    180 110   brown fair  blue       NA male  mascu… Bestin… Human  
- 2 Ric Olié     183  NA   brown fair  blue       NA &lt;NA&gt;  &lt;NA&gt;   Naboo   &lt;NA&gt;   
- 3 Poggle t…    183  80   none  green yell…      NA male  mascu… Geonos… Geonos…
- 4 Luminara…    170  56.2 black yell… blue       58 fema… femin… Mirial  Mirial…
- 5 Lama Su      229  88   none  grey  black      NA male  mascu… Kamino  Kamino…
- 6 Nien Nunb    160  68   none  grey  black      NA male  mascu… Sullust Sullus…
- 7 Jango Fe…    183  79   black tan   brown      66 male  mascu… Concor… Human  
- 8 Gregar T…    185  85   black dark  brown      NA male  mascu… Naboo   Human  
- 9 Roos Tar…    224  82   none  grey  oran…      NA male  mascu… Naboo   Gungan 
-10 Ben Quad…    163  65   none  grey… oran…      NA male  mascu… Tund    Toong  
+ 1 C-3PO        167    75 &lt;NA&gt;  gold  yell…     112 none  mascu… Tatooi… Droid  
+ 2 Eeth Koth    171    NA black brown brown      NA male  mascu… Iridon… Zabrak 
+ 3 Poe Dame…     NA    NA brown light brown      NA male  mascu… &lt;NA&gt;    Human  
+ 4 Cordé        157    NA brown light brown      NA fema… femin… Naboo   Human  
+ 5 Wilhuff …    180    NA aubu… fair  blue       64 male  mascu… Eriadu  Human  
+ 6 Kit Fisto    196    87 none  green black      NA male  mascu… Glee A… Nautol…
+ 7 Quarsh P…    183    NA black dark  brown      62 &lt;NA&gt;  &lt;NA&gt;   Naboo   &lt;NA&gt;   
+ 8 Rugor Na…    206    NA none  green oran…      NA male  mascu… Naboo   Gungan 
+ 9 Cliegg L…    183    NA brown fair  blue       82 male  mascu… Tatooi… Human  
+10 Mas Amed…    196    NA none  blue  blue       NA male  mascu… Champa… Chagri…
 # … with 5 more variables: films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;,
 #   heightsize &lt;dbl&gt;, height.quint &lt;fct&gt;, and abbreviated variable names
 #   ¹​birth_year, ²​homeworld</code></pre>
@@ -5350,7 +5781,7 @@ Tip
   <category>tibble</category>
   <category>pipe</category>
   <guid>https://mbutler808.github.io/posts/2023-02-28-dplyr/index.html</guid>
-  <pubDate>Tue, 28 Feb 2023 10:00:00 GMT</pubDate>
+  <pubDate>Tue, 28 Feb 2023 05:00:00 GMT</pubDate>
   <media:content url="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/tidydata_1.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
@@ -6113,7 +6544,7 @@ increasing max.overlaps</code></pre>
   <category>ggplot2</category>
   <category>data visualization</category>
   <guid>https://mbutler808.github.io/posts/2023-02-21-ggplot2/index.html</guid>
-  <pubDate>Tue, 21 Feb 2023 10:00:00 GMT</pubDate>
+  <pubDate>Tue, 21 Feb 2023 05:00:00 GMT</pubDate>
   <media:content url="https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf" medium="image"/>
 </item>
 <item>
@@ -6456,7 +6887,7 @@ Example
   <category>lattice</category>
   <category>data visualization</category>
   <guid>https://mbutler808.github.io/posts/2023-02-16-plotting-systems/index.html</guid>
-  <pubDate>Thu, 16 Feb 2023 10:00:00 GMT</pubDate>
+  <pubDate>Thu, 16 Feb 2023 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Tidying and Exploring Data</title>
@@ -7192,7 +7623,7 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
   <category>data structures</category>
   <category>objects</category>
   <guid>https://mbutler808.github.io/posts/2023-02-14-tidying-exploring-data/index.html</guid>
-  <pubDate>Tue, 14 Feb 2023 10:00:00 GMT</pubDate>
+  <pubDate>Tue, 14 Feb 2023 05:00:00 GMT</pubDate>
   <media:content url="https://mbutler808.github.io/images/penguins.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -7674,8 +8105,8 @@ Good sources for practice manipulating strings:
 <div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">y <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">8</span>)</span>
 <span id="cb15-2">y</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.16786634  1.20306018 -0.34653291 -1.56933540  0.52040416 -0.22265788
-[7]  0.04805772  0.56151075</code></pre>
+<pre><code>[1] -1.5586869  0.8054835 -1.4944195 -0.3371260  2.2334499 -0.2534822 -1.4554866
+[8]  0.3046668</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">goodanswer <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="cn" style="color: #8f5902;">TRUE</span>, <span class="cn" style="color: #8f5902;">TRUE</span>, <span class="cn" style="color: #8f5902;">FALSE</span>)  <span class="co" style="color: #5E5E5E;"># logical</span></span>
 <span id="cb17-2">goodanswer</span></code></pre></div>
@@ -7742,9 +8173,9 @@ Levels: high low med</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><span class="fu" style="color: #4758AB;">as.character</span>(y)  <span class="co" style="color: #5E5E5E;"># coerce to character</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "-0.167866339058837" "1.20306017894534"   "-0.346532911836106"
-[4] "-1.56933539540352"  "0.520404158713562"  "-0.222657881255818"
-[7] "0.0480577180132275" "0.561510750396616" </code></pre>
+<pre><code>[1] "-1.55868693158335"  "0.805483463516522"  "-1.49441946742258" 
+[4] "-0.337125974660089" "2.23344985377915"   "-0.253482201387456"
+[7] "-1.45548662051813"  "0.304666751603889" </code></pre>
 </div>
 </div>
 <p>Note that when values are quoted, they are of type character.</p>
@@ -7833,15 +8264,15 @@ length (arg 1)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb62" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1">xy</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     x           y
-[1,] 1 -0.16786634
-[2,] 5  1.20306018
-[3,] 7 -0.34653291
-[4,] 2 -1.56933540
-[5,] 6  0.52040416
-[6,] 1 -0.22265788
-[7,] 5  0.04805772
-[8,] 7  0.56151075</code></pre>
+<pre><code>     x          y
+[1,] 1 -1.5586869
+[2,] 5  0.8054835
+[3,] 7 -1.4944195
+[4,] 2 -0.3371260
+[5,] 6  2.2334499
+[6,] 1 -0.2534822
+[7,] 5 -1.4554866
+[8,] 7  0.3046668</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb64" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1">z <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">matrix</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">6</span>, <span class="at" style="color: #657422;">nrow=</span><span class="dv" style="color: #AD0000;">2</span>)  <span class="co" style="color: #5E5E5E;">#create a matrix with 2 rows</span></span>
 <span id="cb64-2">z</span></code></pre></div>
@@ -7966,7 +8397,7 @@ attr(,"names")
 </div>
 <div class="sourceCode cell-code" id="cb101" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1">dat[<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">3</span>]</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.07701725</code></pre>
+<pre><code>[1] 1.55071</code></pre>
 </div>
 </div>
 </section>
@@ -8024,7 +8455,7 @@ attr(,"names")
 <pre><code>List of 4
  $ species: chr [1:3] "a" "b" "c"
  $ x      : num [1:3] 1 2 4
- $ y      : num [1:3] 0.077 0.493 -1.311
+ $ y      : num [1:3] 1.551 1.655 0.504
  $ z      : int [1:2, 1:3] 1 2 3 4 5 6
   ..- attr(*, "names")= chr [1:6] "a" "b" "c" "d" ...
   ..- attr(*, "dimnames")=List of 2
@@ -8051,7 +8482,7 @@ attr(,"names")
   <category>data structures</category>
   <category>objects</category>
   <guid>https://mbutler808.github.io/posts/2023-02-09-data/index.html</guid>
-  <pubDate>Thu, 09 Feb 2023 10:00:00 GMT</pubDate>
+  <pubDate>Thu, 09 Feb 2023 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Saving your work as R scripts</title>
@@ -8334,7 +8765,7 @@ font-style: italic;">###</span></span></code></pre></div>
   <category>scripts</category>
   <category>reproducibility</category>
   <guid>https://mbutler808.github.io/posts/2023-02-07-scripts/index.html</guid>
-  <pubDate>Tue, 07 Feb 2023 10:00:00 GMT</pubDate>
+  <pubDate>Tue, 07 Feb 2023 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>What is the question?</title>
@@ -8445,548 +8876,8 @@ Discussion Questions
   <category>questions</category>
   <category>data mining</category>
   <guid>https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/index.html</guid>
-  <pubDate>Tue, 31 Jan 2023 10:00:00 GMT</pubDate>
+  <pubDate>Tue, 31 Jan 2023 05:00:00 GMT</pubDate>
   <media:content url="http://www.posterwire.com/wp-content/images/wizard_of_oz.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>Data IO</title>
-  <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2023-01-31-reading-data/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<!-- Add interesting quote -->
-<section id="acknowledgements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
-<p>Material for this lecture was borrowed and adopted from</p>
-<ul>
-<li><a href="http://rafalab.dfci.harvard.edu/dsbook/importing-data.html" class="uri">http://rafalab.dfci.harvard.edu/dsbook/importing-data.html</a></li>
-<li><a href="https://www.stephaniehicks.com/jhustatcomputing2022" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022</a></li>
-</ul>
-</section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Learning objectives
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>At the end of this lesson you will:</strong></p>
-<ul>
-<li>Be able to read and write text / csv files in R</li>
-<li>Diagnose some common problems importing data and troubleshoot</li>
-<li>Be able to identify different file types and encodings</li>
-<li>Plan using best practices for data management and spreasheet design</li>
-<li>Be able to calculate memory requirements for R objects</li>
-<li>Be aware of various packages to read in other types of data</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<!-- Sweave2knitr() -->
-<p>So far, we have been working within R, either typing data in directly or using R’s functions to generate data. In order to analyze your own data, you have to load data from an external file into R. Similarly, to save your work, you’ll probably want to write files from R to your hard drive. Both of these require interacting with your computer’s operating system. In this chapter, we’re just going to do it. We’ll talk more about what’s going on in a later section on the R Environment.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-There are many different ways to access data in R
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Built-in datasets - useful for practice</li>
-<li>Text files, importing from .csv is especially easy</li>
-<li>Files in other formats, e.g., .xls</li>
-<li>readLines from a connection including files</li>
-<li>Data not on your local computer, e.g., piped via a url</li>
-<li>Special connections, e.g., google sheets</li>
-</ol>
-</div>
-</div>
-</section>
-<section id="built-in-datasets" class="level1">
-<h1>Built-in datasets</h1>
-<p>R has many built-in datasets that come distributed with R. They are very useful for demonstrating Rʻs many functions for statistics, plotting, and other uses.</p>
-<p>To see a list of them, you can type <code>data()</code> at the command line. To see the contents, type the name of the dataset. To see the help page type a ? in front of the name:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">data</span>()</span>
-<span id="cb1-2">cars</span>
-<span id="cb1-3">?cars</span></code></pre></div>
-</div>
-<p>You can use built-in data in R by referring to the names of the objects.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;">head</span>(cars)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  speed dist
-1     4    2
-2     4   10
-3     7    4
-4     7   22
-5     8   16
-6     9   10</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;">plot</span>(cars)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-01-31-reading-data/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="the-biggest-issue-for-fairly-new-users" class="level1">
-<h1>The biggest issue for fairly new users</h1>
-<p>In order for R to read in data, it needs to know (1) where it the data stream, and (2) what in the datastream it is looking for. In the case of built-in datasets, both problems are solved as it is already imported into R.</p>
-<p>The biggest issue most new-ish users experience when the path or filename is incorrect. For example, I donʻt have a file called “dat.csv” here, so this is a common error:</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>R</strong></pre>
-</div>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="op" style="color: #5E5E5E;">&gt;</span> read.csv<span class="kw" style="color: #003B4F;">(</span><span class="st" style="color: #20794D;">"dat.csv"</span><span class="kw" style="color: #003B4F;">)</span></span>
-<span id="cb5-2"><span class="ex" style="color: null;">Error</span> in file<span class="er" style="color: #AD0000;">(</span><span class="fu" style="color: #4758AB;">file</span>, <span class="st" style="color: #20794D;">"rt"</span><span class="kw" style="color: #003B4F;">)</span> <span class="bu" style="color: null;">:</span> cannot open the connection</span>
-<span id="cb5-3"><span class="ex" style="color: null;">In</span> addition: Warning message:</span>
-<span id="cb5-4"><span class="ex" style="color: null;">In</span> file<span class="er" style="color: #AD0000;">(</span><span class="fu" style="color: #4758AB;">file</span>, <span class="st" style="color: #20794D;">"rt"</span><span class="kw" style="color: #003B4F;">)</span> <span class="bu" style="color: null;">:</span> cannot open file <span class="st" style="color: #20794D;">'dat.csv'</span>: No such file or directory</span></code></pre></div>
-</div>
-<p>The <code>cannot open the conection</code> is a pipe or path error. It cannot open a pipe or a connection to the file. <code>No such file or directory</code> is just that. R doesnʻt know where the file is. Is there a typo? Is it the correct path?</p>
-<p>Once we are in the correct working directory and fixed all typos, most of the time we are good, but we may have some surprises in the file format which weʻll go into below.</p>
-<p>The issue is basically that R is parsing the information stream as it reads the file and filtering what counts as data, and what is not data (also called “delimeters” or the things that separate your data). Once you understnad how to specify delimeters, you are in great shape!</p>
-</section>
-<section id="reading-in-text-files" class="level1">
-<h1>Reading in Text Files</h1>
-<p>The most convenient way to read data into R is using the <code>read.csv()</code> function. This requires that your data is saved in <code>.csv</code> format, which is possible from Microsoft Excel (save as… csv) or any spreadsheet format. It is a text format with data separated by commas. (Open it in a plain text editor and take a look).</p>
-<p>It is very nice because it is unambiguous, not easily corruptible, and non-proprietary. Thus it is readable by nearly every program that reads in data.</p>
-<section id="get-the-files-onto-your-computer" class="level2">
-<h2 class="anchored" data-anchor-id="get-the-files-onto-your-computer">Get the files onto your computer</h2>
-<p>First, get the data files from the <code>rcassdatadata</code> GitHub repo. Navigate to within the rclassdata folder on your computer and execute:</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="fu" style="color: #4758AB;">git</span> pull origin main</span></code></pre></div>
-</div>
-<p>You should probably make a R working directory for your class work. Maybe call it <code>Rclass</code>? Then move or drag <code>rclassdata</code> within it.</p>
-<p>Next, from within R, check which working directory you are in. You should be in your Rclass folder. If you are not, use <code>setwd()</code> to get there.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;">getwd</span>()</span>
-<span id="cb7-2"><span class="fu" style="color: #4758AB;">setwd</span>(<span class="st" style="color: #20794D;">"~/Rclass"</span>)  <span class="co" style="color: #5E5E5E;"># my folder is at the top level of my user directory</span></span></code></pre></div>
-</div>
-<p>Copy the <code>2023-01-31-DataIO</code> folder into Rclass to work for today.</p>
-</section>
-<section id="read.csv" class="level2">
-<h2 class="anchored" data-anchor-id="read.csv">read.csv</h2>
-<p>Getting the file in is easy. If it is in csv format, you just use:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">"anolisSSD.csv"</span>)  <span class="co" style="color: #5E5E5E;"># look for the file in the Data directory</span></span></code></pre></div>
-</div>
-<p>This is an <em>Anolis</em> lizard sexual size dimorphism dataset. It has values of dimorphism by species for different ecomorphs, or microhabitat specialists.</p>
-<p>To save the data, give it a name and save it:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">anolis <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">"anolisSSD.csv"</span>)</span></code></pre></div>
-</div>
-<p>It is a good practice to <em>always</em> check that the data were read in properly. If it is a large file, you’ll want to at least check the beginning and end were read in properly:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;">head</span>(anolis)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  species   logSSD    ecomorph
-1      oc -0.00512        twig
-2      eq  0.08454 crown-giant
-3      co  0.24703 trunk-crown
-4     aln  0.24837 trunk-crown
-5      ol  0.09844  grass-bush
-6      in  0.06137        twig</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="fu" style="color: #4758AB;">tail</span>(anolis)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   species  logSSD     ecomorph
-18      cr 0.39796 trunk-ground
-19      st 0.15737  trunk-crown
-20      cy 0.26024 trunk-ground
-21     alu 0.08216   grass-bush
-22      lo 0.13108        trunk
-23      an 0.13547         twig</code></pre>
-</div>
-</div>
-<p>Voila! Now you can plot, take the mean, etc. Which prints out the first six and last six lines of the file.</p>
-<p>Now try reading in <code>anolisSSDsemicolon.csv</code> what did you get? Try reading it in with <code>read.table()</code> - check out the help page.</p>
-<p>R can read in many other formats as well, including database formats, excel native format (although it is easier in practice to save as .csv), fixed width formats, and scanning lines. For more information see the R manual “R Data Import/Export” which you can get from <code>help.start()</code> or at <a href="http://www.r-project.org" class="uri">http://www.r-project.org</a>.</p>
-</section>
-<section id="input-files-generated-by-data-loggers" class="level2">
-<h2 class="anchored" data-anchor-id="input-files-generated-by-data-loggers">Input files generated by data loggers</h2>
-<p>Files that are generated by computer, even if they are not separated by commas (.csv) are not too bad to deal with. Take, for example, the file format generated from our hand-held Ocean Optics specroradiometer. It is very regular in structure, and we have tons of data files, so it is well worth the programming effort to code a script for automatic file input.</p>
-<p>First, you can open the file below in a text editor. If you’d rather open it in R, you can use:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="fu" style="color: #4758AB;">readLines</span>(<span class="st" style="color: #20794D;">"20070725_01forirr.txt"</span>)</span></code></pre></div>
-</div>
-<p>Notice that there is a very large header, in fact the first 17 lines. Notice also that the last line will cause a problem. Also, the delimiter in this file is tab (backslash t).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">temp <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">readLines</span>(<span class="st" style="color: #20794D;">"20070725_01forirr.txt"</span>)</span>
-<span id="cb15-2"><span class="fu" style="color: #4758AB;">head</span>(temp)</span>
-<span id="cb15-3"><span class="fu" style="color: #4758AB;">tail</span>(temp)</span></code></pre></div>
-</div>
-<p>We can solve these issues using the <code>skip</code> and the <code>comment.char</code> arguments of <code>read.table</code> to ignore both types of lines, reading in only the “good stuff”. Also, the default delimiter in this function is the tab:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.table</span>(<span class="at" style="color: #657422;">file=</span><span class="st" style="color: #20794D;">"20070725_01forirr.txt"</span>, <span class="at" style="color: #657422;">skip=</span><span class="dv" style="color: #AD0000;">17</span>, <span class="at" style="color: #657422;">comment.char=</span><span class="st" style="color: #20794D;">"&gt;"</span>)</span>
-<span id="cb16-2"><span class="fu" style="color: #4758AB;">names</span>(dat) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"lambda"</span>, <span class="st" style="color: #20794D;">"intensity"</span>)</span>
-<span id="cb16-3"><span class="fu" style="color: #4758AB;">head</span>(dat)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  lambda intensity
-1 177.33         0
-2 177.55         0
-3 177.77         0
-4 177.99         0
-5 178.21         0
-6 178.43         0</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="fu" style="color: #4758AB;">tail</span>(dat)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     lambda intensity
-3643 888.21   0.29491
-3644 888.38   0.31306
-3645 888.54   0.28153
-3646 888.71   0.28245
-3647 888.87   0.18988
-3648 889.04   0.18988</code></pre>
-</div>
-</div>
-<p>The file produces (useless) rows of data outside of the range of accuracy of the spectraradiometer. We can get rid of these by subsetting the data, selecting only the range 300-750nm:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">300</span>, ]  <span class="co" style="color: #5E5E5E;"># cut off rows below 300nm</span></span>
-<span id="cb20-2">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">750</span>, ]  <span class="co" style="color: #5E5E5E;">#cut off rows above 750nm</span></span></code></pre></div>
-</div>
-<p>Or do both at once:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">300</span> <span class="sc" style="color: #5E5E5E;">&amp;</span> dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">750</span>,]</span></code></pre></div>
-</div>
-<p>If we are going to be doing this subsetting over and over, we might want to save this as an index vector which tells us the position of the rows of data we want to keep in the dataframe (don’t worry, we’ll cover this again in the workhorse functions chapter).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">oo <span class="ot" style="color: #003B4F;">&lt;-</span> dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">300</span> <span class="sc" style="color: #5E5E5E;">&amp;</span> dat<span class="sc" style="color: #5E5E5E;">$</span>lambda <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">750</span></span>
-<span id="cb22-2">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[oo, ]   <span class="co" style="color: #5E5E5E;"># same as longer version above</span></span></code></pre></div>
-</div>
-<p>We can now save the cleaned up version of the irradiance data:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><span class="fu" style="color: #4758AB;">write.csv</span>(dat, <span class="st" style="color: #20794D;">"20070725_01forirr.csv"</span>)</span></code></pre></div>
-</div>
-</section>
-</section>
-<section id="read-from-url" class="level1">
-<h1>Read from URL</h1>
-<p>A URL is just another datastream or pipe. If it is a .csv file on the internet, R supports reading it in directly:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1">anolis2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">"https://raw.githubusercontent.com/mbutler808/rclassdata/main/2023-01-31-DataIO/anolisSSD.csv"</span>)</span>
-<span id="cb24-2"><span class="fu" style="color: #4758AB;">head</span>(anolis2)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  species   logSSD    ecomorph
-1      oc -0.00512        twig
-2      eq  0.08454 crown-giant
-3      co  0.24703 trunk-crown
-4     aln  0.24837 trunk-crown
-5      ol  0.09844  grass-bush
-6      in  0.06137        twig</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><span class="fu" style="color: #4758AB;">cbind</span>(anolis, anolis2)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   species   logSSD     ecomorph species   logSSD     ecomorph
-1       oc -0.00512         twig      oc -0.00512         twig
-2       eq  0.08454  crown-giant      eq  0.08454  crown-giant
-3       co  0.24703  trunk-crown      co  0.24703  trunk-crown
-4      aln  0.24837  trunk-crown     aln  0.24837  trunk-crown
-5       ol  0.09844   grass-bush      ol  0.09844   grass-bush
-6       in  0.06137         twig      in  0.06137         twig
-7       cu  0.09501  crown-giant      cu  0.09501  crown-giant
-8       ri  0.08947  crown-giant      ri  0.08947  crown-giant
-9       sa  0.28893 trunk-ground      sa  0.28893 trunk-ground
-10      op  0.15963   grass-bush      op  0.15963   grass-bush
-11      va  0.14766         twig      va  0.14766         twig
-12      li  0.38873 trunk-ground      li  0.38873 trunk-ground
-13      ga  0.28768  crown-giant      ga  0.28768  crown-giant
-14      gr  0.39786  trunk-crown      gr  0.39786  trunk-crown
-15      br  0.17106        trunk      br  0.17106        trunk
-16      di  0.13801        trunk      di  0.13801        trunk
-17      kr  0.23478   grass-bush      kr  0.23478   grass-bush
-18      cr  0.39796 trunk-ground      cr  0.39796 trunk-ground
-19      st  0.15737  trunk-crown      st  0.15737  trunk-crown
-20      cy  0.26024 trunk-ground      cy  0.26024 trunk-ground
-21     alu  0.08216   grass-bush     alu  0.08216   grass-bush
-22      lo  0.13108        trunk      lo  0.13108        trunk
-23      an  0.13547         twig      an  0.13547         twig</code></pre>
-</div>
-</div>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Use the correct file format
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Make sure that your URL leads to a raw <code>.csv</code> file, and not the <code>.html</code> rendering of your csv file!</p>
-</div>
-</div>
-</section>
-<section id="what-to-do-when-your-spreadsheet-is-malformed" class="level1">
-<h1>What to do when your spreadsheet is malformed</h1>
-<p>You will inevitably run into malformed spreadsheets. If there are unexpected characters used as delimiters, irregular delimiters, or uneven numbers of elements, these will all cause problems reading in data smoothly into any software.</p>
-<p>Most of the time, these issues are inadvertent. For example, if you cut and paste off the web, extra characters can easily be introduced. Try reading in <code>species_list_IUCN.csv</code>. It is a large spreadsheet of every species of subfamily Asteriorphinae frog in the world (over 330). Does it look OK?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1">temp <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">"species_list_IUCN.csv"</span>)</span>
-<span id="cb28-2"><span class="fu" style="color: #4758AB;">head</span>(temp)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                                                                   SPECIES.OF.ASTEROPHRYINAE.REPRESENTED.IN.IUCN.SHAPEFILE.LIST.
-1   Aphantophryne minuta                                                                                                        
-2   Aphantophryne nana                                                                                                          
-3   Aphantophryne pansa                                                                                                         
-4   Aphantophryne parkeri                                                                                                       
-5   Aphantophryne sabini                                                                                                        
-6   Asterophrys eurydactyla                                                                                                     
-   X X.1 X.2 X.3
-1 NA  NA  NA  NA
-2 NA  NA  NA  NA
-3 NA  NA  NA  NA
-4 NA  NA  NA  NA
-5 NA  NA  NA  NA
-6 NA  NA  NA  NA</code></pre>
-</div>
-</div>
-<p>Itʻs hard to tell from this output what the problem is. Try <code>readLines</code>, which will show you the entire line of data:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1">tempL <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">readLines</span>(<span class="st" style="color: #20794D;">"species_list_IUCN.csv"</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in readLines("species_list_IUCN.csv"): incomplete final line found on
-'species_list_IUCN.csv'</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><span class="fu" style="color: #4758AB;">head</span>(tempL)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "SPECIES OF ASTEROPHRYINAE REPRESENTED IN IUCN SHAPEFILE LIST:,,,,"                                                                 
-[2] "Aphantophryne minuta                                                                                                        ,,,,"  
-[3] "Aphantophryne nana                                                                                                          ,,,,"  
-[4] "  Aphantophryne pansa                                                                                                         ,,,,"
-[5] "  Aphantophryne parkeri                                                                                                       ,,,,"
-[6] "  Aphantophryne sabini                                                                                                        ,,,,"</code></pre>
-</div>
-</div>
-<p>Now you can clearly see that it is extra whitespace. Extra blank columns, and a huge long line of white space after each species name. Starting from <em>Aphantophryne pansa</em>, there are two extra spaces in front of each species name.</p>
-<p>The easiest thing to do here is to open up the spreadsheet in your spreadsheet program (or plain text editor) and read it back in. Delete the extra columns, and do search and replace on the two leading spaces and trailing multiple spaces. Also change that very long name to something more reasonable like “gensp”. (This is an example of using variable names as annotations or comments - donʻt do it.)</p>
-<p>Alternatively, you can solve these problems within R. We will learn these object and string manipulation skills later, but here is one way to solve the problems once you have diagnosed them.</p>
-<section id="read-in-and-select-only-the-first-columns" class="level4">
-<h4 class="anchored" data-anchor-id="read-in-and-select-only-the-first-columns">Read in and select only the first columns</h4>
-<p>The rest of the columns are blank, so we really only need the first one. Also lets give it a shorter name.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1">dat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">"species_list_IUCN.csv"</span>)</span>
-<span id="cb34-2">dat <span class="ot" style="color: #003B4F;">&lt;-</span> dat[<span class="dv" style="color: #AD0000;">1</span>]   <span class="co" style="color: #5E5E5E;"># select only the first column and resave dat</span></span>
-<span id="cb34-3"><span class="fu" style="color: #4758AB;">names</span>(dat) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="st" style="color: #20794D;">"gensp"</span>  <span class="co" style="color: #5E5E5E;"># give the column a shorter name</span></span></code></pre></div>
-</div>
-</section>
-<section id="use-function-trimws" class="level4">
-<h4 class="anchored" data-anchor-id="use-function-trimws">Use function <code>trimws</code></h4>
-<p>R has a handy function <code>trimws</code> that trims white space</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1">gensp <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">trimws</span>(dat<span class="sc" style="color: #5E5E5E;">$</span>gensp)</span>
-<span id="cb35-2"><span class="fu" style="color: #4758AB;">head</span>(gensp)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Aphantophryne minuta"    "Aphantophryne nana"     
-[3] "Aphantophryne pansa"     "Aphantophryne parkeri"  
-[5] "Aphantophryne sabini"    "Asterophrys eurydactyla"</code></pre>
-</div>
-</div>
-<p>How you deal with cleaning the data will depend on what the issue is. But the first step is always diagnosing the problem. Weʻll learn many more strategies as we go.</p>
-</section>
-</section>
-<section id="entering-data-with-spreadsheets" class="level1">
-<h1>Entering data with spreadsheets</h1>
-<p>Data management is a major issue for any scientist, so it is worthwhile to develop some best practices. Entering data into spreadsheets is a fundamental step in any study using field data or any type of information that is gathered by humans. Some of the issues to consider are:</p>
-<ol type="1">
-<li>How can we best minimize human error?</li>
-<li>What dataset structures are best for analyzing the data using software?</li>
-<li>Compatability with other datasets in the lab, or commonly used in the field.</li>
-</ol>
-<p>In the best case, we want to make our data available to the world, which means that it will have a permanence. We may also want to build on this data year after year, so it is worth thinking about a good design.</p>
-<section id="human-error" class="level2">
-<h2 class="anchored" data-anchor-id="human-error">Human Error</h2>
-<p>It is very easy to make a typo, and humans are really bad at catching our own typos in real time. Right? They creep in despite our best efforts. This is why even though it is possible to measure specimens and enter the numbers directly into the computer, itʻs not something I would do.</p>
-<p>I always write my measurements down into a notebook or a datasheet using pencil and paper. This has saved me many errors in three ways (1) sometimes my brain is still processing what I just wrote and I will catch a typo. (2) I write my data in rows for specimens and columns for the different measurements. As the dataset builds, it is easy to notice errors if some number is really off. (3) If you have any doubts, you can quickly look over your page and re-measure anything suspicous. If you have the person-power, you can also have one person taking the measurements and calling them out, and another writing them down and repeating them back. It is a very effective way to check on the spot.</p>
-<p>I had my first post-college job at an insurance rating board. This is a business that deals with reams and reams of data. We did work a lot with Fortran code and spreadsheets, but surprisingly, some of it does actually have to get manually checked. The protocol was simple, a paper printout of the old version was put next to the new version and a person went along with a ruler, literally putting a check mark after verifying the number. A second check was done as well, and then I finally understood the meaning of “double checking” 😝. When I got to grad school, it was eye-opening to find that checking any personʻs data entry was a rare practice 😲. Please, whenever possible check your data entry. So here are some tips:</p>
-<ol type="1">
-<li>Record data in a notebook (paper and pencil). It serves as a permanent record.</li>
-<li>Write it down in a data table format in an order that minimizes error. For example, if it is convenient to take five measurements in a particular order, then organize your table that way and always take the measurements in the same order.</li>
-<li>Organize your spreadsheet to mirror the hand-written data. This will minimize data entry errors.</li>
-<li>Have another person check your data entry against the notebook.</li>
-</ol>
-</section>
-<section id="organizing-your-spreadhseet" class="level2">
-<h2 class="anchored" data-anchor-id="organizing-your-spreadhseet">Organizing your spreadhseet</h2>
-<p>When it comes time to enter your data in a spreadsheet, there are many things you can do to improve organization. Below is a summary of the recommendations made in paper by Karl Broman and Kara Woo <span class="citation" data-cites="Broman:2018">(Broman and Woo 2018)</span>.</p>
-<ul>
-<li><strong>Be Consistent</strong> - Have a plan before you start entering data. Be consistent and stick to it.</li>
-<li><strong>Choose Good Names for Things</strong> - You want the names you pick for objects, files, and directories to be memorable, easy to spell, descriptive, but concise. This is actually a hard balance to achieve and it does require time and thought.
-<ul>
-<li>One important rule to follow is do not use spaces, use underscores _ or dashes instead -.</li>
-<li>Also, avoid symbols; stick to letters and numbers.</li>
-</ul></li>
-<li><strong>Write Dates as YYYY-MM-DD</strong> - To avoid confusion, we strongly recommend using this global ISO 8601 standard.</li>
-<li><strong>No Empty Cells</strong> - Fill in all cells and use some common code for missing data.</li>
-<li><strong>Put Just One Thing in a Cell</strong> - It is better to add columns to store the extra information rather than having more than one piece of information in one cell.</li>
-<li><strong>Make It a Rectangle</strong> - The spreadsheet should be a rectangle.</li>
-<li><strong>Create a Data Dictionary</strong> - If you need to explain things, such as what the columns are or what the labels used for categorical variables are, do this in a separate file. This is an excellent use for a README.md file</li>
-<li><strong>No Calculations in the Raw Data Files</strong> - Excel permits you to perform calculations. Do not make this part of your spreadsheet. Code for calculations should be in a script.</li>
-<li><strong>Do Not Use Font Color or Highlighting as Data</strong> - Most import functions are not able to import this information. Encode this information as a variable (a “comment” column) instead.</li>
-<li><strong>Make Backups</strong> - Make regular backups of your data.</li>
-<li><strong>Use Data Validation to Avoid Errors</strong> - Leverage the tools in your spreadsheet software so that the process is as error-free and repetitive-stress-injury-free as possible. Think of checks you can do for “reality checks”.</li>
-<li><strong>Save the Data as Text Files</strong> - Save files for sharing in comma or tab delimited format. An unambiguous text format is the best for archiving your data.</li>
-</ul>
-</section>
-</section>
-<section id="a-few-words-about-encodings" class="level1">
-<h1>A few words about Encodings</h1>
-<section id="text-versus-binary-files" class="level2">
-<h2 class="anchored" data-anchor-id="text-versus-binary-files">Text versus binary files</h2>
-<p>For data science purposes, files can generally be classified into two categories: text files (also known as <strong>ASCII</strong> files) and <strong>binary</strong> files. You have already worked with text files. All your R scripts are text files and so are the Quarto files used to create this website. The .csv tables you have read are also text files. One big advantage of these files is that we can easily “look” at them using a plain text editor, without having to purchase any kind of special software.</p>
-<p>Any text editor can be used to examine a text file, including freely available editors such as <strong>R</strong>, <strong>RStudio</strong>, <strong>Atom</strong>, <strong>Notepad</strong>, <strong>TextEdit</strong>, <strong>vi</strong>, <strong>emacs</strong>, <strong>nano</strong>, and <strong>pico</strong>. However, if you try to open, say, an Excel xls file, jpg or png file, you will not be able to see anything immediately useful. These are binary files. Excel files are actually compressed folders with several text files inside. But the main distinction here is that text files can be easily examined.</p>
-<p>Although R includes tools for reading widely used binary files, such as xls files, <em>in general you will want to find data sets stored in text files</em>. If necessary, use the proprietary software to export the data into text files and go from there.</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The problem with using propietary formats for data management is that htey are poor formats for achival purposes. These formats may change or they donʻt copy well, so that eventually you can no longer open them.</p>
-</div>
-</div>
-<p>Similarly, when sharing data you want to make it available as text files as long as storage is not an issue (binary files are much more efficient at saving space on your disk). In general, plain-text formats make it easier to share data since commercial software is not required for working with the data, and they are more reliable.</p>
-<p>Technically, html and xml files are text files too, but they have complicated tags around the information. In the Data Wrangling part of the book we learn to extract data from more complex text files such as html files.</p>
-</section>
-<section id="unicode-versus-ascii" class="level2">
-<h2 class="anchored" data-anchor-id="unicode-versus-ascii">Unicode versus ASCII</h2>
-<p>A pitfall in data science is assuming a file is an ASCII text file when, in fact, it is something else that can look a lot like an ASCII text file, for example, a Unicode text file.</p>
-<p>To understand the difference between these, remember that everything on a computer needs to eventually be converted to 0s and 1s (binary format). ASCII is an encoding that maps bits to characters that are easier for humans to read.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Binary data can take on only two values - 0 or 1
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>a <strong>bit</strong> is the smallest unit, a single binary character (0 or 1).</li>
-<li>a <strong>byte</strong> is eight bits.</li>
-<li>a <strong>megabyte</strong> or MB is one million bytes.</li>
-<li>a <strong>gigabyte</strong> or GB is one billion bytes.</li>
-<li>You can roughly calculate the size of your data by the numbers of bytes per each observation.</li>
-</ul>
-</div>
-</div>
-<p>ASCII uses 7 bits – seven variables that can be either 0 or 1 – which results in 2<sup>7</sup> = 128 unique items, enough to encode all the characters on an English language keyboard (all characters, numbers, and symbols, Figure&nbsp;1, Figure&nbsp;2). However, we need to expand the possibilities if we want to include support for other languages or additional characters.</p>
-<div id="fig-ascii" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://mbutler808.github.io/posts/2023-01-31-reading-data/ascii1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: Binary encodings in ACII, with some of the most used escape sequences like <code>\t</code> for tab and <code>\n</code> for new line.</figcaption><p></p>
-</figure>
-</div>
-<div id="fig-ascii2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://mbutler808.github.io/posts/2023-01-31-reading-data/ascii2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2: Some examples of ASCII encodings for A-E and a-e.</figcaption><p></p>
-</figure>
-</div>
-<p>For this reason, a new encoding, using more than 7 bits, was defined: Unicode. When using Unicode, one can chose between 8, 16, and 32 bits abbreviated UTF-8, UTF-16, and UTF-32 respectively. RStudio actually defaults to UTF-8 encoding.</p>
-<p>Although we do not go into the details of how to deal with the different encodings here, it is important that you know these different encodings exist so that you can better diagnose a problem if you encounter it. One way problems manifest themselves is when you see “weird looking” characters you were not expecting.</p>
-<p>Many plain text editors (Atom, Sublime, TextWrangler, Notepad++) will detect encodings and tell you what they are and may also convert between them. Also from the command line the <code>file</code> command will reveal the encoding (should also work on Windows if you have <code>git</code> installed:</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb37-1"><span class="fu" style="color: #4758AB;">file</span> filename</span></code></pre></div>
-</div>
-<p>This StackOverflow discussion is an example: <a href="https://stackoverflow.com/questions/18789330/r-on-windows-character-encoding-hell" class="uri">https://stackoverflow.com/questions/18789330/r-on-windows-character-encoding-hell</a>.</p>
-</section>
-<section id="line-endings" class="level2">
-<h2 class="anchored" data-anchor-id="line-endings">Line endings</h2>
-<p>One last potential headache is the character used for line endings. The line ending is the invisible (to us) character that is added to your file when you press the <code>return</code> key.</p>
-<p>It is all one stream of informatin to the computer, but the computer will interpret the information as a new line when it detects one of these characters. When software is provided a file with an unexpected line ending, it is not able to properly detect the lines of information (maybe it sees only one huge line). See?</p>
-<p>There are two types of line endings in use today:</p>
-<ul>
-<li><p><strong>On UNIX and MacOS</strong>, text file line-endings are terminated with a newline character (ASCII 0x0a, represented by the <code>\n</code> escape sequence in most languages), also referred to as a linefeed (LF).</p></li>
-<li><p><strong>On Windows</strong>, line-endings are terminated with a combination of a carriage return (ASCII 0x0d or <code>\r</code>) and a newline(<code>\n</code>), also referred to as CR/LF.</p></li>
-</ul>
-<p>If your computer complains about line endings, the easiest thing to do is to open it in one of the good plain text editors and save it with the line endings it is expecting (usually as LF instead of CR/LF).</p>
-</section>
-</section>
-<section id="calculating-memory-requirements-for-r-objects" class="level1">
-<h1>Calculating Memory Requirements for R Objects</h1>
-<p>Because <strong>R stores all of its objects in physical memory</strong>, it is important to be aware of how much memory is being used up by all of the data objects residing in your workspace.</p>
-<p>It is easy to make a back of the envelope calculation of how much memory will be required by a new dataset. For example, suppose I have a data frame with 1,500,000 rows and 120 columns, all of which are numeric data. Roughly, how much memory is required to store this data frame?</p>
-<p>Well, on most modern computers <a href="http://en.wikipedia.org/wiki/Double-precision_floating-point_format">double precision floating point numbers</a> are stored using 64 bits of memory, or 8 bytes. Given that information, you can do the following calculation</p>
-<p>1,500,000 × 120 × 8 bytes/numeric = 1,440,000,000 bytes</p>
-<p>= 1,440,000,000 bytes / 2<sup>20</sup> bytes/MB</p>
-<p>= 1,373 MB</p>
-<p>= 1.37 GB</p>
-<p>So the dataset would require about 1.37 GB of RAM. Most computers these days have at least that much RAM. However, you need to be aware of</p>
-<ul>
-<li>what other programs might be running on your computer, using up RAM</li>
-<li>what other R objects might already be taking up RAM in your workspace</li>
-</ul>
-<p>Reading in a large dataset for which you do not have enough RAM is one easy way to freeze up your computer (or at least your R session). When that happens you to kill the R process, in the best case scenario, or reboot your computer, in the worst case. So before opening up potentially huge datasets, make sure to do a rough calculation of memory requirements needed. You’ll thank me later.</p>
-<p><em>Also, itʻs aways good to build a script as you go and save frequently.</em></p>
-</section>
-<section id="other-data-types" class="level1">
-<h1>Other data types</h1>
-<p>Now, there are of course, many R packages that have been developed to read in all kinds of other datasets, and you may need to resort to one of these packages if you are working in a specific area.</p>
-<p>For example, check out</p>
-<ul>
-<li><a href="https://github.com/r-dbi/DBI"><code>DBI</code></a> for relational databases</li>
-<li><a href="https://haven.tidyverse.org"><code>haven</code></a> for SPSS, Stata, and SAS data</li>
-<li><a href="https://github.com/r-lib/httr"><code>httr</code></a> for web APIs</li>
-<li><a href="https://readxl.tidyverse.org"><code>readxl</code></a> for <code>.xls</code> and <code>.xlsx</code> sheets</li>
-<li><a href="https://googlesheets4.tidyverse.org"><code>googlesheets4</code></a> for Google Sheets</li>
-<li><a href="https://googledrive.tidyverse.org"><code>googledrive</code></a> for Google Drive files</li>
-<li><a href="https://github.com/tidyverse/rvest"><code>rvest</code></a> for web scraping</li>
-<li><a href="https://github.com/jeroen/jsonlite#jsonlite"><code>jsonlite</code></a> for JSON</li>
-<li><a href="https://github.com/r-lib/xml2"><code>xml2</code></a> for XML.</li>
-</ul>
-</section>
-<section id="ascii-art" class="level1">
-<h1>ASCII art</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="https://nl.wikipedia.org/wiki/Gebruiker:Wilinckx"><img src="https://mbutler808.github.io/posts/2023-01-31-reading-data/https:/upload.wikimedia.org/wikipedia/commons/4/45/BB-ASCII-art-screenshot-zebra.png" class="img-fluid figure-img"></a></p>
-<p></p><figcaption class="figure-caption">Zebra in ASCII by Wilinckx, Wikimedia commons</figcaption><p></p>
-</figure>
-</div>
-
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-Broman:2018" class="csl-entry">
-Broman, Karl W., and Kara H. Woo. 2018. <span>“Data Organization in Spreadsheets.”</span> <em>The American Statistician</em> 72 (1): 2–10. <a href="https://doi.org/10.1080/00031305.2017.1375989">https://doi.org/10.1080/00031305.2017.1375989</a>.
-</div>
-</div></section></div> ]]></description>
-  <category>module 2</category>
-  <category>week 3</category>
-  <category>data</category>
-  <category>input</category>
-  <category>output</category>
-  <category>formats</category>
-  <guid>https://mbutler808.github.io/posts/2023-01-31-reading-data/index.html</guid>
-  <pubDate>Tue, 31 Jan 2023 10:00:00 GMT</pubDate>
-  <media:content url="https://mbutler808.github.io/posts/2023-01-31-reading-data/ascii1.png" medium="image" type="image/png" height="52" width="144"/>
 </item>
 </channel>
 </rss>

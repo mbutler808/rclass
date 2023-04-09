@@ -521,28 +521,28 @@ $scores
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>mylist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-           x         y
-1 -1.7263950 0.6481564
-2 -0.6013918 0.2222366
-3 -0.5961741 1.9362035
+           x          y
+1 -1.5891006  1.0447945
+2 -0.9289017  0.7709087
+3  0.3724301 -0.4045960
 
 [[2]]
-           x         y
-1  0.5848591 -1.830745
-2 -0.1817905 -1.739007
-3 -1.8887220  3.259660
+           x          y
+1  0.1793252 -0.1167686
+2  0.8126721  0.4296348
+3 -1.6203481 -0.8756523
 
 [[3]]
-            x          y
-1 -0.41679868  1.1316357
-2 -1.53859929  1.6786411
-3  0.03206055 -0.2948545
+           x          y
+1 -0.9860967 -0.3711503
+2  0.8975715 -0.4703146
+3 -1.0199470  1.2916043
 
 [[4]]
-            x          y
-1  0.95184731  0.4991119
-2 -0.02823968  0.5471838
-3  0.16363490 -0.1766082</code></pre>
+          x          y
+1  1.359747 -0.9601006
+2  1.236366 -0.6644286
+3 -1.495295 -0.3078295</code></pre>
 </div>
 </div>
 <p>This code does the same thing, but uses the <code>c()</code> function to add on to <code>mylist</code> (what happens when you add on to a null list?):</p>
@@ -554,28 +554,28 @@ $scores
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>mylist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-            x          y
-1 -0.38241743  0.5645779
-2  0.66244788 -0.4939633
-3 -0.07128512  1.0290206
+           x          y
+1 -1.4285965 -0.6116601
+2  1.4485142 -0.3044112
+3 -0.1127297 -0.2419247
 
 [[2]]
           x          y
-1 2.7509007 -0.6316569
-2 0.8467325  0.8879843
-3 1.1694098  2.3165810
+1 0.2545869 -0.7306861
+2 0.1032878  1.1283951
+3 2.0754615 -0.1501652
 
 [[3]]
            x          y
-1 -0.2816809  2.2235912
-2 -1.8733641 -0.1192452
-3 -0.4045759  1.9047164
+1 -0.3170322 -0.3139040
+2 -1.0130806 -0.4275128
+3  0.2439555  0.1655069
 
 [[4]]
-           x         y
-1 -0.5773772 1.5670042
-2 -0.9762400 0.4054583
-3  1.6231700 1.1012945</code></pre>
+          x         y
+1 0.8218255 0.9689341
+2 0.5789347 0.1230913
+3 1.8513586 1.7753243</code></pre>
 </div>
 </div>
 </section>
@@ -590,16 +590,16 @@ $scores
 <pre><code>Analysis of Variance Table
 
 Response: mylist[[1]]$x
-              Df  Sum Sq Mean Sq F value Pr(&gt;F)
-mylist[[1]]$y  1 0.39411 0.39411   2.171 0.3796
-Residuals      1 0.18153 0.18153               </code></pre>
+              Df Sum Sq Mean Sq F value Pr(&gt;F)
+mylist[[1]]$y  1 2.2984  2.2984   1.242 0.4656
+Residuals      1 1.8506  1.8506               </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unlist</span>(aov.out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Df1       Df2   Sum Sq1   Sum Sq2  Mean Sq1 
-1.0000000 1.0000000 0.3941076 0.1815294 0.3941076 
+1.0000000 1.0000000 2.2983557 1.8505623 2.2983557 
  Mean Sq2  F value1  F value2   Pr(&gt;F)1   Pr(&gt;F)2 
-0.1815294 2.1710404        NA 0.3796002        NA </code></pre>
+1.8505623 1.2419769        NA 0.4655777        NA </code></pre>
 </div>
 </div>
 </section>

@@ -299,7 +299,6 @@ div.csl-indent {
   <li><a href="#calculating-the-angle-in-r" id="toc-calculating-the-angle-in-r" class="nav-link" data-scroll-target="#calculating-the-angle-in-r">Calculating the angle in R</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#landmarks-and-pseudolandmarks" id="toc-landmarks-and-pseudolandmarks" class="nav-link" data-scroll-target="#landmarks-and-pseudolandmarks">Landmarks and Pseudolandmarks</a></li>
   </ul>
 </nav>
 </nav>
@@ -316,9 +315,7 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
-<li><p><a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-22-control-structures" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-22-control-structures</a></p></li>
-<li><p><a href="https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/" class="uri">https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/</a></p></li>
-<li><p>&lt;&gt;</p></li>
+<li><a href="https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/" class="uri">https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/</a></li>
 </ul>
 </section>
 <section id="learning-objectives" class="level1">
@@ -336,7 +333,6 @@ Learning objectives
 <p><strong>At the end of this lesson you will:</strong></p>
 <ul>
 <li>Be able to estimate measurement error and repeatability</li>
-<li></li>
 </ul>
 </div>
 </div>
@@ -374,7 +370,7 @@ s^{2}_{within} = MSS_{within}
 </section>
 <section id="example" class="level2">
 <h2 class="anchored" data-anchor-id="example">Example</h2>
-<p>Let’s say you are taking photographs of your specimens. They are rather rounded and so it is hard to place them flat on the table to photograph from above. Issue 1 here is whether the shape variation we observe in the photo is real or due to placing the specimen at slightly different angles. Then, when once you have the photograph you need to digitize the landmarks. Issue 2 is whether you put the landmarks in the same place every time (i.e.&nbsp;is your criteria for the landmark robust enough that its obvious where it should be placed on each specimen, and if you came back to the data a month or year later?)</p>
+<p>Let’s say you are taking photographs of your specimens and you want to quantify the error assocated with placing your landmarks in the same place every time (i.e.&nbsp;is your criteria for the landmark robust enough that its obvious where it should be placed on each specimen, and if you came back to the data a month or year later?)</p>
 <p>To assess measurement error in this instance we could take two sets of pictures, each time removing and positioning the specimen. And we could digitize each image twice, preferably in different sessions (another day or week). This would give us 4 sets of landmark data for each specimen, allowing us to asses both error associated with the digitization as well as error in capturing the shapes via the photographs.</p>
 <p>Alternatively, if we were interested in inter-observer error vs.&nbsp;repeatability within observer, we could take one photograph and have it measured by two different people, each person taking two sets of measurements (preferably in different sessions).</p>
 <section id="simulated-example" class="level3">
@@ -391,24 +387,24 @@ s^{2}_{within} = MSS_{within}
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(individual, total_m, session)  <span class="co"># the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      individual  total_m session
- [1,]          1 20.22235       1
- [2,]          2 22.19588       1
- [3,]          3 21.60974       1
- [4,]          4 22.35029       1
- [5,]          5 18.32830       1
- [6,]          1 23.66583       2
- [7,]          2 19.94666       2
- [8,]          3 19.29870       2
- [9,]          4 22.57861       2
-[10,]          5 17.51251       2</code></pre>
+ [1,]          1 20.44919       1
+ [2,]          2 21.85592       1
+ [3,]          3 23.57399       1
+ [4,]          4 23.66764       1
+ [5,]          5 15.82221       1
+ [6,]          1 20.61579       2
+ [7,]          2 22.73522       2
+ [8,]          3 22.57645       2
+ [9,]          4 23.67244       2
+[10,]          5 13.60084       2</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(total_m <span class="sc">~</span> session))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
-session      1   0.29    0.29   0.064  0.807
-Residuals    8  36.32    4.54               </code></pre>
+session      1   0.47    0.47   0.035  0.857
+Residuals    8 108.45   13.56               </code></pre>
 </div>
 </div>
 <p>There is no difference between sessions (yay)!</p>
@@ -416,9 +412,11 @@ Residuals    8  36.32    4.54               </code></pre>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">aov</span>(total_m <span class="sc">~</span> individual))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mod </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
-individual   4  25.12   6.280   2.733   0.15
-Residuals    5  11.49   2.298               </code></pre>
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+individual   4 105.55  26.388   39.21 0.000574 ***
+Residuals    5   3.37   0.673                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <p>The specimens measured (individuals) are significantly different.</p>
@@ -429,7 +427,7 @@ Residuals    5  11.49   2.298               </code></pre>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>pME <span class="ot">&lt;-</span> s2within<span class="sc">/</span>(s2within<span class="sc">+</span>s2among)<span class="sc">*</span><span class="dv">100</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>pME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 53.56951</code></pre>
+<pre><code>[1] 4.974382</code></pre>
 </div>
 </div>
 <p>And the percent measurement error is represented by <code>pME</code>. As a rough rule of thumb we want this to be less than 5%. If it is very high, we either want to practice more, or take multiple measurements of each variable and average them.</p>
@@ -560,24 +558,12 @@ M (rad)\frac{180^\circ}{\pi rad} = (M\frac{180}{\pi} )^\circ
 [1,] 24.77514</code></pre>
 </div>
 </div>
-</section>
-</section>
-</section>
-</section>
-<section id="landmarks-and-pseudolandmarks" class="level1">
-<h1>Landmarks and Pseudolandmarks</h1>
-<p><img src="../../images/rodentmandible.jpg" class="img-fluid" alt="Rodent lower jaw (mandible). Lateral view of a Nectomys squamipes mandible, showing the 10 landmarks used in this work. 1) Anterior edge of the incisive alveolus; 2) Most posterior point of the diastema; 3) Junction between the mandible and the m1 root; 4) Junction between the molar base and the coronoid process; 5) Most posterior point at the articular process; 6) Most anterior point in the angular notch; 7) Most posterior point at the angular process; 8) Angular process base; 9) Inner edge of the mandibular symphysis; 10) Posterior edge of the incisive alveolus"> <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.7557">Source</a></p>
-<p>Acquiring landmarks usually involves some digitizing by hand.</p>
-<p><a href="https://russellboneatlas.wordpress.com/home/red-fox-bone-atlas/red-fox-mandible/" class="uri">https://russellboneatlas.wordpress.com/home/red-fox-bone-atlas/red-fox-mandible/</a></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#require(imager)  # install if you need to</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">#jaw &lt;- load.image("../../images/rodentmandible.jpg")</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(jaw)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
 
 
+</section>
+</section>
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">

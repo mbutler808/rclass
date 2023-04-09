@@ -469,8 +469,7 @@ psittacula   4.235020 3.049120 2.259640 2.230040 2.073940</code></pre>
 18 Unaffiliated      217     299     374     365     341     528     407     321
 # … with 2 more variables: `&gt;150k` &lt;dbl&gt;, `Don't know/refused` &lt;dbl&gt;, and
 #   abbreviated variable names ¹​`$10-20k`, ²​`$20-30k`, ³​`$30-40k`, ⁴​`$40-50k`,
-#   ⁵​`$50-75k`, ⁶​`$75-100k`, ⁷​`$100-150k`
-# ℹ Use `colnames()` to see all variable names</code></pre>
+#   ⁵​`$50-75k`, ⁶​`$75-100k`, ⁷​`$100-150k`</code></pre>
 </div>
 </div>
 <p>Take a second to look at this data. In this case the variables are religion (a proper vector), income bracket (in the column names), and the number of respts, which is the third variable, is presented inside the table. onden Converting this data to tidy format would give us</p>
@@ -493,8 +492,7 @@ psittacula   4.235020 3.049120 2.259640 2.230040 2.073940</code></pre>
  8 Agnostic $100-150k                  109
  9 Agnostic &gt;150k                       84
 10 Agnostic Don't know/refused          96
-# … with 170 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 170 more rows</code></pre>
 </div>
 </div>
 <p>Now we have each variable along the columns and each row corresponds to one observation (or category, here a combination of religion and income bracket).</p>
@@ -532,8 +530,7 @@ psittacula   4.235020 3.049120 2.259640 2.230040 2.073940</code></pre>
  8 Agnostic $100-150k                  109
  9 Agnostic &gt;150k                       84
 10 Agnostic Don't know/refused          96
-# … with 170 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 170 more rows</code></pre>
 </div>
 </div>
 <div class="callout-tip callout callout-style-default callout-captioned">
@@ -680,8 +677,7 @@ Example of <code>pivot_longer()</code>
  8 Afghanistan Asia       1987    40.8 13867957      852.
  9 Afghanistan Asia       1992    41.7 16317921      649.
 10 Afghanistan Asia       1997    41.8 22227415      635.
-# … with 1,694 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 1,694 more rows</code></pre>
 </div>
 </div>
 <p>If we wanted to make <code>lifeExp</code>, <code>pop</code> and <code>gdpPercap</code> (all measurements that we observe) go from a wide table into a long table, what would we do?</p>
@@ -717,18 +713,18 @@ Example
 <pre><code># A tibble: 12 × 6
    company  year    Q1    Q2    Q3    Q4
      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
- 1       1  2006    81    70    22    62
- 2       1  2007     2    11    68    56
- 3       1  2008    14    63    94    18
- 4       1  2009    34     2    97    32
- 5       2  2006    96   100    57    70
- 6       2  2007    15    46    14    30
- 7       2  2008    76    53    81    98
- 8       2  2009    61    30    31    99
- 9       3  2006    86    16    33     0
-10       3  2007    68    23    67    28
-11       3  2008    54    25    10    20
-12       3  2009    94    98    39    67</code></pre>
+ 1       1  2006    77     4    95    88
+ 2       1  2007     0    22    70    45
+ 3       1  2008    53     7    87    97
+ 4       1  2009    64    80    33     8
+ 5       2  2006     3    33    50    14
+ 6       2  2007    98    39    11    37
+ 7       2  2008   100    35    88    22
+ 8       2  2009    38    96    78    89
+ 9       3  2006    61     6    14    87
+10       3  2007    11    52    28    58
+11       3  2008    46    37    29    18
+12       3  2009    23    82    56    59</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -768,8 +764,7 @@ Example
  8 Afghanistan_Asia_1987     40.8 13867957      852.
  9 Afghanistan_Asia_1992     41.7 16317921      649.
 10 Afghanistan_Asia_1997     41.8 22227415      635.
-# … with 1,694 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 1,694 more rows</code></pre>
 </div>
 </div>
 <p>Next, we show how to separate the columns into three separate columns using <code>separate()</code> using the <code>col</code>, <code>into</code> and <code>sep</code> arguments. Note that this works by finding the delimiter, and relies on order of the information.</p>
@@ -795,8 +790,7 @@ Example
  8 Afghanistan Asia      1987     40.8 13867957      852.
  9 Afghanistan Asia      1992     41.7 16317921      649.
 10 Afghanistan Asia      1997     41.8 22227415      635.
-# … with 1,694 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 1,694 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -853,8 +847,7 @@ Questions
  8 Afghanistan Asia       1962 pop       10267083  
  9 Afghanistan Asia       1962 gdpPercap      853. 
 10 Afghanistan Asia       1967 lifeExp         34.0
-# … with 5,102 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 5,102 more rows</code></pre>
 </div>
 </div>
 <p>We stacked the three variables <code>lifeExp</code>, <code>pop</code>, and <code>gdpPercap</code> so now the table is a little thinner and three times as long.</p>

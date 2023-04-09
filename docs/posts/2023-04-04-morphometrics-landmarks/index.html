@@ -8,7 +8,7 @@
 
 <meta name="author" content="Marguerite Butler">
 <meta name="dcterms.date" content="2023-04-04">
-<meta name="description" content="Getting started with some issues in morphometrics">
+<meta name="description" content="Getting started with morphometrics">
 
 <title>ZOOL710 Data Science in R for Biologists - Intro to Geometric Morphometrics</title>
 <style>
@@ -86,6 +86,25 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -211,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <h1 class="title">Intro to Geometric Morphometrics</h1>
                   <div>
         <div class="description">
-          Getting started with some issues in morphometrics
+          Getting started with morphometrics
         </div>
       </div>
                           <div class="quarto-categories">
@@ -267,10 +286,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#capturing-images" id="toc-capturing-images" class="nav-link" data-scroll-target="#capturing-images">Capturing images</a></li>
-  <li><a href="#landmarks-and-pseudolandmarks" id="toc-landmarks-and-pseudolandmarks" class="nav-link" data-scroll-target="#landmarks-and-pseudolandmarks">Landmarks and Pseudolandmarks</a></li>
+  <li><a href="#landmarks" id="toc-landmarks" class="nav-link" data-scroll-target="#landmarks">Landmarks</a>
+  <ul class="collapse">
+  <li><a href="#digitizing-landmarks-on-images" id="toc-digitizing-landmarks-on-images" class="nav-link" data-scroll-target="#digitizing-landmarks-on-images">Digitizing Landmarks on Images</a></li>
+  </ul></li>
+  <li><a href="#geomorph-package" id="toc-geomorph-package" class="nav-link" data-scroll-target="#geomorph-package"><code>geomorph</code> package</a>
+  <ul class="collapse">
+  <li><a href="#digitizing-landmarks-in-geomorph" id="toc-digitizing-landmarks-in-geomorph" class="nav-link" data-scroll-target="#digitizing-landmarks-in-geomorph">Digitizing landmarks in <code>geomorph</code></a></li>
+  </ul></li>
+  <li><a href="#tps-format" id="toc-tps-format" class="nav-link" data-scroll-target="#tps-format">TPS format</a></li>
   <li><a href="#semi-landmarks" id="toc-semi-landmarks" class="nav-link" data-scroll-target="#semi-landmarks">Semi-Landmarks</a></li>
-  <li><a href="#procrustes-analysis" id="toc-procrustes-analysis" class="nav-link" data-scroll-target="#procrustes-analysis">Procrustes Analysis</a></li>
-  <li><a href="#more-software" id="toc-more-software" class="nav-link" data-scroll-target="#more-software">More software</a></li>
+  <li><a href="#more-geomorphic-morphometrics-software" id="toc-more-geomorphic-morphometrics-software" class="nav-link" data-scroll-target="#more-geomorphic-morphometrics-software">More geomorphic morphometrics software</a></li>
   </ul>
 </nav>
 </nav>
@@ -313,7 +339,8 @@ Learning objectives
 <section id="preparation" class="level3">
 <h3 class="anchored" data-anchor-id="preparation">Preparation</h3>
 <p>Packages:<br>
-<strong>geomorph</strong> <strong>rgl</strong><br>
+<strong>geomorph</strong><br>
+<strong>rgl</strong><br>
 <strong>Matrix</strong><br>
 Please install if you donʻt have them. <code>install.packages(c("geomorph","rgl","Matrix"), dependencies=T)</code></p>
 <p>Mac Users: Please also install Xquartz <a href="https://www.xquartz.org" class="uri">https://www.xquartz.org</a>, a windowing system for <code>rgl</code>.</p>
@@ -363,8 +390,8 @@ Please install if you donʻt have them. <code>install.packages(c("geomorph","rgl
 </ul>
 <p>Errors and distortions can be fixed with software, but it is much easier to minimize them at the start.</p>
 </section>
-<section id="landmarks-and-pseudolandmarks" class="level1">
-<h1>Landmarks and Pseudolandmarks</h1>
+<section id="landmarks" class="level1">
+<h1>Landmarks</h1>
 <p>Essential features of good landmarks:</p>
 <p>Choose landmarks that are:</p>
 <ul>
@@ -378,27 +405,43 @@ Please install if you donʻt have them. <code>install.packages(c("geomorph","rgl
 </ul>
 <p>Here is an example of typical landmarks:</p>
 <p><img src="../../images/rodentmandible.jpg" class="img-fluid" alt="Rodent lower jaw (mandible). Lateral view of a Nectomys squamipes mandible, showing the 10 landmarks used in this work. 1) Anterior edge of the incisive alveolus; 2) Most posterior point of the diastema; 3) Junction between the mandible and the m1 root; 4) Junction between the molar base and the coronoid process; 5) Most posterior point at the articular process; 6) Most anterior point in the angular notch; 7) Most posterior point at the angular process; 8) Angular process base; 9) Inner edge of the mandibular symphysis; 10) Posterior edge of the incisive alveolus"> <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.7557">Source</a></p>
-<p>Acquiring landmarks usually involves some digitizing by hand (with computer assistance). For 2D landmark data:</p>
+<section id="digitizing-landmarks-on-images" class="level3">
+<h3 class="anchored" data-anchor-id="digitizing-landmarks-on-images">Digitizing Landmarks on Images</h3>
+<p>Acquiring landmarks usually involves some digitizing by hand (with computer assistance). For 2D landmark data the workflow is:</p>
 <ul>
 <li>Read in the image file<br>
 </li>
-<li>Set the scale (translation between pixels and known distance)<br>
+<li>Set the scale<br>
 </li>
 <li>Digitize landmarks, collecting X-Y coordinate data</li>
 </ul>
+<p>Image files are rows and columns of pixels, the number of which is determined by the file size and resolution. Pixels therefore, form a grid which we can digitize, meaning we can indicate at which pixel our landmark of interest is. We translate the pixel coordinates into real-world distances, typically by ditigizing an object of known dimensions such as a ruler. Digitizing software typically asks the user to indicate the points on the screen and the known distances they correspond to.</p>
 <p>Easy-to use software for this purpose include <code>ImageJ</code> and <code>FIJI</code>, as well as the <code>geomorph</code> package in R. Before doing a large project, I would try them all to see which serves your purpose the best.</p>
-<p>For <code>geomorph</code>, Emma Sherratʻs <a href="https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf">Emma Sherratʻs quick guide to Geomorph</a> provides an excellent walk-through in Chapter 15.</p>
-<p>For a quick example, letʻs do a 2D landmark collection on the Red Fox Mandible using <code>digitize2d()</code>.</p>
-<p>The syntax is:</p>
+</section>
+</section>
+<section id="geomorph-package" class="level1">
+<h1><code>geomorph</code> package</h1>
+<p>The package <code>geomorph</code> is widely used for geometric morphometrics, and will serve as a good example to illustrate the geometric morphometrics workflow all in R (depending on the project and the material, however, you may find it more convenient or efficient to use other software for digitizing).</p>
+<section id="digitizing-landmarks-in-geomorph" class="level3">
+<h3 class="anchored" data-anchor-id="digitizing-landmarks-in-geomorph">Digitizing landmarks in <code>geomorph</code></h3>
+<p>For a quick example, letʻs do a 2D landmark collection on the Red Fox Mandible using <code>digitize2d()</code>. Emma Sherratʻs <a href="https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf">quick guide to Geomorph</a> provides a more thorough walk-through for capturing landmarks in Chapter 15.</p>
+<p>The syntax for <code>digitize2d()</code> is:</p>
 <p><code>digitize2d(filelist, nlandmarks, scale = NULL, tpsfile, verbose = TRUE)</code></p>
 <p>Where:</p>
-<p><code>filelist</code> : vector of filenames.<br>
-<code>nlandmarks</code> : number of landmarks to digitize <code>scale</code> : length of scale to use (optional) <code>tpsfile</code> : name of output file to create or read (to edit)</p>
+<ul>
+<li><code>filelist</code> : a vector of filenames of image files</li>
+<li><code>nlandmarks</code> : the number of landmarks to digitize<br>
+</li>
+<li><code>scale</code> : the length of scale to use (optional)<br>
+</li>
+<li><code>tpsfile</code> : the name of an output file to create or read</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(geomorph)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"red-fox-mandible-lateral.jpg"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># files &lt;- list.files(pattern = "*.jpg") # for multiple files in your image directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># files &lt;- list.files(pattern = "*.jpg") </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>             <span class="co"># for multiple files in your image directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">digitize2d</span>( files, </span>
@@ -407,8 +450,15 @@ Please install if you donʻt have them. <code>install.packages(c("geomorph","rgl
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">tpsfile =</span> <span class="st">"mandible-lat.tps"</span>, </span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">verbose =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In verbose mode, it will ask you to confirm each landmark (this can be turned off). If a landmark is missing, choose <code>a</code> for absent. Make a mistake and choose <code>n</code> - it will ask you to redigitize it.</p>
-<p>The output will be sent to the tps file:</p>
+<p>R will now wait for you to digitize the first landmark. In verbose mode, it will ask you to <em>confirm</em> each landmark (this can be turned off). If a landmark is missing, choose <code>a</code> for absent. If you make a mistake and choose <code>n</code>, it will ask you to redigitize it. The output will be sent to a <code>.tps</code>file.</p>
+</section>
+</section>
+<section id="tps-format" class="level1">
+<h1>TPS format</h1>
+<p>TPS format is a standard morphometric data format for storing landmark coordinate data.</p>
+<p><code>readland.tps()</code> reads TPS format and returns an array: <em>p</em> landmarks by <em>k</em> dimensions by <em>N</em> specimens.</p>
+<p>Remember an array is simply a multidimensional dataframe. Think of it here as a stack of spreadsheets. Each spreadsheet has rows for landmarks and columns for dimensions. We have a separate spreadsheet for each specimen, making this a 3-dimensional array.</p>
+<p>The third dimension of this array contains names for each specimen, which are obtained from the image names in the <em>.tps</em> file. We can read in the data that we digitized above:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">readland.tps</span>(<span class="st">"mandible-lat.tps"</span>, <span class="at">specID =</span> <span class="st">"ID"</span>, <span class="at">readcurves =</span> <span class="cn">FALSE</span>, <span class="at">warnmsg =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -432,7 +482,7 @@ No curves detected; all points appear to be fixed landmarks.</code></pre>
 [10,] 113.50334 107.91870</code></pre>
 </div>
 </div>
-<p>For another example, check out the <code>plethodon</code> data included with <code>geomorph</code></p>
+<p>Note that the name saved with the data in this case was the file name. For another example, check out the <code>plethodon</code> data included with <code>geomorph</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(plethodon)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(plethodon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -454,37 +504,41 @@ No curves detected; all points appear to be fixed landmarks.</code></pre>
  $ outline: num [1:3631, 1:2] 0.399 0.4 0.401 0.403 0.404 ...</code></pre>
 </div>
 </div>
-<p>3D coordinates in tps format contain 3D arrays (one table per specimen).</p>
-<p><img src="../../geomorphdataarrays.png" class="img-fluid"> <a href="https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf">Source: Emma Sherratʻs quick guide to Geomorph</a></p>
+<p>3D coordinates in tps format simply have a third dimension (z in addition to x and y) in each spreadsheet (one spreadsheet or table per specimen).</p>
+<p><img src="../../images/geomorphdataarrays.png" class="img-fluid"></p>
+<p><a href="https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf">Source: Emma Sherratʻs quick guide to Geomorph</a></p>
 </section>
 <section id="semi-landmarks" class="level1">
 <h1>Semi-Landmarks</h1>
-<p>Oftentimes, there is more shape variation than distinct landmarks. For example, there is no distinct landmark that you can reliable digitize on the curve of a shell, for example. In this case, semi-landmarks can be helpful.</p>
+<p>Oftentimes, there is more shape variation than what is captured by the landmarks themselves, which are only points. In addition, sometimes curves and surfaces have no distinct feature that can be reliably captured as the same homologous point from specimen to specimen. For example, the curvature of a smooth shell may lack any distinct landmarks. In both of these cases, semi-landmarks can be helpful.</p>
 <p><strong>Semi-landmarks</strong> are regularly spaced points between two landmarks or along a curve or a surface.<br>
 <strong>Sliding semi-landmarks</strong> are spaced linearly along a curve.<br>
 <strong>Surface semi-landmarks</strong> are spread out evenly in 3D along a surface.</p>
-<p>NOTE: One thing to note is that any error in the landmarks will also be propagated through the semilandmarks.</p>
+<p>NOTE: One thing to note is that any error in the landmarks will also be propagated to the semilandmarks.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/caecelian_skull_semilandmarks.jpeg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure: Landmark and semilandmark data displayed on the caecilian Siphonops annulatus BMNH 1956.1.15.88. Points are colored as follows: landmarks (red), sliding semilandmarks (“curve points,” yellow), and surface semilandmarks (“surface points,” blue). For information regarding each cranial region, see Bardua et al.&nbsp;(2019). BMNH, Natural History Museum, London, UK.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure: Landmark and semilandmark data displayed on the caecilian <em>Siphonops annulatus</em> BMNH 1956.1.15.88. Points are colored as follows: landmarks (red), sliding semilandmarks (“curve points,” yellow), and surface semilandmarks (“surface points,” blue). For information regarding each cranial region, see Bardua et al.&nbsp;(2019). BMNH, Natural History Museum, London, UK.</figcaption><p></p>
 </figure>
 </div>
 <p><a href="https://academic.oup.com/iob/article/1/1/obz016/5526881">Source: Bardua et al 2019</a></p>
+<p>See <span class="citation" data-cites="Bardua:2019">(<a href="#ref-Bardua:2019" role="doc-biblioref">Bardua et al. 2019</a>)</span> for an excellent review article and practical guide.</p>
 <p>Annotated 3D version of this figure available at: <a href="https://sketchfab.com/3d-models/add35e2e8af94839b1f577bfcee32e54" class="uri">https://sketchfab.com/3d-models/add35e2e8af94839b1f577bfcee32e54</a></p>
 <p>Letʻs practice digitizing 3D landmarks with the geomorph vignette: <a href="https://cran.r-project.org/web/packages/geomorph/vignettes/geomorph.digitize3D.html" class="uri">https://cran.r-project.org/web/packages/geomorph/vignettes/geomorph.digitize3D.html</a></p>
 </section>
-<section id="procrustes-analysis" class="level1">
-<h1>Procrustes Analysis</h1>
-</section>
-<section id="more-software" class="level1">
-<h1>More software</h1>
+<section id="more-geomorphic-morphometrics-software" class="level1">
+<h1>More geomorphic morphometrics software</h1>
 <p><a href="https://academic.oup.com/view-large/223239151" class="uri">https://academic.oup.com/view-large/223239151</a></p>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Bardua:2019" class="csl-entry" role="doc-biblioentry">
+Bardua, C, R N Felice, A Watanabe, A -C Fabre, and A Goswami. 2019. <span>“<span class="nocase">A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses</span>.”</span> <em>Integrative Organismal Biology</em> 1 (1). <a href="https://doi.org/10.1093/iob/obz016">https://doi.org/10.1093/iob/obz016</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
