@@ -5,7 +5,7 @@ author:
     url: https://butlerlab.org
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
-description: "Getting started with some issues in morphometrics"
+description: "Some important considerations in a typical workflow"
 date: 2023-04-04
 categories: [module 6, week 12, control structures, if else, (do) while, programming]
 bibliography: refs.bib

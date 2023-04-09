@@ -5,7 +5,7 @@ author:
     url: https://butlerlab.org
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
-description: "Getting started with some issues in morphometrics"
+description: "No measurements are perfect, so quantifying repeatability is important"
 date: 2023-03-30
 categories: [module 6, week 12, control structures, if else, (do) while, programming]
 bibliography: refs.bib
@@ -157,58 +157,49 @@ __((MS(id) – MS(id:photo:rep))/2 ) / (MS(id)+MS(id:photo)+MS(id:photo:rep))__
 The result is the __repeatability__, which in good circumstances is somewhere above 0.95; and thus 5% __measurement error__.
 
 
-### Simulated example:
+### Simplifed Simulated example:
 
-Measure 5 specimens (single measurement). 
-Take two photos of each specimen, digitized twice (once in each of two sessions on different days).  How repeatable are the measurements?  
+Simplifed example: 20 specimens, 1 photo, 2 digitzing reps:
+
+20 specimens: (single measurement dataset). 
+2 repetitons: Digitize each photo twice (once in each of two sessions on different days).  
+How repeatable are the measurements?  
 
 Simulate the data:  
 
 ```{r}
-true_m <- rnorm(10,20,3)  # true values for 10 specimens
-p1 <- true_m + rnorm(10,0,.1)
-p2 <- true_m + rnorm(10,0,.1)
+true_m <- rnorm(20,20,3)  # true values for  specimens
+m1 <- true_m + rnorm(20,0,0.5)  # measurement 1
+m2 <- true_m + rnorm(20,0,0.5)  # measurement 2
 
-p1m1 <- true_m + p1 + rnorm(10,0,.05) # photo 1 measurements set 1
-p1m2 <- true_m + p1 + rnorm(10,0,.05)
-p2m1 <- true_m + p2 + rnorm(10,0,.05) # photo 2 measurements set 1
-p2m2 <- true_m + p2 + rnorm(10,0,.05)
-
-id <- as.factor(rep(1:10, times=4))
-photo <- as.factor(rep(rep(1:2, each=10), times=2))
+id <- as.factor(rep(1:20, times=2))
 rep <- gl(2, 20)
-total_m <- c(p1m1, p2m1, p1m2, p2m2)
-cbind(id, total_m, photo, rep)  # the data
+total_m <- c(m1, m2)
+cbind(id, total_m, rep)  # the data
 ```
 
+Is there a difference between the measurement sessions?
 ```{r}
-summary(aov(lm ( total_m ~ id:photo:rep)))
-msi <- summary(aov(lm ( total_m ~ id)))[[1]][1,3]
-msip <- summary(aov(lm ( total_m ~ id:photo)))[[1]][1,3]
-msipr <- summary(aov(lm ( total_m ~ id:photo:rep)))[[1]][1,3]
+summary(aov(lm ( total_m ~ rep)))
 ```
 
-To calculate the repeatability of our digitizing ability, we subtract the MS of the id:photo:rep term from the id term and divide by two (because we have two replicates):
+No (_thatʻs good!_)
 
-(MS(id) – MS(id:photo:rep))/2 
-
-Then we calculate the ratio of this value to the total MS:
-
-((MS(id) – MS(id:photo:rep))/2 ) / (MS(id)+MS(id:photo)+MS(id:photo:rep)) 
-
-The result is a value, which in good circumstances is somewhere above 0.95; a repeatability of 0.95 and thus 5% error.
-
+Is there a difference between individual specimens?
 ```{r}
-((msi - msipr)/2) / (msi+msip+msipr)
+mod <- summary(aov(lm( total_m ~ id )))
+mod
 ```
-And the percent measurement error is represented by `pME`.  As a rough rule of thumb we want this to be less than 5%.  If it is very high, we either want to practice more, or take multiple measurements of each variable and average them. 
 
+Yes, and the resigual mean squared error looks small too (good!). 
+How big is the measurement error? 
+```{r}
+s2_within <- ms_within <- mod[[1]][2,3]
+s2_within
 
-Alternatively, if we were interested in inter-observer error vs. repeatability within observer, we could take one photograph and have it measured by two different people, each person taking two sets of measurements (preferably in different sessions). 
+ms_among <- mod[[1]][1,3]
+s2_among <- (ms_among-ms_within)/2
+ME <- s2_within/(s2_within+s2_among) * 100
+```
+Not bad. A rule of thumb is that 5% ME is good (95% repeatability). If we want to reduce ME, we can use the average of the two measurements in our analyses. 
 
-
-
-
-The same can be done for the photos (ind:photo) but of course remember digitizing error is also in this term. This post is inspired by Chapter 9 of the Green Book, which I strongly recommend reading.
-
-Remember, all this can be done by accessing the parts of the ANOVA table using regular R indexing. Dump the output of procD.lm into an object e.g. called res then res[,3] will be the MS values.

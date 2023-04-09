@@ -1,0 +1,235 @@
+---
+title: "Procrustes Superimposition and Analyses"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "A tour of analyses with geometric morphometric data"
+date: 2023-04-11
+categories: [module 6, week 13, geometric morphometrics, GPA, procrustes superimposition, size, shape]
+bibliography: ../refs.bib
+---
+
+### Acknowledgements
+
+References for this Material:
+
+- Bardua et al (2019) A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses<https://academic.oup.com/iob/article/1/1/obz016/5526881>
+- [Emma Sherratʻs quick guide to Geomorph](https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf)
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Be able to create shape data from geometric morphometric data
+-   Understand the general concepts for Procrustes superimposition 
+-   Be able to perform basic analyses on geometric morphometric data
+
+:::
+
+
+# Size Adjustment with Procrustes Superimposition 
+
+Procrustes superimposition is the most widely used method to create size and shape variables from landmark data. The basic idea is that larger objects should have landmarks that are farther apart than the same landmarks in smaller objects. 
+
+### Centroid
+
+A key concept is the __centroid__, which the center point of all of the landmarks. It is easily calculated for each specimen by taking the average of all of the landmark coordinates along each axis. For _p_ landmarks in two dimensions the coordinates of the centroid would be:
+
+$$
+C_{x} = \frac{X_1+X_2+X_3+ ... + X_p}{p}
+$$
+$$
+C_{y} = \frac{Y_1+Y_2+Y_3 ... + Y_p}{p}
+$$
+
+### Centroid size
+
+The concept of __centroid size__ describes geometric size. It is calculated from the distances of each landmark from the centroid, but it is a geometric mean because it is caculated by taking the square-root of the sums of squared distances of each landmark from the centroid.  
+
+![The centroid of a triangle (with landmarks at the vertices) is the point in the center.](../../images/Triangle.Centroid.png)
+
+[Source: Wikipedia]
+
+### Shape Variables 
+
+Shape variables calculated from Procrustes superimposition mathematically separate scale (size) from shape by applying shape-preserving transformations to make the landmarks as similar as possible. 
+
+The concept: In order to compare differences in shape, we can remove size  (in other words, normalize by size or bring all of the specimens to the same size) with the following transformations:
+
+-  __Scale__: Bring each set of landmarks to the same size by magnifing or reducing the distances of the landmarks around their centroid.  
+-   __Translate__: Shift the landmarks in the coordinate space to place the centroids at a common point.  
+-  __Rotate__: Rotate the landmarks with an angular transformation to bring them into a common orientation. 
+ 
+
+At the end of Procrustes superimposition, the landmarks for the different specimens will be scaled to the same size and their coordinates will lie as close together as possible while preserving the differences in shape. The figure below illustrates these steps. 
+
+The mathematics of these transofrmations come from basic linear algebra operations on matrices, which are beyond the scope of the class, but to understand what is happening we can analogize it to univariate arithmetic.  
+
+_Scaling_ is like dividing each variable by a size variable to put all of the individuals on the same baseline with regard to size (magnitude). 
+
+_Translation_ brings the centers of all of the landmarks into alignment. Think of a situation where we measured the length of specimens according to wherever they fell within the picture frame, for example if one specimen started at 2 and extended to 10, and another started at 6 and extended to 12. We could translate (or slide) each of these to place their midpoint at zero by subtracting the mean value from each of their endpoints. For the first specimen, we would subtract 6, translating the specimen from (2,10) to (-4,4), and for the second we would subtract 9, tanslating the specimen from (6,12) to (-3,3).  
+
+_Rotation_ is an angular rotation to bring a 2 or 3D object into a common orientation. For a more thorough discussion please see [@Zelditch:2004].
+
+![Figure: Procrustes superimposition. The figure shows the three transformation steps of an ordinary Procrustes fit for two configurations of landmarks. (a) Scaling of both configurations to the same size; (b) Translation to the same position of the center of gravity; (c) Rotation to the orientation that provides the minimum sum of squared distances between corresponding landmarks.](../../images/Procrustes_superimposition.png)
+
+[Source: Christian Klingenberg](https://commons.wikimedia.org/wiki/File:Procrustes_superimposition.png)
+
+::: callout-note
+## From the documentation for `gpagen()` in `geomorph`:
+GPA translates all specimens to the origin, scales them to unit-centroid size, and optimally rotates them (using a least-squares criterion) until the coordinates of corresponding points align as closely as possible. The resulting aligned Procrustes coordinates represent the shape of each specimen, and are found in a curved space related to Kendall's shape space (Kendall 1984). Typically, these are projected into a linear tangent space yielding Kendall's tangent space coordinates (i.e., Procrustes shape variables), which are used for subsequent multivariate analyses (Dryden and Mardia 1993, Rohlf 1999). 
+:::
+
+# Geomorph Package
+
+### Data Structures
+
+The package `geomorph` is written to work with standard geomorphic morphometrics data file types such as TPS and NTS, as well as others. 
+
+`readland.tps()` reads morphometric data in TPS format. It returns an array for storing landmark data: _p_ landmarks X _k_ dimensions X _N_ specimens
+
+The third dimension of this array contains names for each specimen, which are obtained from the image names in the _.tps_ file.
+
+
+### Built-in Example
+
+Letʻs look again at the built-in dataset `plethodon` that comes with `geomorph`. It has skull landmark data for 40 specimens of two species of plethdon salamanders. `plethodon` is a list.
+
+```{r}
+require(geomorph)
+data(plethodon) 
+class(plethodon)
+attributes(plethodon)
+table(plethodon$species)
+dim(plethodon$land)
+```
+
+The landmarks are in `plethodon$land`. There are twenty of each species, and from the dimensions  of `plethodon$land` we see that each of the 40 specimens has 12 landmarks in two dimensions. `plotAllSpecimens` plots the coordinates of all samples, so we can start to look at variation. 
+
+#### Shape: General Procrustes Analysis
+
+```{r}
+#|warning: false
+plotAllSpecimens(plethodon$land)
+Y.gpa <- gpagen(plethodon$land, PrinAxes = FALSE)
+summary(Y.gpa)
+```
+
+The summary provides the mean for each of the coordinates after GPA. We can see the mean of the coordinates among the individual coordinates by plotting:
+
+```{r}
+plot(Y.gpa)
+```
+
+Letʻs compare the plot of all specimens before and after Generalized Procrustes Analysis. The below plot is before GPA, on the raw landmarks `plethodon$land`:
+```{r}
+plotAllSpecimens(plethodon$land)
+```
+
+Plotting again after alignment with Generalized Procrustes Analysis gives a good representation of shape variation. Plotting links between the landmarks helps with visualization. 
+
+```{r}
+plotAllSpecimens(Y.gpa$coords,links=plethodon$links)
+```
+
+#### Principal Components Analysis
+
+PCA on the procrustes coordinates (size-adjusted or shape variables) can be done with: 
+```{r}
+pleth.pca <- gm.prcomp(Y.gpa$coords)
+pleth.pca 
+```
+There are 20 PC axes, with 67% of the total shape variation in the first two axes. A plot on PC1 vs PC2 reveals several distinct clusters, suggesting shape differences. The scores are in `pleth.pca$x`. There is a plot method for geomorph pca results:
+
+```{r}
+pleth.pca.plot <- plot(pleth.pca)
+```
+The specimens are from two species in two distinct environments, and there seems to be  some separation between the points along PC1 vs. PC2. These points correspond to specimens of two different species in the original TPS data that information is in `plethodon$species`. Because the species names are a factor, we can use this to do a quick and dirty plot colored by species. We can plot additional PC axes by specifying the axes to plot:
+
+```{r}
+class(plethodon$species)
+par(mfrow=c(2,2)) # set up 2x2 plots
+plot(pleth.pca, main = "PCA", 
+      col=plethodon$species # color points by species
+    )
+plot(pleth.pca, main = "PCA", 
+      axis1 = 1, axis2 = 3, # plot PC axes 1 vs 3
+      col=plethodon$species 
+    )
+plot(pleth.pca, main = "PCA", 
+      axis1 = 2, axis2 = 3, # PC 2 vs PC3
+      col=plethodon$species
+    ) 
+plot(pleth.pca, main = "PCA", 
+      axis1 = 3, axis2 = 4, # PC3 vs PC4
+      col=plethodon$species
+    ) 
+```
+
+All of the separation between species comes from PC1 vs. 2, with no additional separation by adding PC3 or PC4. 
+
+#### Statistical test for differences among species and sites
+
+We can test the shape variables (GPA coordinates) as explanatory variables for phenotypic varation. Because there are multiple pheontypic (Y) variables, we use MANOVA (multivariate ANOVA).  
+
+`geomorph` has a helper function `geomorph.data.frame` that creates an object of class `geomorph.data.frame` from your procrustes shape coordinates that includes the centroid size (`Csize`), and allows you to associate your metadata such as species and site together with the shape data. The idea is keep it organized in a data-frame like manner, even though it is a list (it makes sure that all the elements have the same length). 
+
+```{r}
+gdf <-geomorph.data.frame(Y.gpa$coords)
+attributes(gdf) 
+
+gdf <-geomorph.data.frame(Y.gpa, 
+              species = plethodon$species, 
+              site = plethodon$site
+              )
+attributes(gdf) 
+```
+
+```{r}
+lm.fit <- procD.lm(coords~species * site, data=gdf)
+summary(lm.fit)
+```
+
+The MANOVA reveals significant shape differences between species, between sites,  and in the interaction between the two factors (species and site).
+
+We can also look at variation with centroid size:
+
+
+```{r}
+anova(procD.lm(coords ~ Csize + species * site, data = gdf))
+```
+
+There is signficant multivariate difference among the shape data by size as well as by species and site. This is a good place to note that while size and shape are _mathematically_ uncorrelated by GPA, there could still be some _biological_ variation that produces some pattern of shape variation with size. 
+
+
+#### Relative Warps
+
+We can look at the relative shape change between the specimens. This is a common technique you will see in the literature using _relative warps analysis_. It uses a shape analysis technique called __thin plate splines__ which is a smoothing method that is forced to go through the landmarks, but will fit a surface between them (in as many diemsions as there are in the data). 
+
+__Relative warps analysis__ will show the shape deformation needed to move from a reference shape to a another shape. 
+
+First we calcuate the mean shape in all of the data as the reference shape. 
+
+```{r}
+ref<-mshape(gdf$coords)
+```
+
+Calculate the mean shape of _Plethodon jordanii_, and we can compare this species to the mean of both species: 
+```{r}
+gp1.mn<-mshape(gdf$coords[,,gdf$species=="Jord"])
+plotRefToTarget(ref,gp1.mn,mag=2, links=plethodon$links)
+plotAllSpecimens(gdf$coords,links=plethodon$links)
+```
+
+We can see that most of the shape change between _P. jordanii_ and the mean shape is around the jaw hinge and top of the skull near the orbit (where the eyes would be).
+
+Can you do the same but comparing the mean of the two species against each other? 
+
+# More geomorphic morphometrics software 
+
+<https://academic.oup.com/view-large/223239151>

@@ -5,10 +5,10 @@ author:
     url: https://butlerlab.org
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
-description: "Getting started with some issues in morphometrics"
+description: "Getting started with morphometrics"
 date: 2023-04-04
 categories: [module 6, week 12, control structures, if else, (do) while, programming]
-bibliography: refs.bib
+bibliography: ../refs.bib
 ---
 
 ### Acknowledgements
@@ -33,8 +33,8 @@ References for this Material:
 ### Preparation
 
 Packages:  
-__geomorph__ 
-__rgl__  
+__geomorph__   
+__rgl__    
 __Matrix__  
 Please install if you donʻt have them. `install.packages(c("geomorph","rgl","Matrix"), dependencies=T)`
 
@@ -81,7 +81,7 @@ The most important thing is consistency and a protocol that minimizes error. Whi
 
 Errors and distortions can be fixed with software, but it is much easier to minimize them at the start. 
 
-# Landmarks and Pseudolandmarks
+# Landmarks 
 
 Essential features of good landmarks:
 
@@ -97,35 +97,48 @@ Here is an example of typical landmarks:
 ![Rodent lower jaw (mandible). Lateral view of a _Nectomys squamipes_ mandible, showing the 10 landmarks used in this work. 1) Anterior edge of the incisive alveolus; 2) Most posterior point of the diastema; 3) Junction between the mandible and the m1 root; 4) Junction between the molar base and the coronoid process; 5) Most posterior point at the articular process; 6) Most anterior point in the angular notch; 7) Most posterior point at the angular process; 8) Angular process base; 9) Inner edge of the mandibular symphysis; 10) Posterior edge of the incisive alveolus](../../images/rodentmandible.jpg)
 [Source](https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.7557)
 
-Acquiring landmarks usually involves some digitizing by hand (with computer assistance). For 2D landmark data:
+### Digitizing Landmarks on Images
+
+Acquiring landmarks usually involves some digitizing by hand (with computer assistance). For 2D landmark data the workflow is:
 
 -  Read in the image file  
--  Set the scale (translation between pixels and known distance)  
+-  Set the scale   
 -  Digitize landmarks, collecting X-Y coordinate data 
+
+Image files are rows and columns of pixels, the number of which is determined by the file size and resolution. Pixels therefore, form a grid which we can digitize, meaning we can indicate at which pixel our landmark of interest is. We translate the pixel coordinates into real-world distances, typically by ditigizing an object of known dimensions such as a ruler. Digitizing software typically asks the user to indicate the points on the screen and the known distances they correspond to. 
 
 Easy-to use software for this purpose include `ImageJ` and `FIJI`, as well as the `geomorph` package in R.  Before doing a large project, I would try them all to see which serves your purpose the best. 
 
-For `geomorph`, Emma Sherratʻs [Emma Sherratʻs quick guide to Geomorph](https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf) provides an excellent walk-through in Chapter 15.  
 
-For a quick example, letʻs do a 2D landmark collection on the Red Fox Mandible using `digitize2d()`. 
+#  `geomorph` package
 
-The syntax is:
+The package `geomorph` is widely used for geometric morphometrics, and will serve as a good example to illustrate the geometric morphometrics workflow all in R (depending on the project and the material, however, you may find it more convenient or efficient to use other software for digitizing).   
+
+
+### Digitizing landmarks in `geomorph`
+
+
+For a quick example, letʻs do a 2D landmark collection on the Red Fox Mandible using `digitize2d()`.  Emma Sherratʻs [quick guide to Geomorph](https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf) provides a more thorough walk-through for capturing landmarks in Chapter 15.  
+
+
+The syntax for `digitize2d()` is:
 
 `digitize2d(filelist, nlandmarks, scale = NULL, tpsfile, verbose = TRUE)`
 
 Where:
 
-`filelist` : vector of filenames.  
-`nlandmarks` : number of landmarks to digitize
-`scale`  : length of scale to use (optional)
-`tpsfile` : name of output file to create or read (to edit)
+-  `filelist` : a vector of filenames of image files
+-  `nlandmarks` : the number of landmarks to digitize  
+-  `scale`  : the length of scale to use (optional)  
+-  `tpsfile` : the name of an output file to create or read 
 
 ```{r}
 #| warning: false
 require(geomorph)
 
 files <- c("red-fox-mandible-lateral.jpg")
-# files <- list.files(pattern = "*.jpg") # for multiple files in your image directory
+# files <- list.files(pattern = "*.jpg") 
+             # for multiple files in your image directory
 ```
 ```{r}
 #| eval: false
@@ -136,16 +149,26 @@ digitize2d( files,
             verbose = TRUE) 
 ```
 
-In verbose mode, it will ask you to confirm each landmark (this can be turned off). If a landmark is missing, choose `a` for absent. Make a mistake and choose `n` - it will ask you to redigitize it. 
+R will now wait for you to digitize the first landmark. In verbose mode, it will ask you to _confirm_ each landmark (this can be turned off). If a landmark is missing, choose `a` for absent. If you make a mistake and choose `n`, it will ask you to redigitize it. The output will be sent to a `.tps `file.
 
-The output will be sent to the tps file:
+
+# TPS format
+
+TPS format is a standard morphometric data format for storing landmark coordinate data. 
+
+`readland.tps()` reads TPS format and returns an array: _p_ landmarks by _k_ dimensions by _N_ specimens.  
+
+Remember an array is simply a multidimensional dataframe. Think of it here as a stack of spreadsheets. Each spreadsheet has rows for landmarks and columns for dimensions.  We have a separate spreadsheet for each specimen, making this a 3-dimensional array. 
+
+The third dimension of this array contains names for each specimen, which are obtained from the image names in the _.tps_ file.  We can read in the data that we digitized above:
+
 
 ```{r}
 dat <- readland.tps("mandible-lat.tps", specID = "ID", readcurves = FALSE, warnmsg = TRUE)
 dat
 ```
 
-For another example, check out the `plethodon` data included with `geomorph`
+Note that the name saved with the data in this case was the file name. For another example, check out the `plethodon` data included with `geomorph`
 
 ```{r}
 data(plethodon)
@@ -153,34 +176,35 @@ attributes(plethodon)
 str(plethodon)
 ```
 
-3D coordinates in tps format contain 3D arrays (one table per specimen). 
+3D coordinates in tps format simply have a third dimension (z in addition to x and y) in each spreadsheet (one spreadsheet or table per specimen).  
 
-![](../../geomorphdataarrays.png)
+![](../../images/geomorphdataarrays.png)
+
+
 [Source: Emma Sherratʻs quick guide to Geomorph](https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf)
+
 
 # Semi-Landmarks
 
-Oftentimes, there is more shape variation than distinct landmarks. For example, there is no distinct landmark that you can reliable digitize on the curve of a shell, for example. In this case, semi-landmarks can be helpful. 
+Oftentimes, there is more shape variation than what is captured by the landmarks themselves, which are only points. In addition, sometimes curves and surfaces have no distinct feature that can be reliably captured as the same homologous point from specimen to specimen. For example, the curvature of a smooth shell may lack any distinct landmarks. In both of these cases, semi-landmarks can be helpful. 
 
 __Semi-landmarks__ are regularly spaced points between two landmarks or along a curve or a surface.   
   __Sliding semi-landmarks__ are spaced linearly along a curve.  
   __Surface semi-landmarks__ are spread out evenly in 3D along a surface. 
 
-NOTE: One thing to note is that any error in the landmarks will also be propagated through the semilandmarks. 
+NOTE: One thing to note is that any error in the landmarks will also be propagated to the semilandmarks. 
 
-![Figure: Landmark and semilandmark data displayed on the caecilian Siphonops annulatus BMNH 1956.1.15.88. Points are colored as follows: landmarks (red), sliding semilandmarks (“curve points,” yellow), and surface semilandmarks (“surface points,” blue). For information regarding each cranial region, see Bardua et al. (2019). BMNH, Natural History Museum, London, UK.](../../images/caecelian_skull_semilandmarks.jpeg)
+![Figure: Landmark and semilandmark data displayed on the caecilian _Siphonops annulatus_ BMNH 1956.1.15.88. Points are colored as follows: landmarks (red), sliding semilandmarks (“curve points,” yellow), and surface semilandmarks (“surface points,” blue). For information regarding each cranial region, see Bardua et al. (2019). BMNH, Natural History Museum, London, UK.](../../images/caecelian_skull_semilandmarks.jpeg)
 
 [Source: Bardua et al 2019](https://academic.oup.com/iob/article/1/1/obz016/5526881)
+
+See [@Bardua:2019] for an excellent review article and practical guide. 
 
 Annotated 3D version of this figure available at: <https://sketchfab.com/3d-models/add35e2e8af94839b1f577bfcee32e54>
 
 Letʻs practice digitizing 3D landmarks with the geomorph vignette: <https://cran.r-project.org/web/packages/geomorph/vignettes/geomorph.digitize3D.html>
 
 
-# Procrustes Analysis 
-
-
-
-# More software 
+# More geomorphic morphometrics software 
 
 <https://academic.oup.com/view-large/223239151>

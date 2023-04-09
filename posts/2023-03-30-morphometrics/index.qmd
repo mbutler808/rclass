@@ -15,10 +15,7 @@ bibliography: refs.bib
 
 Material for this lecture was borrowed and adopted from
 
--   <https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-22-control-structures>
-
 - <https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/>
-- <>
 
 # Learning objectives
 
@@ -28,7 +25,7 @@ Material for this lecture was borrowed and adopted from
 **At the end of this lesson you will:**
 
 -   Be able to estimate measurement error and repeatability
--   
+
 :::
 
 # Overview
@@ -71,7 +68,7 @@ $$
 
 ## Example
 
-Let’s say you are taking photographs of your specimens. They are rather rounded and so it is hard to place them flat on the table to photograph from above. Issue 1 here is whether the shape variation we observe in the photo is real or due to placing the specimen at slightly different angles. Then, when once you have the photograph you need to digitize the landmarks. Issue 2 is whether you put the landmarks in the same place every time (i.e. is your criteria for the landmark robust enough that its obvious where it should be placed on each specimen, and if you came back to the data a month or year later?)
+Let’s say you are taking photographs of your specimens and you want to quantify the error assocated with placing your landmarks in the same place every time (i.e. is your criteria for the landmark robust enough that its obvious where it should be placed on each specimen, and if you came back to the data a month or year later?)
 
 To assess measurement error in this instance we could take two sets of pictures, each time removing and positioning the specimen. And we could digitize each image twice, preferably in different sessions (another day or week). This would give us 4 sets of landmark data for each specimen, allowing us to asses both error associated with the digitization as well as error in capturing the shapes via the photographs. 
 
@@ -238,23 +235,6 @@ theta_degrees <- theta/ pi * 180
 theta_degrees
 ```
 
-# Landmarks and Pseudolandmarks
-
-![Rodent lower jaw (mandible). Lateral view of a Nectomys squamipes mandible, showing the 10 landmarks used in this work. 1) Anterior edge of the incisive alveolus; 2) Most posterior point of the diastema; 3) Junction between the mandible and the m1 root; 4) Junction between the molar base and the coronoid process; 5) Most posterior point at the articular process; 6) Most anterior point in the angular notch; 7) Most posterior point at the angular process; 8) Angular process base; 9) Inner edge of the mandibular symphysis; 10) Posterior edge of the incisive alveolus](../../images/rodentmandible.jpg)
-[Source](https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.7557)
-
-Acquiring landmarks usually involves some digitizing by hand. 
-
-
-<https://russellboneatlas.wordpress.com/home/red-fox-bone-atlas/red-fox-mandible/>
-
-```{r}
-#require(imager)  # install if you need to
-
-#jaw <- load.image("../../images/rodentmandible.jpg")
-#plot(jaw)
-
-```
 
 
 
