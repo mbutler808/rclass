@@ -92,7 +92,7 @@ Learning objectives
 <p>The mathematics of these transofrmations come from basic linear algebra operations on matrices, which are beyond the scope of the class, but to understand what is happening we can analogize it to univariate arithmetic.</p>
 <p><em>Scaling</em> is like dividing each variable by a size variable to put all of the individuals on the same baseline with regard to size (magnitude).</p>
 <p><em>Translation</em> brings the centers of all of the landmarks into alignment. Think of a situation where we measured the length of specimens according to wherever they fell within the picture frame, for example if one specimen started at 2 and extended to 10, and another started at 6 and extended to 12. We could translate (or slide) each of these to place their midpoint at zero by subtracting the mean value from each of their endpoints. For the first specimen, we would subtract 6, translating the specimen from (2,10) to (-4,4), and for the second we would subtract 9, tanslating the specimen from (6,12) to (-3,3).</p>
-<p><em>Rotation</em> is an angular rotation to bring a 2 or 3D object into a common orientation. For a more thorough discussion please see <span class="citation" data-cites="Zelditch:2004">(<strong>Zelditch:2004?</strong>)</span>.</p>
+<p><em>Rotation</em> is an angular rotation to bring a 2 or 3D object into a common orientation. For a more thorough discussion please see <span class="citation" data-cites="Zelditch:2012">(Zelditch, Swiderski, and Sheets 2012)</span>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://mbutler808.github.io/images/Procrustes_superimposition.png" class="img-fluid figure-img"></p>
@@ -7740,7 +7740,7 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
   <category>objects</category>
   <guid>https://mbutler808.github.io/posts/2023-02-14-tidying-exploring-data/index.html</guid>
   <pubDate>Tue, 14 Feb 2023 10:00:00 GMT</pubDate>
-  <media:content url="https://mbutler808.github.io/images/penguins.png" medium="image" type="image/png" height="86" width="144"/>
+  <media:content url="https://mbutler808.github.io/images/penguins.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Types of Data</title>

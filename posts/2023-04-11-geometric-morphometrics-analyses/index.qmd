@@ -84,7 +84,7 @@ _Scaling_ is like dividing each variable by a size variable to put all of the in
 
 _Translation_ brings the centers of all of the landmarks into alignment. Think of a situation where we measured the length of specimens according to wherever they fell within the picture frame, for example if one specimen started at 2 and extended to 10, and another started at 6 and extended to 12. We could translate (or slide) each of these to place their midpoint at zero by subtracting the mean value from each of their endpoints. For the first specimen, we would subtract 6, translating the specimen from (2,10) to (-4,4), and for the second we would subtract 9, tanslating the specimen from (6,12) to (-3,3).  
 
-_Rotation_ is an angular rotation to bring a 2 or 3D object into a common orientation. For a more thorough discussion please see [@Zelditch:2004].
+_Rotation_ is an angular rotation to bring a 2 or 3D object into a common orientation. For a more thorough discussion please see [@Zelditch:2012].
 
 ![Figure: Procrustes superimposition. The figure shows the three transformation steps of an ordinary Procrustes fit for two configurations of landmarks. (a) Scaling of both configurations to the same size; (b) Translation to the same position of the center of gravity; (c) Rotation to the orientation that provides the minimum sum of squared distances between corresponding landmarks.](../../images/Procrustes_superimposition.png)
 
