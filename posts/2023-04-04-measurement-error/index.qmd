@@ -95,7 +95,8 @@ files <- list.files()  # to read the file names from the current drectory
 files <- files <- c("id1_photo1_rep1.jpg", 
                     "id1_photo1_rep2.jpg", 
                     "id1_photo2_rep1.jpg", 
-                    "id1_photo2_rep2.jpg")  # made up example to practice 
+                    "id1_photo2_rep2.jpg"
+                    )  # made up example to practice 
 
 # Collect metadata, approach 1 - substr
 meta <- strsplit(files, "_|\\.")  # metadata. split filenames by _ or . 
@@ -108,9 +109,21 @@ rep <- sapply(meta, "[[", 3)
 # using sub and regular expressions to select (string1)_(string2)_(string3)
 # also ignoring the final .jpg, where . is escaped by \\
 
-id <- sub("^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(\\.jpg)", "\\1", files)
-photo <- sub("^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(\\.jpg)", "\\2", files)
-rep <- sub("^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(\\.jpg)", "\\3", files)
+id <- sub(
+        "^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(\\.jpg)", 
+        "\\1", 
+        files
+      )
+photo <- sub(
+         "^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(\\.jpg)", 
+         "\\2", 
+         files
+       )
+rep <- sub(
+         "^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(\\.jpg)", 
+         "\\3", 
+         files
+       )
 ```
 
 We can use these vectors along with the coordinates to test for measurement error with ANOVA. 
@@ -148,11 +161,20 @@ __Data and model term objects:__
 
 Look at the values of the Mean Squares (MS) column in the ANOVA table. Compare the value for `id:photo` and `id:photo:rep` with `id`. 
 
-To calculate the __repeatability__ of our digitizing ability, we subtract the __MS__ of the __rep__ term from the __individual__ term and divide by __two__ (because we have two replicates):
-__(MS(id) – MS(ind:photo:rep))/2__
 
-Then we calculate the ratio of this value to the total MS:
+#### Repeatability  
+To calculate the __repeatability__ of our digitizing ability, we subtract the __MS__ of the __rep__ term from the __individual__ term and divide by __two__ 
+(because we have two replicates):  
+
+<center>
+__((MS(id) – MS(id:photo:rep))/2 )__
+</center>
+
+Then we calculate the ratio of this value to the total MS:  
+
+<center>
 __((MS(id) – MS(id:photo:rep))/2 ) / (MS(id)+MS(id:photo)+MS(id:photo:rep))__ 
+</center>  
 
 The result is the __repeatability__, which in good circumstances is somewhere above 0.95; and thus 5% __measurement error__.
 
@@ -200,6 +222,7 @@ s2_within
 ms_among <- mod[[1]][1,3]
 s2_among <- (ms_among-ms_within)/2
 ME <- s2_within/(s2_within+s2_among) * 100
+ME
 ```
 Not bad. A rule of thumb is that 5% ME is good (95% repeatability). If we want to reduce ME, we can use the average of the two measurements in our analyses. 
 

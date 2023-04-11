@@ -15,6 +15,7 @@ bibliography: ../refs.bib
 
 References for this Material:
 
+- The authors of the `geomorph` package for developing many useful vignettes (Antigoni Kaliontzopoulou) and sample datasets which is drawn upon below 
 - Bardua et al (2019) A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses<https://academic.oup.com/iob/article/1/1/obz016/5526881>
 - [Emma Sherratʻs quick guide to Geomorph](https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf)
 
@@ -30,6 +31,15 @@ References for this Material:
 -   Be able to perform basic analyses on geometric morphometric data
 
 :::
+
+
+# The goals of Geometric Morphometrics 
+
+From [@MacLeod:2010]:
+
+> __The ultimate goals for any geometric morphometric analysis__ - to define a mathematical space in which we can compare sets of landmark configurations that (1) ordinates shapes on the basis of their similarity, (2) treats these configurations as a __whole entity__ rather than an accumulation of _independent parts_, (3) respects the conventions of the Kendall shape space, (4) supports shape modelling, and (5) is stable in the face of minor changes to the sample and/or reference shape.
+
+What is a Kendall shape space, you ask? A shape space or coordinate system is used to describes shapes, and importantly, be used to understand differences between shapes. Kendallʻs shape space describes curves and local approxmation to curves using tangents [@Klingenberg:2020]. For this lesson just remember that shapes are connected by geometries, which we can describe mathematically. This makes it much easier to compare the major differences between multidimensional shapes. 
 
 
 # Size Adjustment with Procrustes Superimposition 
@@ -89,7 +99,7 @@ GPA translates all specimens to the origin, scales them to unit-centroid size, a
 
 ### Data Structures
 
-The package `geomorph` is written to work with standard geomorphic morphometrics data file types such as TPS and NTS, as well as others. 
+The package `geomorph` is written to work with standard geomorphic morphometrics data file types such as TPS and NTS, as well as others [@Adams:2022,@Baken:2021]. 
 
 `readland.tps()` reads morphometric data in TPS format. It returns an array for storing landmark data: _p_ landmarks X _k_ dimensions X _N_ specimens
 
@@ -98,7 +108,14 @@ The third dimension of this array contains names for each specimen, which are ob
 
 ### Built-in Example
 
-Letʻs look again at the built-in dataset `plethodon` that comes with `geomorph`. It has skull landmark data for 40 specimens of two species of plethdon salamanders. `plethodon` is a list.
+Letʻs look again at the built-in dataset `plethodon` that comes with `geomorph`. It has skull landmark data for 40 specimens of two species of plethdon salamanders [@Adams:2004]. 
+
+![_Plethodon jordani_, Photo by Kevin Stohlgren](../../images/plethodonjordani.png)
+
+[Source: Ambibians and Reptiles of North Carolina website](https://herpsofnc.org/jordans-salamander/)
+
+
+The dataset `plethodon` is a list.
 
 ```{r}
 require(geomorph)
@@ -109,7 +126,9 @@ table(plethodon$species)
 dim(plethodon$land)
 ```
 
-The landmarks are in `plethodon$land`. There are twenty of each species, and from the dimensions  of `plethodon$land` we see that each of the 40 specimens has 12 landmarks in two dimensions. `plotAllSpecimens` plots the coordinates of all samples, so we can start to look at variation. 
+The landmarks are in `plethodon$land`. There are twenty of each species, and from the dimensions  of `plethodon$land` we see that each of the 40 specimens has 12 landmarks in two dimensions. 
+
+`plotAllSpecimens` plots the coordinates of all samples, so we can start to look at variation. 
 
 #### Shape: General Procrustes Analysis
 
@@ -175,8 +194,16 @@ All of the separation between species comes from PC1 vs. 2, with no additional s
 
 #### Statistical test for differences among species and sites
 
-We can test the shape variables (GPA coordinates) as explanatory variables for phenotypic varation. Because there are multiple pheontypic (Y) variables, we use MANOVA (multivariate ANOVA).  
+We can test the shape variables (GPA coordinates) as explanatory variables for phenotypic varation. Because there are multiple pheontypic (Y) variables, we use MANOVA (multivariate ANOVA). 
 
+`geomorph` has custom linear model functions  that use __randomized residuals__ (permutation test) to assess linear model fits on the high-dimensional geomorphic morphometric data [@Collyer:2018,@Collyer:2021]  (rather than assume the data come from a multivariate normal distribution).
+
+|Function | Description|
+|-|----|
+|`procD.lm` | Procrustes ANOVA/regression for Procrustes shape variables|
+|`procD.pgls` | Phylogenetic version of `procD.lm`|
+
+ 
 `geomorph` has a helper function `geomorph.data.frame` that creates an object of class `geomorph.data.frame` from your procrustes shape coordinates that includes the centroid size (`Csize`), and allows you to associate your metadata such as species and site together with the shape data. The idea is keep it organized in a data-frame like manner, even though it is a list (it makes sure that all the elements have the same length). 
 
 ```{r}
@@ -226,10 +253,27 @@ plotRefToTarget(ref,gp1.mn,mag=2, links=plethodon$links)
 plotAllSpecimens(gdf$coords,links=plethodon$links)
 ```
 
-We can see that most of the shape change between _P. jordanii_ and the mean shape is around the jaw hinge and top of the skull near the orbit (where the eyes would be).
+We can see that most of the shape change between _P. jordanii_ and the mean shape is around the jaw hinge (points 1,2) and top of the skull (post cranial, points 11,12).  Compare to the sketch of the landmark coordinates. 
+
+![Skull landmarks from @Adams:2004](../../images/plethodonlandmarks.png)
+
 
 Can you do the same but comparing the mean of the two species against each other? 
 
 # More geomorphic morphometrics software 
 
 <https://academic.oup.com/view-large/223239151>
+
+# More reading
+
+- [@Bookstein:1992] Morphometric Tools for Landmark Data: Geometry and Biology
+
+- [@Webster:2010] A Practical Introduction to Landmark-Based Geometric Morphometrics
+
+- [@Bardua:2019] A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses
+
+- [@Savriama:2018] A Step-by-Step Guide for Geometric Morphometrics of Floral Symmetry
+
+- [@Zelditch:2012] Geometric morphometrics for biologists a primer (the green book)
+
+

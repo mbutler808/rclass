@@ -10,7 +10,7 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023</description>
 <generator>quarto-1.2.313</generator>
-<lastBuildDate>Tue, 11 Apr 2023 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 11 Apr 2023 10:00:00 GMT</lastBuildDate>
 <item>
   <title>Procrustes Superimposition and Analyses</title>
   <dc:creator>Marguerite Butler</dc:creator>
@@ -24,6 +24,7 @@
 <h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>References for this Material:</p>
 <ul>
+<li>The authors of the <code>geomorph</code> package for developing many useful vignettes (Antigoni Kaliontzopoulou) and sample datasets which is drawn upon below</li>
 <li>Bardua et al (2019) A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses<a href="https://academic.oup.com/iob/article/1/1/obz016/5526881" class="uri">https://academic.oup.com/iob/article/1/1/obz016/5526881</a></li>
 <li><a href="https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf">Emma Sherratʻs quick guide to Geomorph</a></li>
 </ul>
@@ -48,6 +49,14 @@ Learning objectives
 </ul>
 </div>
 </div>
+</section>
+<section id="the-goals-of-geometric-morphometrics" class="level1">
+<h1>The goals of Geometric Morphometrics</h1>
+<p>From <span class="citation" data-cites="MacLeod:2010">(MacLeod 2010)</span>:</p>
+<blockquote class="blockquote">
+<p><strong>The ultimate goals for any geometric morphometric analysis</strong> - to define a mathematical space in which we can compare sets of landmark configurations that (1) ordinates shapes on the basis of their similarity, (2) treats these configurations as a <strong>whole entity</strong> rather than an accumulation of <em>independent parts</em>, (3) respects the conventions of the Kendall shape space, (4) supports shape modelling, and (5) is stable in the face of minor changes to the sample and/or reference shape.</p>
+</blockquote>
+<p>What is a Kendall shape space, you ask? A shape space or coordinate system is used to describes shapes, and importantly, be used to understand differences between shapes. Kendallʻs shape space describes curves and local approxmation to curves using tangents <span class="citation" data-cites="Klingenberg:2020">(Klingenberg 2020)</span>. For this lesson just remember that shapes are connected by geometries, which we can describe mathematically. This makes it much easier to compare the major differences between multidimensional shapes.</p>
 </section>
 <section id="size-adjustment-with-procrustes-superimposition" class="level1">
 <h1>Size Adjustment with Procrustes Superimposition</h1>
@@ -83,7 +92,7 @@ Learning objectives
 <p>The mathematics of these transofrmations come from basic linear algebra operations on matrices, which are beyond the scope of the class, but to understand what is happening we can analogize it to univariate arithmetic.</p>
 <p><em>Scaling</em> is like dividing each variable by a size variable to put all of the individuals on the same baseline with regard to size (magnitude).</p>
 <p><em>Translation</em> brings the centers of all of the landmarks into alignment. Think of a situation where we measured the length of specimens according to wherever they fell within the picture frame, for example if one specimen started at 2 and extended to 10, and another started at 6 and extended to 12. We could translate (or slide) each of these to place their midpoint at zero by subtracting the mean value from each of their endpoints. For the first specimen, we would subtract 6, translating the specimen from (2,10) to (-4,4), and for the second we would subtract 9, tanslating the specimen from (6,12) to (-3,3).</p>
-<p><em>Rotation</em> is an angular rotation to bring a 2 or 3D object into a common orientation. For a more thorough discussion please see <span class="citation" data-cites="Zelditch:2004">(Zelditch 2004)</span>.</p>
+<p><em>Rotation</em> is an angular rotation to bring a 2 or 3D object into a common orientation. For a more thorough discussion please see <span class="citation" data-cites="Zelditch:2004">(<strong>Zelditch:2004?</strong>)</span>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://mbutler808.github.io/images/Procrustes_superimposition.png" class="img-fluid figure-img"></p>
@@ -110,13 +119,21 @@ From the documentation for <code>gpagen()</code> in <code>geomorph</code>:
 <h1>Geomorph Package</h1>
 <section id="data-structures" class="level3">
 <h3 class="anchored" data-anchor-id="data-structures">Data Structures</h3>
-<p>The package <code>geomorph</code> is written to work with standard geomorphic morphometrics data file types such as TPS and NTS, as well as others.</p>
+<p>The package <code>geomorph</code> is written to work with standard geomorphic morphometrics data file types such as TPS and NTS, as well as others <span class="citation" data-cites="Adams:2022">Baken et al. (2021)</span>.</p>
 <p><code>readland.tps()</code> reads morphometric data in TPS format. It returns an array for storing landmark data: <em>p</em> landmarks X <em>k</em> dimensions X <em>N</em> specimens</p>
 <p>The third dimension of this array contains names for each specimen, which are obtained from the image names in the <em>.tps</em> file.</p>
 </section>
 <section id="built-in-example" class="level3">
 <h3 class="anchored" data-anchor-id="built-in-example">Built-in Example</h3>
-<p>Letʻs look again at the built-in dataset <code>plethodon</code> that comes with <code>geomorph</code>. It has skull landmark data for 40 specimens of two species of plethdon salamanders. <code>plethodon</code> is a list.</p>
+<p>Letʻs look again at the built-in dataset <code>plethodon</code> that comes with <code>geomorph</code>. It has skull landmark data for 40 specimens of two species of plethdon salamanders <span class="citation" data-cites="Adams:2004">(Dean C. Adams 2004)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://mbutler808.github.io/images/plethodonjordani.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption"><em>Plethodon jordani</em>, Photo by Kevin Stohlgren</figcaption><p></p>
+</figure>
+</div>
+<p><a href="https://herpsofnc.org/jordans-salamander/">Source: Ambibians and Reptiles of North Carolina website</a></p>
+<p>The dataset <code>plethodon</code> is a list.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">require</span>(geomorph)</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -152,7 +169,8 @@ From the documentation for <code>gpagen()</code> in <code>geomorph</code>:
 <pre><code>[1] 12  2 40</code></pre>
 </div>
 </div>
-<p>The landmarks are in <code>plethodon$land</code>. There are twenty of each species, and from the dimensions of <code>plethodon$land</code> we see that each of the 40 specimens has 12 landmarks in two dimensions. <code>plotAllSpecimens</code> plots the coordinates of all samples, so we can start to look at variation.</p>
+<p>The landmarks are in <code>plethodon$land</code>. There are twenty of each species, and from the dimensions of <code>plethodon$land</code> we see that each of the 40 specimens has 12 landmarks in two dimensions.</p>
+<p><code>plotAllSpecimens</code> plots the coordinates of all samples, so we can start to look at variation.</p>
 <section id="shape-general-procrustes-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="shape-general-procrustes-analysis">Shape: General Procrustes Analysis</h4>
 <div class="cell">
@@ -308,6 +326,29 @@ Cumulative Proportion  9.963576e-01 9.981901e-01 9.992469e-01 1.000000e+00</code
 <section id="statistical-test-for-differences-among-species-and-sites" class="level4">
 <h4 class="anchored" data-anchor-id="statistical-test-for-differences-among-species-and-sites">Statistical test for differences among species and sites</h4>
 <p>We can test the shape variables (GPA coordinates) as explanatory variables for phenotypic varation. Because there are multiple pheontypic (Y) variables, we use MANOVA (multivariate ANOVA).</p>
+<p><code>geomorph</code> has custom linear model functions that use <strong>randomized residuals</strong> (permutation test) to assess linear model fits on the high-dimensional geomorphic morphometric data <span class="citation" data-cites="Collyer:2018">Collyer and Adams (2021)</span> (rather than assume the data come from a multivariate normal distribution).</p>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>procD.lm</code></td>
+<td>Procrustes ANOVA/regression for Procrustes shape variables</td>
+</tr>
+<tr class="even">
+<td><code>procD.pgls</code></td>
+<td>Phylogenetic version of <code>procD.lm</code></td>
+</tr>
+</tbody>
+</table>
 <p><code>geomorph</code> has a helper function <code>geomorph.data.frame</code> that creates an object of class <code>geomorph.data.frame</code> from your procrustes shape coordinates that includes the centroid size (<code>Csize</code>), and allows you to associate your metadata such as species and site together with the shape data. The idea is keep it organized in a data-frame like manner, even though it is a list (it makes sure that all the elements have the same length).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1">gdf <span class="ot" style="color: #003B4F;">&lt;-</span><span class="fu" style="color: #4758AB;">geomorph.data.frame</span>(Y.gpa<span class="sc" style="color: #5E5E5E;">$</span>coords)</span>
@@ -401,7 +442,13 @@ Call: procD.lm(f1 = coords ~ Csize + species * site, data = gdf)</code></pre>
 <p><img src="https://mbutler808.github.io/posts/2023-04-11-geometric-morphometrics-analyses/index_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>We can see that most of the shape change between <em>P. jordanii</em> and the mean shape is around the jaw hinge and top of the skull near the orbit (where the eyes would be).</p>
+<p>We can see that most of the shape change between <em>P. jordanii</em> and the mean shape is around the jaw hinge (points 1,2) and top of the skull (post cranial, points 11,12). Compare to the sketch of the landmark coordinates.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://mbutler808.github.io/images/plethodonlandmarks.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Skull landmarks from <span class="citation" data-cites="Adams:2004">Dean C. Adams (2004)</span></figcaption><p></p>
+</figure>
+</div>
 <p>Can you do the same but comparing the mean of the two species against each other?</p>
 </section>
 </section>
@@ -409,14 +456,57 @@ Call: procD.lm(f1 = coords ~ Csize + species * site, data = gdf)</code></pre>
 <section id="more-geomorphic-morphometrics-software" class="level1">
 <h1>More geomorphic morphometrics software</h1>
 <p><a href="https://academic.oup.com/view-large/223239151" class="uri">https://academic.oup.com/view-large/223239151</a></p>
+</section>
+<section id="more-reading" class="level1">
+<h1>More reading</h1>
+<ul>
+<li><p><span class="citation" data-cites="Bookstein:1992">(Bookstein 1992)</span> Morphometric Tools for Landmark Data: Geometry and Biology</p></li>
+<li><p><span class="citation" data-cites="Webster:2010">(Webster and Sheets 2010)</span> A Practical Introduction to Landmark-Based Geometric Morphometrics</p></li>
+<li><p><span class="citation" data-cites="Bardua:2019">(Bardua et al. 2019)</span> A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses</p></li>
+<li><p><span class="citation" data-cites="Savriama:2018">(Savriama 2018)</span> A Step-by-Step Guide for Geometric Morphometrics of Floral Symmetry</p></li>
+<li><p><span class="citation" data-cites="Zelditch:2012">(Zelditch, Swiderski, and Sheets 2012)</span> Geometric morphometrics for biologists a primer (the green book)</p></li>
+</ul>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-Zelditch:2004" class="csl-entry">
-Zelditch, Miriam. 2004. <em>Geometric Morphometrics for Biologists a Primer</em>. Amsterdam ; Elsevier Academic Press.
+<div id="ref-Adams:2022" class="csl-entry">
+Adams, D. C., M. L. Collyer, A. Kaliontzopoulou, and E. K. Baken. 2022. <span>“Geomorph: Software for Geometric Morphometric Analyses. R Package Version 4.0.4.”</span> <a href="https://cran.r-project.org/package=geomorph">https://cran.r-project.org/package=geomorph</a>.
+</div>
+<div id="ref-Adams:2004" class="csl-entry">
+Adams, Dean C. 2004. <span>“Character Displacement via Aggressive Interference in Appalachian Salamanders.”</span> <em>Ecology</em> 85 (10): 2664–70. <a href="http://www.jstor.org/stable/3450422">http://www.jstor.org/stable/3450422</a>.
+</div>
+<div id="ref-Baken:2021" class="csl-entry">
+Baken, E. K., M. L. Collyer, A. Kaliontzopoulou, and D. C. Adams. 2021. <span>“Geomorphic V4.0 and gmShiny: Enhanced Analytics and a New Graphical Interface for a Comprehensive Morphometric Experience.”</span> <em>Methods in Ecology and Evolution</em>.
+</div>
+<div id="ref-Bardua:2019" class="csl-entry">
+Bardua, C, R N Felice, A Watanabe, A -C Fabre, and A Goswami. 2019. <span>“<span class="nocase">A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses</span>.”</span> <em>Integrative Organismal Biology</em> 1 (1). <a href="https://doi.org/10.1093/iob/obz016">https://doi.org/10.1093/iob/obz016</a>.
+</div>
+<div id="ref-Bookstein:1992" class="csl-entry">
+Bookstein, Fred L. 1992. <em>Morphometric Tools for Landmark Data: Geometry and Biology</em>. Cambridge: Cambridge University Press. <a href="https://doi.org/DOI: 10.1017/CBO9780511573064">https://doi.org/DOI: 10.1017/CBO9780511573064</a>.
+</div>
+<div id="ref-Collyer:2018" class="csl-entry">
+Collyer, M. L., and D. C. Adams. 2018. <span>“<span>RRPP</span>: An r Package for Fitting Linear Models to High‐dimensional Data Using Residual Randomization.”</span> <em>Methods in Ecology and Evolution</em>.
+</div>
+<div id="ref-Collyer:2021" class="csl-entry">
+———. 2021. <span>“<span>RRPP</span>: Linear Model Evaluation with Randomized Residuals in a Permutation Procedure, r Package Version 1.1.2.”</span> <a href="https://cran.r-project.org/package=RRPP">https://cran.r-project.org/package=RRPP</a>.
+</div>
+<div id="ref-Klingenberg:2020" class="csl-entry">
+Klingenberg, Christian Peter. 2020. <span>“Walking on Kendall’s Shape Space: Understanding Shape Spaces and Their Coordinate Systems.”</span> <em>Evolutionary Biology</em> 47 (4): 334–52. <a href="https://doi.org/10.1007/s11692-020-09513-x">https://doi.org/10.1007/s11692-020-09513-x</a>.
+</div>
+<div id="ref-MacLeod:2010" class="csl-entry">
+MacLeod, Norm. 2010. <span>“PalaeoMath: Part 21 - Principal Warps, Relative Warps, and Procrustes PCA.”</span> Newsletter 75. <em>PaleoMath 101</em>. The Paleontological Association.
+</div>
+<div id="ref-Savriama:2018" class="csl-entry">
+Savriama, Yoland. 2018. <span>“A Step-by-Step Guide for Geometric Morphometrics of Floral Symmetry.”</span> <em>Frontiers in Plant Science</em> 9. <a href="https://doi.org/10.3389/fpls.2018.01433">https://doi.org/10.3389/fpls.2018.01433</a>.
+</div>
+<div id="ref-Webster:2010" class="csl-entry">
+Webster, Mark, and H. David Sheets. 2010. <span>“A Practical Introduction to Landmark-Based Geometric Morphometrics.”</span> <em>The Paleontological Society Papers</em> 16: 163–88. <a href="https://doi.org/DOI: 10.1017/S1089332600001868">https://doi.org/DOI: 10.1017/S1089332600001868</a>.
+</div>
+<div id="ref-Zelditch:2012" class="csl-entry">
+Zelditch, Miriam Leah, Donald L. Swiderski, and H. David Sheets. 2012. <em>Geometric Morphometrics for Biologists a Primer</em>. Amsterdam ; Elsevier Academic Press.
 </div>
 </div></section></div> ]]></description>
   <category>module 6</category>
@@ -427,7 +517,7 @@ Zelditch, Miriam. 2004. <em>Geometric Morphometrics for Biologists a Primer</em>
   <category>size</category>
   <category>shape</category>
   <guid>https://mbutler808.github.io/posts/2023-04-11-geometric-morphometrics-analyses/index.html</guid>
-  <pubDate>Tue, 11 Apr 2023 04:00:00 GMT</pubDate>
+  <pubDate>Tue, 11 Apr 2023 10:00:00 GMT</pubDate>
   <media:content url="https://mbutler808.github.io/images/Triangle.Centroid.png" medium="image" type="image/png" height="116" width="144"/>
 </item>
 <item>
@@ -518,7 +608,7 @@ Typical Morphometric Worflow
   <category>(do) while</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-04-04-morphometric-workflow/index.html</guid>
-  <pubDate>Tue, 04 Apr 2023 04:00:00 GMT</pubDate>
+  <pubDate>Tue, 04 Apr 2023 10:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Intro to Geometric Morphometrics</title>
@@ -766,7 +856,7 @@ Bardua, C, R N Felice, A Watanabe, A -C Fabre, and A Goswami. 2019. <span>“<sp
   <category>(do) while</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-04-04-morphometrics-landmarks/index.html</guid>
-  <pubDate>Tue, 04 Apr 2023 04:00:00 GMT</pubDate>
+  <pubDate>Tue, 04 Apr 2023 10:00:00 GMT</pubDate>
   <media:content url="https://mbutler808.github.io/images/rodentmandible.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
@@ -846,22 +936,35 @@ Learning objectives
 <span id="cb1-2">files <span class="ot" style="color: #003B4F;">&lt;-</span> files <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"id1_photo1_rep1.jpg"</span>, </span>
 <span id="cb1-3">                    <span class="st" style="color: #20794D;">"id1_photo1_rep2.jpg"</span>, </span>
 <span id="cb1-4">                    <span class="st" style="color: #20794D;">"id1_photo2_rep1.jpg"</span>, </span>
-<span id="cb1-5">                    <span class="st" style="color: #20794D;">"id1_photo2_rep2.jpg"</span>)  <span class="co" style="color: #5E5E5E;"># made up example to practice </span></span>
-<span id="cb1-6"></span>
-<span id="cb1-7"><span class="co" style="color: #5E5E5E;"># Collect metadata, approach 1 - substr</span></span>
-<span id="cb1-8">meta <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">strsplit</span>(files, <span class="st" style="color: #20794D;">"_|</span><span class="sc" style="color: #5E5E5E;">\\</span><span class="st" style="color: #20794D;">."</span>)  <span class="co" style="color: #5E5E5E;"># metadata. split filenames by _ or . </span></span>
-<span id="cb1-9">                                  <span class="co" style="color: #5E5E5E;"># Need to use \\ to escape the .</span></span>
-<span id="cb1-10">id <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sapply</span>(meta, <span class="st" style="color: #20794D;">"[["</span>, <span class="dv" style="color: #AD0000;">1</span>)</span>
-<span id="cb1-11">photo <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sapply</span>(meta, <span class="st" style="color: #20794D;">"[["</span>, <span class="dv" style="color: #AD0000;">2</span>)</span>
-<span id="cb1-12">rep <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sapply</span>(meta, <span class="st" style="color: #20794D;">"[["</span>, <span class="dv" style="color: #AD0000;">3</span>)</span>
-<span id="cb1-13"></span>
-<span id="cb1-14"><span class="co" style="color: #5E5E5E;"># Collect metadata approach 2 - sub</span></span>
-<span id="cb1-15"><span class="co" style="color: #5E5E5E;"># using sub and regular expressions to select (string1)_(string2)_(string3)</span></span>
-<span id="cb1-16"><span class="co" style="color: #5E5E5E;"># also ignoring the final .jpg, where . is escaped by \\</span></span>
-<span id="cb1-17"></span>
-<span id="cb1-18">id <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sub</span>(<span class="st" style="color: #20794D;">"^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(</span><span class="sc" style="color: #5E5E5E;">\\</span><span class="st" style="color: #20794D;">.jpg)"</span>, <span class="st" style="color: #20794D;">"</span><span class="sc" style="color: #5E5E5E;">\\</span><span class="st" style="color: #20794D;">1"</span>, files)</span>
-<span id="cb1-19">photo <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sub</span>(<span class="st" style="color: #20794D;">"^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(</span><span class="sc" style="color: #5E5E5E;">\\</span><span class="st" style="color: #20794D;">.jpg)"</span>, <span class="st" style="color: #20794D;">"</span><span class="sc" style="color: #5E5E5E;">\\</span><span class="st" style="color: #20794D;">2"</span>, files)</span>
-<span id="cb1-20">rep <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sub</span>(<span class="st" style="color: #20794D;">"^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(</span><span class="sc" style="color: #5E5E5E;">\\</span><span class="st" style="color: #20794D;">.jpg)"</span>, <span class="st" style="color: #20794D;">"</span><span class="sc" style="color: #5E5E5E;">\\</span><span class="st" style="color: #20794D;">3"</span>, files)</span></code></pre></div>
+<span id="cb1-5">                    <span class="st" style="color: #20794D;">"id1_photo2_rep2.jpg"</span></span>
+<span id="cb1-6">                    )  <span class="co" style="color: #5E5E5E;"># made up example to practice </span></span>
+<span id="cb1-7"></span>
+<span id="cb1-8"><span class="co" style="color: #5E5E5E;"># Collect metadata, approach 1 - substr</span></span>
+<span id="cb1-9">meta <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">strsplit</span>(files, <span class="st" style="color: #20794D;">"_|</span><span class="sc" style="color: #5E5E5E;">\\</span><span class="st" style="color: #20794D;">."</span>)  <span class="co" style="color: #5E5E5E;"># metadata. split filenames by _ or . </span></span>
+<span id="cb1-10">                                  <span class="co" style="color: #5E5E5E;"># Need to use \\ to escape the .</span></span>
+<span id="cb1-11">id <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sapply</span>(meta, <span class="st" style="color: #20794D;">"[["</span>, <span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb1-12">photo <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sapply</span>(meta, <span class="st" style="color: #20794D;">"[["</span>, <span class="dv" style="color: #AD0000;">2</span>)</span>
+<span id="cb1-13">rep <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sapply</span>(meta, <span class="st" style="color: #20794D;">"[["</span>, <span class="dv" style="color: #AD0000;">3</span>)</span>
+<span id="cb1-14"></span>
+<span id="cb1-15"><span class="co" style="color: #5E5E5E;"># Collect metadata approach 2 - sub</span></span>
+<span id="cb1-16"><span class="co" style="color: #5E5E5E;"># using sub and regular expressions to select (string1)_(string2)_(string3)</span></span>
+<span id="cb1-17"><span class="co" style="color: #5E5E5E;"># also ignoring the final .jpg, where . is escaped by \\</span></span>
+<span id="cb1-18"></span>
+<span id="cb1-19">id <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sub</span>(</span>
+<span id="cb1-20">        <span class="st" style="color: #20794D;">"^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(</span><span class="sc" style="color: #5E5E5E;">\\</span><span class="st" style="color: #20794D;">.jpg)"</span>, </span>
+<span id="cb1-21">        <span class="st" style="color: #20794D;">"</span><span class="sc" style="color: #5E5E5E;">\\</span><span class="st" style="color: #20794D;">1"</span>, </span>
+<span id="cb1-22">        files</span>
+<span id="cb1-23">      )</span>
+<span id="cb1-24">photo <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sub</span>(</span>
+<span id="cb1-25">         <span class="st" style="color: #20794D;">"^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(</span><span class="sc" style="color: #5E5E5E;">\\</span><span class="st" style="color: #20794D;">.jpg)"</span>, </span>
+<span id="cb1-26">         <span class="st" style="color: #20794D;">"</span><span class="sc" style="color: #5E5E5E;">\\</span><span class="st" style="color: #20794D;">2"</span>, </span>
+<span id="cb1-27">         files</span>
+<span id="cb1-28">       )</span>
+<span id="cb1-29">rep <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sub</span>(</span>
+<span id="cb1-30">         <span class="st" style="color: #20794D;">"^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(</span><span class="sc" style="color: #5E5E5E;">\\</span><span class="st" style="color: #20794D;">.jpg)"</span>, </span>
+<span id="cb1-31">         <span class="st" style="color: #20794D;">"</span><span class="sc" style="color: #5E5E5E;">\\</span><span class="st" style="color: #20794D;">3"</span>, </span>
+<span id="cb1-32">         files</span>
+<span id="cb1-33">       )</span></code></pre></div>
 </div>
 <p>We can use these vectors along with the coordinates to test for measurement error with ANOVA.</p>
 </section>
@@ -883,9 +986,18 @@ Learning objectives
 </div>
 <p><strong>Data and model term objects:</strong> - <strong>coords</strong> is the data object (a vector or array) - <strong>id</strong> is a vector containing labels for each specimen - <strong>photo</strong> is a vector (photo is 1 or 2) - <strong>rep</strong> is a vector (digitizing replicate 1 or 2)</p>
 <p>Look at the values of the Mean Squares (MS) column in the ANOVA table. Compare the value for <code>id:photo</code> and <code>id:photo:rep</code> with <code>id</code>.</p>
-<p>To calculate the <strong>repeatability</strong> of our digitizing ability, we subtract the <strong>MS</strong> of the <strong>rep</strong> term from the <strong>individual</strong> term and divide by <strong>two</strong> (because we have two replicates): <strong>(MS(id) – MS(ind:photo:rep))/2</strong></p>
-<p>Then we calculate the ratio of this value to the total MS: <strong>((MS(id) – MS(id:photo:rep))/2 ) / (MS(id)+MS(id:photo)+MS(id:photo:rep))</strong></p>
+<section id="repeatability" class="level4">
+<h4 class="anchored" data-anchor-id="repeatability">Repeatability</h4>
+<p>To calculate the <strong>repeatability</strong> of our digitizing ability, we subtract the <strong>MS</strong> of the <strong>rep</strong> term from the <strong>individual</strong> term and divide by <strong>two</strong> (because we have two replicates):</p>
+<center>
+<strong>((MS(id) – MS(id:photo:rep))/2 )</strong>
+</center>
+<p>Then we calculate the ratio of this value to the total MS:</p>
+<center>
+<strong>((MS(id) – MS(id:photo:rep))/2 ) / (MS(id)+MS(id:photo)+MS(id:photo:rep))</strong>
+</center>
 <p>The result is the <strong>repeatability</strong>, which in good circumstances is somewhere above 0.95; and thus 5% <strong>measurement error</strong>.</p>
+</section>
 </section>
 <section id="simplifed-simulated-example" class="level3">
 <h3 class="anchored" data-anchor-id="simplifed-simulated-example">Simplifed Simulated example:</h3>
@@ -904,46 +1016,46 @@ How repeatable are the measurements?</p>
 <span id="cb3-8"><span class="fu" style="color: #4758AB;">cbind</span>(id, total_m, rep)  <span class="co" style="color: #5E5E5E;"># the data</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      id  total_m rep
- [1,]  1 17.10225   1
- [2,]  2 15.93986   1
- [3,]  3 16.19714   1
- [4,]  4 21.44124   1
- [5,]  5 21.54744   1
- [6,]  6 16.44169   1
- [7,]  7 18.90075   1
- [8,]  8 20.44293   1
- [9,]  9 25.09316   1
-[10,] 10 20.39886   1
-[11,] 11 25.94884   1
-[12,] 12 18.35997   1
-[13,] 13 21.62585   1
-[14,] 14 19.90764   1
-[15,] 15 27.66315   1
-[16,] 16 21.11648   1
-[17,] 17 16.21200   1
-[18,] 18 19.97062   1
-[19,] 19 20.03302   1
-[20,] 20 15.84359   1
-[21,]  1 17.12800   2
-[22,]  2 17.28850   2
-[23,]  3 16.03851   2
-[24,]  4 21.87341   2
-[25,]  5 20.78227   2
-[26,]  6 16.73352   2
-[27,]  7 17.15422   2
-[28,]  8 20.67574   2
-[29,]  9 24.17468   2
-[30,] 10 20.15450   2
-[31,] 11 26.62219   2
-[32,] 12 18.34595   2
-[33,] 13 21.26133   2
-[34,] 14 20.48446   2
-[35,] 15 27.57298   2
-[36,] 16 20.05384   2
-[37,] 17 17.00963   2
-[38,] 18 21.46221   2
-[39,] 19 20.56191   2
-[40,] 20 14.67021   2</code></pre>
+ [1,]  1 21.27560   1
+ [2,]  2 17.60708   1
+ [3,]  3 21.90370   1
+ [4,]  4 25.74035   1
+ [5,]  5 21.53369   1
+ [6,]  6 18.12917   1
+ [7,]  7 17.52989   1
+ [8,]  8 19.25345   1
+ [9,]  9 20.76813   1
+[10,] 10 17.52782   1
+[11,] 11 15.46890   1
+[12,] 12 21.74648   1
+[13,] 13 20.92998   1
+[14,] 14 24.28469   1
+[15,] 15 19.78854   1
+[16,] 16 17.32797   1
+[17,] 17 16.01674   1
+[18,] 18 17.49154   1
+[19,] 19 19.94586   1
+[20,] 20 19.35142   1
+[21,]  1 21.29522   2
+[22,]  2 16.71170   2
+[23,]  3 21.94824   2
+[24,]  4 26.42610   2
+[25,]  5 22.04669   2
+[26,]  6 17.98205   2
+[27,]  7 18.02014   2
+[28,]  8 19.16643   2
+[29,]  9 20.70190   2
+[30,] 10 16.59378   2
+[31,] 11 15.80474   2
+[32,] 12 22.23258   2
+[33,] 13 20.67769   2
+[34,] 14 24.23565   2
+[35,] 15 19.89918   2
+[36,] 16 18.37393   2
+[37,] 17 16.53033   2
+[38,] 18 18.01682   2
+[39,] 19 19.34949   2
+[40,] 20 20.45557   2</code></pre>
 </div>
 </div>
 <p>Is there a difference between the measurement sessions?</p>
@@ -951,8 +1063,8 @@ How repeatable are the measurements?</p>
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(<span class="fu" style="color: #4758AB;">lm</span> ( total_m <span class="sc" style="color: #5E5E5E;">~</span> rep)))</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
-rep          1      0    0.00       0  0.995
-Residuals   38    434   11.42               </code></pre>
+rep          1    0.2   0.203   0.028  0.868
+Residuals   38  275.9   7.259               </code></pre>
 </div>
 </div>
 <p>No (<em>thatʻs good!</em>)</p>
@@ -962,8 +1074,8 @@ Residuals   38    434   11.42               </code></pre>
 <span id="cb7-2">mod</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-id          19  427.3  22.491   67.72 4.01e-14 ***
-Residuals   20    6.6   0.332                     
+id          19 272.89  14.363   90.91 2.26e-15 ***
+Residuals   20   3.16   0.158                     
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -973,11 +1085,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">s2_within <span class="ot" style="color: #003B4F;">&lt;-</span> ms_within <span class="ot" style="color: #003B4F;">&lt;-</span> mod[[<span class="dv" style="color: #AD0000;">1</span>]][<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">3</span>]</span>
 <span id="cb9-2">s2_within</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3321015</code></pre>
+<pre><code>[1] 0.1579956</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">ms_among <span class="ot" style="color: #003B4F;">&lt;-</span> mod[[<span class="dv" style="color: #AD0000;">1</span>]][<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">3</span>]</span>
 <span id="cb11-2">s2_among <span class="ot" style="color: #003B4F;">&lt;-</span> (ms_among<span class="sc" style="color: #5E5E5E;">-</span>ms_within)<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">2</span></span>
-<span id="cb11-3">ME <span class="ot" style="color: #003B4F;">&lt;-</span> s2_within<span class="sc" style="color: #5E5E5E;">/</span>(s2_within<span class="sc" style="color: #5E5E5E;">+</span>s2_among) <span class="sc" style="color: #5E5E5E;">*</span> <span class="dv" style="color: #AD0000;">100</span></span></code></pre></div>
+<span id="cb11-3">ME <span class="ot" style="color: #003B4F;">&lt;-</span> s2_within<span class="sc" style="color: #5E5E5E;">/</span>(s2_within<span class="sc" style="color: #5E5E5E;">+</span>s2_among) <span class="sc" style="color: #5E5E5E;">*</span> <span class="dv" style="color: #AD0000;">100</span></span>
+<span id="cb11-4">ME</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.176153</code></pre>
+</div>
 </div>
 <p>Not bad. A rule of thumb is that 5% ME is good (95% repeatability). If we want to reduce ME, we can use the average of the two measurements in our analyses.</p>
 
@@ -999,7 +1115,7 @@ Claude, Julien. 2008. <em>Morphometrics with r</em>. 1. Aufl. New York, NY: Spri
   <category>(do) while</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-04-04-measurement-error/index.html</guid>
-  <pubDate>Thu, 30 Mar 2023 04:00:00 GMT</pubDate>
+  <pubDate>Thu, 30 Mar 2023 10:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Intro to Morphometrics</title>
@@ -1259,7 +1375,7 @@ Claude, Julien. 2008. <em>Morphometrics with r</em>. 1. Aufl. New York, NY: Spri
   <category>(do) while</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-03-30-morphometrics/index.html</guid>
-  <pubDate>Thu, 30 Mar 2023 04:00:00 GMT</pubDate>
+  <pubDate>Thu, 30 Mar 2023 10:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Program Flow</title>
@@ -1650,7 +1766,7 @@ font-style: italic;">## Stop loop after 20 iterations</span></span>
   <category>(do) while</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-03-28-program-flow/index.html</guid>
-  <pubDate>Tue, 28 Mar 2023 04:00:00 GMT</pubDate>
+  <pubDate>Tue, 28 Mar 2023 10:00:00 GMT</pubDate>
   <media:content url="https://mbutler808.github.io/images/ProgramFlow_decision_point.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
@@ -1986,7 +2102,7 @@ font-style: italic;">## creates a null (empty) list</span></span>
   <category>for loops</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-03-23-apply/index.html</guid>
-  <pubDate>Thu, 23 Mar 2023 04:00:00 GMT</pubDate>
+  <pubDate>Thu, 23 Mar 2023 10:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Lists and For-Loops</title>
@@ -2345,7 +2461,7 @@ Residuals      1 1.8506  1.8506               </code></pre>
   <category>for loops</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2023-03-23-lists-loops/index.html</guid>
-  <pubDate>Thu, 23 Mar 2023 04:00:00 GMT</pubDate>
+  <pubDate>Thu, 23 Mar 2023 10:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Writing your own functions</title>
@@ -2760,7 +2876,7 @@ see '?methods' for accessing help and source code</code></pre>
   <category>methods</category>
   <category>scope</category>
   <guid>https://mbutler808.github.io/posts/2023-03-21-functions/index.html</guid>
-  <pubDate>Tue, 21 Mar 2023 04:00:00 GMT</pubDate>
+  <pubDate>Tue, 21 Mar 2023 10:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Joining data with dplyr</title>
@@ -3218,7 +3334,7 @@ Questions
   <category>tibble</category>
   <category>pipe</category>
   <guid>https://mbutler808.github.io/posts/2023-03-09-joining-data/index.html</guid>
-  <pubDate>Thu, 09 Mar 2023 05:00:00 GMT</pubDate>
+  <pubDate>Thu, 09 Mar 2023 10:00:00 GMT</pubDate>
   <media:content url="https://d33wubrfki0l68.cloudfront.net/aeab386461820b029b7e7606ccff1286f623bae1/ef0d4/diagrams/join-venn.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -3802,7 +3918,7 @@ Questions
   <category>dplyr</category>
   <category>tibble</category>
   <guid>https://mbutler808.github.io/posts/2023-03-09-reshaping-data/index.html</guid>
-  <pubDate>Thu, 09 Mar 2023 05:00:00 GMT</pubDate>
+  <pubDate>Thu, 09 Mar 2023 10:00:00 GMT</pubDate>
 </item>
 <item>
   <title>A small review of univariate parametric statistics</title>
@@ -4143,7 +4259,7 @@ F-statistic: 64.32 on 3 and 146 DF,  p-value: &lt; 2.2e-16</code></pre>
   <category>ggplot2</category>
   <category>dplyr</category>
   <guid>https://mbutler808.github.io/posts/2023-03-07-univariate/index.html</guid>
-  <pubDate>Tue, 07 Mar 2023 05:00:00 GMT</pubDate>
+  <pubDate>Tue, 07 Mar 2023 10:00:00 GMT</pubDate>
 </item>
 <item>
   <title>A small tour of multivariate analysis</title>
@@ -4575,7 +4691,7 @@ Petal.Width   0.9728120 0.22290236</code></pre>
   <category>statistics</category>
   <category>R</category>
   <guid>https://mbutler808.github.io/posts/2023-03-02-multivariate/index.html</guid>
-  <pubDate>Tue, 28 Feb 2023 05:00:00 GMT</pubDate>
+  <pubDate>Tue, 28 Feb 2023 10:00:00 GMT</pubDate>
   <media:content url="https://mbutler808.github.io/images/skew.gif" medium="image" type="image/gif"/>
 </item>
 <item>
@@ -5781,7 +5897,7 @@ Tip
   <category>tibble</category>
   <category>pipe</category>
   <guid>https://mbutler808.github.io/posts/2023-02-28-dplyr/index.html</guid>
-  <pubDate>Tue, 28 Feb 2023 05:00:00 GMT</pubDate>
+  <pubDate>Tue, 28 Feb 2023 10:00:00 GMT</pubDate>
   <media:content url="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/tidydata_1.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
@@ -6544,7 +6660,7 @@ increasing max.overlaps</code></pre>
   <category>ggplot2</category>
   <category>data visualization</category>
   <guid>https://mbutler808.github.io/posts/2023-02-21-ggplot2/index.html</guid>
-  <pubDate>Tue, 21 Feb 2023 05:00:00 GMT</pubDate>
+  <pubDate>Tue, 21 Feb 2023 10:00:00 GMT</pubDate>
   <media:content url="https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf" medium="image"/>
 </item>
 <item>
@@ -6887,7 +7003,7 @@ Example
   <category>lattice</category>
   <category>data visualization</category>
   <guid>https://mbutler808.github.io/posts/2023-02-16-plotting-systems/index.html</guid>
-  <pubDate>Thu, 16 Feb 2023 05:00:00 GMT</pubDate>
+  <pubDate>Thu, 16 Feb 2023 10:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Tidying and Exploring Data</title>
@@ -7623,8 +7739,8 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
   <category>data structures</category>
   <category>objects</category>
   <guid>https://mbutler808.github.io/posts/2023-02-14-tidying-exploring-data/index.html</guid>
-  <pubDate>Tue, 14 Feb 2023 05:00:00 GMT</pubDate>
-  <media:content url="https://mbutler808.github.io/images/penguins.png" medium="image" type="image/png"/>
+  <pubDate>Tue, 14 Feb 2023 10:00:00 GMT</pubDate>
+  <media:content url="https://mbutler808.github.io/images/penguins.png" medium="image" type="image/png" height="86" width="144"/>
 </item>
 <item>
   <title>Types of Data</title>
@@ -8482,7 +8598,7 @@ attr(,"names")
   <category>data structures</category>
   <category>objects</category>
   <guid>https://mbutler808.github.io/posts/2023-02-09-data/index.html</guid>
-  <pubDate>Thu, 09 Feb 2023 05:00:00 GMT</pubDate>
+  <pubDate>Thu, 09 Feb 2023 10:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Saving your work as R scripts</title>
@@ -8765,7 +8881,7 @@ font-style: italic;">###</span></span></code></pre></div>
   <category>scripts</category>
   <category>reproducibility</category>
   <guid>https://mbutler808.github.io/posts/2023-02-07-scripts/index.html</guid>
-  <pubDate>Tue, 07 Feb 2023 05:00:00 GMT</pubDate>
+  <pubDate>Tue, 07 Feb 2023 10:00:00 GMT</pubDate>
 </item>
 <item>
   <title>What is the question?</title>
@@ -8876,7 +8992,7 @@ Discussion Questions
   <category>questions</category>
   <category>data mining</category>
   <guid>https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/index.html</guid>
-  <pubDate>Tue, 31 Jan 2023 05:00:00 GMT</pubDate>
+  <pubDate>Tue, 31 Jan 2023 10:00:00 GMT</pubDate>
   <media:content url="http://www.posterwire.com/wp-content/images/wizard_of_oz.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>

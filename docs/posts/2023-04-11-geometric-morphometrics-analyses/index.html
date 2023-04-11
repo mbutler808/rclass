@@ -283,6 +283,7 @@ div.csl-indent {
   <ul>
   <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link active" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li><a href="#the-goals-of-geometric-morphometrics" id="toc-the-goals-of-geometric-morphometrics" class="nav-link" data-scroll-target="#the-goals-of-geometric-morphometrics">The goals of Geometric Morphometrics</a></li>
   <li><a href="#size-adjustment-with-procrustes-superimposition" id="toc-size-adjustment-with-procrustes-superimposition" class="nav-link" data-scroll-target="#size-adjustment-with-procrustes-superimposition">Size Adjustment with Procrustes Superimposition</a>
   <ul class="collapse">
   <li><a href="#centroid" id="toc-centroid" class="nav-link" data-scroll-target="#centroid">Centroid</a></li>
@@ -295,6 +296,7 @@ div.csl-indent {
   <li><a href="#built-in-example" id="toc-built-in-example" class="nav-link" data-scroll-target="#built-in-example">Built-in Example</a></li>
   </ul></li>
   <li><a href="#more-geomorphic-morphometrics-software" id="toc-more-geomorphic-morphometrics-software" class="nav-link" data-scroll-target="#more-geomorphic-morphometrics-software">More geomorphic morphometrics software</a></li>
+  <li><a href="#more-reading" id="toc-more-reading" class="nav-link" data-scroll-target="#more-reading">More reading</a></li>
   </ul>
 </nav>
 </nav>
@@ -311,6 +313,7 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>References for this Material:</p>
 <ul>
+<li>The authors of the <code>geomorph</code> package for developing many useful vignettes (Antigoni Kaliontzopoulou) and sample datasets which is drawn upon below</li>
 <li>Bardua et al (2019) A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses<a href="https://academic.oup.com/iob/article/1/1/obz016/5526881" class="uri">https://academic.oup.com/iob/article/1/1/obz016/5526881</a></li>
 <li><a href="https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf">Emma Sherratʻs quick guide to Geomorph</a></li>
 </ul>
@@ -335,6 +338,14 @@ Learning objectives
 </ul>
 </div>
 </div>
+</section>
+<section id="the-goals-of-geometric-morphometrics" class="level1">
+<h1>The goals of Geometric Morphometrics</h1>
+<p>From <span class="citation" data-cites="MacLeod:2010">(<a href="#ref-MacLeod:2010" role="doc-biblioref">MacLeod 2010</a>)</span>:</p>
+<blockquote class="blockquote">
+<p><strong>The ultimate goals for any geometric morphometric analysis</strong> - to define a mathematical space in which we can compare sets of landmark configurations that (1) ordinates shapes on the basis of their similarity, (2) treats these configurations as a <strong>whole entity</strong> rather than an accumulation of <em>independent parts</em>, (3) respects the conventions of the Kendall shape space, (4) supports shape modelling, and (5) is stable in the face of minor changes to the sample and/or reference shape.</p>
+</blockquote>
+<p>What is a Kendall shape space, you ask? A shape space or coordinate system is used to describes shapes, and importantly, be used to understand differences between shapes. Kendallʻs shape space describes curves and local approxmation to curves using tangents <span class="citation" data-cites="Klingenberg:2020">(<a href="#ref-Klingenberg:2020" role="doc-biblioref">Klingenberg 2020</a>)</span>. For this lesson just remember that shapes are connected by geometries, which we can describe mathematically. This makes it much easier to compare the major differences between multidimensional shapes.</p>
 </section>
 <section id="size-adjustment-with-procrustes-superimposition" class="level1">
 <h1>Size Adjustment with Procrustes Superimposition</h1>
@@ -374,7 +385,7 @@ C_{y} = \frac{Y_1+Y_2+Y_3 ... + Y_p}{p}
 <p>The mathematics of these transofrmations come from basic linear algebra operations on matrices, which are beyond the scope of the class, but to understand what is happening we can analogize it to univariate arithmetic.</p>
 <p><em>Scaling</em> is like dividing each variable by a size variable to put all of the individuals on the same baseline with regard to size (magnitude).</p>
 <p><em>Translation</em> brings the centers of all of the landmarks into alignment. Think of a situation where we measured the length of specimens according to wherever they fell within the picture frame, for example if one specimen started at 2 and extended to 10, and another started at 6 and extended to 12. We could translate (or slide) each of these to place their midpoint at zero by subtracting the mean value from each of their endpoints. For the first specimen, we would subtract 6, translating the specimen from (2,10) to (-4,4), and for the second we would subtract 9, tanslating the specimen from (6,12) to (-3,3).</p>
-<p><em>Rotation</em> is an angular rotation to bring a 2 or 3D object into a common orientation. For a more thorough discussion please see <span class="citation" data-cites="Zelditch:2004">(<a href="#ref-Zelditch:2004" role="doc-biblioref">Zelditch 2004</a>)</span>.</p>
+<p><em>Rotation</em> is an angular rotation to bring a 2 or 3D object into a common orientation. For a more thorough discussion please see <span class="citation" data-cites="Zelditch:2004">(<a href="#ref-Zelditch:2004" role="doc-biblioref"><strong>Zelditch:2004?</strong></a>)</span>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/Procrustes_superimposition.png" class="img-fluid figure-img"></p>
@@ -401,13 +412,21 @@ From the documentation for <code>gpagen()</code> in <code>geomorph</code>:
 <h1>Geomorph Package</h1>
 <section id="data-structures" class="level3">
 <h3 class="anchored" data-anchor-id="data-structures">Data Structures</h3>
-<p>The package <code>geomorph</code> is written to work with standard geomorphic morphometrics data file types such as TPS and NTS, as well as others.</p>
+<p>The package <code>geomorph</code> is written to work with standard geomorphic morphometrics data file types such as TPS and NTS, as well as others <span class="citation" data-cites="Adams:2022">Baken et al. (<a href="#ref-Baken:2021" role="doc-biblioref">2021</a>)</span>.</p>
 <p><code>readland.tps()</code> reads morphometric data in TPS format. It returns an array for storing landmark data: <em>p</em> landmarks X <em>k</em> dimensions X <em>N</em> specimens</p>
 <p>The third dimension of this array contains names for each specimen, which are obtained from the image names in the <em>.tps</em> file.</p>
 </section>
 <section id="built-in-example" class="level3">
 <h3 class="anchored" data-anchor-id="built-in-example">Built-in Example</h3>
-<p>Letʻs look again at the built-in dataset <code>plethodon</code> that comes with <code>geomorph</code>. It has skull landmark data for 40 specimens of two species of plethdon salamanders. <code>plethodon</code> is a list.</p>
+<p>Letʻs look again at the built-in dataset <code>plethodon</code> that comes with <code>geomorph</code>. It has skull landmark data for 40 specimens of two species of plethdon salamanders <span class="citation" data-cites="Adams:2004">(<a href="#ref-Adams:2004" role="doc-biblioref">Dean C. Adams 2004</a>)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/plethodonjordani.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption"><em>Plethodon jordani</em>, Photo by Kevin Stohlgren</figcaption><p></p>
+</figure>
+</div>
+<p><a href="https://herpsofnc.org/jordans-salamander/">Source: Ambibians and Reptiles of North Carolina website</a></p>
+<p>The dataset <code>plethodon</code> is a list.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(geomorph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -443,7 +462,8 @@ From the documentation for <code>gpagen()</code> in <code>geomorph</code>:
 <pre><code>[1] 12  2 40</code></pre>
 </div>
 </div>
-<p>The landmarks are in <code>plethodon$land</code>. There are twenty of each species, and from the dimensions of <code>plethodon$land</code> we see that each of the 40 specimens has 12 landmarks in two dimensions. <code>plotAllSpecimens</code> plots the coordinates of all samples, so we can start to look at variation.</p>
+<p>The landmarks are in <code>plethodon$land</code>. There are twenty of each species, and from the dimensions of <code>plethodon$land</code> we see that each of the 40 specimens has 12 landmarks in two dimensions.</p>
+<p><code>plotAllSpecimens</code> plots the coordinates of all samples, so we can start to look at variation.</p>
 <section id="shape-general-procrustes-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="shape-general-procrustes-analysis">Shape: General Procrustes Analysis</h4>
 <div class="cell">
@@ -599,6 +619,29 @@ Cumulative Proportion  9.963576e-01 9.981901e-01 9.992469e-01 1.000000e+00</code
 <section id="statistical-test-for-differences-among-species-and-sites" class="level4">
 <h4 class="anchored" data-anchor-id="statistical-test-for-differences-among-species-and-sites">Statistical test for differences among species and sites</h4>
 <p>We can test the shape variables (GPA coordinates) as explanatory variables for phenotypic varation. Because there are multiple pheontypic (Y) variables, we use MANOVA (multivariate ANOVA).</p>
+<p><code>geomorph</code> has custom linear model functions that use <strong>randomized residuals</strong> (permutation test) to assess linear model fits on the high-dimensional geomorphic morphometric data <span class="citation" data-cites="Collyer:2018">Collyer and Adams (<a href="#ref-Collyer:2021" role="doc-biblioref">2021</a>)</span> (rather than assume the data come from a multivariate normal distribution).</p>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>procD.lm</code></td>
+<td>Procrustes ANOVA/regression for Procrustes shape variables</td>
+</tr>
+<tr class="even">
+<td><code>procD.pgls</code></td>
+<td>Phylogenetic version of <code>procD.lm</code></td>
+</tr>
+</tbody>
+</table>
 <p><code>geomorph</code> has a helper function <code>geomorph.data.frame</code> that creates an object of class <code>geomorph.data.frame</code> from your procrustes shape coordinates that includes the centroid size (<code>Csize</code>), and allows you to associate your metadata such as species and site together with the shape data. The idea is keep it organized in a data-frame like manner, even though it is a list (it makes sure that all the elements have the same length).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>gdf <span class="ot">&lt;-</span><span class="fu">geomorph.data.frame</span>(Y.gpa<span class="sc">$</span>coords)</span>
@@ -692,7 +735,13 @@ Call: procD.lm(f1 = coords ~ Csize + species * site, data = gdf)</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>We can see that most of the shape change between <em>P. jordanii</em> and the mean shape is around the jaw hinge and top of the skull near the orbit (where the eyes would be).</p>
+<p>We can see that most of the shape change between <em>P. jordanii</em> and the mean shape is around the jaw hinge (points 1,2) and top of the skull (post cranial, points 11,12). Compare to the sketch of the landmark coordinates.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/plethodonlandmarks.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Skull landmarks from <span class="citation" data-cites="Adams:2004">Dean C. Adams (<a href="#ref-Adams:2004" role="doc-biblioref">2004</a>)</span></figcaption><p></p>
+</figure>
+</div>
 <p>Can you do the same but comparing the mean of the two species against each other?</p>
 </section>
 </section>
@@ -700,14 +749,57 @@ Call: procD.lm(f1 = coords ~ Csize + species * site, data = gdf)</code></pre>
 <section id="more-geomorphic-morphometrics-software" class="level1">
 <h1>More geomorphic morphometrics software</h1>
 <p><a href="https://academic.oup.com/view-large/223239151" class="uri">https://academic.oup.com/view-large/223239151</a></p>
+</section>
+<section id="more-reading" class="level1">
+<h1>More reading</h1>
+<ul>
+<li><p><span class="citation" data-cites="Bookstein:1992">(<a href="#ref-Bookstein:1992" role="doc-biblioref">Bookstein 1992</a>)</span> Morphometric Tools for Landmark Data: Geometry and Biology</p></li>
+<li><p><span class="citation" data-cites="Webster:2010">(<a href="#ref-Webster:2010" role="doc-biblioref">Webster and Sheets 2010</a>)</span> A Practical Introduction to Landmark-Based Geometric Morphometrics</p></li>
+<li><p><span class="citation" data-cites="Bardua:2019">(<a href="#ref-Bardua:2019" role="doc-biblioref">Bardua et al. 2019</a>)</span> A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses</p></li>
+<li><p><span class="citation" data-cites="Savriama:2018">(<a href="#ref-Savriama:2018" role="doc-biblioref">Savriama 2018</a>)</span> A Step-by-Step Guide for Geometric Morphometrics of Floral Symmetry</p></li>
+<li><p><span class="citation" data-cites="Zelditch:2012">(<a href="#ref-Zelditch:2012" role="doc-biblioref">Zelditch, Swiderski, and Sheets 2012</a>)</span> Geometric morphometrics for biologists a primer (the green book)</p></li>
+</ul>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-Zelditch:2004" class="csl-entry" role="doc-biblioentry">
-Zelditch, Miriam. 2004. <em>Geometric Morphometrics for Biologists a Primer</em>. Amsterdam ; Elsevier Academic Press.
+<div id="ref-Adams:2022" class="csl-entry" role="doc-biblioentry">
+Adams, D. C., M. L. Collyer, A. Kaliontzopoulou, and E. K. Baken. 2022. <span>“Geomorph: Software for Geometric Morphometric Analyses. R Package Version 4.0.4.”</span> <a href="https://cran.r-project.org/package=geomorph">https://cran.r-project.org/package=geomorph</a>.
+</div>
+<div id="ref-Adams:2004" class="csl-entry" role="doc-biblioentry">
+Adams, Dean C. 2004. <span>“Character Displacement via Aggressive Interference in Appalachian Salamanders.”</span> <em>Ecology</em> 85 (10): 2664–70. <a href="http://www.jstor.org/stable/3450422">http://www.jstor.org/stable/3450422</a>.
+</div>
+<div id="ref-Baken:2021" class="csl-entry" role="doc-biblioentry">
+Baken, E. K., M. L. Collyer, A. Kaliontzopoulou, and D. C. Adams. 2021. <span>“Geomorphic V4.0 and gmShiny: Enhanced Analytics and a New Graphical Interface for a Comprehensive Morphometric Experience.”</span> <em>Methods in Ecology and Evolution</em>.
+</div>
+<div id="ref-Bardua:2019" class="csl-entry" role="doc-biblioentry">
+Bardua, C, R N Felice, A Watanabe, A -C Fabre, and A Goswami. 2019. <span>“<span class="nocase">A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses</span>.”</span> <em>Integrative Organismal Biology</em> 1 (1). <a href="https://doi.org/10.1093/iob/obz016">https://doi.org/10.1093/iob/obz016</a>.
+</div>
+<div id="ref-Bookstein:1992" class="csl-entry" role="doc-biblioentry">
+Bookstein, Fred L. 1992. <em>Morphometric Tools for Landmark Data: Geometry and Biology</em>. Cambridge: Cambridge University Press. <a href="https://doi.org/DOI: 10.1017/CBO9780511573064">https://doi.org/DOI: 10.1017/CBO9780511573064</a>.
+</div>
+<div id="ref-Collyer:2018" class="csl-entry" role="doc-biblioentry">
+Collyer, M. L., and D. C. Adams. 2018. <span>“<span>RRPP</span>: An r Package for Fitting Linear Models to High‐dimensional Data Using Residual Randomization.”</span> <em>Methods in Ecology and Evolution</em>.
+</div>
+<div id="ref-Collyer:2021" class="csl-entry" role="doc-biblioentry">
+———. 2021. <span>“<span>RRPP</span>: Linear Model Evaluation with Randomized Residuals in a Permutation Procedure, r Package Version 1.1.2.”</span> <a href="https://cran.r-project.org/package=RRPP">https://cran.r-project.org/package=RRPP</a>.
+</div>
+<div id="ref-Klingenberg:2020" class="csl-entry" role="doc-biblioentry">
+Klingenberg, Christian Peter. 2020. <span>“Walking on Kendall’s Shape Space: Understanding Shape Spaces and Their Coordinate Systems.”</span> <em>Evolutionary Biology</em> 47 (4): 334–52. <a href="https://doi.org/10.1007/s11692-020-09513-x">https://doi.org/10.1007/s11692-020-09513-x</a>.
+</div>
+<div id="ref-MacLeod:2010" class="csl-entry" role="doc-biblioentry">
+MacLeod, Norm. 2010. <span>“PalaeoMath: Part 21 - Principal Warps, Relative Warps, and Procrustes PCA.”</span> Newsletter 75. <em>PaleoMath 101</em>. The Paleontological Association.
+</div>
+<div id="ref-Savriama:2018" class="csl-entry" role="doc-biblioentry">
+Savriama, Yoland. 2018. <span>“A Step-by-Step Guide for Geometric Morphometrics of Floral Symmetry.”</span> <em>Frontiers in Plant Science</em> 9. <a href="https://doi.org/10.3389/fpls.2018.01433">https://doi.org/10.3389/fpls.2018.01433</a>.
+</div>
+<div id="ref-Webster:2010" class="csl-entry" role="doc-biblioentry">
+Webster, Mark, and H. David Sheets. 2010. <span>“A Practical Introduction to Landmark-Based Geometric Morphometrics.”</span> <em>The Paleontological Society Papers</em> 16: 163–88. <a href="https://doi.org/DOI: 10.1017/S1089332600001868">https://doi.org/DOI: 10.1017/S1089332600001868</a>.
+</div>
+<div id="ref-Zelditch:2012" class="csl-entry" role="doc-biblioentry">
+Zelditch, Miriam Leah, Donald L. Swiderski, and H. David Sheets. 2012. <em>Geometric Morphometrics for Biologists a Primer</em>. Amsterdam ; Elsevier Academic Press.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
