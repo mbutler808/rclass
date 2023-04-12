@@ -10,7 +10,272 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023</description>
 <generator>quarto-1.2.313</generator>
-<lastBuildDate>Tue, 11 Apr 2023 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 13 Apr 2023 10:00:00 GMT</lastBuildDate>
+<item>
+  <title>Setting Up for IQTREE2</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2023-04-13-iqtree-setup/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="acknowledgements" class="level3">
+<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>References for this Material:</p>
+<ul>
+<li>The Gene Tree species tree tutorial by Minh Bui <a href="http://www.iqtree.org/workshop/molevol2022" class="uri">http://www.iqtree.org/workshop/molevol2022</a></li>
+<li>Many pages on Stack Overflow</li>
+</ul>
+</section>
+<section id="learning-objectives" class="level1">
+<h1>Learning objectives</h1>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Understand where user-installed software goes on your computer</li>
+<li>Be able to install software and update the search paths to run from the command line</li>
+<li>Run iqtree2 from the command line on your own computer</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>In the next session we will learn how to use <a href="www.iqtree.org">IQTREE2</a> to infer phylogenetic trees (both species trees and gene trees), and compute several concordance factors. Please follow these instructions to install all of the software and ensure it is in working order before the next class. We will use R to read in and explore the output from IQTREE.</p>
+</section>
+<section id="setup-iqtree-software" class="level1">
+<h1>Setup iqtree software</h1>
+<ul>
+<li>Download <a href="https://github.com/iqtree/iqtree2/releases/tag/v2.1.2">iqtree version 2.1.2</a> and install the binary for your platform <em>following the instructions below</em>.</li>
+<li>As of this writing, IQTREE2 v2.1.2 is the latest stable release version, the preview versions (e.g., 2.2.2.3) are in beta testing.</li>
+</ul>
+<section id="windows-users" class="level3">
+<h3 class="anchored" data-anchor-id="windows-users">Windows users</h3>
+<p>Move the IQTREE2 directory to <code>C:\Program Files</code>, this is where your software applicaiton files are stored. You can move it using your GUI, or using Git-Bash. Then update your computerʻs search paths so that you can run iqtree2 from the command line from any directory.</p>
+<p><strong>Using the GUI</strong>, Move this directory to <code>C:\Program Files</code>, so the path to the iqtree binary should be <code>C:\Program Files\iqtree-2.1.2-Windows\bin\iqtree2.exe</code>. We are writing to Program Files, which is a protected folder so it will ask you to grant Adminstrator priviledges.</p>
+<p>OR - <strong>Using Git-Bash</strong>:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Installing Git-Bash
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you need to install Git-Bash, download it from here: <a href="https://gitforwindows.org" class="uri">https://gitforwindows.org</a> <strong>Choose these components during installation:</strong></p>
+<ul>
+<li>Windows Explorer Integration
+<ul>
+<li>Git Bash Here</li>
+<li>Git GUI Here</li>
+</ul></li>
+<li>Git LFS</li>
+<li>Associate .git* configuration files with the default text editor</li>
+<li>Associate .sh files to be run with Bash</li>
+<li>Add a Git Bash profile to Windows Terminal</li>
+</ul>
+</div>
+</div>
+<p>To write files to the <code>C:\Program Files\</code> directory, you will have to <strong>run Git-Bash as administrator</strong>, so do the following:</p>
+<ol type="1">
+<li>Click the Windows Start button and type <code>Git-Bash</code>.</li>
+<li>You should see several options under <code>Git-Bash</code> on the right. Click on “Run as administrator”. If you donʻt see the options, click on the little “&gt;” to the right of Git Bash, and this sub menu should appear. Use “Run as administrator”.</li>
+<li>Execute the bash commands below</li>
+</ol>
+<section id="using-git-bash" class="level4">
+<h4 class="anchored" data-anchor-id="using-git-bash">Using git-bash:</h4>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Git-bash</strong></pre>
+</div>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="bu" style="color: null;">cd</span> Downloads</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;">ls</span></span></code></pre></div>
+</div>
+<p>Check if the directory is there an unzipped. If it is zipped, run:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Git-bash</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;">unzip</span> iqtree-2.1.2-Windows.zip</span></code></pre></div>
+</div>
+<p>Move to files to the application folder. Be sure to use <strong>double quotes</strong> around the path because of the space.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Git-bash</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;">mv</span> iqtree-2.1.2-Windows <span class="st" style="color: #20794D;">"/C/Program Files/"</span></span></code></pre></div>
+</div>
+<p>Finally, add the path to the binary to the bash search path:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Git-bash</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="bu" style="color: null;">export</span> <span class="va" style="color: #111111;">PATH</span><span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">$PATH</span>:<span class="st" style="color: #20794D;">"/C/Program Files/iqtree-2.1.2-Windows/bin"</span></span></code></pre></div>
+</div>
+<p>Now you can just type <code>iqtree2</code> from Git-bash and it should run iqtree from any folder. If you type <code>$PATH</code> at the command line, you should see the path you just added along with paths to many other software applications that are installed.</p>
+</section>
+</section>
+<section id="mac-users" class="level3">
+<h3 class="anchored" data-anchor-id="mac-users">Mac users</h3>
+<p>Open a terminal and type <code>$PATH</code>. You will see the search paths that your computer looks through when you execute commands.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="va" style="color: #111111;">$PATH</span></span></code></pre></div>
+</div>
+<p>You will see the following paths, separated by <code>:</code>, along with many others. These are the directories that your computer searches through when you type commands on the command line searching for a match to the software you are executing.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;">/opt/local/bin:/opt/local/sbin:/usr/local/bin:</span></span></code></pre></div>
+</div>
+<p>If we save (a link to) the binary for IQTREE2 <code>/opt/local/bin</code>, then we can execute the command <code>iqtree2</code> from any directory without worrying about specifying the path to the applicaiton.</p>
+<p>Check out the directory <code>/opt/local/</code>. List the details of the <code>bin</code> subdirectory and notice that some of the applicaitons saved there are actually symbolic links</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="bu" style="color: null;">cd</span> /opt/local/bin</span>
+<span id="cb7-2"><span class="fu" style="color: #4758AB;">ls</span> <span class="at" style="color: #657422;">-la</span></span></code></pre></div>
+</div>
+<p>You will see something like this, along with many other binaries:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;">lrwxr-xr-x</span>    1 root      wheel        40 Feb  7 09:30 c_rehash <span class="at" style="color: #657422;">-</span><span class="op" style="color: #5E5E5E;">&gt;</span> /opt/local/libexec/openssl3/bin/c_rehash</span>
+<span id="cb8-2"><span class="ex" style="color: null;">-rwxr-xr-x</span>    1 macports  wheel  10425872 Dec 10 22:28 cmake</span></code></pre></div>
+</div>
+<p>In the example above, <code>c_rehash</code> is a sybmolic link that is pointing to the location of the actual location of the binary which is in the a program directory within the <code>libexec/</code> subdirectory of <code>/opt/local</code>. On the other hand, <code>cmake</code> is the binary itself.</p>
+<p>Letʻs move the <strong>iqtree2</strong> directory to <code>/opt/local/libexec/</code>. Then you will have to make a symbolic link to iqtree2 in <code>/opt/local/bin</code>. Start by downloading the zipped directory. It should automatically unzip. Assuming it downloaded to your Downloads folder, open a terminal and issue the following commands:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="bu" style="color: null;">cd</span> ~</span>
+<span id="cb9-2"><span class="fu" style="color: #4758AB;">ls</span> Downloads</span></code></pre></div>
+</div>
+<p>You should see the <code>iqtree-2.1.2-MacOSX</code> folder inside of your Downloads folder. We will now move the iqtree folder to the place where user installed software is saved. You will probably be denied permission to just use <code>mv folder_from folder_to</code> because it is in a protected place on your harddrive, so you will have to use <code>sudo</code> for <strong>superuser do</strong>, and it will ask for your computer password to confirm.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="fu" style="color: #4758AB;">sudo</span> mv Downloads/iqtree-2.1.2-MacOSX /opt/local/libexec</span></code></pre></div>
+</div>
+<p>The directory should now be there:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="fu" style="color: #4758AB;">ls</span> /opt/local/libexec</span></code></pre></div>
+</div>
+<p>Now make a symbolic link in the <code>/opt/local/bin</code> folder to your iqtree executable: <code>ln -s /path/to/original /path/to/link</code></p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="fu" style="color: #4758AB;">ln</span> <span class="at" style="color: #657422;">-s</span> /opt/local/libexec/iqtree-2.1.2-MacOSX/bin/iqtree2 /opt/local/bin/iqtree2</span></code></pre></div>
+</div>
+<p>If you get a permission denied, add “sudo” in front of the line to create a symbolic link. After you do that, you can just run iqtree2 on the command line from directory and it will find the app along your computerʻs searchpath. Now type <code>iqtree2</code> on the command line. You should see a message like this with nine examples:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="ex" style="color: null;">IQ-TREE</span> multicore version 2.1.2 COVID-edition for Mac OS X 64-bit built Oct 22 2020</span>
+<span id="cb13-2"><span class="ex" style="color: null;">Developed</span> by Bui Quang Minh, James Barbetti, Nguyen Lam Tung,</span>
+<span id="cb13-3"><span class="ex" style="color: null;">Olga</span> Chernomor, Heiko Schmidt, Dominik Schrempf, Michael Woodhams.</span>
+<span id="cb13-4"></span>
+<span id="cb13-5"><span class="ex" style="color: null;">Command-line</span> examples <span class="er" style="color: #AD0000;">(</span><span class="ex" style="color: null;">replace</span> <span class="st" style="color: #20794D;">'iqtree2 ...'</span> by actual path to executable<span class="kw" style="color: #003B4F;">)</span><span class="bu" style="color: null;">:</span></span>
+<span id="cb13-6"></span>
+<span id="cb13-7"><span class="ex" style="color: null;">1.</span> Infer maximum-likelihood tree from a sequence alignment <span class="er" style="color: #AD0000;">(</span><span class="ex" style="color: null;">example.phy</span><span class="kw" style="color: #003B4F;">)</span></span>
+<span id="cb13-8">   <span class="ex" style="color: null;">with</span> the best-fit model automatically selected by ModelFinder:</span>
+<span id="cb13-9">     <span class="ex" style="color: null;">iqtree2</span> <span class="at" style="color: #657422;">-s</span> example.phy</span>
+<span id="cb13-10"></span>
+<span id="cb13-11"><span class="ex" style="color: null;">2.</span> Perform ModelFinder without subsequent tree inference:</span>
+<span id="cb13-12">     <span class="ex" style="color: null;">iqtree2</span> <span class="at" style="color: #657422;">-s</span> example.phy <span class="at" style="color: #657422;">-m</span> MF</span>
+<span id="cb13-13">   <span class="kw" style="color: #003B4F;">(</span><span class="ex" style="color: null;">use</span> <span class="st" style="color: #20794D;">'-m TEST'</span> to resemble jModelTest/ProtTest<span class="kw" style="color: #003B4F;">)</span></span>
+<span id="cb13-14"></span>
+<span id="cb13-15"><span class="ex" style="color: null;">...</span></span></code></pre></div>
+</div>
+</section>
+<section id="multiple-installations-of-iqtree2" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-installations-of-iqtree2">Multiple installations of iqtree2</h2>
+<p>If you want, you can install multiple versions of iqtree. Just be sure to give the binary different names. For example if you install iqtree v2.2.2.3, (latest pre-release version) you could name that binary <code>iqtree2.2.2.3</code> or <code>iqtree2beta</code> etc. so as to have one unique name per software application.</p>
+</section>
+</section>
+<section id="setup-your-tutorial-folder" class="level1">
+<h1>Setup your Tutorial Folder</h1>
+<p>Make a folder for this exercise <code>TurtleTutorial</code> somewhere convenient (in your <code>rclass</code> folder?).</p>
+<ul>
+<li>Download these files into it:
+<ul>
+<li><a href="http://www.iqtree.org/workshop/data/turtle.fa">turtle.fa</a> : A sequence alignment (in FASTA format) which is a subset of the original dataset used to assess the phylogenetic position of Turtles relative to Crocodiles and Birds <a href="https://doi.org/10.1186/1741-7007-10-65">Chiari et al., 2012</a>.</li>
+<li><a href="http://www.iqtree.org/workshop/data/turtle.nex">turtle.nex</a> : The partition file (in NEXUS format) defining 29 genes, which are a subset of the original dataset of 248 genes.</li>
+</ul></li>
+<li>The R script <a href="../../code/concordance.R"><code>concordance.R</code></a></li>
+</ul>
+</section>
+<section id="test-your-iqtree-installation" class="level1">
+<h1>Test your IQTREE installation</h1>
+<p>From a terminal window, navigate to your <code>TurtleTutorial</code> directory and check if iqtree works:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><span class="ex" style="color: null;">iqtree2</span></span>
+<span id="cb14-2"><span class="ex" style="color: null;">iqtree2</span> <span class="at" style="color: #657422;">-s</span> turtle.fa</span></code></pre></div>
+</div>
+<p>It should begin running iqtree and you will see messages during execution.</p>
+</section>
+<section id="r-packages-you-will-need" class="level1">
+<h1>R packages you will need</h1>
+<ul>
+<li>Start up R and install any necessary packages that you need to install:
+<ul>
+<li><code>viridis</code></li>
+<li><code>GGally</code></li>
+<li><code>entropy</code></li>
+<li><code>ggplot2</code></li>
+<li><code>dplyr</code></li>
+<li><code>ggrepel</code></li>
+</ul></li>
+</ul>
+<p>You are all set to use <strong>iqtree2</strong>!</p>
+</section>
+<section id="iqtree-documentation" class="level1">
+<h1>IQTREE documentation</h1>
+<ul>
+<li><p>[IQTREE quickstart]](http://www.iqtree.org/doc/Quickstart)</p></li>
+<li><p>IQTREE documentation <a href="http://www.iqtree.org/doc/" class="uri">http://www.iqtree.org/doc/</a></p></li>
+<li><p>Command Line Reference (when you get more familiar with it) <a href="http://www.iqtree.org/doc/Command-Reference" class="uri">http://www.iqtree.org/doc/Command-Reference</a></p></li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>module 7</category>
+  <category>week 13</category>
+  <category>iqtree2</category>
+  <category>phylogenetic inference</category>
+  <category>command line</category>
+  <guid>https://mbutler808.github.io/posts/2023-04-13-iqtree-setup/index.html</guid>
+  <pubDate>Thu, 13 Apr 2023 10:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Procrustes Superimposition and Analyses</title>
   <dc:creator>Marguerite Butler</dc:creator>
@@ -8885,118 +9150,6 @@ font-style: italic;">###</span></span></code></pre></div>
   <category>reproducibility</category>
   <guid>https://mbutler808.github.io/posts/2023-02-07-scripts/index.html</guid>
   <pubDate>Tue, 07 Feb 2023 10:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>What is the question?</title>
-  <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<!-- Add interesting quote -->
-<section id="pre-lecture-materials" class="level1">
-<h1>Pre-lecture materials</h1>
-<section id="read-ahead" class="level2">
-<h2 class="anchored" data-anchor-id="read-ahead">Read ahead</h2>
-<ul>
-<li>Take a look at the data in this recent paper: <a href="https://doi.org/10.1073/pnas.2216789120">Winchell et. al, (2023)</a> Genome-wide parallelism underlies contemporary adaptation in urban lizards. PNAS 120 (3) e2216789120 <strong>Check SLACK channel for pdf</strong></li>
-</ul>
-</section>
-<section id="watch-ahead-a-motivating-example-for-the-whole-endeavor-of-data-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="watch-ahead-a-motivating-example-for-the-whole-endeavor-of-data-analysis">Watch ahead: A Motivating Example for the whole endeavor of data analysis</h2>
-<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
-<p>In the age of Artificial Intelligence (AI), we have many data-intensive tools available. But can we just throw more data at a problem to get better outcomes? Please watch this thought provoking short talk by <a href="https://www.ted.com/speakers/sebastian_wernicke">Sebastian Wernicke</a> “How to use data to make a hit TV show”… What goes wrong when we look for decisions in the wrong places 🌴</p>
-<div style="position:relative;height:0;padding-bottom:56.25%">
-<iframe src="https://embed.ted.com/talks/lang/en/sebastian_wernicke_how_to_use_data_to_make_a_hit_tv_show" width="854" height="480" style="position:absolute;left:0;top:0;width:100%;height:100%" frameborder="0" scrolling="no" allowfullscreen="">
-</iframe>
-</div>
-</section>
-</section>
-<section id="can-we-design-a-hit-tv-show-or-anything-of-importance-with-data" class="level1">
-<h1>Can we design a hit TV show (or anything of importance) with data?</h1>
-<p>The Wizard of Oz (1939) starring Judy Garland was the first major motion picture in color via the complex Technicolor process. It was a tremendous success. I remember my father telling me about what a huge event it was when it came to his small town. Yet, would it have been an inevitable success? Even at that time, there were many other movies, and there were a lot of doubts about whether the American audience would accept the fantasy story, the length, the musical choices, the actors, and so many other variables. Even though the movie landscape was much simpler then, it was still multivariate.</p>
-<div id="fig-oz" class="quarto-layout-panel">
-<figure class="figure">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/http:/www.posterwire.com/wp-content/images/wizard_of_oz.jpg" class="img-fluid figure-img" width="300"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/https:/upload.wikimedia.org/wikipedia/commons/d/d6/The_Wizard_of_Oz_Judy_Garland_Terry_1939.jpg" id="fig-judy" class="img-fluid figure-img" width="300"><a href="">Judy Garland and Dorothy, and Toto, NBC television network</a></p>
-</div>
-</div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: <a href="https://en.wikipedia.org/wiki/The_Wizard_of_Oz_(1939_film)">The Wizard of Oz, MGM 1939</a></figcaption><p></p>
-</figure>
-</div>
-<p>Yet there must be something to the analysis of data into human behavior. Internet companies sell our web browsing history, there are still opinion polls, demographic surveys, and the like. Do these types of data differ? Can we do better?</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Questions for “How to use data to make a hit TV show”
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>The first study produced a TV show that was perfectly average. How do you imagine they approached the data, and what might have been the difference with the study that led to the hit show?</li>
-<li>How do shows become hits? Is the underlying mechanim complex? Or is the predictive data complex? or both? What contributes to complexity?</li>
-<li>What is a good role for data analysis in this type of question?</li>
-<li>Can we really “let the data tell us the answer”? What does such a statement leave unstated?</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="genome-wide-parallelism-underlies-contemporary-adaptation-in-urban-lizards" class="level1">
-<h1>Genome-wide parallelism underlies contemporary adaptation in urban lizards</h1>
-<p>This is a hot-off-the-presses study into a hot topic.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Discussion Questions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>What are the questions in this study?</li>
-<li>What are the types of data?</li>
-<li>At the most basic level, what are the questions in the data analysis?</li>
-</ul>
-</div>
-</div>
-<p>When we break it down, what can we do with data?</p>
-<ul>
-<li>Same vs.&nbsp;different
-<ul>
-<li>Similar vs.&nbsp;less similar</li>
-</ul></li>
-<li>Moving in the same direction</li>
-<li>Are groupings real?</li>
-<li>Larger vs.&nbsp;smaller
-<ul>
-<li>Predictive order</li>
-</ul></li>
-</ul>
-<p>Can we identify these data comparisons in <a href="https://doi.org/10.1073/pnas.2216789120">Winchell et. al, (2023)</a>?</p>
-
-
-</section>
-
- ]]></description>
-  <category>module 2</category>
-  <category>week 3</category>
-  <category>data</category>
-  <category>questions</category>
-  <category>data mining</category>
-  <guid>https://mbutler808.github.io/posts/2023-01-31-what-is-the-question/index.html</guid>
-  <pubDate>Tue, 31 Jan 2023 10:00:00 GMT</pubDate>
-  <media:content url="http://www.posterwire.com/wp-content/images/wizard_of_oz.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>
