@@ -176,6 +176,7 @@ Then we calculate the ratio of this value to the total MS:
 __((MS(id) – MS(id:photo:rep))/2 ) / (MS(id)+MS(id:photo)+MS(id:photo:rep))__ 
 </center>  
 
+
 The result is the __repeatability__, which in good circumstances is somewhere above 0.95; and thus 5% __measurement error__.
 
 

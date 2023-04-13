@@ -277,6 +277,562 @@ Installing Git-Bash
   <pubDate>Thu, 13 Apr 2023 10:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>Phylogenetic Inference with IQTREE2</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2023-04-13-iqtree-phylogenetics/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="acknowledgements" class="level3">
+<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>References for this Material:</p>
+<ul>
+<li><p>The Gene Tree species tree tutorial by Bui Minh <a href="http://www.iqtree.org/workshop/molevol2022" class="uri">http://www.iqtree.org/workshop/molevol2022</a>. Please see for more information.</p></li>
+<li><p>And Rob Lanfearʻs excellent blog post about concordance factors <a href="http://www.robertlanfear.com/blog/files/concordance_factors.html" class="uri">http://www.robertlanfear.com/blog/files/concordance_factors.html</a> with R code to help with analysis.</p></li>
+<li><p>See Methods Paper: Bui Quang Minh, Matthew W Hahn, Robert Lanfear New Methods to Calculate Concordance Factors for Phylogenomic Datasets Molecular Biology and Evolution, Volume 37, Issue 9, September 2020, Pages 2727–2733, <a href="https://doi.org/10.1093/molbev/msaa106" class="uri">https://doi.org/10.1093/molbev/msaa106</a></p></li>
+</ul>
+</section>
+<section id="learning-objectives" class="level1">
+<h1>Learning objectives</h1>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Understand where user-installed software goes on your computer</li>
+<li>Be able to install software and update the search paths to run from the command line</li>
+<li>Run iqtree2 from the command line on your own computer</li>
+</ul>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Setup iqtree software
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Instructions for installing IQTREE2 and setup for this lession were provided in the <a href="../../posts/2023-04-13-iqtree-setup/index.html">previous lesson</a>.</p>
+<section id="setup-your-tutorial-folder" class="level4">
+<h4 class="anchored" data-anchor-id="setup-your-tutorial-folder">Setup your Tutorial Folder</h4>
+<p>Make a <code>TurtleTutorial</code> folder, add the following files/folders:</p>
+<ul>
+<li>Make an <code>input</code> folder and put these files into it:
+<ul>
+<li><a href="http://www.iqtree.org/workshop/data/turtle.fa">turtle.fa</a> : A sequence alignment (in FASTA format) which is a subset of the original dataset used to assess the phylogenetic position of Turtles relative to Crocodiles and Birds <a href="https://doi.org/10.1186/1741-7007-10-65">Chiari et al., 2012</a>.<br>
+</li>
+<li><a href="http://www.iqtree.org/workshop/data/turtle.nex">turtle.nex</a> : The partition file (in NEXUS format) defining 29 genes, which are a subset of the original dataset of 248 genes.<br>
+</li>
+</ul></li>
+<li>The R script <a href="../../code/concordance.R"><code>concordance.R</code></a></li>
+<li>iqtree shell script: <a href="../../code/iqtreerun.sh"><code>iqtreerun.sh</code></a></li>
+</ul>
+</section>
+<section id="r-packages-you-will-need" class="level4">
+<h4 class="anchored" data-anchor-id="r-packages-you-will-need">R packages you will need</h4>
+<ul>
+<li><code>viridis</code></li>
+<li><code>GGally</code></li>
+<li><code>entropy</code></li>
+<li><code>ggplot2</code></li>
+<li><code>dplyr</code></li>
+<li><code>ggrepel</code></li>
+</ul>
+</section>
+</div>
+</div>
+</section>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>When inferring phylogenies from sequence data, it is important to provide support values, usually at the nodes, to indicate how much evidence there is for each split along the phylogeny. The most common and familar are nodal support values - <strong>bootstrap support</strong> in percent for <strong>maximum likelihood trees</strong>, and <strong>posterior probability</strong> for trees inferred by <strong>Bayesian inference</strong>.</p>
+<p>IQTREE2 is software for the inference of phylogenies by Maximum Likelihood <span class="citation" data-cites="Minh:2020">(Minh et al. 2020)</span>. Several additional modules are bundled with IQTREE2. ModelFinder searches for the best model prior to phylogenetic inference <span class="citation" data-cites="Kalyaanamoorthy:2017">(Kalyaanamoorthy et al. 2017)</span>. ModelFinder can also combine partitions to reduce overparameterization, similar to PartitionFinder <span class="citation" data-cites="Lanfear:2016">(Lanfear et al. 2016)</span>.</p>
+<p>There is an increasing recognition that nodal support is not enough. Most phylogenetic analyses are now multi-locus, with data from several to hundred of genes. More studies are discovering that not all of the loci may agree – sometimes certain loci will support one topology whereas others may support an alternative topology. This is called gene-tree species-tree discordance. It can arise by evolutionary mechanisms such as incomplete lineage sorting when you have rapid radiation (short branch lengths in parts of the tree), where ancestral alleles do not have sufficient time to sort themselves out amongst the descendant lineages to reflect the history of cladogenesis, or it can arise by noisy data. Either way, if you have gene-tree species-tree discordance, it will erode support at nodes, or in the worst case, appear to strongly support a spurious evolutionary scenario. We can test for concordance between gene trees and species trees <span class="citation" data-cites="Minh:2020a">(Minh, Hahn, and Lanfear 2020)</span></p>
+<p>In this module we will learn how to use <a href="www.iqtree.org">IQTREE2</a> to infer phylogenetic trees (both species trees and gene trees), and compute several concordance factors. Gene concordance and discordance factors, and site concordance and discordance factors (site = position along the DNA sequence). We will use R to read in and explore the output from IQTREE.</p>
+</section>
+<section id="iqtree-and-ml-phylogenetic-inference-lecture" class="level1">
+<h1>IQTREE and ML phylogenetic inference lecture</h1>
+<p>We will review Bui Quang Minhʻs (<a href="https://bqminh.github.io/people/minh/">Minh Bùi</a>) <a href="https://github.com/simon-ho/SydneyPhyloWorkshop/blob/master/Lecture2_1.IQTREE.pdf">lecture on IQTREE2</a> and how it addresses some issues in maximum likelihood inference of phylogenetics.</p>
+</section>
+<section id="infer-the-turtle-phylogeny-with-iqtree" class="level1">
+<h1>Infer the Turtle Phylogeny with IQTREE</h1>
+<section id="the-theoretical-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-theoretical-problem">The theoretical problem</h2>
+<p>The position of turtles among vertebrates has been enigmatic for decades. At various times it has been allied more closely with mammals or lizards. It is one of those truly hard biological problems. Even with the development of genomics, the position of turtles with respect to crocodiles and birds remains a hot topic of research as of late.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://mbutler808.github.io/images/turtle.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">The changing position of turtles. Image by Jeremy Brown, from IQTREE tutorial</figcaption><p></p>
+</figure>
+</div>
+<p>Importantly, different groups have gotten different answers even with 100% bootstrap support at the nodes. This highlights a problem that can occur when we have gene trees that conflict with the species tree. This can occur through incomplete lineage sorting (you will see ILS a lot in the literature), or via hybridization, or other mechanisms.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://mbutler808.github.io/images/Incomplete-Lineage-Sorting.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure from Pollard et al (2006). Incomplete Lineage Sorting The history of a gene (colored lines) is drawn in the context of a species tree (gray bars). New lineages arising from new polymorphisms in the gene are drawn in different colors. In this case, the two alleles in the population prior to the split of Dmel are maintained through to the split of Dere and Dyak, leading to incomplete lineage sorting and an incongruent genealogy (tree 2). The greater the diversity in the ancestral population and the shorter the time between speciation events, the more likely nonspecies genealogies are.</figcaption><p></p>
+</figure>
+</div>
+<p>Source: <span class="citation" data-cites="Pollard:2006">(Pollard et al. 2006)</span></p>
+</section>
+<section id="the-data" class="level2">
+<h2 class="anchored" data-anchor-id="the-data">The data</h2>
+<p>The original genomic data comes from <span class="citation" data-cites="Chiari:2012">(Chiari et al. 2012)</span>. We are analyzing a subset of 29 genes from the original 248 genes, as well as a subset of taxa (to allow faster runs), presented in Bui Minhʻs <a href="http://www.iqtree.org/workshop/molevol2022">tutorial</a>. We will use IQTREE2 to generate the phylogenetic data, and then use R to analyze some of the output. We are just going to do the basics, for more indepth coverage see <a href="http://www.iqtree.org/workshop/molevol2022">Minh Buiʻs tutorial</a>.</p>
+</section>
+<section id="species-trees" class="level2">
+<h2 class="anchored" data-anchor-id="species-trees">Species Trees</h2>
+<p>A shell script for thes IQTREE commands are in <code>iqtreerun.sh</code></p>
+<section id="simplest-phylogeny" class="level3">
+<h3 class="anchored" data-anchor-id="simplest-phylogeny">Simplest phylogeny</h3>
+<p><a href="http://www.iqtree.org">IQTREE2</a> is the latest version of the IQTREE software. It runs on the command line, and each run generates a number of output files. To keep organized, it is a good idea to save your iqtree commands as a shell script, and to make input and output directories.</p>
+<p>Mac users open your <code>Terminal</code>, Windows users open your <code>Git-Bash</code>, navigate to your <code>TurtleTutorial</code> folder.</p>
+<p>The simple command below will find the best-fit model using ModelFinder, reconstruct the ML tree, and calculate branch supports using the ultrafast boostrap.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;">iqtree2</span> <span class="at" style="color: #657422;">-s</span> input/turtle.fa <span class="at" style="color: #657422;">-B</span> 1000 <span class="at" style="color: #657422;">-T</span> AUTO</span></code></pre></div>
+</div>
+<p><strong>Run options explained:</strong></p>
+<ul>
+<li><code>-s input/turtle.fa</code> the path to the input alignment in <code>turtle.fa</code>.<br>
+</li>
+<li><code>-B 1000</code> 1000 replicates for the ultrafast bootstrap (Minh et al., 2013).<br>
+</li>
+<li><code>-T AUTO</code> auto select the best number of CPU cores to speed up the analysis.</li>
+</ul>
+<p><strong>Output files (in <code>out</code>):</strong></p>
+<ul>
+<li><code>turtle.fa.iqtree</code> the main report file that is self-readable. You should look at this file to see the computational results. It also contains a textual representation of the final tree.<br>
+</li>
+<li><code>turtle.fa.treefile</code> the ML tree in NEWICK format, which can be visualized in FigTree or any other tree viewer program.<br>
+</li>
+<li><code>turtle.fa.log</code> log file of the entire run (also printed on the screen).<br>
+</li>
+<li><code>turtle.fa.ckp.gz</code> checkpoint file used to resume an interrupted analysis.<br>
+… and a few other files.</li>
+</ul>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Look at the report file <code>turtle.fa.iqtree</code>, and the log file <code>turtle.fa.log</code>.</li>
+<li>What is the best-fit model name? What do you know about this model? (see <a href="http://www.iqtree.org/doc/Substitution-Models">substitution models</a> available in IQ-TREE)</li>
+<li>What are the AIC/AICc/BIC scores of this model and tree?</li>
+<li>Visualise the tree <code>turtle.fa.treefile</code> in a tree viewer software like <a href="http://tree.bio.ed.ac.uk/software/figtree/">FigTree</a> (or read into R with <code>ape</code> and <code>plot()</code>).<br>
+</li>
+<li>What relationship among three trees does this tree support?</li>
+<li>What is the ultrafast bootstrap support (%) for the relevant clade?</li>
+<li>Does this tree agree with the published tree <span class="citation" data-cites="Chiari:2012">(Chiari et al. 2012)</span>?</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="species-tree-partitioned-by-locus" class="level3">
+<h3 class="anchored" data-anchor-id="species-tree-partitioned-by-locus">Species Tree partitioned by locus</h3>
+<p>Partitioning by locus allows each locus to be scaled to different evolutionary rates, as it is well known that some genes evolve faster than others (for example nuclear protein-coding genes vs.&nbsp;mitochondrial genes vs.&nbsp;non-coding genes).</p>
+<p>We add a partition file indicating where the loci are in the alighment:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;"># infer the species tree with 1000 ultrafast bootstraps </span></span>
+<span id="cb2-2"><span class="co" style="color: #5E5E5E;"># and an edge-linked fully-partitioned model </span></span>
+<span id="cb2-3"><span class="ex" style="color: null;">iqtree2</span> <span class="at" style="color: #657422;">-s</span> input/turtle.fa <span class="at" style="color: #657422;">-p</span> input/turtle.nex <span class="at" style="color: #657422;">--prefix</span> out/species <span class="at" style="color: #657422;">-B</span> 1000 <span class="at" style="color: #657422;">-nt</span> AUTO</span></code></pre></div>
+</div>
+<p><strong>Run options explained:</strong></p>
+<ul>
+<li><code>-p input/turtle.nex</code> the partition file that delimits the partitions in the alighment to specify an edge-linked proportional partition model (Chernomor et al., 2016). There is one set of branch lengths for the phylogeny, but each partition can have proportionally shorter or longer tree length, representing slow or fast evolutionary rates, respectively.</li>
+</ul>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Look at the report file <code>turtle.fa.iqtree</code>, and the log file <code>turtle.fa.log</code>.</li>
+<li>What are the AIC/AICc/BIC scores of this model and tree? How does it compare?</li>
+<li>What relationship among three trees does this tree support?</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="gene-trees" class="level3">
+<h3 class="anchored" data-anchor-id="gene-trees">Gene Trees</h3>
+<p>We will now infer a separate phylogeny for each locus (gene). It is really easy to compute gene trees in IQTREE. The same inputs are used as for the paritioned model, but we just tell IQTREE to estimate each gene tree separately with a different flag:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="co" style="color: #5E5E5E;"># infer single-locus trees  </span></span>
+<span id="cb3-2"><span class="ex" style="color: null;">iqtree2</span> <span class="at" style="color: #657422;">-s</span> input/turtle.fa <span class="at" style="color: #657422;">-S</span> input/turtle.nex <span class="at" style="color: #657422;">-m</span> TEST <span class="at" style="color: #657422;">--prefix</span> out/loci <span class="at" style="color: #657422;">-B</span> 1000 </span></code></pre></div>
+</div>
+<p><strong>Run options explained:</strong></p>
+<ul>
+<li><code>-S input/turtle.nex</code> to infer separate trees for every partition in <code>turtle.nex</code>. All output files are similar to a partition analysis, except that the tree <code>turtle.loci.treefile</code> now contains a multiple trees - one for each gene.</li>
+</ul>
+</section>
+</section>
+<section id="concordance-factors" class="level2">
+<h2 class="anchored" data-anchor-id="concordance-factors">Concordance factors</h2>
+<p>Species trees essentially imply that gene trees and species tree are equal. However, it is well known that gene trees might be discordant (i.e., individual genes may have differet histories). Therefore, we now want to quantify the agreement between gene trees and species tree in a so-called concordance factor <span class="citation" data-cites="Minh:2020a">(Minh, Hahn, and Lanfear 2020)</span>.</p>
+<p>You can now compute gene concordance factor (gCF) and site concordance factor (sCF) for the tree inferred under the partition model:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="co" style="color: #5E5E5E;"># locus modelfinder species tree vs. single-locus trees </span></span>
+<span id="cb4-2"><span class="ex" style="color: null;">iqtree2</span> <span class="at" style="color: #657422;">-t</span> out/species.treefile <span class="at" style="color: #657422;">--gcf</span> out/loci.treefile <span class="at" style="color: #657422;">-s</span> input/turtle.fa <span class="at" style="color: #657422;">--scf</span> 100 <span class="at" style="color: #657422;">--prefix</span> out/concord </span></code></pre></div>
+</div>
+<p><strong>Run options explained:</strong></p>
+<ul>
+<li><code>-t out/species.treefile</code> to specify the species tree. We use tree under the partitioned model here, but you can of course use the other tree.</li>
+<li><code>--gcf out/loci.treefile</code> to specify a gene-trees file.</li>
+<li><code>--scf 100</code> to draw 100 random quartets when computing sCF.</li>
+</ul>
+<p><strong>Output files (in <code>out</code>):</strong></p>
+<ul>
+<li><code>concord.cf.tree</code>: tree file where branches are annotated with bootstrap/gCF/sCF values.</li>
+<li><code>concord.cf.stat</code>: a table file with various statistics for every branch of the tree.</li>
+</ul>
+<p>Similarly, you can compute gCF and sCF for the tree under different species trees, for example if you generate an unpartitioned model:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;">iqtree2</span> <span class="at" style="color: #657422;">-t</span> out/unpartitioned.treefile <span class="at" style="color: #657422;">--gcf</span> out/loci.treefile <span class="at" style="color: #657422;">-s</span> input/turtle.fa <span class="at" style="color: #657422;">--scf</span> 100 <span class="at" style="color: #657422;">--prefix</span> out/concord.unpartitioned </span></code></pre></div>
+</div>
+<p><strong>Note:</strong> If you need to redo any of these analyses, add the <code>-redo</code> flag at the end of the command</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Definitions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Gene concordance factor (gCF) is the percentage of decisive gene trees concordant with a particular branch of the species tree (0% &lt;= gCF(b) &lt;= 100%). gCF=0% means that branch b does not occur in any gene trees, whereas gCF=100% means that branch b occurs in every gene tree.<br>
+</li>
+<li>Site concordance factor (sCF) is the percentage of decisive (parsimony informative) alignment sites supporting a particular branch of the species tree (~33% &lt;= sCF(b) &lt;= 100%). sCF&lt;33% means that another discordant branch b’ is more supported, whereas sCF=100% means that branch b is supported by all sites.<br>
+</li>
+<li><strong>CAUTION</strong> when gCF ~ 0% or sCF &lt; 33%, even if boostrap supports are ~100%!</li>
+<li><strong>GREAT</strong> when gCF and sCF &gt; 50% (i.e., branch is supported by a majority of genes and sites).</li>
+</ul>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Visualise <code>concord.cf.tree.nex</code> in FigTree.</li>
+<li>Explore gene concordance factor (gCF), gene discordance factors (gDF1, gDF2, gDFP), site concordance factor (sCF) and site discordance factors (sDF1, sDF2).</li>
+<li>How do gCF and sCF values look compared with bootstrap supports?</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="further-analyses-of-iqtree-outputs" class="level1">
+<h1>Further analyses of IQTREE outputs</h1>
+<p>An R script for these analyses is in <code>concordance.R</code></p>
+<section id="using-concordance-factors-to-understand-your-data" class="level2">
+<h2 class="anchored" data-anchor-id="using-concordance-factors-to-understand-your-data">Using concordance factors to understand your data</h2>
+<p>The first step is just to look at the concordance factors on the tree. To do this, just load the output tree (concord.cf.tree) in any tree viewer such as Figtree or you can use R. In this tree, each branch label shows bootstrap / gCF / sCF.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">require</span>(viridis)</span>
+<span id="cb6-2"><span class="fu" style="color: #4758AB;">require</span>(GGally)</span>
+<span id="cb6-3"><span class="fu" style="color: #4758AB;">require</span>(entropy)</span>
+<span id="cb6-4"><span class="fu" style="color: #4758AB;">require</span>(ggtree)</span>
+<span id="cb6-5"><span class="fu" style="color: #4758AB;">require</span>(treeio)</span>
+<span id="cb6-6"><span class="fu" style="color: #4758AB;">require</span>(tidytree)</span>
+<span id="cb6-7"><span class="fu" style="color: #4758AB;">require</span>(ggplot2)</span>
+<span id="cb6-8"><span class="fu" style="color: #4758AB;">require</span>(dplyr)</span>
+<span id="cb6-9"><span class="fu" style="color: #4758AB;">require</span>(ggrepel)</span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;"># read the data</span></span>
+<span id="cb7-2">d <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">read.delim</span>(<span class="st" style="color: #20794D;">"out/concord.cf.stat"</span>, <span class="at" style="color: #657422;">header =</span> T, <span class="at" style="color: #657422;">comment.char=</span><span class="st" style="color: #20794D;">'#'</span>)</span>
+<span id="cb7-3">               </span>
+<span id="cb7-4"><span class="fu" style="color: #4758AB;">names</span>(d)[<span class="fu" style="color: #4758AB;">names</span>(d)<span class="sc" style="color: #5E5E5E;">==</span><span class="st" style="color: #20794D;">"Label"</span>] <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"bootstrap"</span></span>
+<span id="cb7-5"><span class="fu" style="color: #4758AB;">names</span>(d)[<span class="fu" style="color: #4758AB;">names</span>(d)<span class="sc" style="color: #5E5E5E;">==</span><span class="st" style="color: #20794D;">"Length"</span>] <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"branchlength"</span></span>
+<span id="cb7-6"></span>
+<span id="cb7-7"><span class="co" style="color: #5E5E5E;"># plot the tree</span></span>
+<span id="cb7-8"></span>
+<span id="cb7-9">tree <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.iqtree</span>(<span class="st" style="color: #20794D;">"out/concord.cf.tree"</span>)  <span class="co" style="color: #5E5E5E;"># read in tree file</span></span>
+<span id="cb7-10">tib <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as_tibble</span>(tree)</span>
+<span id="cb7-11">d<span class="sc" style="color: #5E5E5E;">$</span>node <span class="ot" style="color: #003B4F;">&lt;-</span> d<span class="sc" style="color: #5E5E5E;">$</span>ID <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span> </span>
+<span id="cb7-12"></span>
+<span id="cb7-13">td <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">full_join</span>(tib, d, <span class="at" style="color: #657422;">by =</span> <span class="st" style="color: #20794D;">"node"</span>)  <span class="co" style="color: #5E5E5E;"># combine the tree (tib) and data (d)</span></span>
+<span id="cb7-14">td <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as.treedata</span>(td)       <span class="co" style="color: #5E5E5E;"># coerce to treedata format (td)</span></span>
+<span id="cb7-15"></span>
+<span id="cb7-16"><span class="fu" style="color: #4758AB;">ggtree</span>(td) <span class="sc" style="color: #5E5E5E;">+</span>          <span class="co" style="color: #5E5E5E;"># plot tree</span></span>
+<span id="cb7-17">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position=</span><span class="st" style="color: #20794D;">"right"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb7-18">  <span class="fu" style="color: #4758AB;">geom_tiplab</span>() <span class="sc" style="color: #5E5E5E;">+</span>                         <span class="co" style="color: #5E5E5E;"># add tip labels</span></span>
+<span id="cb7-19">  <span class="fu" style="color: #4758AB;">geom_label2</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">label=</span>label, <span class="at" style="color: #657422;">subset=</span><span class="sc" style="color: #5E5E5E;">!</span>isTip), <span class="at" style="color: #657422;">color=</span><span class="st" style="color: #20794D;">"black"</span>)  <span class="co" style="color: #5E5E5E;"># add node labels </span></span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-13-iqtree-phylogenetics/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The turtle clade contains <strong>Chelonoidis</strong> to <strong>Phrynops</strong>. Which clade do turtles group with? This part of the tree immediately illustrates the most important point: bootstraps and concordance factors are giving you very different information about each branch in the tree. Just take a look at how different the three numbers can be!</p>
+</section>
+</section>
+<section id="how-concordance-factors-relate-to-each-other-and-to-bootstraps" class="level1">
+<h1>How concordance factors relate to each other and to bootstraps</h1>
+<p>More generally, we can look at the links between bootstrap, gCF, and sCF across all nodes of the tree. This is simple to do in R, because IQ-TREE outputs a tab-delimited file that’s easy to read called concord.cf.stat. This file has one row per branch in the tree, and gives a lot of details on the statistics for each branch.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="co" style="color: #5E5E5E;"># plot the values</span></span>
+<span id="cb8-2"><span class="fu" style="color: #4758AB;">ggplot</span>(d, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> gCF, <span class="at" style="color: #657422;">y =</span> sCF)) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb8-3">    <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">colour =</span> bootstrap)) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb8-4">    <span class="fu" style="color: #4758AB;">scale_colour_viridis</span>(<span class="at" style="color: #657422;">direction =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">1</span>) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb8-5">    <span class="fu" style="color: #4758AB;">xlim</span>(<span class="dv" style="color: #AD0000;">0</span>, <span class="dv" style="color: #AD0000;">100</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb8-6">    <span class="fu" style="color: #4758AB;">ylim</span>(<span class="dv" style="color: #AD0000;">0</span>, <span class="dv" style="color: #AD0000;">100</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb8-7">    <span class="fu" style="color: #4758AB;">geom_abline</span>(<span class="at" style="color: #657422;">slope =</span> <span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">intercept =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">linetype =</span> <span class="st" style="color: #20794D;">"dashed"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-13-iqtree-phylogenetics/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This plot shows a few important things. First, <em>low bootstrap values (bright colours) coincide with the lowest gCF and sCF values, as expected</em>. You can only get a low bootstrap value when the there’s very limited information on that branch in the alignment. And if there’s very little information, there will be very few sites (and therefore genes) that can support a branch.</p>
+<p>Second, <strong>bootstrap values max out at 100% pretty quickly</strong>, even for very low gCF and sCF values. Third, <strong>sCF values have a minimum of ~30%</strong>, but <strong>gCF values can go all the way to 0%</strong>. This is because sCF values are calculated by comparing the three possible resolutions of quartet around a node, so when the data are completely equivocal about these resolutions, we expect an sCF value of 33%. gCF values, on the other hand, are calculated from full gene trees, such that there are many more than 3 possible resolutions around a node, and the gCF value can be as low as 0% if no single gene tree contains a branch that’s present in the reference tree. This can happen (and does, in this bird dataset) when a combination of biology and stochastic error leads to a lot of gene-tree discordance.</p>
+<p>Sometimes we want to label points. <code>ggrepel()</code> is very helpful for this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="co" style="color: #5E5E5E;"># label the points</span></span>
+<span id="cb9-2"><span class="fu" style="color: #4758AB;">ggplot</span>(d, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> gCF, <span class="at" style="color: #657422;">y =</span> sCF, <span class="at" style="color: #657422;">label =</span> ID)) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb9-3">    <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">colour =</span> bootstrap)) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb9-4">    <span class="fu" style="color: #4758AB;">scale_colour_viridis</span>(<span class="at" style="color: #657422;">direction =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">1</span>) <span class="sc" style="color: #5E5E5E;">+</span> </span>
+<span id="cb9-5">    <span class="fu" style="color: #4758AB;">xlim</span>(<span class="dv" style="color: #AD0000;">0</span>, <span class="dv" style="color: #AD0000;">100</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-6">    <span class="fu" style="color: #4758AB;">ylim</span>(<span class="dv" style="color: #AD0000;">0</span>, <span class="dv" style="color: #AD0000;">100</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-7">    <span class="fu" style="color: #4758AB;">geom_abline</span>(<span class="at" style="color: #657422;">slope =</span> <span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">intercept =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">linetype =</span> <span class="st" style="color: #20794D;">"dashed"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-8">    <span class="fu" style="color: #4758AB;">geom_text_repel</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-13-iqtree-phylogenetics/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="digging-deeper-using-discordance-factors" class="level1">
+<h1>Digging deeper using discordance factors</h1>
+<p>First we need to find the ID of the problematic node:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="co" style="color: #5E5E5E;"># show branches of interest</span></span>
+<span id="cb10-2">d[(d<span class="sc" style="color: #5E5E5E;">$</span>ID<span class="sc" style="color: #5E5E5E;">==</span><span class="dv" style="color: #AD0000;">22</span>),]  <span class="co" style="color: #5E5E5E;"># these have lower bootstrap support than the others</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ID   gCF gCF_N gDF1 gDF1_N  gDF2 gDF2_N  gDFP gDFP_N gN   sCF sCF_N  sDF1
+6 22 48.28    14 3.45      1 17.24      5 31.03      9 29 34.72 62.96 22.93
+  sDF1_N  sDF2 sDF2_N     sN bootstrap branchlength node
+6  43.76 41.35  85.03 191.75        81    0.0186587   23</code></pre>
+</div>
+</div>
+<p>We can see that the problematic nodes have very short branch lengths, which is consistent with possible incomplete lineage sorting.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="co" style="color: #5E5E5E;"># plot the tree with colors to highlight support</span></span>
+<span id="cb12-2"></span>
+<span id="cb12-3"><span class="fu" style="color: #4758AB;">ggtree</span>(td, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">color=</span>SH_aLRT), <span class="at" style="color: #657422;">size=</span><span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">+</span>          <span class="co" style="color: #5E5E5E;"># plot tree</span></span>
+<span id="cb12-4">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position=</span><span class="st" style="color: #20794D;">"right"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-5">  <span class="fu" style="color: #4758AB;">geom_tiplab</span>(<span class="at" style="color: #657422;">size=</span><span class="dv" style="color: #AD0000;">5</span>) <span class="sc" style="color: #5E5E5E;">+</span>                         <span class="co" style="color: #5E5E5E;"># add tip labels</span></span>
+<span id="cb12-6">  <span class="fu" style="color: #4758AB;">geom_label2</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">label=</span>label, <span class="at" style="color: #657422;">subset=</span><span class="sc" style="color: #5E5E5E;">!</span>isTip), <span class="at" style="color: #657422;">color=</span><span class="st" style="color: #20794D;">"black"</span>) <span class="sc" style="color: #5E5E5E;">+</span> <span class="co" style="color: #5E5E5E;"># add node labels </span></span>
+<span id="cb12-7">  <span class="fu" style="color: #4758AB;">geom_label2</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">label=</span>label, <span class="at" style="color: #657422;">subset=</span> (<span class="sc" style="color: #5E5E5E;">!</span>isTip <span class="sc" style="color: #5E5E5E;">&amp;</span> (node<span class="sc" style="color: #5E5E5E;">==</span><span class="dv" style="color: #AD0000;">22</span>))), <span class="at" style="color: #657422;">color=</span><span class="st" style="color: #20794D;">"black"</span>, <span class="at" style="color: #657422;">fill=</span><span class="st" style="color: #20794D;">"yellow"</span>) <span class="sc" style="color: #5E5E5E;">+</span>                  <span class="co" style="color: #5E5E5E;"># highlight low bootstrap support </span></span>
+<span id="cb12-8">  <span class="fu" style="color: #4758AB;">scale_color_continuous</span>(<span class="at" style="color: #657422;">low=</span><span class="st" style="color: #20794D;">"yellow"</span>, <span class="at" style="color: #657422;">high=</span><span class="st" style="color: #20794D;">"purple"</span>) <span class="co" style="color: #5E5E5E;"># color the branches by bootstrap</span></span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-13-iqtree-phylogenetics/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;">ggtree</span>(td) <span class="sc" style="color: #5E5E5E;">+</span>                                      <span class="co" style="color: #5E5E5E;"># plot tree</span></span>
+<span id="cb13-2">  <span class="fu" style="color: #4758AB;">geom_tiplab</span>() <span class="sc" style="color: #5E5E5E;">+</span>                               <span class="co" style="color: #5E5E5E;"># plot tip labels</span></span>
+<span id="cb13-3">  <span class="fu" style="color: #4758AB;">geom_label2</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">label=</span>node, <span class="at" style="color: #657422;">subset=</span> <span class="sc" style="color: #5E5E5E;">!</span>isTip))  <span class="co" style="color: #5E5E5E;"># plot node numbers </span></span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-13-iqtree-phylogenetics/index_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="using-concordance-factors-to-test-the-assumptions-of-an-ils-model" class="level1">
+<h1>Using concordance factors to test the assumptions of an ILS model</h1>
+<p>If the discordance among gene trees and sites come from incomplete lineage sorting, we can make a simple and testable prediction: that the number of gene trees or sites supporting the two discordant topologies should be roughly equal. Both of these ideas have been around for some time (for genes [link to Huson et al &amp; Steel 2005 Recomb] and for sites [link to Greene et al 2010]), and the IQ-TREE output lets us test them very easily.</p>
+<p>The basic idea is that we count up the genes or sites supporting the two discordant topologies, and use a chi-square test to see if they’re significantly different. This requires a number of assumptions to hold (see the papers linked above), and if you’re willing to make those assumptions, here’s a simple way to calculate the probability that the data can reject equal frequencies for genes (gEFp, below) and for sites (sEFp, below).</p>
+<p>See Rob Lanfearʻs blog for detailed explanations of the following calculations <a href="http://www.robertlanfear.com/blog/files/concordance_factors.html" class="uri">http://www.robertlanfear.com/blog/files/concordance_factors.html</a>. This is an excellent example of how to integrate output from other analysis software with R code.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="co" style="color: #5E5E5E;"># first we use a slightly modified chisq function</span></span>
+<span id="cb14-2"><span class="co" style="color: #5E5E5E;"># which behaves nicely when you feed it zeros</span></span>
+<span id="cb14-3">chisq <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(DF1, DF2, N){</span>
+<span id="cb14-4">    <span class="fu" style="color: #4758AB;">tryCatch</span>({</span>
+<span id="cb14-5">        <span class="co" style="color: #5E5E5E;"># converts percentages to counts, runs chisq, gets pvalue</span></span>
+<span id="cb14-6">        <span class="fu" style="color: #4758AB;">chisq.test</span>(<span class="fu" style="color: #4758AB;">c</span>(<span class="fu" style="color: #4758AB;">round</span>(DF1<span class="sc" style="color: #5E5E5E;">*</span>N)<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">100</span>, <span class="fu" style="color: #4758AB;">round</span>(DF2<span class="sc" style="color: #5E5E5E;">*</span>N)<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">100</span>))<span class="sc" style="color: #5E5E5E;">$</span>p.value</span>
+<span id="cb14-7">    },</span>
+<span id="cb14-8">    <span class="at" style="color: #657422;">error =</span> <span class="cf" style="color: #003B4F;">function</span>(err) {</span>
+<span id="cb14-9">        <span class="co" style="color: #5E5E5E;"># errors come if you give chisq two zeros</span></span>
+<span id="cb14-10">        <span class="co" style="color: #5E5E5E;"># but here we're sure that there's no difference</span></span>
+<span id="cb14-11">        <span class="fu" style="color: #4758AB;">return</span>(<span class="fl" style="color: #AD0000;">1.0</span>)</span>
+<span id="cb14-12">    })</span>
+<span id="cb14-13">}</span>
+<span id="cb14-14"></span>
+<span id="cb14-15">e <span class="ot" style="color: #003B4F;">=</span> d <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb14-16">    <span class="fu" style="color: #4758AB;">group_by</span>(ID) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb14-17">    <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">gEF_p =</span> <span class="fu" style="color: #4758AB;">chisq</span>(gDF1, gDF2, gN)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb14-18">    <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">sEF_p =</span> <span class="fu" style="color: #4758AB;">chisq</span>(sDF1, sDF2, sN))</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There were 9 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `gEF_p = chisq(gDF1, gDF2, gN)`.
+ℹ In group 1: `ID = 17`.
+Caused by warning in `chisq.test()`:
+! Chi-squared approximation may be incorrect
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 8 remaining warnings.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There were 2 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `sEF_p = chisq(sDF1, sDF2, sN)`.
+ℹ In group 8: `ID = 24`.
+Caused by warning in `chisq.test()`:
+! Chi-squared approximation may be incorrect
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="fu" style="color: #4758AB;">subset</span>(<span class="fu" style="color: #4758AB;">data.frame</span>(e), (gEF_p <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="fl" style="color: #AD0000;">0.05</span> <span class="sc" style="color: #5E5E5E;">|</span> sEF_p <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="fl" style="color: #AD0000;">0.05</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ID   gCF gCF_N gDF1 gDF1_N  gDF2 gDF2_N  gDFP gDFP_N gN   sCF sCF_N  sDF1
+6 22 48.28    14 3.45      1 17.24      5 31.03      9 29 34.72 62.96 22.93
+  sDF1_N  sDF2 sDF2_N     sN bootstrap branchlength node     gEF_p       sEF_p
+6  43.76 41.35  85.03 191.75        81    0.0186587   23 0.1024704 0.001465972</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="co" style="color: #5E5E5E;"># calculate internode certainty</span></span>
+<span id="cb19-2"></span>
+<span id="cb19-3">IC <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(CF, DF1, DF2, N){</span>
+<span id="cb19-4">    </span>
+<span id="cb19-5">    <span class="co" style="color: #5E5E5E;"># convert to counts</span></span>
+<span id="cb19-6">    X <span class="ot" style="color: #003B4F;">=</span> CF <span class="sc" style="color: #5E5E5E;">*</span> N <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">100</span></span>
+<span id="cb19-7">    Y <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">max</span>(DF1, DF2) <span class="sc" style="color: #5E5E5E;">*</span> N <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">100</span></span>
+<span id="cb19-8">        </span>
+<span id="cb19-9">    pX <span class="ot" style="color: #003B4F;">=</span> X<span class="sc" style="color: #5E5E5E;">/</span>(X<span class="sc" style="color: #5E5E5E;">+</span>Y)</span>
+<span id="cb19-10">    pY <span class="ot" style="color: #003B4F;">=</span> Y<span class="sc" style="color: #5E5E5E;">/</span>(X<span class="sc" style="color: #5E5E5E;">+</span>Y)</span>
+<span id="cb19-11">    </span>
+<span id="cb19-12">    IC <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">1</span> <span class="sc" style="color: #5E5E5E;">+</span> pX <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">log2</span>(pX) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb19-13">             pY <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">log2</span>(pY)</span>
+<span id="cb19-14"></span>
+<span id="cb19-15">    <span class="fu" style="color: #4758AB;">return</span>(IC)</span>
+<span id="cb19-16">}</span>
+<span id="cb19-17"></span>
+<span id="cb19-18"></span>
+<span id="cb19-19">e <span class="ot" style="color: #003B4F;">=</span> e <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb19-20">    <span class="fu" style="color: #4758AB;">group_by</span>(ID) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb19-21">    <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">gIC =</span> <span class="fu" style="color: #4758AB;">IC</span>(gCF, gDF1, gDF2, gN)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb19-22">    <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">sIC =</span> <span class="fu" style="color: #4758AB;">IC</span>(sCF, sDF1, sDF2, sN))</span>
+<span id="cb19-23"></span>
+<span id="cb19-24"><span class="co" style="color: #5E5E5E;"># plot it</span></span>
+<span id="cb19-25"><span class="fu" style="color: #4758AB;">ggpairs</span>(e, <span class="at" style="color: #657422;">columns =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"gCF"</span>, <span class="st" style="color: #20794D;">"sCF"</span>, <span class="st" style="color: #20794D;">"bootstrap"</span>, <span class="st" style="color: #20794D;">"gEF_p"</span>, <span class="st" style="color: #20794D;">"sEF_p"</span>, <span class="st" style="color: #20794D;">"gIC"</span>, <span class="st" style="color: #20794D;">"sIC"</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
+Removed 4 rows containing missing values</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
+Removed 4 rows containing missing values
+
+Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
+Removed 4 rows containing missing values
+
+Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
+Removed 4 rows containing missing values
+
+Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
+Removed 4 rows containing missing values</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4 rows containing missing values (`geom_point()`).
+Removed 4 rows containing missing values (`geom_point()`).
+Removed 4 rows containing missing values (`geom_point()`).
+Removed 4 rows containing missing values (`geom_point()`).
+Removed 4 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4 rows containing non-finite values (`stat_density()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
+Removed 4 rows containing missing values</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-13-iqtree-phylogenetics/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="iqtree-documentation" class="level1">
+<h1>IQTREE documentation</h1>
+<ul>
+<li><p>[IQTREE quickstart]](http://www.iqtree.org/doc/Quickstart)</p></li>
+<li><p>IQTREE documentation <a href="http://www.iqtree.org/doc/" class="uri">http://www.iqtree.org/doc/</a></p></li>
+<li><p>Command Line Reference (when you get more familiar with it) <a href="http://www.iqtree.org/doc/Command-Reference" class="uri">http://www.iqtree.org/doc/Command-Reference</a></p></li>
+</ul>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Chiari:2012" class="csl-entry">
+Chiari, Ylenia, Vincent Cahais, Nicolas Galtier, and Frédéric Delsuc. 2012. <span>“Phylogenomic Analyses Support the Position of Turtles as the Sister Group of Birds and Crocodiles (Archosauria).”</span> <em>BMC Biology</em> 10 (1): 65. <a href="https://doi.org/10.1186/1741-7007-10-65">https://doi.org/10.1186/1741-7007-10-65</a>.
+</div>
+<div id="ref-Kalyaanamoorthy:2017" class="csl-entry">
+Kalyaanamoorthy, Subha, Bui Quang Minh, Thomas K F Wong, Arndt von Haeseler, and Lars S Jermiin. 2017. <span>“ModelFinder: Fast Model Selection for Accurate Phylogenetic Estimates.”</span> <em>Nature Methods</em> 14 (6): 587–89. <a href="https://doi.org/10.1038/nmeth.4285">https://doi.org/10.1038/nmeth.4285</a>.
+</div>
+<div id="ref-Lanfear:2016" class="csl-entry">
+Lanfear, Robert, Paul B. Frandsen, April M. Wright, Tereza Senfeld, and Brett Calcott. 2016. <span>“<span class="nocase">PartitionFinder 2: New Methods for Selecting Partitioned Models of Evolution for Molecular and Morphological Phylogenetic Analyses</span>.”</span> <em>Molecular Biology and Evolution</em> 34 (3): 772–73. <a href="https://doi.org/10.1093/molbev/msw260">https://doi.org/10.1093/molbev/msw260</a>.
+</div>
+<div id="ref-Minh:2020a" class="csl-entry">
+Minh, Bui Quang, Matthew W Hahn, and Robert Lanfear. 2020. <span>“<span class="nocase">New Methods to Calculate Concordance Factors for Phylogenomic Datasets</span>.”</span> <em>Molecular Biology and Evolution</em> 37 (9): 2727–33. <a href="https://doi.org/10.1093/molbev/msaa106">https://doi.org/10.1093/molbev/msaa106</a>.
+</div>
+<div id="ref-Minh:2020" class="csl-entry">
+Minh, Bui Quang, Heiko A Schmidt, Olga Chernomor, Dominik Schrempf, Michael D Woodhams, Arndt von Haeseler, and Robert Lanfear. 2020. <span>“<span class="nocase">IQ-TREE 2: New Models and Efficient Methods for Phylogenetic Inference in the Genomic Era</span>.”</span> <em>Molecular Biology and Evolution</em> 37 (5): 1530–34. <a href="https://doi.org/10.1093/molbev/msaa015">https://doi.org/10.1093/molbev/msaa015</a>.
+</div>
+<div id="ref-Pollard:2006" class="csl-entry">
+Pollard, Daniel A, Venky N Iyer, Alan M Moses, and Michael B Eisen. 2006. <span>“Widespread Discordance of Gene Trees with Species Tree in Drosophila: Evidence for Incomplete Lineage Sorting.”</span> Doi:10.1371/journal.pgen.0020173. <em>PLOS Genetics</em> 2 (10): e173–. <a href="https://doi.org/10.1371/journal.pgen.0020173">https://doi.org/10.1371/journal.pgen.0020173</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>module 7</category>
+  <category>week 13</category>
+  <category>iqtree2</category>
+  <category>phylogenetic inference</category>
+  <category>command line</category>
+  <category>gene concordance</category>
+  <category>site concordance</category>
+  <category>gene tree</category>
+  <category>species tree</category>
+  <guid>https://mbutler808.github.io/posts/2023-04-13-iqtree-phylogenetics/index.html</guid>
+  <pubDate>Thu, 13 Apr 2023 10:00:00 GMT</pubDate>
+  <media:content url="https://mbutler808.github.io/images/turtle.png" medium="image" type="image/png" height="54" width="144"/>
+</item>
+<item>
   <title>Procrustes Superimposition and Analyses</title>
   <dc:creator>Marguerite Butler</dc:creator>
   <link>https://mbutler808.github.io/posts/2023-04-11-geometric-morphometrics-analyses/index.html</link>
@@ -1284,46 +1840,46 @@ How repeatable are the measurements?</p>
 <span id="cb3-8"><span class="fu" style="color: #4758AB;">cbind</span>(id, total_m, rep)  <span class="co" style="color: #5E5E5E;"># the data</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      id  total_m rep
- [1,]  1 21.27560   1
- [2,]  2 17.60708   1
- [3,]  3 21.90370   1
- [4,]  4 25.74035   1
- [5,]  5 21.53369   1
- [6,]  6 18.12917   1
- [7,]  7 17.52989   1
- [8,]  8 19.25345   1
- [9,]  9 20.76813   1
-[10,] 10 17.52782   1
-[11,] 11 15.46890   1
-[12,] 12 21.74648   1
-[13,] 13 20.92998   1
-[14,] 14 24.28469   1
-[15,] 15 19.78854   1
-[16,] 16 17.32797   1
-[17,] 17 16.01674   1
-[18,] 18 17.49154   1
-[19,] 19 19.94586   1
-[20,] 20 19.35142   1
-[21,]  1 21.29522   2
-[22,]  2 16.71170   2
-[23,]  3 21.94824   2
-[24,]  4 26.42610   2
-[25,]  5 22.04669   2
-[26,]  6 17.98205   2
-[27,]  7 18.02014   2
-[28,]  8 19.16643   2
-[29,]  9 20.70190   2
-[30,] 10 16.59378   2
-[31,] 11 15.80474   2
-[32,] 12 22.23258   2
-[33,] 13 20.67769   2
-[34,] 14 24.23565   2
-[35,] 15 19.89918   2
-[36,] 16 18.37393   2
-[37,] 17 16.53033   2
-[38,] 18 18.01682   2
-[39,] 19 19.34949   2
-[40,] 20 20.45557   2</code></pre>
+ [1,]  1 24.15721   1
+ [2,]  2 23.51620   1
+ [3,]  3 20.32648   1
+ [4,]  4 21.13753   1
+ [5,]  5 19.63922   1
+ [6,]  6 18.90770   1
+ [7,]  7 20.80480   1
+ [8,]  8 21.50574   1
+ [9,]  9 19.54461   1
+[10,] 10 18.38292   1
+[11,] 11 16.51972   1
+[12,] 12 22.56470   1
+[13,] 13 20.90189   1
+[14,] 14 27.00296   1
+[15,] 15 19.14295   1
+[16,] 16 22.80917   1
+[17,] 17 21.36119   1
+[18,] 18 17.27635   1
+[19,] 19 20.43382   1
+[20,] 20 22.27521   1
+[21,]  1 24.22700   2
+[22,]  2 23.89706   2
+[23,]  3 19.29717   2
+[24,]  4 21.86834   2
+[25,]  5 20.88725   2
+[26,]  6 18.54368   2
+[27,]  7 20.65837   2
+[28,]  8 21.74068   2
+[29,]  9 18.87857   2
+[30,] 10 17.97394   2
+[31,] 11 16.30139   2
+[32,] 12 22.07608   2
+[33,] 13 21.17731   2
+[34,] 14 26.78290   2
+[35,] 15 19.46328   2
+[36,] 16 21.98306   2
+[37,] 17 21.04685   2
+[38,] 18 17.49118   2
+[39,] 19 20.60442   2
+[40,] 20 22.55779   2</code></pre>
 </div>
 </div>
 <p>Is there a difference between the measurement sessions?</p>
@@ -1331,8 +1887,8 @@ How repeatable are the measurements?</p>
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">summary</span>(<span class="fu" style="color: #4758AB;">aov</span>(<span class="fu" style="color: #4758AB;">lm</span> ( total_m <span class="sc" style="color: #5E5E5E;">~</span> rep)))</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
-rep          1    0.2   0.203   0.028  0.868
-Residuals   38  275.9   7.259               </code></pre>
+rep          1   0.01   0.014   0.002  0.962
+Residuals   38 230.77   6.073               </code></pre>
 </div>
 </div>
 <p>No (<em>thatʻs good!</em>)</p>
@@ -1342,8 +1898,8 @@ Residuals   38  275.9   7.259               </code></pre>
 <span id="cb7-2">mod</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-id          19 272.89  14.363   90.91 2.26e-15 ***
-Residuals   20   3.16   0.158                     
+id          19 228.00  12.000   86.17 3.82e-15 ***
+Residuals   20   2.79   0.139                     
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -1353,14 +1909,14 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">s2_within <span class="ot" style="color: #003B4F;">&lt;-</span> ms_within <span class="ot" style="color: #003B4F;">&lt;-</span> mod[[<span class="dv" style="color: #AD0000;">1</span>]][<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">3</span>]</span>
 <span id="cb9-2">s2_within</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1579956</code></pre>
+<pre><code>[1] 0.1392685</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">ms_among <span class="ot" style="color: #003B4F;">&lt;-</span> mod[[<span class="dv" style="color: #AD0000;">1</span>]][<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">3</span>]</span>
 <span id="cb11-2">s2_among <span class="ot" style="color: #003B4F;">&lt;-</span> (ms_among<span class="sc" style="color: #5E5E5E;">-</span>ms_within)<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">2</span></span>
 <span id="cb11-3">ME <span class="ot" style="color: #003B4F;">&lt;-</span> s2_within<span class="sc" style="color: #5E5E5E;">/</span>(s2_within<span class="sc" style="color: #5E5E5E;">+</span>s2_among) <span class="sc" style="color: #5E5E5E;">*</span> <span class="dv" style="color: #AD0000;">100</span></span>
 <span id="cb11-4">ME</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.176153</code></pre>
+<pre><code>[1] 2.294503</code></pre>
 </div>
 </div>
 <p>Not bad. A rule of thumb is that 5% ME is good (95% repeatability). If we want to reduce ME, we can use the average of the two measurements in our analyses.</p>
@@ -8867,289 +9423,6 @@ attr(,"names")
   <category>objects</category>
   <guid>https://mbutler808.github.io/posts/2023-02-09-data/index.html</guid>
   <pubDate>Thu, 09 Feb 2023 10:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Saving your work as R scripts</title>
-  <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2023-02-07-scripts/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<!-- Add interesting quote -->
-<!-- # Pre-lecture materials -->
-<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
-<p>✏️</p>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Learning objectives
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>At the end of this lesson you will:</strong></p>
-<ul>
-<li>Know how to build good scripts</li>
-<li>Be able to run source code</li>
-<li>Be able to verify your script</li>
-<li>Know how to start debugging scripts</li>
-<li>Know how to clear your workspace</li>
-<li>Know how to use <code>print()</code> and <code>cat()</code>, functions and use your history file</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>Because R is interactive, it is tempting to simply play with code until you get the results you want. The problem with this is that you may not be able to <strong>reproduce</strong> it. Also, you may have made many manipulations of your data, some of which you’ve lost track of, and so your data objects may not really be what you think they are. This makes it impossible to repeat your analysis with confidence.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-A key part of any analysis is verification:
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Did you do what you really think you did?</li>
-<li>Was the input free of error?</li>
-<li>Did the steps of your analysis work without error?</li>
-<li>And perhaps most importantly – can you reproduce it?</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="clean-scripts" class="level1">
-<h1>Clean Scripts</h1>
-<p>Writing <strong>clean scripts</strong> help you to accomplish these goals. <em>Scripts are lines of code saved in an ordinary text file with a <code>.R</code> or <code>.r</code> ending.</em> (Make sure it is plain text, and NOT an <code>.rtf</code>, <code>.doc</code>, or other type of binary file.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-All good script follows the first three R’s, as you increase along the path of R jedi-hood, you will add on the 4th R
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Readable – If you look at the script in a month or 6 months, will you be able to easily understand it?</li>
-<li>Right – Does it run free of error, and does it produce correct results?</li>
-<li>Repeatable – Can you reproduce your results from your input data?</li>
-<li>Reusable – Is your coding modular and designed well so that your code can interact with other scripts, and/or use it for other purposes?</li>
-</ul>
-</div>
-</div>
-<p>The mac interface has a very nice text editor, and the newer Windows R interfaces are getting better too (or install Notepad++). From the R menu, choose File &gt; New Document (or command-N). Simply type or cut and paste your code from your history file into here. Let’s make a script for the analyses we’ve done thus far.</p>
-</section>
-<section id="script-template" class="level1">
-<h1>Script Template</h1>
-<p>First, make sure that you are in the directory that you want the script to execute from (<code>Rclass\...</code>). Start off with any packages that you wish to load, then begin to cut and paste your code.</p>
-<p>Make sure to add comments indicated by the <code>#</code> symbol so that you know what the code does:</p>
-<p>Here is the basic structure of a script:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;">#require( ...addonpackage... )    # anything between ... needs to be changed </span></span>
-<span id="cb1-2">      <span class="co" style="color: #5E5E5E;"># if none, then you don't need that line</span></span>
-<span id="cb1-3"></span>
-<span id="cb1-4"><span class="co" style="color: #5E5E5E;">#dat &lt;- read.csv(..."your input file.csv"... )       # input data</span></span>
-<span id="cb1-5"></span>
-<span id="cb1-6"><span class="co" style="color: #5E5E5E;"># Your lines of code to run analyses</span></span>
-<span id="cb1-7"><span class="co" style="color: #5E5E5E;"># You may have output or processed data that you want to save, </span></span>
-<span id="cb1-8"><span class="co" style="color: #5E5E5E;"># create an object for it and write it out to a csv file at the end </span></span>
-<span id="cb1-9"></span>
-<span id="cb1-10"><span class="co" style="color: #5E5E5E;"># plot graphics</span></span>
-<span id="cb1-11"></span>
-<span id="cb1-12"><span class="fu" style="color: #4758AB;">write.csv</span>(out, <span class="at" style="color: #657422;">file=</span><span class="st" style="color: #20794D;">"myoutput.csv"</span>)      <span class="co" style="color: #5E5E5E;"># output data </span></span></code></pre></div>
-</div>
-<p>And here is a simple example script that reads in data, calculates summary statistics, a linear regression, and a couple of figures.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;">#require(stats)        # stats is part of the base package and doesn't need to be loaded, </span></span>
-<span id="cb2-2">    <span class="co" style="color: #5E5E5E;"># but if you need an add-on package, you would require it here.</span></span>
-<span id="cb2-3"></span>
-<span id="cb2-4">dat <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span> (<span class="st" style="color: #20794D;">"Data/morphpre.csv"</span>)  <span class="co" style="color: #5E5E5E;"># read in data</span></span>
-<span id="cb2-5"></span>
-<span id="cb2-6">lm.HLSVL <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">lm</span>(dat<span class="sc" style="color: #5E5E5E;">$</span>HandL <span class="sc" style="color: #5E5E5E;">~</span> dat<span class="sc" style="color: #5E5E5E;">$</span>SVL)   <span class="co" style="color: #5E5E5E;"># run a linear model</span></span>
-<span id="cb2-7"></span>
-<span id="cb2-8"><span class="fu" style="color: #4758AB;">summary</span>(lm.HLSVL) <span class="co" style="color: #5E5E5E;"># get summary statistics</span></span>
-<span id="cb2-9"><span class="fu" style="color: #4758AB;">str</span>(lm.HLSVL) <span class="co" style="color: #5E5E5E;"># look at the linear model object</span></span>
-<span id="cb2-10"><span class="fu" style="color: #4758AB;">coef</span>(lm.HLSVL)[<span class="dv" style="color: #AD0000;">2</span>] <span class="co" style="color: #5E5E5E;"># get the slope of the regression</span></span>
-<span id="cb2-11"></span>
-<span id="cb2-12"><span class="fu" style="color: #4758AB;">plot</span>(dat<span class="sc" style="color: #5E5E5E;">$</span>HandL <span class="sc" style="color: #5E5E5E;">~</span> dat<span class="sc" style="color: #5E5E5E;">$</span>SVL, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>)    <span class="co" style="color: #5E5E5E;"># make a plot with big dots (cex controls size of symbols)</span></span>
-<span id="cb2-13"><span class="fu" style="color: #4758AB;">abline</span>(lm.HLSVL, <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"red"</span>)              <span class="co" style="color: #5E5E5E;"># plots the regression line, in red</span></span>
-<span id="cb2-14">  <span class="fu" style="color: #4758AB;">title</span>(<span class="st" style="color: #20794D;">"Microhylid Hand Length vs Body Size"</span>)  <span class="co" style="color: #5E5E5E;"># add a title</span></span>
-<span id="cb2-15">  <span class="fu" style="color: #4758AB;">text</span>(<span class="at" style="color: #657422;">x=</span><span class="dv" style="color: #AD0000;">15</span>, <span class="at" style="color: #657422;">y=</span><span class="dv" style="color: #AD0000;">13</span>, <span class="fu" style="color: #4758AB;">paste</span>(<span class="st" style="color: #20794D;">"slope = "</span>, <span class="fu" style="color: #4758AB;">coef</span>(lm.HLSVL)[<span class="dv" style="color: #AD0000;">2</span>]))   </span>
-<span id="cb2-16">      <span class="co" style="color: #5E5E5E;"># add important info to the text</span></span>
-<span id="cb2-17"></span>
-<span id="cb2-18"><span class="do" style="color: #5E5E5E;
-font-style: italic;">###</span></span>
-<span id="cb2-19"><span class="co" style="color: #5E5E5E;"># please insert your other lines of code here -- enough </span></span>
-<span id="cb2-20"><span class="co" style="color: #5E5E5E;">#   to save a meaningful analysis</span></span>
-<span id="cb2-21"><span class="do" style="color: #5E5E5E;
-font-style: italic;">###</span></span></code></pre></div>
-</div>
-<p>Note that I have used spacing and indents to increase the ``readability’’ of the code. Use it to set of blocks of code that accomplish one task, with indents to indicate heirarchy. We will talk more about this in the functions section.</p>
-<p>Save the script file as <code>testScript.R</code> or a title of your choice in your class folder. Now if you want to run the code, you simply type at the R console (from within your Rclass directory):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;">source</span>(<span class="st" style="color: #20794D;">"testScript.R"</span>)</span></code></pre></div>
-</div>
-<p>When I am trying to develop a script, I often work by having the script window open next to the R console, and once a bit of code is working, I cut and paste it directly into the script. Save the script and source it. Once you have a good amount of code, you can work by making changes to the script, saving, and sourcing, over and over again.</p>
-</section>
-<section id="writing-pdf-to-file" class="level1">
-<h1>Writing pdf to file</h1>
-<p>If you’d like to print your pdf to a file instead of to the screen, you can add the following code into your script:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;">pdf</span>(<span class="at" style="color: #657422;">file=</span><span class="st" style="color: #20794D;">"MicrohylidHandLvsSize.pdf"</span>) <span class="co" style="color: #5E5E5E;"># open pdf device for printing</span></span>
-<span id="cb4-2">  <span class="fu" style="color: #4758AB;">plot</span>(dat<span class="sc" style="color: #5E5E5E;">$</span>HandL <span class="sc" style="color: #5E5E5E;">~</span> dat<span class="sc" style="color: #5E5E5E;">$</span>SVL, <span class="at" style="color: #657422;">cex=</span><span class="dv" style="color: #AD0000;">2</span>)  <span class="co" style="color: #5E5E5E;"># remake plot as before</span></span>
-<span id="cb4-3">  <span class="fu" style="color: #4758AB;">abline</span>(lm.HLSVL, <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"red"</span>)              </span>
-<span id="cb4-4">    <span class="fu" style="color: #4758AB;">title</span>(<span class="st" style="color: #20794D;">"Microhylid Hand Length vs Body Size"</span>)  </span>
-<span id="cb4-5">    <span class="fu" style="color: #4758AB;">text</span>(<span class="at" style="color: #657422;">x=</span><span class="dv" style="color: #AD0000;">15</span>, <span class="at" style="color: #657422;">y=</span><span class="dv" style="color: #AD0000;">13</span>, <span class="fu" style="color: #4758AB;">paste</span>(<span class="st" style="color: #20794D;">"slope = "</span>, <span class="fu" style="color: #4758AB;">coef</span>(lm.HLSVL)[<span class="dv" style="color: #AD0000;">2</span>]))  </span>
-<span id="cb4-6"><span class="fu" style="color: #4758AB;">dev.off</span>() <span class="co" style="color: #5E5E5E;"># turn off pdf device so future plots go back to screen</span></span></code></pre></div>
-</div>
-<p>Just to clarify, the syntax is:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">pdf</span>() <span class="co" style="color: #5E5E5E;"># open pdf device for printing</span></span>
-<span id="cb5-2"> </span>
-<span id="cb5-3"> <span class="co" style="color: #5E5E5E;"># lines of code that print to pdf such as a plot</span></span>
-<span id="cb5-4"> <span class="co" style="color: #5E5E5E;">#   any additional plot elements such as title, text, etc. </span></span>
-<span id="cb5-5"></span>
-<span id="cb5-6"><span class="fu" style="color: #4758AB;">dev.off</span>() <span class="co" style="color: #5E5E5E;"># close pdf device, completing the file</span></span></code></pre></div>
-</div>
-<p>If you forget <code>dev.off()</code> your pdf will be corrupted. If you donʻt print anythying to the pdf, it may be blank or it may also be corrupted.</p>
-</section>
-<section id="history-file" class="level1">
-<h1>History file</h1>
-<p>Another handy feature of R is that it automatically saves a history file. That is, a file that has a list of every command you’ve executed in your sessions.</p>
-<p>It is saved by default as <code>.history</code> in your working directory. Because the file name begins with a period, it is not visible normally (although it is there – you can see it from the terminal by using the <code>ls -a</code> command). It is great to have in case you are in a bind, but a better practice is to save any important history explicitly with your own filename, either click on the history button on the R gui (box with yellow and blue lines), and click on “save history” at the bottom of the side window, or type the code:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">savehistory</span>(<span class="at" style="color: #657422;">file =</span> <span class="st" style="color: #20794D;">"date_today.Rhistory"</span>)</span></code></pre></div>
-</div>
-<p>This is an ordinary text file, which you can open up and edit (removing all the mistakes), and save as a <code>scriptname.R</code> file.</p>
-<p>Another helpful tip when writing source code is to use <code>print()</code> and <code>cat()</code> functions to print out your output to the console. When you are using R in interactive mode, when you type the name of a variable, you get a print of its contents. However, when you source the same code, the variable does not print to the screen. You have to explicitly put a <code>print()</code> or <code>cat()</code> function around it.</p>
-<p>Let’s use a built-in dataset called <code>iris</code>, which is the famous Fisher iris dataset. Make a test script file and save it as <code>test.R</code>:</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>test.R</strong></pre>
-</div>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;">names</span><span class="er" style="color: #AD0000;">(</span><span class="ex" style="color: null;">iris</span><span class="kw" style="color: #003B4F;">)</span>   <span class="co" style="color: #5E5E5E;"># will not print to console when sourced</span></span>
-<span id="cb7-2"></span>
-<span id="cb7-3"><span class="ex" style="color: null;">spp</span> <span class="op" style="color: #5E5E5E;">&lt;</span>- unique<span class="er" style="color: #AD0000;">(</span><span class="ex" style="color: null;">iris</span><span class="va" style="color: #111111;">$Species</span><span class="kw" style="color: #003B4F;">)</span>  <span class="co" style="color: #5E5E5E;"># only unique values</span></span>
-<span id="cb7-4"><span class="ex" style="color: null;">spp</span> <span class="op" style="color: #5E5E5E;">&lt;</span>- as.character<span class="er" style="color: #AD0000;">(</span><span class="ex" style="color: null;">spp</span><span class="kw" style="color: #003B4F;">)</span>     <span class="co" style="color: #5E5E5E;"># factor -&gt; character</span></span>
-<span id="cb7-5"><span class="ex" style="color: null;">spp</span>   <span class="co" style="color: #5E5E5E;"># will not print to console when sourced</span></span>
-<span id="cb7-6"></span>
-<span id="cb7-7"><span class="ex" style="color: null;">print</span><span class="er" style="color: #AD0000;">(</span><span class="st" style="color: #20794D;">'Species names'</span><span class="kw" style="color: #003B4F;">)</span>  <span class="co" style="color: #5E5E5E;"># will print</span></span>
-<span id="cb7-8"><span class="ex" style="color: null;">print</span><span class="er" style="color: #AD0000;">(</span><span class="ex" style="color: null;">spp</span><span class="kw" style="color: #003B4F;">)</span>              <span class="co" style="color: #5E5E5E;"># will print</span></span>
-<span id="cb7-9"></span>
-<span id="cb7-10"><span class="fu" style="color: #4758AB;">cat</span><span class="er" style="color: #AD0000;">(</span><span class="st" style="color: #20794D;">'\n'</span><span class="ex" style="color: null;">,</span> <span class="st" style="color: #20794D;">'Species names ='</span>, spp<span class="kw" style="color: #003B4F;">)</span>  <span class="co" style="color: #5E5E5E;"># concatenate </span></span>
-<span id="cb7-11">    <span class="co" style="color: #5E5E5E;"># \n is a carriage return character</span></span>
-<span id="cb7-12"><span class="ex" style="color: null;">summary</span><span class="er" style="color: #AD0000;">(</span><span class="ex" style="color: null;">iris</span><span class="kw" style="color: #003B4F;">)</span></span></code></pre></div>
-</div>
-<p>Then test it by running:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;">source</span>(<span class="st" style="color: #20794D;">"test.R"</span>)</span></code></pre></div>
-</div>
-<p>You can see that <code>print()</code> just makes a rough dump of the variables onto the screen. I added a character string so that we would know what variable was being printed to screen. <code>cat()</code> makes a nicer, more customized display (it turns everything into a character vector, then pastes them together [i.e., concatenates them] before printing). They both do the same basic job, however. Notice also that <code>summary()</code> does print to screen. Usually you only need to use these explicit print statements to see the contents of your variables as you are debugging.</p>
-</section>
-<section id="remember-the-workspace" class="level1">
-<h1>Remember the workspace</h1>
-<p>Finally, remember that R is interactive, and the objects you create during a session are still around even after you’ve run your source code and forgotten about them. So to really check that your script is complete, you should shut down R (don’t save the workspace), double click on the name of your script to restart R in the correct directory, and then source the program again. Does it work? Great!!</p>
-<p>You could also try clearing all the objects from your workspace using the command:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;">rm</span>(<span class="at" style="color: #657422;">list=</span><span class="fu" style="color: #4758AB;">ls</span>())     <span class="co" style="color: #5E5E5E;"># remove a list of objects consisting of the entire workspace</span></span></code></pre></div>
-</div>
-<p>But this doesn’t unload your packages, and there is still a danger that the script won’t run in a fresh session if you forgot to include loadig the packages in your script. It’s OK to use for minor incremental changes, but the best thing for a real test when you are done drafting your script is to quit R and retry with a blank slate.</p>
-<p>In general, most of my analyses are pretty quick in terms of computer time (not coding and debugging time!). So I never save my workspace, because I don’t want to deal with any <strong>ghost</strong> objects I have forgotten about. Instead, I write a nice script that will generate the whole analysis. If it’s a really big complex analysis, you can save intermediate output as R data files (more on this later).</p>
-<p>Try to create a script file for all the analyses we’ve done so far (and for every session throughout the course).</p>
-</section>
-<section id="letʻs-get-organized" class="level1">
-<h1>Letʻs get Organized</h1>
-<section id="make-sure-you-can-see-file-endings" class="level2">
-<h2 class="anchored" data-anchor-id="make-sure-you-can-see-file-endings">Make sure you can see file endings</h2>
-<p>Does your MacOS or Windows environment show you the file endings (i.e., <code>.R</code>, <code>.pdf</code>, <code>.csv</code>, etc.)? If not be sure to turn them on. Try the instructions below or you can google for “show all file exensions in” (Mac or Windows, etc.).</p>
-<section id="mac-os" class="level4">
-<h4 class="anchored" data-anchor-id="mac-os">Mac OS</h4>
-<p>This is a Finder preference. From any Finder window, click on the menu bar: <code>Finder &gt;  Preferences &gt; Advanced &gt;</code> Click on <em>Show all finename extensions</em>.</p>
-</section>
-<section id="windows" class="level4">
-<h4 class="anchored" data-anchor-id="windows">Windows</h4>
-<p>This is in File Explorer (Windows key + E). Click on the menu: <code>View &gt; Show &gt; File Name Extensions</code>. You can also choose to show all hidden files if you wish. For pictures <a href="https://pureinfotech.com/show-file-extensions-windows-11/">see here</a></p>
-</section>
-</section>
-<section id="text-editor-environment" class="level2">
-<h2 class="anchored" data-anchor-id="text-editor-environment">Text editor environment</h2>
-<p>While I love the R text editor for writing R scripts, for working with multiple .qmd and other files I find it helpful to have a full-featured plain text editor. A new tool that I discovered is the Sublime text editor. If youʻd like to try it out, you can download it here: <a href="https://www.sublimetext.com" class="uri">https://www.sublimetext.com</a></p>
-<p>A couple of features I like is that you can have multiple panes open. For example if you want to copy text from an old script to a new script, you can easily see and do that.</p>
-<p>It also allows you to organize <em>Projects</em>, various folders that will appear on the sidebar to preserve your workspace. This helps when you are writing text documents across folders. So for example if you have your Rclass folder in one place and your website folder in another, you can have both open within the Sublime project. When you finish working on it you can save the project and reopen it later.</p>
-<p>To create a project start by opening a new file. Then choose the <code>Project &gt; Add folder to Project...</code> on the menu bar. You can load mulitple folders.</p>
-<p>It has contextual highlighting for Quarto as well as GitHub markdown.</p>
-<p>It also has integration with command line R <a href="https://bishwarup-paul.medium.com/a-guide-to-using-r-in-sublime-text-27f78b33f872" class="uri">https://bishwarup-paul.medium.com/a-guide-to-using-r-in-sublime-text-27f78b33f872</a>. You can run R commands in a lower terminal pane, sent directly from your text document in sublime.</p>
-</section>
-<section id="different-desktop-windows" class="level2">
-<h2 class="anchored" data-anchor-id="different-desktop-windows">Different Desktop Windows</h2>
-<p>Itʻs also nice to have multiple desktops to organize your work. - It makes it easier to find your different apps. - You may have one workspace for your text editor, and another for your Terminal or CMD prompt, for example. - If I am working with multiple git repos, I might have one desktop just for my Terminal windows with a separate Terminal open for each one.</p>
-<p>To use multiple desktops: <a href="https://support.microsoft.com/en-us/windows/multiple-desktops-in-windows-36f52e38-5b4a-557b-2ff9-e1a60c976434">On Windows</a> <a href="https://support.apple.com/guide/mac-help/work-in-multiple-spaces-mh14112/mac">On Mac</a></p>
-<p>One the Mac, you can open new desktops by using three fingers to swipe up on the trackpad. Switch between them by swiping left or right with three fingers.</p>
-</section>
-<section id="organize-your-projects-into-folders" class="level2">
-<h2 class="anchored" data-anchor-id="organize-your-projects-into-folders">Organize your Projects into Folders</h2>
-<p>Weʻve been learning about reproducibility. One important aspect is file organization. Each project should be organized into one folder that contains:</p>
-<ul>
-<li>All input data (usually in a Data folder)</li>
-<li>All code and documentation</li>
-<li>All output</li>
-</ul>
-<p>The idea is to keep everything complete, self-contained, and clear. Move old versions into a “Trash” folder. If you donʻt end up looking back at it, then delete it! (Or if you are bold, delete it right away!)</p>
-<p>A really useful UNIX/CMD command is <code>tree</code>. It shows you the directory structure contained within any folder. It works on both MacOS and Windows.</p>
-<p>This is in ASCII – so you can copy and paste it into your README.md file!</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal/CMD</strong></pre>
-</div>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="ex" style="color: null;">tree</span> myfolder</span></code></pre></div>
-</div>
-<p>If it is not pre-installed on your mac, you may need to install it with homebrew:</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="ex" style="color: null;">brew</span> install tree</span></code></pre></div>
-</div>
-</section>
-</section>
-<section id="exercises" class="level1">
-<h1>Exercises</h1>
-<ol type="1">
-<li>Create a script of the work we’ve done so far.</li>
-<li>R has great diagnostic plots for linear models. Read about them in the help page for <code>?plot.lm</code> and incorporate a multi-panel figure by adding two lines of code to the script you’ve already made:</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="fu" style="color: #4758AB;">par</span>(<span class="at" style="color: #657422;">mfrow =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">2</span>))   <span class="co" style="color: #5E5E5E;"># set the plot environment to have two rows and two columns</span></span>
-<span id="cb12-2"><span class="fu" style="color: #4758AB;">plot</span>(lmHLSVL)  <span class="co" style="color: #5E5E5E;"># or the name of your linear model object          </span></span></code></pre></div>
-</div>
-<ol start="3" type="1">
-<li>Save output to a file.</li>
-<li>Modify <code>test.R</code> so that a summary of the iris data prints to the console when sourced.</li>
-<li>Explore other datasets in R. At the R command prompt type <code>data()</code> to see what is available.</li>
-</ol>
-
-
-</section>
-
- ]]></description>
-  <category>module 1</category>
-  <category>week 3</category>
-  <category>R</category>
-  <category>scripts</category>
-  <category>reproducibility</category>
-  <guid>https://mbutler808.github.io/posts/2023-02-07-scripts/index.html</guid>
-  <pubDate>Tue, 07 Feb 2023 10:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

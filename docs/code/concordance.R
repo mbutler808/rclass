@@ -9,10 +9,24 @@ require(dplyr)
 require(ggrepel)
 
 # read the data
-d = read.delim("concord.cf.stat", header = T, comment.char='#')
+d = read.delim("out/concord.cf.stat", header = T, comment.char='#')
+tree <- read.iqtree("out/concord.cf.tree")  # read in tree file
                
 names(d)[names(d)=="Label"] = "bootstrap"
 names(d)[names(d)=="Length"] = "branchlength"
+
+# plot the tree
+tib <- as_tibble(tree)
+d$node <- d$ID + 1 
+
+td <- full_join(tib, d, by = "node")  # combine the tree (tib) and data (d)
+td <- as.treedata(td)       # coerce to treedata format (td)
+
+ggtree(td) +          # plot tree
+	theme(legend.position="right") +
+	geom_tiplab() +                         # add tip labels
+	geom_label2(aes(label=label, subset=!isTip), color="black")  # add node labels 
+
 
 
 # plot the values
@@ -34,22 +48,15 @@ ggplot(d, aes(x = gCF, y = sCF, label = ID)) +
 
 
 # show branches of interest
-d[(d$ID==20|d$ID==22),]  # these have lower bootstrap support than the others
+d[(d$ID==22),]  # these have lower bootstrap support than the others
 
-# plot the tree
-
-tree <- read.iqtree("concord.cf.tree")  # read in tree file
-tib <- as_tibble(tree)
-d$node <- d$ID + 1 
-
-td <- full_join(tib, d, by = "node")  # combine the tree (tib) and data (d)
-td <- as.treedata(td)       # coerce to treedata format (td)
+# plot the tree with colors to highlight support
 
 ggtree(td, aes(color=SH_aLRT), size=2) +          # plot tree
 	theme(legend.position="right") +
 	geom_tiplab(size=5) +                         # add tip labels
 	geom_label2(aes(label=label, subset=!isTip), color="black") + # add node labels 
-	geom_label2(aes(label=label, subset= (!isTip & (node==21 | node==23))), color="black", fill="yellow") + 								 # highlight low bootstrap support 
+	geom_label2(aes(label=label, subset= (!isTip & (node==22))), color="black", fill="yellow") + 								 # highlight low bootstrap support 
 	scale_color_continuous(low="yellow", high="purple") # color the branches by bootstrap
 
 ggtree(td) +                                      # plot tree
@@ -105,41 +112,8 @@ e = e %>%
     mutate(gIC = IC(gCF, gDF1, gDF2, gN)) %>%
     mutate(sIC = IC(sCF, sDF1, sDF2, sN))
 
-
-# entropy
-
-ENT = function(CF, DF1, DF2, N){
-    
-    CF = CF * N / 100
-    DF1 = DF1 * N / 100
-    DF2 = DF2 * N / 100
-    
-    return(entropy(c(CF, DF1, DF2)))
-
-}
-
-ENTC = function(CF, DF1, DF2, N){
-    
-    maxent = 1.098612
-    
-    CF = CF * N / 100
-    DF1 = DF1 * N / 100
-    DF2 = DF2 * N / 100
-    
-    ent = entropy(c(CF, DF1, DF2))
-    
-    entc = 1 - (ent / maxent)
-    
-    return(entc)
-    
-}
-
-e = e %>% 
-    group_by(ID) %>%
-    mutate(sENT = ENT(sCF, sDF1, sDF2, sN)) %>%
-    mutate(sENTC = ENTC(sCF, sDF1, sDF2, sN))
     
 head(e)
 
 # plot it
-ggpairs(e, columns = c("gCF", "sCF", "bootstrap", "gEF_p", "sEF_p", "gIC", "sIC", "sENT", "sENTC"))
+ggpairs(e, columns = c("gCF", "sCF", "bootstrap", "gEF_p", "sEF_p", "gIC", "sIC"))
