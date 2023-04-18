@@ -48,7 +48,7 @@ ggplot(d, aes(x = gCF, y = sCF, label = ID)) +
 
 
 # show branches of interest
-d[(d$ID==22),]  # these have lower bootstrap support than the others
+d[(d$ID==20|d$ID==22),]  # these nodes have lower bootstrap support than the others, low sCF too
 
 # plot the tree with colors to highlight support
 
@@ -90,6 +90,7 @@ subset(data.frame(e), (gEF_p < 0.05 | sEF_p < 0.05))
 
 
 # calculate internode certainty
+# IC values at or close to 1 indicate the absence of conflict for the bipartition defined by a given internode, whereas IC values at or close to 0 indicate equal support for both bipartitions and hence maximum conflict. (Salichos, et al 2014)
 
 IC = function(CF, DF1, DF2, N){
     

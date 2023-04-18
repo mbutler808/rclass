@@ -52,6 +52,7 @@ Make a `TurtleTutorial` folder, add the following files/folders:
     +  [turtle.nex](http://www.iqtree.org/workshop/data/turtle.nex) : The partition file (in NEXUS format) defining 29 genes, which are a subset of the original dataset of 248 genes.   
 -  The R script [`concordance.R`](../../code/concordance.R) 
 -  iqtree shell script: [`iqtreerun.sh`](../../code/iqtreerun.sh)
+-  If you donʻt want to setup IQTREE2 and infer the phylogenies yourself, you can clone the repo (or clone the repo, delete the out files, and run the phylogenies yourself)<https://github.com/mbutler808/TurtleTutorial>
 
 #### R packages you will need
 - `viridis`
@@ -67,8 +68,8 @@ Make a `TurtleTutorial` folder, add the following files/folders:
 
 When inferring phylogenies from sequence data, it is important to provide support values, usually at the nodes, to indicate how much evidence there is for each split along the phylogeny. The most common and familar are nodal support values - __bootstrap support__ in percent for __maximum likelihood trees__, and __posterior probability__ for trees inferred by __Bayesian inference__. 
 
-IQTREE2 is software for the inference of phylogenies by Maximum Likelihood [@Minh:2020]. 
-Several additional modules are bundled with IQTREE2. ModelFinder searches for the best model prior to phylogenetic inference [@Kalyaanamoorthy:2017]. ModelFinder can also combine partitions to reduce overparameterization, similar to PartitionFinder [@Lanfear:2016].
+IQTREE2 is software for the inference of phylogenies by __Maximum Likelihood__ [@Minh:2020]. 
+Several additional modules are bundled with IQTREE2. __ModelFinder__ searches for the best substition models prior to phylogenetic inference [@Kalyaanamoorthy:2017]. ModelFinder can also combine partitions to reduce overparameterization, similar to __PartitionFinder__ [@Lanfear:2016].
 
 There is an increasing recognition that nodal support is not enough. Most phylogenetic analyses are now multi-locus, with data from several to hundred of genes. More studies are discovering that not all of the loci may agree -- sometimes certain loci will support one topology whereas others may support an alternative topology. This is called gene-tree species-tree discordance. It can arise by evolutionary mechanisms such as incomplete lineage sorting when you have rapid radiation (short branch lengths in parts of the tree), where ancestral alleles do not have sufficient time to sort themselves out amongst the descendant lineages to reflect the history of cladogenesis, or it can arise by noisy data. Either way, if you have gene-tree species-tree discordance, it will erode support at nodes, or in the worst case, appear to strongly support a spurious evolutionary scenario. We can test for concordance between gene trees and species trees [@Minh:2020a]
 
@@ -79,17 +80,26 @@ In this module we will learn how to use [IQTREE2](www.iqtree.org) to infer phylo
 
 We will review Bui Quang Minhʻs ([Minh Bùi](https://bqminh.github.io/people/minh/)) [lecture on IQTREE2](https://github.com/simon-ho/SydneyPhyloWorkshop/blob/master/Lecture2_1.IQTREE.pdf) and how it addresses some issues in maximum likelihood inference of phylogenetics. 
 
+Here is an illustration of phylogenetic inference by Maximum Likelihood (@fig-ml). The likelihood of the tree is calculated given the data (here, the DNA sequence at each position or site). Each site is considered an independent data point, and each variable site provides some information about how closely related the taxa are. The likelihood is an expression of a combined probability across all of the sites, assuming a particular substitution model (the best substitution models are what ModelFinder or PartitionFinder finds). The topology and branch lengths that provide the Maximum Likelihood of the data is the ML tree.  
+
+![Figure: An illustration of phylogenetic inference by Maximum Likelihood. A multiple sequence alignment (here, DNA sequences), and DNA substitution models are used to make evolutionary inferences among the taxa (four species t1 through t4). The data in this alignment (in this case a toy example with 18 sites) is converted to a set of site patterns. The site patterns are shown along with the number of times they occur in alignment. These site patterns are used to calculate the likelihood given the substitution model and a phylogenetic tree (in this case an unrooted four-taxon tree). It is also necessary to assume a substitution model to estimate evolutionary distances for pairs of sequences (distances are the number of substitutions that have occurred since sequences had a common ancestor). The evolutionary distance equation (d12) is based on the simple model proposed by Jukes and Cantor in 1969. The equation transforms the proportion of nucleotide differences between taxa 1 and 2 (p12 = 4/18; the four site patterns that differ between taxa 1 and 2 are indicated with asterisks) into an evolutionary distance (in this case d12=0.2635 substitutions per site).](../../images/Site_pattern_frequencies_models.jpg){#fig-ml}
+
+[Source: By EBraun68 - Own work, CC BY-SA 4.0](https://commons.wikimedia.org/w/index.php?curid=95686405)
+
+
 # Infer the Turtle Phylogeny with IQTREE
 
 ## The theoretical problem
 
-The position of turtles among vertebrates has been enigmatic for decades. At various times it has been allied more closely with mammals or lizards.  It is one of those truly hard biological problems. Even with the development of genomics, the position of turtles with respect to crocodiles and birds remains a hot topic of research as of late.  
+The position of turtles among vertebrates has been enigmatic for decades (@fig-turtle). At various times it has been allied more closely with mammals or lizards.  It is one of those truly hard biological problems. Even with the development of genomics, the position of turtles with respect to crocodiles and birds remains a hot topic of research as of late.  
 
-![The changing position of turtles. Image by Jeremy Brown, from IQTREE tutorial](../../images/turtle.png)
+![The changing position of turtles. Image by Jeremy Brown, from IQTREE tutorial](../../images/turtle.png){#fig-turtle}
 
-Importantly, different groups have gotten different answers even with 100% bootstrap support at the nodes.  This highlights a problem that can occur when we have gene trees that conflict with the species tree. This can occur through incomplete lineage sorting (you will see ILS a lot in the literature), or via hybridization, or other mechanisms. 
+[Source: Jeremy Brown](http://www.iqtree.org/workshop/molevol2022)
 
-![Figure from Pollard et al (2006). Incomplete Lineage Sorting The history of a gene (colored lines) is drawn in the context of a species tree (gray bars). New lineages arising from new polymorphisms in the gene are drawn in different colors. In this case, the two alleles in the population prior to the split of Dmel are maintained through to the split of Dere and Dyak, leading to incomplete lineage sorting and an incongruent genealogy (tree 2). The greater the diversity in the ancestral population and the shorter the time between speciation events, the more likely nonspecies genealogies are.](../../images/Incomplete-Lineage-Sorting.jpg)
+Importantly, different groups have gotten different answers even with 100% bootstrap support at the nodes.  This highlights a problem that can occur when we have gene trees that conflict with the species tree. This can occur through incomplete lineage sorting (you will see ILS a lot in the literature; @fig-ils), or via hybridization, or other mechanisms. 
+
+![Incomplete Lineage Sorting. The species tree (thick gray history) in relation to a gene tree (thin colored history). New lineages arising from murations in the gene are represented by changes in color. Differences in the history of the gene versus the species can occur when the two alleles in the population prior to the split of Dmel are maintained through to the split of Dere and Dyak, leading to maintenance of an ancestral polymorphism and incomplete lineage sorting. The species tree is now incongruent with the gene tree (tree 2). The greater the diversity in the ancestral population and the shorter the time between speciation events, the more likely we are to see gene-tree species tree conflict.](../../images/Incomplete-Lineage-Sorting.jpg){#fig-ils}
 
 Source: [@Pollard:2006]
 
@@ -141,7 +151,7 @@ __Output files (in `out`):__
 
 ### Species Tree partitioned by locus
 
-Partitioning by locus allows each locus to be scaled to different evolutionary rates, as it is well known that some genes evolve faster than others (for example nuclear protein-coding genes vs. mitochondrial genes vs. non-coding genes). 
+It is well known that some genes evolve faster than others (for example nuclear protein-coding genes vs. mitochondrial genes vs. non-coding genes). Partitioning by locus allows the rate of substitution for each locus to be scaled to different evolutionary rates for an improved fit of the evolutionary model to the observed DNA sequence data. 
 
 We add a partition file indicating where the loci are in the alighment:
 
@@ -153,7 +163,7 @@ iqtree2 -s input/turtle.fa -p input/turtle.nex --prefix out/species -B 1000 -nt 
 
 __Run options explained:__
 
-- `-p input/turtle.nex` the partition file that delimits the partitions in the alighment to specify an edge-linked proportional partition model (Chernomor et al., 2016). There is one set of branch lengths for the phylogeny, but each partition can have proportionally shorter or longer tree length, representing slow or fast evolutionary rates, respectively.
+- `-p input/turtle.nex` the partition file that delimits the partitions in the alighment to specify an edge-linked proportional partition model (Chernomor et al., 2016). There is one set of branch lengths for the phylogeny, but each partition can have proportionally shorter or longer tree length (= same as slower or faster evolutionary rates, respectively).
 
 ::: {.callout-tip}
 ## Questions
@@ -166,7 +176,7 @@ __Run options explained:__
 
 ### Gene Trees
 
-We will now infer a separate phylogeny for each locus (gene). It is really easy to compute gene trees in IQTREE. The same inputs are used as for the paritioned model, but we just tell IQTREE to estimate each gene tree separately with a different flag:
+We will now infer a separate phylogeny for each locus (= gene). It is really easy to compute gene trees in IQTREE. The same inputs are used as for the paritioned model, but we just tell IQTREE to estimate each gene tree separately with a different (`-S`) flag for the partition file:
 
 ```{.bash filename=Terminal}
 # infer single-locus trees  
@@ -175,12 +185,12 @@ iqtree2 -s input/turtle.fa -S input/turtle.nex -m TEST --prefix out/loci -B 1000
 
 __Run options explained:__
 
-- `-S input/turtle.nex` to infer separate trees for every partition in `turtle.nex`. All output files are similar to a partition analysis, except that the tree `turtle.loci.treefile` now contains a multiple trees - one for each gene.
+- `-S input/turtle.nex` to infer separate trees for every partition in `turtle.nex`. All output files are similar to a partition analysis, except that the tree `turtle.loci.treefile` now contains multiple trees - one for each gene.
 
 
 ## Concordance factors ## 
 
-Species trees essentially imply that gene trees and species tree are equal. However, it is well known that gene trees might be discordant (i.e., individual genes may have differet histories). Therefore, we now want to quantify the agreement between gene trees and species tree in a so-called concordance factor [@Minh:2020a].
+Typcial phylogenetic inference methods essentially imply that gene trees and species tree are one and the same. However, it is well known that gene trees might be discordant (i.e., individual genes may have differet histories). We can actually check with large multilocus datasets (with many loci of sufficient length). Therefore, we now want to quantify the agreement between gene trees and species tree in a so-called concordance factor [@Minh:2020a].
 
 You can now compute gene concordance factor (gCF) and site concordance factor (sCF) for the tree inferred under the partition model:
 
@@ -206,8 +216,9 @@ Similarly, you can compute gCF and sCF for the tree under different species tree
 iqtree2 -t out/unpartitioned.treefile --gcf out/loci.treefile -s input/turtle.fa --scf 100 --prefix out/concord.unpartitioned 
 ```
 
-__Note:__ If you need to redo any of these analyses, add the `-redo` flag at the end of the command
-
+:::{.callout-tip}
+If you need to redo any of these analyses, add the `-redo` flag at the end of the command. 
+:::
 
 ::: {.callout-note}
 ## Definitions
@@ -228,11 +239,15 @@ __Note:__ If you need to redo any of these analyses, add the `-redo` flag at the
 
 # Further analyses of IQTREE outputs
 
+The code and analysis that follows was borrowed and adapted from Rob Lanfearʻs excellent blog on exploring gene-tree species-tree concordance <http://www.robertlanfear.com/blog/files/concordance_factors.html>. This is an excellent example of how to integrate output from other analysis software with R code. 
+
 An R script for these analyses is in `concordance.R`
 
 ## Using concordance factors to understand your data
 
-The first step is just to look at the concordance factors on the tree. To do this, just load the output tree (concord.cf.tree) in any tree viewer such as Figtree or you can use R. In this tree, each branch label shows bootstrap / gCF / sCF.
+The first step is just to look at the concordance factors on the tree. To do this, load the output tree (concord.cf.tree) in any tree viewer such as Figtree or you can use R. In this tree, each branch label shows bootstrap / gCF / sCF.
+
+We can also plot the trees using `ggtree` (but for a first look around I usually use FigTree).
 
 ```{r}
 #| message: false
@@ -250,15 +265,16 @@ require(ggrepel)
 # read the data
 d = read.delim("out/concord.cf.stat", header = T, comment.char='#')
                
+# rename the bootstrap and branchlength columns
 names(d)[names(d)=="Label"] = "bootstrap"
 names(d)[names(d)=="Length"] = "branchlength"
 
 # plot the tree
-
 tree <- read.iqtree("out/concord.cf.tree")  # read in tree file
 tib <- as_tibble(tree)
-d$node <- d$ID + 1 
+d$node <- d$ID + 1  # need to +1 to make IQTREE node numbers = ggtree 
 
+# merge the tree and data 
 td <- full_join(tib, d, by = "node")  # combine the tree (tib) and data (d)
 td <- as.treedata(td)       # coerce to treedata format (td)
 
@@ -286,7 +302,9 @@ ggplot(d, aes(x = gCF, y = sCF)) +
 
 This plot shows a few important things. First, _low bootstrap values (bright colours) coincide with the lowest gCF and sCF values, as expected_. You can only get a low bootstrap value when the there’s very limited information on that branch in the alignment. And if there’s very little information, there will be very few sites (and therefore genes) that can support a branch. 
 
-Second, __bootstrap values max out at 100% pretty quickly__, even for very low gCF and sCF values. Third, __sCF values have a minimum of ~30%__, but __gCF values can go all the way to 0%__. This is because sCF values are calculated by comparing the three possible resolutions of quartet around a node, so when the data are completely equivocal about these resolutions, we expect an sCF value of 33%. gCF values, on the other hand, are calculated from full gene trees, such that there are many more than 3 possible resolutions around a node, and the gCF value can be as low as 0% if no single gene tree contains a branch that’s present in the reference tree. This can happen (and does, in this bird dataset) when a combination of biology and stochastic error leads to a lot of gene-tree discordance. 
+__However, it is possible to have low gCF and sCF even with high bootstrap values.__ It turns out that _bootstrap values max out at 100% pretty quickly_, which tends to happen with very large datasets such as provided by Next-Gen sequencing. 
+
+Finally, __sCF values have a minimum of ~30%__, but __gCF values can go all the way to 0%__. This means that an sCF value ~30% is as low as you can possibly get. The range of possible values are simply a reflection of how these statistics are calculated. sCF values are calculated by comparing the three possible resolutions of quartet around a node, so when the data are completely equivocal about these resolutions, we expect an sCF value of 1 out of 3 or 33%. gCF values, on the other hand, are calculated from full gene trees, such that there are many more than 3 possible resolutions around a node, and the gCF value can be as low as 0% if no single gene tree contains a branch that’s present in the reference tree. This can happen when the genes are too short to contain informative sites (and happens more often deeper in the tree), or noisy data -- a combination of biology and stochastic error that leads to a lot of gene-tree discordance. 
 
 Sometimes we want to label points. `ggrepel()` is very helpful for this:
 
@@ -307,7 +325,7 @@ First we need to find the ID of the problematic node:
 
 ```{r}
 # show branches of interest
-d[(d$ID==22),]  # these have lower bootstrap support than the others
+d[(d$ID==20|d$ID==22),]  # these have lower bootstrap support than the others and have low gCF or sCF
 ```
 
 We can see that the problematic nodes have very short branch lengths, which is consistent with possible incomplete lineage sorting. 
@@ -329,13 +347,13 @@ ggtree(td) +                                      # plot tree
 
 # Using concordance factors to test the assumptions of an ILS model
 
-If the discordance among gene trees and sites come from incomplete lineage sorting, we can make a simple and testable prediction: that the number of gene trees or sites supporting the two discordant topologies should be roughly equal. Both of these ideas have been around for some time (for genes [link to Huson et al & Steel 2005 Recomb] and for sites [link to Greene et al 2010]), and the IQ-TREE output lets us test them very easily. 
+If the discordance among gene trees and sites come from _incomplete lineage sorting_, different genes should randomly support one or the other of the discordant topologies. Thus, we can make a simple and testable prediction: that the number of gene trees or sites supporting the two discordant topologies should be roughly equal. Both of these ideas have been around for some time (for genes [link to Huson et al & Steel 2005 Recomb] and for sites [link to Greene et al 2010]), and the IQ-TREE output lets us test them very easily. 
 
-The basic idea is that we count up the genes or sites supporting the two discordant topologies, and use a chi-square test to see if they’re significantly different. This requires a number of assumptions to hold (see the papers linked above), and if you’re willing to make those assumptions, here’s a simple way to calculate the probability that the data can reject equal frequencies for genes (gEFp, below) and for sites (sEFp, below). 
-
-See Rob Lanfearʻs blog for detailed explanations of the following calculations <http://www.robertlanfear.com/blog/files/concordance_factors.html>. This is an excellent example of how to integrate output from other analysis software with R code. 
+The basic idea is that we count up the genes or sites supporting the two discordant topologies, and use a chi-square test to see if they’re significantly different. This requires a number of assumptions to hold (see the papers linked above). A simple way to calculate the probability that the data can reject __equal frequencies__ of discordant toplogogies (EFp) for genes (gEFp) and for sites (sEFp). In this case failure to reject the hypothesis of equal frequencies is compatible with ILS. 
 
 ```{r}
+#| warning: false
+
 # first we use a slightly modified chisq function
 # which behaves nicely when you feed it zeros
 chisq = function(DF1, DF2, N){
@@ -357,6 +375,76 @@ e = d %>%
     
 
 subset(data.frame(e), (gEF_p < 0.05 | sEF_p < 0.05))
+```
+
+
+# Internode certainty
+
+The last measure to quantify evidence for each branch is the __internode certainty__ [@Salichos:2014]. 
+
+the conflict along a given branch is
+
+Internode certainty quantifies the degree of certainty for each branch (individual internode). It finds the two most common conflicting bipartitions, and measures the log magnitude of their difference. 
+
+We determine concordance in a clever way using set theory. We can think of each branch as splitting the tree into two subsets of taxa (bipartitions). What is so clever is that we donʻt have to compare the toplogies of the subtrees, just the taxa included. The task then comes down to checking for compatible intersections of the bipartitions. This makes it very easy (=fast) computationally. Hereʻs a figure from the paper by @fig-internode-conflict [@Salichos:2014] 
+
+![Compatible and conflicting bipartitions. Bipartition A = {a, b, c, d, e | f, g, h, i, j} is composed of the partitions A1 = {{a, b, c, d, e}} and A2 = {f, g, h, i, j}, where a, b, c, d, e, f, g, h, i, and j are taxa. Bipartition B = {a, b, c | d, e, f, g, h, i, j} is composed of the partitions B1 = {a, b, c} and B2 = {d, e, f, g, h, i, j}, and bipartition C = {a, b, c, d, g | e, f, h, i, j} is composed of the partitions C1 = {a, b, c, d, g} and C2 = {e, f, h, i, j}. ](../../images/internode-conflict.png){#fig-internode-conflict}
+
+[Source: @Salichos:2014]
+
+
+We check the compatibility of the biparitions by checking the intersections of their each possible set of bipartition pairs. 
+
+:::{.callout-note}
+# The definition of compatibility
+Two bipartitions $A=A_1 | A_2$ and $B=B_1 | B_2$ from the same taxon set are __compatible__ _if and only if_ at least one of the intersections of the four bipartition pairs ($A_1 \cap B_1$, $A_1 \cap B_2$, $A_2 \cap B_1$, $A_2 \cap B_2$) is empty (see citations in @Salichos:2014). 
+:::
+
+Bipartitions A and B are compatible because one of the intersections of their bipartition pairs ($A_2 \cap B_1$) is empty. 
+
+$$
+A_2 \cap B_1 =  \{f, g, h, i, j\} \cap \{a, b, c\} = \emptyset
+$$
+
+Bipartitions B and C are also compatible ($B_1 \cap C_2$ is empty). 
+
+$$
+B_1 \cap C_2 =  \{a, b, c\} \cap \{e, f, h, i, j\} = \emptyset
+$$
+
+In contrast, bipartition C conflicts with A (or is incompatible) because none of the four intersections are empty:
+
+$$
+\begin{aligned}
+A_1 \cap C_1 &=  \{{a, b, c, d, e}\} \cap \{a, b, c, d, g\} = \{a, b, c, d\}  \\
+A_1 \cap C_2 &=  \{{a, b, c, d, e}\} \cap \{e, f, h, i, j\} = \{e\}  \\
+A_2 \cap C_1 &=  \{{f, g, h, i, j}\} \cap \{a, b, c, d, g\} = \{a, b, c, d\}  \\  
+A_2 \cap C_2 &=  \{{f, g, h, i, j}\} \cap \{e, f, h, i, j\} = \{e\}  
+\end{aligned}
+$$
+
+For a given branch, Internode Certainty (IC) values reflect the degree of conflict between the bipartition defining the branch (say X) and the most frequent conflicting biparition (say Y), which we can get by counting the number of concordant genes or sites for each bipartition. IC is then defined by: 
+
+$$
+\begin{aligned}
+IC &= log_2(n) + \sum_{n=1}^2 P(X_n)log_2[P(X_n)] \\
+   &= 1 + P(X)log_2[P(X)] + P(Y)log_2[P(Y)], 
+\end{aligned}
+$$
+where the frequencies of the bipartitons are: 
+
+$$
+\begin{aligned}
+P(X) = X/(X + Y), \\  
+P(Y) = Y/(X + Y) 
+\end{aligned}
+$$
+and   $P(X) + P(Y) = 1.$
+
+Therefore, IC values at or close to 1 indicate support for the given branch (i.e., absence of conflict), and IC values at or close to 0 indicate maximum conflict (i.e., equal support for both bipartitions).
+
+```{r}
+#| warning: false
 
 # calculate internode certainty
 
@@ -384,6 +472,16 @@ e = e %>%
 # plot it
 ggpairs(e, columns = c("gCF", "sCF", "bootstrap", "gEF_p", "sEF_p", "gIC", "sIC"))
 ```
+
+::: {.callout-tip}
+## Questions
+
+- Which nodes have IC near zero? 
+- How does it correspond to gCF, sCF, and bootstrap support?
+:::
+
+
+See Rob Lanfearʻs blog for detailed explanations of the following calculations <http://www.robertlanfear.com/blog/files/concordance_factors.html>. This is an excellent example of how to integrate output from other analysis software with R code. 
 
 
 

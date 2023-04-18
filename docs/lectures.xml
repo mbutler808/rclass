@@ -58,6 +58,7 @@ Learning objectives
 <ul>
 <li>Download <a href="https://github.com/iqtree/iqtree2/releases/tag/v2.1.2">iqtree version 2.1.2</a> and install the binary for your platform <em>following the instructions below</em>.</li>
 <li>As of this writing, IQTREE2 v2.1.2 is the latest stable release version, the preview versions (e.g., 2.2.2.3) are in beta testing.</li>
+<li>If you donʻt want to install IQTREE, try the webserver: <a href="http://iqtree.cibiv.univie.ac.at" class="uri">http://iqtree.cibiv.univie.ac.at</a></li>
 </ul>
 <section id="windows-users" class="level3">
 <h3 class="anchored" data-anchor-id="windows-users">Windows users</h3>
@@ -221,12 +222,13 @@ Installing Git-Bash
 <h1>Setup your Tutorial Folder</h1>
 <p>Make a folder for this exercise <code>TurtleTutorial</code> somewhere convenient (in your <code>rclass</code> folder?).</p>
 <ul>
-<li>Download these files into it:
+<li><p>Download these files into it:</p>
 <ul>
 <li><a href="http://www.iqtree.org/workshop/data/turtle.fa">turtle.fa</a> : A sequence alignment (in FASTA format) which is a subset of the original dataset used to assess the phylogenetic position of Turtles relative to Crocodiles and Birds <a href="https://doi.org/10.1186/1741-7007-10-65">Chiari et al., 2012</a>.</li>
 <li><a href="http://www.iqtree.org/workshop/data/turtle.nex">turtle.nex</a> : The partition file (in NEXUS format) defining 29 genes, which are a subset of the original dataset of 248 genes.</li>
 </ul></li>
-<li>The R script <a href="../../code/concordance.R"><code>concordance.R</code></a></li>
+<li><p>The R script <a href="../../code/concordance.R"><code>concordance.R</code></a></p></li>
+<li><p>The IQTREE shell script <a href="../../code/iqtreerun.R"><code>iqtreerun.sh</code></a></p></li>
 </ul>
 </section>
 <section id="test-your-iqtree-installation" class="level1">
@@ -338,6 +340,7 @@ Setup iqtree software
 </ul></li>
 <li>The R script <a href="../../code/concordance.R"><code>concordance.R</code></a></li>
 <li>iqtree shell script: <a href="../../code/iqtreerun.sh"><code>iqtreerun.sh</code></a></li>
+<li>If you donʻt want to setup IQTREE2 and infer the phylogenies yourself, you can clone the repo (or clone the repo, delete the out files, and run the phylogenies yourself)<a href="https://github.com/mbutler808/TurtleTutorial" class="uri">https://github.com/mbutler808/TurtleTutorial</a></li>
 </ul>
 </section>
 <section id="r-packages-you-will-need" class="level4">
@@ -357,30 +360,39 @@ Setup iqtree software
 <section id="overview" class="level1">
 <h1>Overview</h1>
 <p>When inferring phylogenies from sequence data, it is important to provide support values, usually at the nodes, to indicate how much evidence there is for each split along the phylogeny. The most common and familar are nodal support values - <strong>bootstrap support</strong> in percent for <strong>maximum likelihood trees</strong>, and <strong>posterior probability</strong> for trees inferred by <strong>Bayesian inference</strong>.</p>
-<p>IQTREE2 is software for the inference of phylogenies by Maximum Likelihood <span class="citation" data-cites="Minh:2020">(Minh et al. 2020)</span>. Several additional modules are bundled with IQTREE2. ModelFinder searches for the best model prior to phylogenetic inference <span class="citation" data-cites="Kalyaanamoorthy:2017">(Kalyaanamoorthy et al. 2017)</span>. ModelFinder can also combine partitions to reduce overparameterization, similar to PartitionFinder <span class="citation" data-cites="Lanfear:2016">(Lanfear et al. 2016)</span>.</p>
+<p>IQTREE2 is software for the inference of phylogenies by <strong>Maximum Likelihood</strong> <span class="citation" data-cites="Minh:2020">(Minh et al. 2020)</span>. Several additional modules are bundled with IQTREE2. <strong>ModelFinder</strong> searches for the best substition models prior to phylogenetic inference <span class="citation" data-cites="Kalyaanamoorthy:2017">(Kalyaanamoorthy et al. 2017)</span>. ModelFinder can also combine partitions to reduce overparameterization, similar to <strong>PartitionFinder</strong> <span class="citation" data-cites="Lanfear:2016">(Lanfear et al. 2016)</span>.</p>
 <p>There is an increasing recognition that nodal support is not enough. Most phylogenetic analyses are now multi-locus, with data from several to hundred of genes. More studies are discovering that not all of the loci may agree – sometimes certain loci will support one topology whereas others may support an alternative topology. This is called gene-tree species-tree discordance. It can arise by evolutionary mechanisms such as incomplete lineage sorting when you have rapid radiation (short branch lengths in parts of the tree), where ancestral alleles do not have sufficient time to sort themselves out amongst the descendant lineages to reflect the history of cladogenesis, or it can arise by noisy data. Either way, if you have gene-tree species-tree discordance, it will erode support at nodes, or in the worst case, appear to strongly support a spurious evolutionary scenario. We can test for concordance between gene trees and species trees <span class="citation" data-cites="Minh:2020a">(Minh, Hahn, and Lanfear 2020)</span></p>
 <p>In this module we will learn how to use <a href="www.iqtree.org">IQTREE2</a> to infer phylogenetic trees (both species trees and gene trees), and compute several concordance factors. Gene concordance and discordance factors, and site concordance and discordance factors (site = position along the DNA sequence). We will use R to read in and explore the output from IQTREE.</p>
 </section>
 <section id="iqtree-and-ml-phylogenetic-inference-lecture" class="level1">
 <h1>IQTREE and ML phylogenetic inference lecture</h1>
 <p>We will review Bui Quang Minhʻs (<a href="https://bqminh.github.io/people/minh/">Minh Bùi</a>) <a href="https://github.com/simon-ho/SydneyPhyloWorkshop/blob/master/Lecture2_1.IQTREE.pdf">lecture on IQTREE2</a> and how it addresses some issues in maximum likelihood inference of phylogenetics.</p>
+<p>Here is an illustration of phylogenetic inference by Maximum Likelihood (Figure&nbsp;1). The likelihood of the tree is calculated given the data (here, the DNA sequence at each position or site). Each site is considered an independent data point, and each variable site provides some information about how closely related the taxa are. The likelihood is an expression of a combined probability across all of the sites, assuming a particular substitution model (the best substitution models are what ModelFinder or PartitionFinder finds). The topology and branch lengths that provide the Maximum Likelihood of the data is the ML tree.</p>
+<div id="fig-ml" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://mbutler808.github.io/images/Site_pattern_frequencies_models.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Figure: An illustration of phylogenetic inference by Maximum Likelihood. A multiple sequence alignment (here, DNA sequences), and DNA substitution models are used to make evolutionary inferences among the taxa (four species t1 through t4). The data in this alignment (in this case a toy example with 18 sites) is converted to a set of site patterns. The site patterns are shown along with the number of times they occur in alignment. These site patterns are used to calculate the likelihood given the substitution model and a phylogenetic tree (in this case an unrooted four-taxon tree). It is also necessary to assume a substitution model to estimate evolutionary distances for pairs of sequences (distances are the number of substitutions that have occurred since sequences had a common ancestor). The evolutionary distance equation (d12) is based on the simple model proposed by Jukes and Cantor in 1969. The equation transforms the proportion of nucleotide differences between taxa 1 and 2 (p12 = 4/18; the four site patterns that differ between taxa 1 and 2 are indicated with asterisks) into an evolutionary distance (in this case d12=0.2635 substitutions per site).</figcaption><p></p>
+</figure>
+</div>
+<p><a href="https://commons.wikimedia.org/w/index.php?curid=95686405">Source: By EBraun68 - Own work, CC BY-SA 4.0</a></p>
 </section>
 <section id="infer-the-turtle-phylogeny-with-iqtree" class="level1">
 <h1>Infer the Turtle Phylogeny with IQTREE</h1>
 <section id="the-theoretical-problem" class="level2">
 <h2 class="anchored" data-anchor-id="the-theoretical-problem">The theoretical problem</h2>
-<p>The position of turtles among vertebrates has been enigmatic for decades. At various times it has been allied more closely with mammals or lizards. It is one of those truly hard biological problems. Even with the development of genomics, the position of turtles with respect to crocodiles and birds remains a hot topic of research as of late.</p>
-<div class="quarto-figure quarto-figure-center">
+<p>The position of turtles among vertebrates has been enigmatic for decades (Figure&nbsp;2). At various times it has been allied more closely with mammals or lizards. It is one of those truly hard biological problems. Even with the development of genomics, the position of turtles with respect to crocodiles and birds remains a hot topic of research as of late.</p>
+<div id="fig-turtle" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://mbutler808.github.io/images/turtle.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">The changing position of turtles. Image by Jeremy Brown, from IQTREE tutorial</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: The changing position of turtles. Image by Jeremy Brown, from IQTREE tutorial</figcaption><p></p>
 </figure>
 </div>
-<p>Importantly, different groups have gotten different answers even with 100% bootstrap support at the nodes. This highlights a problem that can occur when we have gene trees that conflict with the species tree. This can occur through incomplete lineage sorting (you will see ILS a lot in the literature), or via hybridization, or other mechanisms.</p>
-<div class="quarto-figure quarto-figure-center">
+<p><a href="http://www.iqtree.org/workshop/molevol2022">Source: Jeremy Brown</a></p>
+<p>Importantly, different groups have gotten different answers even with 100% bootstrap support at the nodes. This highlights a problem that can occur when we have gene trees that conflict with the species tree. This can occur through incomplete lineage sorting (you will see ILS a lot in the literature; Figure&nbsp;3), or via hybridization, or other mechanisms.</p>
+<div id="fig-ils" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://mbutler808.github.io/images/Incomplete-Lineage-Sorting.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure from Pollard et al (2006). Incomplete Lineage Sorting The history of a gene (colored lines) is drawn in the context of a species tree (gray bars). New lineages arising from new polymorphisms in the gene are drawn in different colors. In this case, the two alleles in the population prior to the split of Dmel are maintained through to the split of Dere and Dyak, leading to incomplete lineage sorting and an incongruent genealogy (tree 2). The greater the diversity in the ancestral population and the shorter the time between speciation events, the more likely nonspecies genealogies are.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Incomplete Lineage Sorting. The species tree (thick gray history) in relation to a gene tree (thin colored history). New lineages arising from murations in the gene are represented by changes in color. Differences in the history of the gene versus the species can occur when the two alleles in the population prior to the split of Dmel are maintained through to the split of Dere and Dyak, leading to maintenance of an ancestral polymorphism and incomplete lineage sorting. The species tree is now incongruent with the gene tree (tree 2). The greater the diversity in the ancestral population and the shorter the time between speciation events, the more likely we are to see gene-tree species tree conflict.</figcaption><p></p>
 </figure>
 </div>
 <p>Source: <span class="citation" data-cites="Pollard:2006">(Pollard et al. 2006)</span></p>
@@ -447,7 +459,7 @@ Questions
 </section>
 <section id="species-tree-partitioned-by-locus" class="level3">
 <h3 class="anchored" data-anchor-id="species-tree-partitioned-by-locus">Species Tree partitioned by locus</h3>
-<p>Partitioning by locus allows each locus to be scaled to different evolutionary rates, as it is well known that some genes evolve faster than others (for example nuclear protein-coding genes vs.&nbsp;mitochondrial genes vs.&nbsp;non-coding genes).</p>
+<p>It is well known that some genes evolve faster than others (for example nuclear protein-coding genes vs.&nbsp;mitochondrial genes vs.&nbsp;non-coding genes). Partitioning by locus allows the rate of substitution for each locus to be scaled to different evolutionary rates for an improved fit of the evolutionary model to the observed DNA sequence data.</p>
 <p>We add a partition file indicating where the loci are in the alighment:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -459,7 +471,7 @@ Questions
 </div>
 <p><strong>Run options explained:</strong></p>
 <ul>
-<li><code>-p input/turtle.nex</code> the partition file that delimits the partitions in the alighment to specify an edge-linked proportional partition model (Chernomor et al., 2016). There is one set of branch lengths for the phylogeny, but each partition can have proportionally shorter or longer tree length, representing slow or fast evolutionary rates, respectively.</li>
+<li><code>-p input/turtle.nex</code> the partition file that delimits the partitions in the alighment to specify an edge-linked proportional partition model (Chernomor et al., 2016). There is one set of branch lengths for the phylogeny, but each partition can have proportionally shorter or longer tree length (= same as slower or faster evolutionary rates, respectively).</li>
 </ul>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -481,7 +493,7 @@ Questions
 </section>
 <section id="gene-trees" class="level3">
 <h3 class="anchored" data-anchor-id="gene-trees">Gene Trees</h3>
-<p>We will now infer a separate phylogeny for each locus (gene). It is really easy to compute gene trees in IQTREE. The same inputs are used as for the paritioned model, but we just tell IQTREE to estimate each gene tree separately with a different flag:</p>
+<p>We will now infer a separate phylogeny for each locus (= gene). It is really easy to compute gene trees in IQTREE. The same inputs are used as for the paritioned model, but we just tell IQTREE to estimate each gene tree separately with a different (<code>-S</code>) flag for the partition file:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
@@ -491,13 +503,13 @@ Questions
 </div>
 <p><strong>Run options explained:</strong></p>
 <ul>
-<li><code>-S input/turtle.nex</code> to infer separate trees for every partition in <code>turtle.nex</code>. All output files are similar to a partition analysis, except that the tree <code>turtle.loci.treefile</code> now contains a multiple trees - one for each gene.</li>
+<li><code>-S input/turtle.nex</code> to infer separate trees for every partition in <code>turtle.nex</code>. All output files are similar to a partition analysis, except that the tree <code>turtle.loci.treefile</code> now contains multiple trees - one for each gene.</li>
 </ul>
 </section>
 </section>
 <section id="concordance-factors" class="level2">
 <h2 class="anchored" data-anchor-id="concordance-factors">Concordance factors</h2>
-<p>Species trees essentially imply that gene trees and species tree are equal. However, it is well known that gene trees might be discordant (i.e., individual genes may have differet histories). Therefore, we now want to quantify the agreement between gene trees and species tree in a so-called concordance factor <span class="citation" data-cites="Minh:2020a">(Minh, Hahn, and Lanfear 2020)</span>.</p>
+<p>Typcial phylogenetic inference methods essentially imply that gene trees and species tree are one and the same. However, it is well known that gene trees might be discordant (i.e., individual genes may have differet histories). We can actually check with large multilocus datasets (with many loci of sufficient length). Therefore, we now want to quantify the agreement between gene trees and species tree in a so-called concordance factor <span class="citation" data-cites="Minh:2020a">(Minh, Hahn, and Lanfear 2020)</span>.</p>
 <p>You can now compute gene concordance factor (gCF) and site concordance factor (sCF) for the tree inferred under the partition model:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -524,7 +536,19 @@ Questions
 </div>
 <div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;">iqtree2</span> <span class="at" style="color: #657422;">-t</span> out/unpartitioned.treefile <span class="at" style="color: #657422;">--gcf</span> out/loci.treefile <span class="at" style="color: #657422;">-s</span> input/turtle.fa <span class="at" style="color: #657422;">--scf</span> 100 <span class="at" style="color: #657422;">--prefix</span> out/concord.unpartitioned </span></code></pre></div>
 </div>
-<p><strong>Note:</strong> If you need to redo any of these analyses, add the <code>-redo</code> flag at the end of the command</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you need to redo any of these analyses, add the <code>-redo</code> flag at the end of the command.</p>
+</div>
+</div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -566,10 +590,12 @@ Questions
 </section>
 <section id="further-analyses-of-iqtree-outputs" class="level1">
 <h1>Further analyses of IQTREE outputs</h1>
+<p>The code and analysis that follows was borrowed and adapted from Rob Lanfearʻs excellent blog on exploring gene-tree species-tree concordance <a href="http://www.robertlanfear.com/blog/files/concordance_factors.html" class="uri">http://www.robertlanfear.com/blog/files/concordance_factors.html</a>. This is an excellent example of how to integrate output from other analysis software with R code.</p>
 <p>An R script for these analyses is in <code>concordance.R</code></p>
 <section id="using-concordance-factors-to-understand-your-data" class="level2">
 <h2 class="anchored" data-anchor-id="using-concordance-factors-to-understand-your-data">Using concordance factors to understand your data</h2>
-<p>The first step is just to look at the concordance factors on the tree. To do this, just load the output tree (concord.cf.tree) in any tree viewer such as Figtree or you can use R. In this tree, each branch label shows bootstrap / gCF / sCF.</p>
+<p>The first step is just to look at the concordance factors on the tree. To do this, load the output tree (concord.cf.tree) in any tree viewer such as Figtree or you can use R. In this tree, each branch label shows bootstrap / gCF / sCF.</p>
+<p>We can also plot the trees using <code>ggtree</code> (but for a first look around I usually use FigTree).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">require</span>(viridis)</span>
 <span id="cb6-2"><span class="fu" style="color: #4758AB;">require</span>(GGally)</span>
@@ -585,22 +611,23 @@ Questions
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;"># read the data</span></span>
 <span id="cb7-2">d <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">read.delim</span>(<span class="st" style="color: #20794D;">"out/concord.cf.stat"</span>, <span class="at" style="color: #657422;">header =</span> T, <span class="at" style="color: #657422;">comment.char=</span><span class="st" style="color: #20794D;">'#'</span>)</span>
 <span id="cb7-3">               </span>
-<span id="cb7-4"><span class="fu" style="color: #4758AB;">names</span>(d)[<span class="fu" style="color: #4758AB;">names</span>(d)<span class="sc" style="color: #5E5E5E;">==</span><span class="st" style="color: #20794D;">"Label"</span>] <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"bootstrap"</span></span>
-<span id="cb7-5"><span class="fu" style="color: #4758AB;">names</span>(d)[<span class="fu" style="color: #4758AB;">names</span>(d)<span class="sc" style="color: #5E5E5E;">==</span><span class="st" style="color: #20794D;">"Length"</span>] <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"branchlength"</span></span>
-<span id="cb7-6"></span>
-<span id="cb7-7"><span class="co" style="color: #5E5E5E;"># plot the tree</span></span>
-<span id="cb7-8"></span>
+<span id="cb7-4"><span class="co" style="color: #5E5E5E;"># rename the bootstrap and branchlength columns</span></span>
+<span id="cb7-5"><span class="fu" style="color: #4758AB;">names</span>(d)[<span class="fu" style="color: #4758AB;">names</span>(d)<span class="sc" style="color: #5E5E5E;">==</span><span class="st" style="color: #20794D;">"Label"</span>] <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"bootstrap"</span></span>
+<span id="cb7-6"><span class="fu" style="color: #4758AB;">names</span>(d)[<span class="fu" style="color: #4758AB;">names</span>(d)<span class="sc" style="color: #5E5E5E;">==</span><span class="st" style="color: #20794D;">"Length"</span>] <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"branchlength"</span></span>
+<span id="cb7-7"></span>
+<span id="cb7-8"><span class="co" style="color: #5E5E5E;"># plot the tree</span></span>
 <span id="cb7-9">tree <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.iqtree</span>(<span class="st" style="color: #20794D;">"out/concord.cf.tree"</span>)  <span class="co" style="color: #5E5E5E;"># read in tree file</span></span>
 <span id="cb7-10">tib <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as_tibble</span>(tree)</span>
-<span id="cb7-11">d<span class="sc" style="color: #5E5E5E;">$</span>node <span class="ot" style="color: #003B4F;">&lt;-</span> d<span class="sc" style="color: #5E5E5E;">$</span>ID <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span> </span>
+<span id="cb7-11">d<span class="sc" style="color: #5E5E5E;">$</span>node <span class="ot" style="color: #003B4F;">&lt;-</span> d<span class="sc" style="color: #5E5E5E;">$</span>ID <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>  <span class="co" style="color: #5E5E5E;"># need to +1 to make IQTREE node numbers = ggtree </span></span>
 <span id="cb7-12"></span>
-<span id="cb7-13">td <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">full_join</span>(tib, d, <span class="at" style="color: #657422;">by =</span> <span class="st" style="color: #20794D;">"node"</span>)  <span class="co" style="color: #5E5E5E;"># combine the tree (tib) and data (d)</span></span>
-<span id="cb7-14">td <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as.treedata</span>(td)       <span class="co" style="color: #5E5E5E;"># coerce to treedata format (td)</span></span>
-<span id="cb7-15"></span>
-<span id="cb7-16"><span class="fu" style="color: #4758AB;">ggtree</span>(td) <span class="sc" style="color: #5E5E5E;">+</span>          <span class="co" style="color: #5E5E5E;"># plot tree</span></span>
-<span id="cb7-17">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position=</span><span class="st" style="color: #20794D;">"right"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb7-18">  <span class="fu" style="color: #4758AB;">geom_tiplab</span>() <span class="sc" style="color: #5E5E5E;">+</span>                         <span class="co" style="color: #5E5E5E;"># add tip labels</span></span>
-<span id="cb7-19">  <span class="fu" style="color: #4758AB;">geom_label2</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">label=</span>label, <span class="at" style="color: #657422;">subset=</span><span class="sc" style="color: #5E5E5E;">!</span>isTip), <span class="at" style="color: #657422;">color=</span><span class="st" style="color: #20794D;">"black"</span>)  <span class="co" style="color: #5E5E5E;"># add node labels </span></span></code></pre></div>
+<span id="cb7-13"><span class="co" style="color: #5E5E5E;"># merge the tree and data </span></span>
+<span id="cb7-14">td <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">full_join</span>(tib, d, <span class="at" style="color: #657422;">by =</span> <span class="st" style="color: #20794D;">"node"</span>)  <span class="co" style="color: #5E5E5E;"># combine the tree (tib) and data (d)</span></span>
+<span id="cb7-15">td <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as.treedata</span>(td)       <span class="co" style="color: #5E5E5E;"># coerce to treedata format (td)</span></span>
+<span id="cb7-16"></span>
+<span id="cb7-17"><span class="fu" style="color: #4758AB;">ggtree</span>(td) <span class="sc" style="color: #5E5E5E;">+</span>          <span class="co" style="color: #5E5E5E;"># plot tree</span></span>
+<span id="cb7-18">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position=</span><span class="st" style="color: #20794D;">"right"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb7-19">  <span class="fu" style="color: #4758AB;">geom_tiplab</span>() <span class="sc" style="color: #5E5E5E;">+</span>                         <span class="co" style="color: #5E5E5E;"># add tip labels</span></span>
+<span id="cb7-20">  <span class="fu" style="color: #4758AB;">geom_label2</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">label=</span>label, <span class="at" style="color: #657422;">subset=</span><span class="sc" style="color: #5E5E5E;">!</span>isTip), <span class="at" style="color: #657422;">color=</span><span class="st" style="color: #20794D;">"black"</span>)  <span class="co" style="color: #5E5E5E;"># add node labels </span></span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="https://mbutler808.github.io/posts/2023-04-13-iqtree-phylogenetics/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -624,7 +651,8 @@ Questions
 </div>
 </div>
 <p>This plot shows a few important things. First, <em>low bootstrap values (bright colours) coincide with the lowest gCF and sCF values, as expected</em>. You can only get a low bootstrap value when the there’s very limited information on that branch in the alignment. And if there’s very little information, there will be very few sites (and therefore genes) that can support a branch.</p>
-<p>Second, <strong>bootstrap values max out at 100% pretty quickly</strong>, even for very low gCF and sCF values. Third, <strong>sCF values have a minimum of ~30%</strong>, but <strong>gCF values can go all the way to 0%</strong>. This is because sCF values are calculated by comparing the three possible resolutions of quartet around a node, so when the data are completely equivocal about these resolutions, we expect an sCF value of 33%. gCF values, on the other hand, are calculated from full gene trees, such that there are many more than 3 possible resolutions around a node, and the gCF value can be as low as 0% if no single gene tree contains a branch that’s present in the reference tree. This can happen (and does, in this bird dataset) when a combination of biology and stochastic error leads to a lot of gene-tree discordance.</p>
+<p><strong>However, it is possible to have low gCF and sCF even with high bootstrap values.</strong> It turns out that <em>bootstrap values max out at 100% pretty quickly</em>, which tends to happen with very large datasets such as provided by Next-Gen sequencing.</p>
+<p>Finally, <strong>sCF values have a minimum of ~30%</strong>, but <strong>gCF values can go all the way to 0%</strong>. This means that an sCF value ~30% is as low as you can possibly get. The range of possible values are simply a reflection of how these statistics are calculated. sCF values are calculated by comparing the three possible resolutions of quartet around a node, so when the data are completely equivocal about these resolutions, we expect an sCF value of 1 out of 3 or 33%. gCF values, on the other hand, are calculated from full gene trees, such that there are many more than 3 possible resolutions around a node, and the gCF value can be as low as 0% if no single gene tree contains a branch that’s present in the reference tree. This can happen when the genes are too short to contain informative sites (and happens more often deeper in the tree), or noisy data – a combination of biology and stochastic error that leads to a lot of gene-tree discordance.</p>
 <p>Sometimes we want to label points. <code>ggrepel()</code> is very helpful for this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="co" style="color: #5E5E5E;"># label the points</span></span>
@@ -645,12 +673,14 @@ Questions
 <p>First we need to find the ID of the problematic node:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="co" style="color: #5E5E5E;"># show branches of interest</span></span>
-<span id="cb10-2">d[(d<span class="sc" style="color: #5E5E5E;">$</span>ID<span class="sc" style="color: #5E5E5E;">==</span><span class="dv" style="color: #AD0000;">22</span>),]  <span class="co" style="color: #5E5E5E;"># these have lower bootstrap support than the others</span></span></code></pre></div>
+<span id="cb10-2">d[(d<span class="sc" style="color: #5E5E5E;">$</span>ID<span class="sc" style="color: #5E5E5E;">==</span><span class="dv" style="color: #AD0000;">20</span><span class="sc" style="color: #5E5E5E;">|</span>d<span class="sc" style="color: #5E5E5E;">$</span>ID<span class="sc" style="color: #5E5E5E;">==</span><span class="dv" style="color: #AD0000;">22</span>),]  <span class="co" style="color: #5E5E5E;"># these have lower bootstrap support than the others and have low gCF or sCF</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  ID   gCF gCF_N gDF1 gDF1_N  gDF2 gDF2_N  gDFP gDFP_N gN   sCF sCF_N  sDF1
-6 22 48.28    14 3.45      1 17.24      5 31.03      9 29 34.72 62.96 22.93
+4 20 75.00     3 0.00      0 25.00      1  0.00      0  4 38.24 26.35 28.02
+6 22 48.28    14 3.45      1 17.24      5 31.03      9 29 36.13 57.59 22.17
   sDF1_N  sDF2 sDF2_N     sN bootstrap branchlength node
-6  43.76 41.35  85.03 191.75        81    0.0186587   23</code></pre>
+4  19.59 33.75  23.71  69.65        51   0.00355984   21
+6  37.78 39.70  72.90 168.27        81   0.01865970   23</code></pre>
 </div>
 </div>
 <p>We can see that the problematic nodes have very short branch lengths, which is consistent with possible incomplete lineage sorting.</p>
@@ -676,9 +706,8 @@ Questions
 </section>
 <section id="using-concordance-factors-to-test-the-assumptions-of-an-ils-model" class="level1">
 <h1>Using concordance factors to test the assumptions of an ILS model</h1>
-<p>If the discordance among gene trees and sites come from incomplete lineage sorting, we can make a simple and testable prediction: that the number of gene trees or sites supporting the two discordant topologies should be roughly equal. Both of these ideas have been around for some time (for genes [link to Huson et al &amp; Steel 2005 Recomb] and for sites [link to Greene et al 2010]), and the IQ-TREE output lets us test them very easily.</p>
-<p>The basic idea is that we count up the genes or sites supporting the two discordant topologies, and use a chi-square test to see if they’re significantly different. This requires a number of assumptions to hold (see the papers linked above), and if you’re willing to make those assumptions, here’s a simple way to calculate the probability that the data can reject equal frequencies for genes (gEFp, below) and for sites (sEFp, below).</p>
-<p>See Rob Lanfearʻs blog for detailed explanations of the following calculations <a href="http://www.robertlanfear.com/blog/files/concordance_factors.html" class="uri">http://www.robertlanfear.com/blog/files/concordance_factors.html</a>. This is an excellent example of how to integrate output from other analysis software with R code.</p>
+<p>If the discordance among gene trees and sites come from <em>incomplete lineage sorting</em>, different genes should randomly support one or the other of the discordant topologies. Thus, we can make a simple and testable prediction: that the number of gene trees or sites supporting the two discordant topologies should be roughly equal. Both of these ideas have been around for some time (for genes [link to Huson et al &amp; Steel 2005 Recomb] and for sites [link to Greene et al 2010]), and the IQ-TREE output lets us test them very easily.</p>
+<p>The basic idea is that we count up the genes or sites supporting the two discordant topologies, and use a chi-square test to see if they’re significantly different. This requires a number of assumptions to hold (see the papers linked above). A simple way to calculate the probability that the data can reject <strong>equal frequencies</strong> of discordant toplogogies (EFp) for genes (gEFp) and for sites (sEFp). In this case failure to reject the hypothesis of equal frequencies is compatible with ILS.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="co" style="color: #5E5E5E;"># first we use a slightly modified chisq function</span></span>
 <span id="cb14-2"><span class="co" style="color: #5E5E5E;"># which behaves nicely when you feed it zeros</span></span>
@@ -697,95 +726,102 @@ Questions
 <span id="cb14-15">e <span class="ot" style="color: #003B4F;">=</span> d <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
 <span id="cb14-16">    <span class="fu" style="color: #4758AB;">group_by</span>(ID) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
 <span id="cb14-17">    <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">gEF_p =</span> <span class="fu" style="color: #4758AB;">chisq</span>(gDF1, gDF2, gN)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb14-18">    <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">sEF_p =</span> <span class="fu" style="color: #4758AB;">chisq</span>(sDF1, sDF2, sN))</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: There were 9 warnings in `mutate()`.
-The first warning was:
-ℹ In argument: `gEF_p = chisq(gDF1, gDF2, gN)`.
-ℹ In group 1: `ID = 17`.
-Caused by warning in `chisq.test()`:
-! Chi-squared approximation may be incorrect
-ℹ Run `dplyr::last_dplyr_warnings()` to see the 8 remaining warnings.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: There were 2 warnings in `mutate()`.
-The first warning was:
-ℹ In argument: `sEF_p = chisq(sDF1, sDF2, sN)`.
-ℹ In group 8: `ID = 24`.
-Caused by warning in `chisq.test()`:
-! Chi-squared approximation may be incorrect
-ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="fu" style="color: #4758AB;">subset</span>(<span class="fu" style="color: #4758AB;">data.frame</span>(e), (gEF_p <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="fl" style="color: #AD0000;">0.05</span> <span class="sc" style="color: #5E5E5E;">|</span> sEF_p <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="fl" style="color: #AD0000;">0.05</span>))</span></code></pre></div>
+<span id="cb14-18">    <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">sEF_p =</span> <span class="fu" style="color: #4758AB;">chisq</span>(sDF1, sDF2, sN))</span>
+<span id="cb14-19">    </span>
+<span id="cb14-20"></span>
+<span id="cb14-21"><span class="fu" style="color: #4758AB;">subset</span>(<span class="fu" style="color: #4758AB;">data.frame</span>(e), (gEF_p <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="fl" style="color: #AD0000;">0.05</span> <span class="sc" style="color: #5E5E5E;">|</span> sEF_p <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="fl" style="color: #AD0000;">0.05</span>))</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  ID   gCF gCF_N gDF1 gDF1_N  gDF2 gDF2_N  gDFP gDFP_N gN   sCF sCF_N  sDF1
-6 22 48.28    14 3.45      1 17.24      5 31.03      9 29 34.72 62.96 22.93
-  sDF1_N  sDF2 sDF2_N     sN bootstrap branchlength node     gEF_p       sEF_p
-6  43.76 41.35  85.03 191.75        81    0.0186587   23 0.1024704 0.001465972</code></pre>
+6 22 48.28    14 3.45      1 17.24      5 31.03      9 29 36.13 57.59 22.17
+  sDF1_N sDF2 sDF2_N     sN bootstrap branchlength node     gEF_p       sEF_p
+6  37.78 39.7   72.9 168.27        81    0.0186597   23 0.1024704 0.003849915</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="co" style="color: #5E5E5E;"># calculate internode certainty</span></span>
-<span id="cb19-2"></span>
-<span id="cb19-3">IC <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(CF, DF1, DF2, N){</span>
-<span id="cb19-4">    </span>
-<span id="cb19-5">    <span class="co" style="color: #5E5E5E;"># convert to counts</span></span>
-<span id="cb19-6">    X <span class="ot" style="color: #003B4F;">=</span> CF <span class="sc" style="color: #5E5E5E;">*</span> N <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">100</span></span>
-<span id="cb19-7">    Y <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">max</span>(DF1, DF2) <span class="sc" style="color: #5E5E5E;">*</span> N <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">100</span></span>
-<span id="cb19-8">        </span>
-<span id="cb19-9">    pX <span class="ot" style="color: #003B4F;">=</span> X<span class="sc" style="color: #5E5E5E;">/</span>(X<span class="sc" style="color: #5E5E5E;">+</span>Y)</span>
-<span id="cb19-10">    pY <span class="ot" style="color: #003B4F;">=</span> Y<span class="sc" style="color: #5E5E5E;">/</span>(X<span class="sc" style="color: #5E5E5E;">+</span>Y)</span>
-<span id="cb19-11">    </span>
-<span id="cb19-12">    IC <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">1</span> <span class="sc" style="color: #5E5E5E;">+</span> pX <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">log2</span>(pX) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb19-13">             pY <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">log2</span>(pY)</span>
-<span id="cb19-14"></span>
-<span id="cb19-15">    <span class="fu" style="color: #4758AB;">return</span>(IC)</span>
-<span id="cb19-16">}</span>
-<span id="cb19-17"></span>
-<span id="cb19-18"></span>
-<span id="cb19-19">e <span class="ot" style="color: #003B4F;">=</span> e <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb19-20">    <span class="fu" style="color: #4758AB;">group_by</span>(ID) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb19-21">    <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">gIC =</span> <span class="fu" style="color: #4758AB;">IC</span>(gCF, gDF1, gDF2, gN)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb19-22">    <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">sIC =</span> <span class="fu" style="color: #4758AB;">IC</span>(sCF, sDF1, sDF2, sN))</span>
-<span id="cb19-23"></span>
-<span id="cb19-24"><span class="co" style="color: #5E5E5E;"># plot it</span></span>
-<span id="cb19-25"><span class="fu" style="color: #4758AB;">ggpairs</span>(e, <span class="at" style="color: #657422;">columns =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"gCF"</span>, <span class="st" style="color: #20794D;">"sCF"</span>, <span class="st" style="color: #20794D;">"bootstrap"</span>, <span class="st" style="color: #20794D;">"gEF_p"</span>, <span class="st" style="color: #20794D;">"sEF_p"</span>, <span class="st" style="color: #20794D;">"gIC"</span>, <span class="st" style="color: #20794D;">"sIC"</span>))</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
-Removed 4 rows containing missing values</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
-Removed 4 rows containing missing values
-
-Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
-Removed 4 rows containing missing values
-
-Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
-Removed 4 rows containing missing values
-
-Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
-Removed 4 rows containing missing values</code></pre>
+</section>
+<section id="internode-certainty" class="level1">
+<h1>Internode certainty</h1>
+<p>The last measure to quantify evidence for each branch is the <strong>internode certainty</strong> <span class="citation" data-cites="Salichos:2014">(Salichos, Stamatakis, and Rokas 2014)</span>.</p>
+<p>the conflict along a given branch is</p>
+<p>Internode certainty quantifies the degree of certainty for each branch (individual internode). It finds the two most common conflicting bipartitions, and measures the log magnitude of their difference.</p>
+<p>We determine concordance in a clever way using set theory. We can think of each branch as splitting the tree into two subsets of taxa (bipartitions). What is so clever is that we donʻt have to compare the toplogies of the subtrees, just the taxa included. The task then comes down to checking for compatible intersections of the bipartitions. This makes it very easy (=fast) computationally. Hereʻs a figure from the paper by Figure&nbsp;4</p>
+<div id="fig-internode-conflict" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://mbutler808.github.io/images/internode-conflict.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4: Compatible and conflicting bipartitions. Bipartition A = {a, b, c, d, e | f, g, h, i, j} is composed of the partitions A1 = {{a, b, c, d, e}} and A2 = {f, g, h, i, j}, where a, b, c, d, e, f, g, h, i, and j are taxa. Bipartition B = {a, b, c | d, e, f, g, h, i, j} is composed of the partitions B1 = {a, b, c} and B2 = {d, e, f, g, h, i, j}, and bipartition C = {a, b, c, d, g | e, f, h, i, j} is composed of the partitions C1 = {a, b, c, d, g} and C2 = {e, f, h, i, j}.</figcaption><p></p>
+</figure>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 4 rows containing missing values (`geom_point()`).
-Removed 4 rows containing missing values (`geom_point()`).
-Removed 4 rows containing missing values (`geom_point()`).
-Removed 4 rows containing missing values (`geom_point()`).
-Removed 4 rows containing missing values (`geom_point()`).</code></pre>
+<p><span class="citation" data-cites="Salichos:2014">(Source: Salichos, Stamatakis, and Rokas 2014)</span></p>
+<p>We check the compatibility of the biparitions by checking the intersections of their each possible set of bipartition pairs.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 4 rows containing non-finite values (`stat_density()`).</code></pre>
+<div class="callout-caption-container flex-fill">
+The definition of compatibility
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
-Removed 4 rows containing missing values</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 4 rows containing missing values (`geom_point()`).</code></pre>
+<div class="callout-body-container callout-body">
+<p>Two bipartitions <img src="https://latex.codecogs.com/png.latex?A=A_1%20%7C%20A_2"> and <img src="https://latex.codecogs.com/png.latex?B=B_1%20%7C%20B_2"> from the same taxon set are <strong>compatible</strong> <em>if and only if</em> at least one of the intersections of the four bipartition pairs (<img src="https://latex.codecogs.com/png.latex?A_1%20%5Ccap%20B_1">, <img src="https://latex.codecogs.com/png.latex?A_1%20%5Ccap%20B_2">, <img src="https://latex.codecogs.com/png.latex?A_2%20%5Ccap%20B_1">, <img src="https://latex.codecogs.com/png.latex?A_2%20%5Ccap%20B_2">) is empty (see citations in <span class="citation" data-cites="Salichos:2014">Salichos, Stamatakis, and Rokas (2014)</span>).</p>
 </div>
+</div>
+<p>Bipartitions A and B are compatible because one of the intersections of their bipartition pairs (<img src="https://latex.codecogs.com/png.latex?A_2%20%5Ccap%20B_1">) is empty.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA_2%20%5Ccap%20B_1%20=%20%20%5C%7Bf,%20g,%20h,%20i,%20j%5C%7D%20%5Ccap%20%5C%7Ba,%20b,%20c%5C%7D%20=%20%5Cemptyset%0A"></p>
+<p>Bipartitions B and C are also compatible (<img src="https://latex.codecogs.com/png.latex?B_1%20%5Ccap%20C_2"> is empty).</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AB_1%20%5Ccap%20C_2%20=%20%20%5C%7Ba,%20b,%20c%5C%7D%20%5Ccap%20%5C%7Be,%20f,%20h,%20i,%20j%5C%7D%20=%20%5Cemptyset%0A"></p>
+<p>In contrast, bipartition C conflicts with A (or is incompatible) because none of the four intersections are empty:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0AA_1%20%5Ccap%20C_1%20&amp;=%20%20%5C%7B%7Ba,%20b,%20c,%20d,%20e%7D%5C%7D%20%5Ccap%20%5C%7Ba,%20b,%20c,%20d,%20g%5C%7D%20=%20%5C%7Ba,%20b,%20c,%20d%5C%7D%20%20%5C%5C%0AA_1%20%5Ccap%20C_2%20&amp;=%20%20%5C%7B%7Ba,%20b,%20c,%20d,%20e%7D%5C%7D%20%5Ccap%20%5C%7Be,%20f,%20h,%20i,%20j%5C%7D%20=%20%5C%7Be%5C%7D%20%20%5C%5C%0AA_2%20%5Ccap%20C_1%20&amp;=%20%20%5C%7B%7Bf,%20g,%20h,%20i,%20j%7D%5C%7D%20%5Ccap%20%5C%7Ba,%20b,%20c,%20d,%20g%5C%7D%20=%20%5C%7Ba,%20b,%20c,%20d%5C%7D%20%20%5C%5C%20%20%0AA_2%20%5Ccap%20C_2%20&amp;=%20%20%5C%7B%7Bf,%20g,%20h,%20i,%20j%7D%5C%7D%20%5Ccap%20%5C%7Be,%20f,%20h,%20i,%20j%5C%7D%20=%20%5C%7Be%5C%7D%20%20%0A%5Cend%7Baligned%7D%0A"></p>
+<p>For a given branch, Internode Certainty (IC) values reflect the degree of conflict between the bipartition defining the branch (say X) and the most frequent conflicting biparition (say Y), which we can get by counting the number of concordant genes or sites for each bipartition. IC is then defined by:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0AIC%20&amp;=%20log_2(n)%20+%20%5Csum_%7Bn=1%7D%5E2%20P(X_n)log_2%5BP(X_n)%5D%20%5C%5C%0A%20%20%20&amp;=%201%20+%20P(X)log_2%5BP(X)%5D%20+%20P(Y)log_2%5BP(Y)%5D,%0A%5Cend%7Baligned%7D%0A"> where the frequencies of the bipartitons are:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0AP(X)%20=%20X/(X%20+%20Y),%20%5C%5C%20%20%0AP(Y)%20=%20Y/(X%20+%20Y)%0A%5Cend%7Baligned%7D%0A"> and <img src="https://latex.codecogs.com/png.latex?P(X)%20+%20P(Y)%20=%201."></p>
+<p>Therefore, IC values at or close to 1 indicate support for the given branch (i.e., absence of conflict), and IC values at or close to 0 indicate maximum conflict (i.e., equal support for both bipartitions).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="co" style="color: #5E5E5E;"># calculate internode certainty</span></span>
+<span id="cb16-2"></span>
+<span id="cb16-3">IC <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(CF, DF1, DF2, N){</span>
+<span id="cb16-4">    </span>
+<span id="cb16-5">    <span class="co" style="color: #5E5E5E;"># convert to counts</span></span>
+<span id="cb16-6">    X <span class="ot" style="color: #003B4F;">=</span> CF <span class="sc" style="color: #5E5E5E;">*</span> N <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">100</span></span>
+<span id="cb16-7">    Y <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">max</span>(DF1, DF2) <span class="sc" style="color: #5E5E5E;">*</span> N <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">100</span></span>
+<span id="cb16-8">        </span>
+<span id="cb16-9">    pX <span class="ot" style="color: #003B4F;">=</span> X<span class="sc" style="color: #5E5E5E;">/</span>(X<span class="sc" style="color: #5E5E5E;">+</span>Y)</span>
+<span id="cb16-10">    pY <span class="ot" style="color: #003B4F;">=</span> Y<span class="sc" style="color: #5E5E5E;">/</span>(X<span class="sc" style="color: #5E5E5E;">+</span>Y)</span>
+<span id="cb16-11">    </span>
+<span id="cb16-12">    IC <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">1</span> <span class="sc" style="color: #5E5E5E;">+</span> pX <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">log2</span>(pX) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb16-13">             pY <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">log2</span>(pY)</span>
+<span id="cb16-14"></span>
+<span id="cb16-15">    <span class="fu" style="color: #4758AB;">return</span>(IC)</span>
+<span id="cb16-16">}</span>
+<span id="cb16-17"></span>
+<span id="cb16-18"></span>
+<span id="cb16-19">e <span class="ot" style="color: #003B4F;">=</span> e <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb16-20">    <span class="fu" style="color: #4758AB;">group_by</span>(ID) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb16-21">    <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">gIC =</span> <span class="fu" style="color: #4758AB;">IC</span>(gCF, gDF1, gDF2, gN)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb16-22">    <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">sIC =</span> <span class="fu" style="color: #4758AB;">IC</span>(sCF, sDF1, sDF2, sN))</span>
+<span id="cb16-23"></span>
+<span id="cb16-24"><span class="co" style="color: #5E5E5E;"># plot it</span></span>
+<span id="cb16-25"><span class="fu" style="color: #4758AB;">ggpairs</span>(e, <span class="at" style="color: #657422;">columns =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"gCF"</span>, <span class="st" style="color: #20794D;">"sCF"</span>, <span class="st" style="color: #20794D;">"bootstrap"</span>, <span class="st" style="color: #20794D;">"gEF_p"</span>, <span class="st" style="color: #20794D;">"sEF_p"</span>, <span class="st" style="color: #20794D;">"gIC"</span>, <span class="st" style="color: #20794D;">"sIC"</span>))</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-04-13-iqtree-phylogenetics/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://mbutler808.github.io/posts/2023-04-13-iqtree-phylogenetics/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Which nodes have IC near zero?</li>
+<li>How does it correspond to gCF, sCF, and bootstrap support?</li>
+</ul>
+</div>
+</div>
+<p>See Rob Lanfearʻs blog for detailed explanations of the following calculations <a href="http://www.robertlanfear.com/blog/files/concordance_factors.html" class="uri">http://www.robertlanfear.com/blog/files/concordance_factors.html</a>. This is an excellent example of how to integrate output from other analysis software with R code.</p>
 </section>
 <section id="iqtree-documentation" class="level1">
 <h1>IQTREE documentation</h1>
@@ -818,6 +854,9 @@ Minh, Bui Quang, Heiko A Schmidt, Olga Chernomor, Dominik Schrempf, Michael D Wo
 <div id="ref-Pollard:2006" class="csl-entry">
 Pollard, Daniel A, Venky N Iyer, Alan M Moses, and Michael B Eisen. 2006. <span>“Widespread Discordance of Gene Trees with Species Tree in Drosophila: Evidence for Incomplete Lineage Sorting.”</span> Doi:10.1371/journal.pgen.0020173. <em>PLOS Genetics</em> 2 (10): e173–. <a href="https://doi.org/10.1371/journal.pgen.0020173">https://doi.org/10.1371/journal.pgen.0020173</a>.
 </div>
+<div id="ref-Salichos:2014" class="csl-entry">
+Salichos, Leonidas, Alexandros Stamatakis, and Antonis Rokas. 2014. <span>“<span class="nocase">Novel Information Theory-Based Measures for Quantifying Incongruence among Phylogenetic Trees</span>.”</span> <em>Molecular Biology and Evolution</em> 31 (5): 1261–71. <a href="https://doi.org/10.1093/molbev/msu061">https://doi.org/10.1093/molbev/msu061</a>.
+</div>
 </div></section></div> ]]></description>
   <category>module 7</category>
   <category>week 13</category>
@@ -830,7 +869,7 @@ Pollard, Daniel A, Venky N Iyer, Alan M Moses, and Michael B Eisen. 2006. <span>
   <category>species tree</category>
   <guid>https://mbutler808.github.io/posts/2023-04-13-iqtree-phylogenetics/index.html</guid>
   <pubDate>Thu, 13 Apr 2023 10:00:00 GMT</pubDate>
-  <media:content url="https://mbutler808.github.io/images/turtle.png" medium="image" type="image/png" height="54" width="144"/>
+  <media:content url="https://mbutler808.github.io/images/Site_pattern_frequencies_models.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Procrustes Superimposition and Analyses</title>

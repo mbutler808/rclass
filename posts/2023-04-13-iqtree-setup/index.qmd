@@ -39,7 +39,7 @@ In the next session we will learn how to use [IQTREE2](www.iqtree.org) to infer 
 
 -  Download [iqtree version 2.1.2](https://github.com/iqtree/iqtree2/releases/tag/v2.1.2) and install the binary for your platform _following the instructions below_. 
 -  As of this writing, IQTREE2 v2.1.2 is the latest stable release version, the preview versions (e.g., 2.2.2.3) are in beta testing. 
-
+- If you donʻt want to install IQTREE, try the webserver: <http://iqtree.cibiv.univie.ac.at>
 
 ###  Windows users
 
@@ -184,6 +184,8 @@ Make a folder for this exercise `TurtleTutorial` somewhere convenient  (in your 
       -  [turtle.nex](http://www.iqtree.org/workshop/data/turtle.nex) : The partition file (in NEXUS format) defining 29 genes, which are a subset of the original dataset of 248 genes. 
 
 -  The R script [`concordance.R`](../../code/concordance.R) 
+
+-  The IQTREE shell script [`iqtreerun.sh`](../../code/iqtreerun.R) 
 
 
 # Test your IQTREE installation
