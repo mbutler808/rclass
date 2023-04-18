@@ -127,9 +127,49 @@ describe the same trees, though it might not be easy to tell at first glance. Th
 
 The NEXUS format (`*.nex` or `*.nxs`) is widely used in bioinformatics. Many phylogenetics programs use nexus format including $PAUP^*$, MrBayes, Mesquite, MacClade, etc., and many more can read nexus.  
 
-One of the key features is that it is very _extensible_ with information in blocks. This flexibilityy, however, can be a curse when you encounter new extensions to the format that your code did not anticipate. However, for the most part we will be using packages that read in nexus so you can reasonable hope that someone has dealt with the headache for you. 
+One of the key features is that it is very _extensible_ with information in __blocks__. We will only be concerned with blocks of DNA sequence data, but any type of information can be added.  This flexibilityy, however, can be a curse when you encounter new extensions to the format that your code did not anticipate. However, for the most part we will be using packages that read in nexus so you can reasonable hope that someone has dealt with the headache for you. 
 
+Nexus files are often used as inputs to phylogenetic programs. In that case, they typically only have a TAXA block and a DATA block. In our IQTREE2 example we also had a partition file in nexus format. But they can also return the output of the phylogenetic reconstruction, in that case they will have a TREES block as well. 
 
+### Nexus syntax:
+
+A NEXUS file begins with `#NEXUS` on the first line. 
+
+__Blocks__ of information follow, tyically on multiple lines, enclosed by a __BEGIN blockname;__ and __END;__ (Key words are case-insensitive).
+
+Comments are enclosed by square brackets `[comments]`
+
+Typical blocks:
+
+-  __TAXA__: The taxa block contains the names of the taxa.
+-  __DATA__: The data block contains a data matrix (we will use DNA sequences).
+-  __TREES__: The trees block contains one or more phylogenetic trees in newick format.
+
+For example [From Wikipedia](https://en.wikipedia.org/wiki/Nexus_file):
+
+```{.bash}
+#NEXUS
+Begin TAXA;
+  Dimensions ntax=4;
+  TaxLabels SpaceDog SpaceCat SpaceOrc SpaceElf;
+End;
+
+Begin data;
+  Dimensions nchar=15;
+  Format datatype=dna missing=? gap=- matchchar=.;
+  Matrix
+    [ When a position is a "matchchar", it means that it is the same as the first entry at the same position. ]
+    SpaceDog   atgctagctagctcg
+    SpaceCat   ......??...-.a.
+    SpaceOrc   ...t.......-.g. [ same as atgttagctag-tgg ]
+    SpaceElf   ...t.......-.a.           
+  ;
+End;
+
+BEGIN TREES;
+  Tree tree1 = (((SpaceDog,SpaceCat),SpaceOrc,SpaceElf));
+END; 
+```  
 
 
 # `phylo` (`ape` 5.0 or above)
