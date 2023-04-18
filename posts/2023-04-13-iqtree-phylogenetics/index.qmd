@@ -52,7 +52,7 @@ Make a `TurtleTutorial` folder, add the following files/folders:
     +  [turtle.nex](http://www.iqtree.org/workshop/data/turtle.nex) : The partition file (in NEXUS format) defining 29 genes, which are a subset of the original dataset of 248 genes.   
 -  The R script [`concordance.R`](../../code/concordance.R) 
 -  iqtree shell script: [`iqtreerun.sh`](../../code/iqtreerun.sh)
--  If you donʻt want to setup IQTREE2 and infer the phylogenies yourself, you can clone the repo (or clone the repo, delete the out files, and run the phylogenies yourself)<https://github.com/mbutler808/TurtleTutorial>
+-  If you donʻt want to setup IQTREE2 and infer the phylogenies yourself, you can clone the repo (or to get the files, clone the repo, delete the out directories, and run the scripts to get the phylogenies yourself) <https://github.com/mbutler808/TurtleTutorial>
 
 #### R packages you will need
 - `viridis`
