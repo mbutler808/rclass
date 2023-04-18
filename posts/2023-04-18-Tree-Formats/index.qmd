@@ -64,7 +64,7 @@ In phylogenetics, we use ideas and terminology from both graph theory and nature
 
 # Newick format
 
-A very basic tree format is __Newick__ (named after the [seafood restaurant](https://www.newicks.com) in New Hampshire where it was formalized in 1986 by James Archie, William H. E. Day, Joseph Felsenstein, Wayne Maddison, Christopher Meacham, F. James Rohlf, and David Swofford - the second meeting was at the restaurant; it is also called New Hampshire format for that reason). It is widely used in graph theory as well. It is simply a string. Each nesting on the tree corresponds to a parenthetical statement. For example, for this tree (drawn brute-force):
+A very basic tree format is __Newick__ (`.tree`), named after the [seafood restaurant](https://www.newicks.com) in New Hampshire where it was formalized in 1986 by James Archie, William H. E. Day, Joseph Felsenstein, Wayne Maddison, Christopher Meacham, F. James Rohlf, and David Swofford - the second meeting was at the restaurant; it is also called New Hampshire format for that reason). It is widely used in graph theory as well. It is simply a string. Each nesting on the tree corresponds to a parenthetical statement. For example, for this tree (drawn brute-force):
 
 ![Photo from the Newick restaurant [home page](https://www.newicks.com)](http://www.newicks.com/Web2014/Ed7.1.jpg)
 
@@ -124,6 +124,11 @@ describe the same trees, though it might not be easy to tell at first glance. Th
 
 
 # NEXUS -- Coming soon
+
+The NEXUS format (`*.nex` or `*.nxs`) is widely used in bioinformatics. Many phylogenetics programs use nexus format including $PAUP^*$, MrBayes, Mesquite, MacClade, etc., and many more can read nexus.  
+
+One of the key features is that it is very _extensible_ with information in blocks. This flexibilityy, however, can be a curse when you encounter new extensions to the format that your code did not anticipate. However, for the most part we will be using packages that read in nexus so you can reasonable hope that someone has dealt with the headache for you. 
+
 
 
 

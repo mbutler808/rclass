@@ -90,7 +90,7 @@ R packages you will need
 </section>
 <section id="newick-format" class="level1">
 <h1>Newick format</h1>
-<p>A very basic tree format is <strong>Newick</strong> (named after the <a href="https://www.newicks.com">seafood restaurant</a> in New Hampshire where it was formalized in 1986 by James Archie, William H. E. Day, Joseph Felsenstein, Wayne Maddison, Christopher Meacham, F. James Rohlf, and David Swofford - the second meeting was at the restaurant; it is also called New Hampshire format for that reason). It is widely used in graph theory as well. It is simply a string. Each nesting on the tree corresponds to a parenthetical statement. For example, for this tree (drawn brute-force):</p>
+<p>A very basic tree format is <strong>Newick</strong> (<code>.tree</code>), named after the <a href="https://www.newicks.com">seafood restaurant</a> in New Hampshire where it was formalized in 1986 by James Archie, William H. E. Day, Joseph Felsenstein, Wayne Maddison, Christopher Meacham, F. James Rohlf, and David Swofford - the second meeting was at the restaurant; it is also called New Hampshire format for that reason). It is widely used in graph theory as well. It is simply a string. Each nesting on the tree corresponds to a parenthetical statement. For example, for this tree (drawn brute-force):</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://mbutler808.github.io/posts/2023-04-18-Tree-Formats/http:/www.newicks.com/Web2014/Ed7.1.jpg" class="img-fluid figure-img"></p>
@@ -141,6 +141,8 @@ R packages you will need
 </section>
 <section id="nexus-coming-soon" class="level1">
 <h1>NEXUS – Coming soon</h1>
+<p>The NEXUS format (<code>*.nex</code> or <code>*.nxs</code>) is widely used in bioinformatics. Many phylogenetics programs use nexus format including <img src="https://latex.codecogs.com/png.latex?PAUP%5E*">, MrBayes, Mesquite, MacClade, etc., and many more can read nexus.</p>
+<p>One of the key features is that it is very <em>extensible</em> with information in blocks. This flexibilityy, however, can be a curse when you encounter new extensions to the format that your code did not anticipate. However, for the most part we will be using packages that read in nexus so you can reasonable hope that someone has dealt with the headache for you.</p>
 </section>
 <section id="phylo-ape-5.0-or-above" class="level1">
 <h1><code>phylo</code> (<code>ape</code> 5.0 or above)</h1>
