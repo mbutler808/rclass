@@ -286,7 +286,7 @@ div.csl-indent {
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
   <li><a href="#tree-vocabulary" id="toc-tree-vocabulary" class="nav-link" data-scroll-target="#tree-vocabulary">Tree vocabulary</a></li>
   <li><a href="#newick-format" id="toc-newick-format" class="nav-link" data-scroll-target="#newick-format">Newick format</a></li>
-  <li><a href="#nexus-coming-soon" id="toc-nexus-coming-soon" class="nav-link" data-scroll-target="#nexus-coming-soon">NEXUS – Coming soon</a>
+  <li><a href="#nexus-more-soon" id="toc-nexus-more-soon" class="nav-link" data-scroll-target="#nexus-more-soon">NEXUS – More soon</a>
   <ul class="collapse">
   <li><a href="#nexus-syntax" id="toc-nexus-syntax" class="nav-link" data-scroll-target="#nexus-syntax">Nexus syntax:</a></li>
   </ul></li>
@@ -423,8 +423,8 @@ R packages you will need
 <p><strong>((F,G),E)</strong></p>
 <p>describe the same trees, though it might not be easy to tell at first glance. This is generally an issue for any tree representation. While Newick strings are compact and easy to understand, they also don’t lend themselves to easy <em>tree traversal</em> (moving up or down the tree). In most analysis software that performs computations along trees, some other representation is used.</p>
 </section>
-<section id="nexus-coming-soon" class="level1">
-<h1>NEXUS – Coming soon</h1>
+<section id="nexus-more-soon" class="level1">
+<h1>NEXUS – More soon</h1>
 <p>The NEXUS format (<code>*.nex</code> or <code>*.nxs</code>) is widely used in bioinformatics. Many phylogenetics programs use nexus format including <span class="math inline">\(PAUP^*\)</span>, MrBayes, Mesquite, MacClade, etc., and many more can read nexus.</p>
 <p>One of the key features is that it is very <em>extensible</em> with information in <strong>blocks</strong>. We will only be concerned with blocks of DNA sequence data, but any type of information can be added. This flexibilityy, however, can be a curse when you encounter new extensions to the format that your code did not anticipate. However, for the most part we will be using packages that read in nexus so you can reasonable hope that someone has dealt with the headache for you.</p>
 <p>Nexus files are often used as inputs to phylogenetic programs. In that case, they typically only have a TAXA block and a DATA block. In our IQTREE2 example we also had a partition file in nexus format. But they can also return the output of the phylogenetic reconstruction, in that case they will have a TREES block as well.</p>

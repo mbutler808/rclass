@@ -123,7 +123,7 @@ __((F,G),E)__
 describe the same trees, though it might not be easy to tell at first glance. This is generally an issue for any tree representation. While Newick strings are compact and easy to understand, they also don't lend themselves to easy _tree traversal_ (moving up or down the tree). In most analysis software that performs computations along trees, some other representation is used.
 
 
-# NEXUS -- Coming soon
+# NEXUS -- More soon
 
 The NEXUS format (`*.nex` or `*.nxs`) is widely used in bioinformatics. Many phylogenetics programs use nexus format including $PAUP^*$, MrBayes, Mesquite, MacClade, etc., and many more can read nexus.  
 
