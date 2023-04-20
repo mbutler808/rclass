@@ -289,9 +289,26 @@ div.csl-indent {
   <li><a href="#nexus-more-soon" id="toc-nexus-more-soon" class="nav-link" data-scroll-target="#nexus-more-soon">NEXUS – More soon</a>
   <ul class="collapse">
   <li><a href="#nexus-syntax" id="toc-nexus-syntax" class="nav-link" data-scroll-target="#nexus-syntax">Nexus syntax:</a></li>
+  <li><a href="#note-partition-files-in-iqtree" id="toc-note-partition-files-in-iqtree" class="nav-link" data-scroll-target="#note-partition-files-in-iqtree">Note: Partition files in IQTREE</a></li>
   </ul></li>
-  <li><a href="#phylo-ape-5.0-or-above" id="toc-phylo-ape-5.0-or-above" class="nav-link" data-scroll-target="#phylo-ape-5.0-or-above"><code>phylo</code> (<code>ape</code> 5.0 or above)</a></li>
-  <li><a href="#ouchtree-ouch-version-2.0-or-above" id="toc-ouchtree-ouch-version-2.0-or-above" class="nav-link" data-scroll-target="#ouchtree-ouch-version-2.0-or-above">ouchtree (<code>ouch</code> version 2.0 or above)</a></li>
+  <li><a href="#phylo-ape-5.0-or-above" id="toc-phylo-ape-5.0-or-above" class="nav-link" data-scroll-target="#phylo-ape-5.0-or-above"><code>phylo</code> (<code>ape</code> 5.0 or above)</a>
+  <ul class="collapse">
+  <li><a href="#getting-trees-into-phylo-format" id="toc-getting-trees-into-phylo-format" class="nav-link" data-scroll-target="#getting-trees-into-phylo-format">Getting trees into phylo format</a></li>
+  </ul></li>
+  <li><a href="#ouchtree-ouch-version-2.0-or-above" id="toc-ouchtree-ouch-version-2.0-or-above" class="nav-link" data-scroll-target="#ouchtree-ouch-version-2.0-or-above">ouchtree (<code>ouch</code> version 2.0 or above)</a>
+  <ul class="collapse">
+  <li><a href="#building-ouchtree-format-from-dataframes" id="toc-building-ouchtree-format-from-dataframes" class="nav-link" data-scroll-target="#building-ouchtree-format-from-dataframes">Building ouchtree format from dataframes</a></li>
+  <li><a href="#converting-from-ape-to-ouch" id="toc-converting-from-ape-to-ouch" class="nav-link" data-scroll-target="#converting-from-ape-to-ouch">Converting from <code>ape</code> to <code>ouch</code></a></li>
+  <li><a href="#coerce-to-data.frame" id="toc-coerce-to-data.frame" class="nav-link" data-scroll-target="#coerce-to-data.frame">Coerce to data.frame</a></li>
+  <li><a href="#hidden-components-of-ouchtree" id="toc-hidden-components-of-ouchtree" class="nav-link" data-scroll-target="#hidden-components-of-ouchtree">Hidden components of <code>ouchtree</code></a></li>
+  </ul></li>
+  <li><a href="#treedata-from-package-tidytree" id="toc-treedata-from-package-tidytree" class="nav-link" data-scroll-target="#treedata-from-package-tidytree"><code>treedata</code> from package <code>tidytree</code></a>
+  <ul class="collapse">
+  <li><a href="#reading-trees-into-treedata" id="toc-reading-trees-into-treedata" class="nav-link" data-scroll-target="#reading-trees-into-treedata">Reading trees into <code>treedata</code></a></li>
+  <li><a href="#combining-tree-with-data" id="toc-combining-tree-with-data" class="nav-link" data-scroll-target="#combining-tree-with-data">Combining tree with data</a></li>
+  <li><a href="#methods-to-extract-information-from-treedata" id="toc-methods-to-extract-information-from-treedata" class="nav-link" data-scroll-target="#methods-to-extract-information-from-treedata">Methods to extract information from <code>treedata</code></a></li>
+  <li><a href="#plotting-ggtree" id="toc-plotting-ggtree" class="nav-link" data-scroll-target="#plotting-ggtree">Plotting ggtree</a></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -308,7 +325,7 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>References for this Material:</p>
 <ul>
-<li>This was adapted from the chapter “All about trees” written by Brian OʻMeara from the manual “Getting started in R for Phylogenetics” by Marguerite A. Butler, Brian C. O’Meara, Jason Pienaar, Michael Alfaro, Graham Slater, and Todd Oakley</li>
+<li>Some of this material was adapted from the chapter “All about trees” originally written by Brian OʻMeara from the manual “Getting started in R for Phylogenetics” by Marguerite A. Butler, Brian C. O’Meara, Jason Pienaar, Michael Alfaro, Graham Slater, and Todd Oakley</li>
 </ul>
 </section>
 <section id="learning-objectives" class="level1">
@@ -347,7 +364,48 @@ R packages you will need
 <ul>
 <li><code>ape</code></li>
 <li><code>ouch</code></li>
+<li><code>ggtree</code> which will also install <code>treeio</code>, <code>tidytree</code>, and others</li>
 </ul>
+<p><code>ggtree</code> is distributed through <code>bioconductor</code>. * To install ggtree:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Bioconductor version '3.15' is out-of-date; the current release version '3.16'
+  is available with R version '4.2'; see https://bioconductor.org/install</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"ggtree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Bioconductor version 3.15 (BiocManager 1.30.18), R 4.2.1 (2022-06-23)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package(s) not installed when version(s) same as current; use `force = TRUE` to
+  re-install: 'ggtree'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Old packages: 'ade4', 'aplot', 'BiocManager', 'bit', 'blob', 'boot', 'brew',
+  'broom', 'bslib', 'cachem', 'callr', 'car', 'class', 'cli', 'cluster',
+  'codetools', 'colorspace', 'commonmark', 'covr', 'cpp11', 'crayon', 'curl',
+  'data.table', 'dbplyr', 'desc', 'deSolve', 'devtools', 'digest', 'dotCall64',
+  'dplyr', 'dtplyr', 'evaluate', 'expm', 'fansi', 'fastmap', 'fontawesome',
+  'forcats', 'foreign', 'fs', 'gapminder', 'gargle', 'gee', 'geiger', 'GenSA',
+  'geodist', 'geometry', 'gert', 'ggbeeswarm', 'ggfun', 'ggimage', 'ggplot2',
+  'ggrepel', 'gh', 'gitcreds', 'googledrive', 'googlesheets4', 'gtable',
+  'gtools', 'haven', 'highr', 'hms', 'httpuv', 'httr', 'igraph', 'isoband',
+  'jsonlite', 'knitr', 'lattice', 'lifecycle', 'lme4', 'lpSolve', 'lubridate',
+  'magic', 'magick', 'maps', 'markdown', 'MASS', 'Matrix', 'mgcv', 'minqa',
+  'mnormt', 'modelr', 'nlme', 'nnet', 'openssl', 'parameters', 'phangorn',
+  'phytools', 'pillar', 'pkgbuild', 'pkgdown', 'pkgload', 'plyr', 'processx',
+  'ps', 'purrr', 'quantreg', 'ragg', 'RcppArmadillo', 'readr', 'readxl',
+  'rlang', 'RMySQL', 'rncl', 'RNeXML', 'roxygen2', 'rpart', 'RPostgreSQL',
+  'RSQLite', 'rstudioapi', 'rversions', 'sass', 'scales', 'scatterplot3d',
+  'segmented', 'seqinr', 'shiny', 'sourcetools', 'sp', 'spatial', 'spelling',
+  'statmod', 'stringi', 'stringr', 'survival', 'svglite', 'sys', 'terra',
+  'testthat', 'tibble', 'tidyr', 'tidyselect', 'tidytree', 'tidyverse',
+  'tinytex', 'treeio', 'utf8', 'V8', 'vctrs', 'vdiffr', 'vegan', 'viridisLite',
+  'vroom', 'webfakes', 'whisker', 'xfun', 'XML', 'yaml', 'yulab.utils', 'zip'</code></pre>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -381,22 +439,23 @@ R packages you will need
 <p></p><figcaption class="figure-caption">Photo from the Newick restaurant <a href="https://www.newicks.com">home page</a></figcaption><p></p>
 </figure>
 </div>
+<p>NOTE: You would never construct a <code>phylo</code> tree as below, this is just to illustrate its structure (see following sections for how to read in trees):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ape)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ouch)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(phylobase)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># simpletree &lt;- rcoal(length(LETTERS[1:7]), rooted = TRUE, tip.label = LETTERS[1:7], br = "coalescent")</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>simpletree<span class="ot">&lt;-</span><span class="fu">structure</span>(<span class="fu">list</span>(</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">edge =</span> <span class="fu">matrix</span>(</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">11</span>, <span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">13</span>, </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">11</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">12</span>, <span class="dv">5</span>, <span class="dv">13</span>, <span class="dv">6</span>, <span class="dv">7</span>),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">nrow=</span>12L), </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">tip.label =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>, <span class="st">"F"</span>, <span class="st">"G"</span>), </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">Nnode =</span> 6L</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  ), </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">"phylo"</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simpletree,<span class="at">no.margin=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ape)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ouch)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(treeio)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># simpletree &lt;- rcoal(length(LETTERS[1:7]), rooted = TRUE, tip.label = LETTERS[1:7], br = "coalescent")</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>simpletree<span class="ot">&lt;-</span><span class="fu">structure</span>(<span class="fu">list</span>(</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">edge =</span> <span class="fu">matrix</span>(</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">11</span>, <span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">13</span>, </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">11</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">12</span>, <span class="dv">5</span>, <span class="dv">13</span>, <span class="dv">6</span>, <span class="dv">7</span>),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">nrow=</span>12L), </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">tip.label =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>, <span class="st">"F"</span>, <span class="st">"G"</span>), </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">Nnode =</span> 6L</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  ), </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">"phylo"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simpletree,<span class="at">no.margin=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-simpletree" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -425,9 +484,9 @@ R packages you will need
 </section>
 <section id="nexus-more-soon" class="level1">
 <h1>NEXUS – More soon</h1>
-<p>The NEXUS format (<code>*.nex</code> or <code>*.nxs</code>) is widely used in bioinformatics. Many phylogenetics programs use nexus format including <span class="math inline">\(PAUP^*\)</span>, MrBayes, Mesquite, MacClade, etc., and many more can read nexus.</p>
+<p>The NEXUS format (<code>*.nex</code> or <code>*.nxs</code>) is widely used in bioinformatics. Many phylogenetics programs use nexus format including <span class="math inline">\(PAUP^*\)</span>, MrBayes, Mesquite, MacClade, IQTREE2, etc., and many more can read nexus.</p>
 <p>One of the key features is that it is very <em>extensible</em> with information in <strong>blocks</strong>. We will only be concerned with blocks of DNA sequence data, but any type of information can be added. This flexibilityy, however, can be a curse when you encounter new extensions to the format that your code did not anticipate. However, for the most part we will be using packages that read in nexus so you can reasonable hope that someone has dealt with the headache for you.</p>
-<p>Nexus files are often used as inputs to phylogenetic programs. In that case, they typically only have a TAXA block and a DATA block. In our IQTREE2 example we also had a partition file in nexus format. But they can also return the output of the phylogenetic reconstruction, in that case they will have a TREES block as well.</p>
+<p>Nexus files are often used as inputs to phylogenetic programs, to hold the DNA (or other) alignments and the taxon names. In that case, they typically only have a TAXA block and a DATA block. In our IQTREE2 example we also had a partition file in nexus format. But they can also return the output of the phylogenetic reconstruction, in that case they will have a TREES block as well.</p>
 <section id="nexus-syntax" class="level3">
 <h3 class="anchored" data-anchor-id="nexus-syntax">Nexus syntax:</h3>
 <p>A NEXUS file begins with <code>#NEXUS</code> on the first line.</p>
@@ -440,27 +499,59 @@ R packages you will need
 <li><strong>TREES</strong>: The trees block contains one or more phylogenetic trees in newick format.</li>
 </ul>
 <p>For example <a href="https://en.wikipedia.org/wiki/Nexus_file">From Wikipedia</a>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#NEXUS</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Begin</span> TAXA<span class="kw">;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Dimensions</span> ntax=4<span class="kw">;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">TaxLabels</span> SpaceDog SpaceCat SpaceOrc SpaceElf<span class="kw">;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">End</span><span class="kw">;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Begin</span> data<span class="kw">;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Dimensions</span> nchar=15<span class="kw">;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Format</span> datatype=dna missing=<span class="pp">?</span> gap=- matchchar=.<span class="kw">;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Matrix</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">[</span> When a position <span class="er">is</span> <span class="ex">a</span> <span class="st">"matchchar"</span>, it means that it is the same as the first entry at the same position. ]</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SpaceDog</span>   atgctagctagctcg</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SpaceCat</span>   ......<span class="pp">??</span>...-.a.</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SpaceOrc</span>   ...t.......-.g. [ same as atgttagctag-tgg ]</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SpaceElf</span>   ...t.......-.a.           </span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">;</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ex">End</span><span class="kw">;</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="ex">BEGIN</span> TREES<span class="kw">;</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Tree</span> tree1 = <span class="er">(</span><span class="kw">((</span><span class="ex">SpaceDog,SpaceCat</span><span class="kw">)</span><span class="ex">,SpaceOrc,SpaceElf</span><span class="kw">));</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ex">END</span><span class="kw">;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#NEXUS</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Begin</span> TAXA<span class="kw">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Dimensions</span> ntax=4<span class="kw">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">TaxLabels</span> SpaceDog SpaceCat SpaceOrc SpaceElf<span class="kw">;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">End</span><span class="kw">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Begin</span> data<span class="kw">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Dimensions</span> nchar=15<span class="kw">;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Format</span> datatype=dna missing=<span class="pp">?</span> gap=- matchchar=.<span class="kw">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Matrix</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">[</span> When a position <span class="er">is</span> <span class="ex">a</span> <span class="st">"matchchar"</span>, it means that it is the same as the first entry at the same position. ]</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SpaceDog</span>   atgctagctagctcg</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SpaceCat</span>   ......<span class="pp">??</span>...-.a.</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SpaceOrc</span>   ...t.......-.g. [ same as atgttagctag-tgg ]</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SpaceElf</span>   ...t.......-.a.           </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="ex">End</span><span class="kw">;</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="ex">BEGIN</span> TREES<span class="kw">;</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Tree</span> tree1 = <span class="er">(</span><span class="kw">((</span><span class="ex">SpaceDog,SpaceCat</span><span class="kw">)</span><span class="ex">,SpaceOrc,SpaceElf</span><span class="kw">));</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="ex">END</span><span class="kw">;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="note-partition-files-in-iqtree" class="level3">
+<h3 class="anchored" data-anchor-id="note-partition-files-in-iqtree">Note: Partition files in IQTREE</h3>
+<p>NEXUS files are also used for a wide variety of other purposes to supply additional information to phylogenetic reconstruction. Partition files for IQTREE use a nexus format with the block labeled <code>SETS</code>, with the information coded as <code>charset LOCUSNAME = startposition - endposition;</code> The positions being along the alignment specified in the DNA alignment file (which could also be in nexus format, phylip format, or many others.</p>
+<p>I like to use the gene name to label the partitions. For example, a by-locus partition file can be indicated as so:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#nexus</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">begin</span> sets<span class="kw">;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> sia = 1-407<span class="kw">;</span>  </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> bdnf = 408-924<span class="kw">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> nxc = 925-1479<span class="kw">;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> cyb = 1480-1989<span class="kw">;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> nd4 = 1990-2475<span class="kw">;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">end</span><span class="kw">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And a by locus and codon partition file, where the range of positions is <code>\3</code> for each third position, and the start is adjusted to indicate 1st, 2nd, 3rd codon positions:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#nexus</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">begin</span> sets<span class="kw">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> sia_pos1 = 1-407<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> sia_pos2 = 2-407<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> sia_pos3 = 3-407<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> bdnf_pos1 = 408-924<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> bdnf_pos2 = 409-924<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> bdnf_pos3 = 410-924<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> nxc_pos1 = 925-1479<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> nxc_pos2 = 926-1479<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> nxc_pos3 = 927-1479<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> cyb_pos1 = 1480-1989<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> cyb_pos2 = 1481-1989<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> cyb_pos3 = 1482-1989<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> nd4_pos1 = 1990-2475<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> nd4_pos2 = 1991-2475<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="ex">charset</span> nd4_pos3 = 1992-2475<span class="dt">\3</span><span class="kw">;</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="ex">end</span><span class="kw">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="phylo-ape-5.0-or-above" class="level1">
@@ -468,9 +559,9 @@ R packages you will need
 <p>The <a href="http://ape-package.ird.fr"><code>ape</code> package</a> <span class="citation" data-cites="Paradis:2019">(<a href="#ref-Paradis:2019" role="doc-biblioref">Paradis and Schliep 2019</a>)</span> uses a different representation of trees. It uses R <code>structures</code>, <code>lists</code>, <code>matrices</code>, and <code>vectors</code> to store a tree. Each node in the tree receives a number. For example, here is the tree from before in <code>ape</code> format.</p>
 <p>Here is <code>simpletree</code> with the node numbers printed. It is printed with the following commands:</p>
 <div class="cell" data-caption="A simple tree with ape's numbering of nodes included">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simpletree,<span class="at">no.margin=</span><span class="cn">TRUE</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nodelabels</span>()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tiplabels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simpletree,<span class="at">no.margin=</span><span class="cn">TRUE</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nodelabels</span>()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tiplabels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/simpletreeplotnodelabels-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -478,7 +569,7 @@ R packages you will need
 <p>For a tree with <strong>N tips</strong>, the tips have <strong>numbers 1…N</strong> and the <strong>nodes</strong> have <strong>numbers greater than N</strong> (this is in contrast to how this was done in early (&lt;1.9) versions of <code>ape</code>). These numbers are used to store information about the tree’s structure.</p>
 <p>To do this, a matrix is created, with height corresponding to the number of internal and terminal nodes and width 2. The first column of the matrix has the node at the beginning of the branch, the second has the node at the end of the branch. For example, for our simple tree, this matrix is</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>simpletree<span class="sc">$</span>edge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>simpletree<span class="sc">$</span>edge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      [,1] [,2]
  [1,]    8    9
@@ -497,21 +588,26 @@ R packages you will need
 </div>
 <p>This alone is enough for a basic topology. However, it might be nice to know what the taxa actually are, rather than just numbers. To do this, a character vector with as many entries as the number of tips is used. In the example tree, this is</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>simpletree<span class="sc">$</span>tip.label</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>simpletree<span class="sc">$</span>tip.label</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "A" "B" "C" "D" "E" "F" "G"</code></pre>
 </div>
 </div>
-<p>It’s possible that internal nodes have labels, too (for example, the most recent common ancestor of a set of birds might be labeled Aves). If so, an optional <code>node.label</code> is used. If branch lengths are known, they are included as the numeric vector <code>edge.length</code>.</p>
+<p>It’s possible that internal nodes have labels, too (for example, the most recent common ancestor of a set of birds might be labeled Aves). If so, an optional <code>node.label</code> is used. If branch lengths are known, they are included as the numeric vector <code>edge.length</code>. Letʻs some add using ape functions:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>simpletree<span class="sc">$</span>edge.length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>simpletreebrlen<span class="ot">&lt;-</span><span class="fu">compute.brlen</span>(simpletree)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>simpletreebrlen<span class="sc">$</span>edge.length<span class="ot">&lt;-</span><span class="dv">3</span><span class="sc">*</span>simpletreebrlen<span class="sc">$</span>edge.length</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>simpletree<span class="ot">&lt;-</span>simpletreebrlen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>simpletree<span class="sc">$</span>edge.length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 1.5 1.0 0.5 0.5 1.0 0.5 0.5 2.0 1.0 0.5 0.5 0.5</code></pre>
 </div>
 </div>
 <p>Finally, there are a few other elements (<code>Nnode</code>, the number of internal nodes; <code>class=phylo</code>) to set the class. To dump the the internal representation of phylo tree to screen, you can use <code>unclass()</code> which strips the class attribute (the S4 analog is <code>attributes</code>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unclass</span>(simpletree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unclass</span>(simpletree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$edge
       [,1] [,2]
@@ -539,60 +635,204 @@ $edge.length
 </div>
 </div>
 <p><code>phylo</code> trees are S3 objects. We’ll be learning more about them later, but an important thing to know is that you directly access any element of them by using the <code>$</code> operator (as was done above). Optional elements, or even elements of your own devising, can be added to them, too, using the same operator.</p>
+<section id="getting-trees-into-phylo-format" class="level3">
+<h3 class="anchored" data-anchor-id="getting-trees-into-phylo-format">Getting trees into phylo format</h3>
+<p><code>ape</code> has many of functions for reading in trees (the <code>read.</code> series) and writing trees to file (the <code>write.</code> series). The most commonly used are:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.nexus</span>(file, <span class="at">tree.names =</span> <span class="cn">NULL</span>, <span class="at">force.multi =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read.tree</span>(<span class="at">file =</span> <span class="st">""</span>, <span class="at">text =</span> <span class="cn">NULL</span>, <span class="at">tree.names =</span> <span class="cn">NULL</span>, <span class="at">skip =</span> <span class="dv">0</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">comment.char =</span> <span class="st">""</span>, <span class="at">keep.multi =</span> <span class="cn">FALSE</span>, ...)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">read.FASTA</span>(file, <span class="at">type =</span> <span class="st">"DNA"</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">read.GenBank</span>(access.nb, <span class="at">seq.names =</span> access.nb, <span class="at">species.names =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">as.character =</span> <span class="cn">FALSE</span>, <span class="at">chunk.size =</span> <span class="dv">400</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)    </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">write.nexus</span>(..., <span class="at">file =</span> <span class="st">""</span>, <span class="at">translate =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write.tree</span>(tree, <span class="at">file =</span> <span class="st">""</span>, <span class="at">append =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">digits =</span> <span class="dv">10</span>, <span class="at">tree.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To see more, invoke the package help page <code>?ape</code> and look under <code>read.</code> and <code>write.</code></p>
+<p>Examples:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.tree</span>(simpletree, <span class="st">"mytree.tree"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">read.tree</span>(<span class="st">"mytree.tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tree2 <span class="ot">&lt;-</span> <span class="fu">read.tree</span>(<span class="at">text=</span><span class="st">"((G:1.0,F:1.0):1.1,E:2.1):3.5;"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><code>phylo</code> is widely used in other packages as well. <code>ape</code> itself has many functions as it was written primarily to perform phylogenetic comparative analyses.</p>
+<section id="methods" class="level4">
+<h4 class="anchored" data-anchor-id="methods">Methods</h4>
+<p>In line with the style of object-oriented programming, R has a generic function convention that will dispatch the correct function after looking at the class of the first object passed to it as an argument. For example, when you tell it to <code>plot(vector_object)</code> R takes a look – “oh, youʻre a vector, Iʻll send you to the plotting method for vectors”.</p>
+<p>The developer of the class (usually bundled in a package) has to write all of the generic methods for their new class. You can see all of the methods available for S3 classes like <code>phylo</code> like so:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="fu">class</span>(simpletree)) <span class="co"># same as methods(class="phylo")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in findGeneric(nm, envir = as.environment(w)): 'drop.tip' is a formal
+generic function; S3 methods will not likely be found</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] +                    all.equal            ancestor            
+ [4] as_tibble            as.evonet            as.hclust           
+ [7] as.matching          as.treedata          as.ultrametric      
+[10] c                    child                coalescent.intervals
+[13] coerce               cophenetic           degree              
+[16] di2multi             drop.tip             full_join           
+[19] identify             initialize           is.binary           
+[22] is.rooted            is.ultrametric       isTip               
+[25] keep.tip             makeLabel            MRCA                
+[28] multi2di             Nedge                Nnode               
+[31] nodeid               nodelab              Ntip                
+[34] offspring            parent               plot                
+[37] print                reorder              root                
+[40] rootnode             show                 skyline             
+[43] slotsFromS3          summary              tree_subset         
+[46] unroot               updateLabel          vcv                 
+see '?methods' for accessing help and source code</code></pre>
+</div>
+</div>
+<p>Remember these are functions, so these are all functions that are written to work with any <code>phylo</code> object.</p>
+<p>Try some, like <code>Ntip(simpletree)</code>. Both <code>drop.tip</code> and <code>keep.tip</code> are really helpful for cutting your tree down to a subset of taxa.</p>
+</section>
+</section>
 </section>
 <section id="ouchtree-ouch-version-2.0-or-above" class="level1">
 <h1>ouchtree (<code>ouch</code> version 2.0 or above)</h1>
-<p><code>OUCH</code> <span class="citation" data-cites="Butler:2004">King and Butler (<a href="#ref-King:2022" role="doc-biblioref">2022</a>)</span> uses a different tree structure than does <code>ape</code>. First, <code>OUCH</code>’s is an S4 class, rather than S3. There are several differences between them, which you’ll learn later. There are two main distinctions that will be important now. It helps to have a metaphor: think of a car. The S3 representation of a car is all the parts, neatly disassembled and laid out. The S4 representation of a car is a closed box. With S3, you can look at and manipulate any part of the car directly and manipulate it (using the <code>$</code> operator). You could check the amount of gas in the tank by directly accessing the gas. With S4, you should use a method, if one exists, to access and manipulate elements. For example, you could check the gas in the tank using the fuel gauge, if the fuel gauge method exists and works properly. S3 objects can be built up piecemeal, and there aren’t built-in checks to make sure that everything is correct: if you forget to add a wheel element to the S3 char, you won’t know there’s a problem until some function tries to access it and fails. S4 objects are instantiated once, when you pass them all the initialization info they need (they often have defaults, and often have internal consistency checks). <code>OUCH</code> uses the <code>ouchtree</code> class as a basic tree class, then derives other classes from this for storing information on analyses. The <code>ouchtree</code> class is:</p>
-<p><code>setClass(</code></p>
-<p><code>'ouchtree',</code></p>
-<p><code>representation=representation(</code></p>
-<p><code>nnodes = 'integer',</code></p>
-<p><code>nodes = 'character',</code></p>
-<p><code>ancestors = 'character',</code></p>
-<p><code>nodelabels = 'character',</code></p>
-<p><code>times = 'numeric',</code></p>
-<p><code>root = 'integer',</code></p>
-<p><code>nterm = 'integer',</code></p>
-<p><code>term = 'integer',</code></p>
-<p><code>anc.numbers = 'integer',</code></p>
-<p><code>lineages = 'list',</code></p>
-<p><code>epochs = 'list',</code></p>
-<p><code>branch.times = 'matrix',</code></p>
-<p><code>depth = 'numeric'</code></p>
-<p><code>)</code></p>
-<p><code>)</code></p>
-<p>At first glance, it looks like creating a new <code>ouchtree</code> object will be a lot of work: there are 13 different elements, some of them vectors, built in the class. However, with S4 objects, the beauty of constructors comes into play. The constructor function for a new <code>ouchtree</code> is just the function</p>
-<p><code>ouchtree(nodes, ancestors, times, labels = as.character(nodes))</code></p>
-<p><strong>The <code>ouchtree</code> function only has four arguments</strong>, one of them optional. Using the function and these elements, all the other elements of the class are initialized.</p>
+<p>Trees in the package <code>ouch</code> <span class="citation" data-cites="Butler:2004">King and Butler (<a href="#ref-King:2022" role="doc-biblioref">2022</a>)</span> are of class <code>ouchtree</code>, and are written as an S4 object, as opposed to the S3 object class used by <code>ape</code>.</p>
+<p>Whereas S3 objects can be created on the fly by putting primitive object types together, S4 objects are created by a constructor function that puts the object together in a more structured way and importantly, <em>checks that the object is actually constructed correctly</em>. This makes it a lot easier for developers to reliably depend on objects of that class.</p>
+<section id="building-ouchtree-format-from-dataframes" class="level3">
+<h3 class="anchored" data-anchor-id="building-ouchtree-format-from-dataframes">Building ouchtree format from dataframes</h3>
+<p>The <code>ouchtree()</code> function is the constructor for objects of class <code>ouchtree</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ouchtree</span>(nodes, ancestors, times, <span class="at">labels =</span> <span class="fu">as.character</span>(nodes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>The <code>ouchtree</code> function only has four arguments</strong>, one of them optional.</p>
 <ul>
-<li>The first element is <code>nodes</code>, a character vector of node ids (including internal nodes). Unlike <code>ape</code>, the leaves do not need to have smaller ids than internal nodes.</li>
-<li>The second argument is <code>ancestors</code>, a character vector of node ids of the ancestors for the nodes in the <code>nodes</code> vector. The <code>nodes</code> and <code>ancestors</code> vectors almost correspond to the second and first columns of the <code>ape</code> <code>edge</code> matrix, respectively, with the exception that <code>ouchtree</code> includes the root node with an ancestor of <code>NA</code>.</li>
-<li>The third element, <code>times</code>, represents the height of each node from the root. Remember that <code>ape</code>’s <code>edge.length</code> vector has the length of the branch subtending each node; instead, <code>ouchtree</code> has the sum of the lengths of all branches connecting a given node to the root. Again, the root node is included in <code>ouchtree</code> (with height 0) but not in ape.</li>
-<li>The fourth argument, <code>labels</code>, is a vector of labels for both tips and internal nodes. If internal nodes do not have names, they get a label of <code>&lt;NA&gt;</code>.</li>
+<li><code>nodes</code>: a character vector of node ids (including internal nodes). Unlike <code>ape</code>, the leaves do not need to have smaller ids than internal nodes.</li>
+<li><code>ancestors</code>: a character vector of node ids of the ancestors for the nodes in the <code>nodes</code> vector. The <code>nodes</code> and <code>ancestors</code> vectors almost correspond to the second and first columns of the <code>ape</code> <code>edge</code> matrix, respectively, with the exception that <code>ouchtree</code> includes the root node with an ancestor of <code>NA</code>.</li>
+<li><code>times</code>: represents the height of each node from the root. Remember that <code>ape</code>’s <code>edge.length</code> vector has the length of the branch subtending each node; instead, <code>ouchtree</code> has the sum of the lengths of all branches connecting a given node to the root. Again, the root node is included in <code>ouchtree</code> (with height 0) but not in ape.</li>
+<li><code>labels</code>: is a vector of labels for both tips and internal nodes. It is optional, if no argument is supplied then the <code>nodes</code> are used as labels. If internal nodes do not have names, they get a label of <code>&lt;NA&gt;</code>.</li>
 </ul>
-<p>For example, our example tree, when converted to ouchtree format, is</p>
+<p>We can use <code>ouch</code>ʻs built-in dataset <code>anolis.ssd</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(simpletreeouch)<span class="sc">$</span>nodes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(anolis.ssd)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(anolis.ssd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13"</code></pre>
+<pre><code>[1] "data.frame"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(simpletreeouch)<span class="sc">$</span>ancestors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>anolis.ssd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] NA  "3" "1" "6" "6" "1" "2" "2" "3" "4" "4" "5" "5"</code></pre>
+<pre><code>   node species  log.SSD ancestor   time OU.1 OU.7
+1     1    &lt;NA&gt;       NA       NA 0.0000   ns  anc
+2     2    &lt;NA&gt;       NA        1 0.1614   ns  anc
+3     3    &lt;NA&gt;       NA        2 0.1845   ns  anc
+4     4    &lt;NA&gt;       NA        3 0.4778   ns  anc
+5     5    &lt;NA&gt;       NA        3 0.3909   ns  anc
+6     6    &lt;NA&gt;       NA        3 0.5026   ns  anc
+7     7    &lt;NA&gt;       NA        3 0.2372   ns  anc
+8     8    &lt;NA&gt;       NA        7 0.6986   ns  anc
+9     9    &lt;NA&gt;       NA        7 0.4864   ns  anc
+10   10    &lt;NA&gt;       NA        9 0.6838   ns  anc
+11   11    &lt;NA&gt;       NA        3 0.2783   ns  anc
+12   12    &lt;NA&gt;       NA       11 0.5529   ns  anc
+13   13    &lt;NA&gt;       NA       11 0.4259   ns  anc
+14   14    &lt;NA&gt;       NA        3 0.2826   ns  anc
+15   15    &lt;NA&gt;       NA       14 0.3998   ns  anc
+16   16      oc -0.00512        1 1.0000   ns   tw
+17   17      eq  0.08454        2 1.0000   ns   cg
+18   18      co  0.24703        4 1.0000   ns   tc
+19   19     aln  0.24837        4 1.0000   ns   tc
+20   20      ol  0.09844        5 1.0000   ns   gb
+21   21      in  0.06137        5 1.0000   ns   tw
+22   22      cu  0.09501        6 1.0000   ns   cg
+23   23      ri  0.08947        6 1.0000   ns   cg
+24   24      sa  0.28893        8 1.0000   ns   tg
+25   25      op  0.15963        8 1.0000   ns   gb
+26   26      va  0.14766        9 1.0000   ns   tw
+27   27      li  0.38873        9 1.0000   ns   tg
+28   28      ga  0.28768       10 1.0000   ns   cg
+29   29      gr  0.39786       10 1.0000   ns   tc
+30   30      br  0.17106       12 1.0000   ns   tr
+31   31      di  0.13801       12 1.0000   ns   tr
+32   32      kr  0.23478       13 1.0000   ns   gb
+33   33      cr  0.39796       13 1.0000   ns   tg
+34   34      st  0.15737       13 1.0000   ns   tc
+35   35      cy  0.26024        3 1.0000   ns   tg
+36   36     alu  0.08216       14 1.0000   ns   gb
+37   37      lo  0.13108       15 1.0000   ns   tr
+38   38      an  0.13547       15 1.0000   ns   tw</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(simpletreeouch)<span class="sc">$</span>times</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.0000000 0.8333333 0.6666667 0.8333333 0.8333333 0.5000000 1.0000000
- [8] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(simpletreeouch)<span class="sc">$</span>nodelabels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] ""  ""  ""  ""  ""  ""  "G" "F" "E" "D" "C" "B" "A"</code></pre>
-</div>
-</div>
-<p>One other element of <code>ouchtree</code>, created on initialization, is a matrix showing shared amount of time on a tree between two tips (which may be the same tip). This, multiplied by a rate parameter, becomes a variance-covariance matrix under a Brownian motion model, which we’ll be discussing in the course.</p>
+<p>This is a dataframe containing sexual size dimorphism data on 38 species of <code>Anolis</code> lizard <span class="citation" data-cites="Butler:2004">(<a href="#ref-Butler:2004" role="doc-biblioref">Butler and King 2004</a>)</span>. The tree information is provided by <code>node</code>, <code>species</code>, <code>ancestor</code>, and <code>time</code>. The <code>log.SSD</code> contains the phenotypic data we are interested in studying, and the other vectors (<code>OU.1</code>, <code>OU.7</code>) contain hypotheses for the evolution of these phenotypes (they are potential covariates). (More on this later).</p>
+<p>We construct the ouchtree like so, and check with a plot:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(simpletreeouch)<span class="sc">$</span>branch.times</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">with</span>(anolis.ssd,<span class="fu">ouchtree</span>(node,ancestor,time<span class="sc">/</span><span class="fu">max</span>(time),species))</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="converting-from-ape-to-ouch" class="level3">
+<h3 class="anchored" data-anchor-id="converting-from-ape-to-ouch">Converting from <code>ape</code> to <code>ouch</code></h3>
+<p>However, most people donʻt know how to easily convert their newick or nexus format trees to a dataframe (and would be afraid to make errors), so probably the most commonly used method to obtain ouchtrees is to read in the treefile to <code>phylo</code> format using <code>ape</code>, then use ouchʻs <code>ape2ouch()</code> function.</p>
+<p>For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>osimpletree<span class="ot">&lt;-</span><span class="fu">ape2ouch</span>(<span class="at">tree=</span>simpletree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Our example tree, when converted to ouchtree format, is</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>osimpletree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   nodes ancestors     times labels
+1      1      &lt;NA&gt; 0.0000000       
+2      2         3 0.8333333       
+3      3         1 0.6666667       
+4      4         6 0.8333333       
+5      5         6 0.8333333       
+6      6         1 0.5000000       
+7      7         2 1.0000000      G
+8      8         2 1.0000000      F
+9      9         3 1.0000000      E
+10    10         4 1.0000000      D
+11    11         4 1.0000000      C
+12    12         5 1.0000000      B
+13    13         5 1.0000000      A</code></pre>
+</div>
+</div>
+<p>Note that the print method for the tree displays the vectors used to construct the tree (the user input).</p>
+</section>
+<section id="coerce-to-data.frame" class="level3">
+<h3 class="anchored" data-anchor-id="coerce-to-data.frame">Coerce to data.frame</h3>
+<p>ouchtree objects can also be coerced to dataframes, which is helpful for adding hypotheses or metadata. Because <code>ouchtree</code> is an S4 object, to coerce it to a dataframe you use:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as</span>(osimpletree, <span class="st">"data.frame"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   nodes ancestors     times labels
+1      1      &lt;NA&gt; 0.0000000       
+2      2         3 0.8333333       
+3      3         1 0.6666667       
+4      4         6 0.8333333       
+5      5         6 0.8333333       
+6      6         1 0.5000000       
+7      7         2 1.0000000      G
+8      8         2 1.0000000      F
+9      9         3 1.0000000      E
+10    10         4 1.0000000      D
+11    11         4 1.0000000      C
+12    12         5 1.0000000      B
+13    13         5 1.0000000      A</code></pre>
+</div>
+</div>
+</section>
+<section id="hidden-components-of-ouchtree" class="level3">
+<h3 class="anchored" data-anchor-id="hidden-components-of-ouchtree">Hidden components of <code>ouchtree</code></h3>
+<p><code>ouch</code> was written primarily to perform computations along phylogenies to test models of evolution, and thus the <code>ouctree</code> object constructor creates many informational matrices and vectors that are used for rapid computations. Itʻs plotting function is mainly to check that the phylogeny and models were entered correctly, but itʻs also probably the fastest plotting algorithm around.</p>
+<p>For example, the <code>branch.times</code> matrix, created on initialization, is part of the <code>ouchtree</code> object and is a matrix showing shared amount of time on a tree between two tips (which may be the same tip). This, multiplied by a rate parameter, becomes a variance-covariance matrix under a Brownian motion model, which we’ll be discussing later.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(osimpletree)<span class="sc">$</span>branch.times</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          [,1]      [,2]      [,3]      [,4]      [,5]      [,6]      [,7]
 [1,] 1.0000000 0.8333333 0.6666667 0.0000000 0.0000000 0.0000000 0.0000000
@@ -604,16 +844,136 @@ $edge.length
 [7,] 0.0000000 0.0000000 0.0000000 0.5000000 0.5000000 0.8333333 1.0000000</code></pre>
 </div>
 </div>
+<section id="ouchtree-slots" class="level4">
+<h4 class="anchored" data-anchor-id="ouchtree-slots"><code>ouchtree</code> Slots</h4>
+<p>The <code>ouchtree()</code> function (from the 3-4 user supplied arguments), initializes all of the other elements (slots) of class <code>ouchtree</code> which is defined as:</p>
+<ul>
+<li><code>nnodes</code> = ‘integer’ vector, number of nodes</li>
+<li><code>nodes</code> = ‘character’ vector, names for nodes</li>
+<li><code>ancestors</code> = ‘character’, names for ancestors</li>
+<li><code>nodelabels</code> = ‘character’, user-specified labels (i.e., species names)</li>
+<li><code>times</code> = ‘numeric’, time from root to node</li>
+<li><code>root</code> = ‘integer’, identity of the root node</li>
+<li><code>nterm</code> = ‘integer’, number of terminal taxa or tips</li>
+<li><code>term</code> = ‘integer’, vector of terminal nodes</li>
+<li><code>anc.numbers</code> = ‘integer’, numbers of ancestors</li>
+<li><code>lineages</code> = ‘list’, nodes traversed from root to each node</li>
+<li><code>epochs</code> = ‘list’,</li>
+<li><code>branch.times</code> = ‘matrix’,</li>
+<li><code>depth</code> = ‘numeric’</li>
+</ul>
 <p>The entire content of the <code>simpletreeouch</code> object can be dumped to screen using the following command (not executed here to save paper):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(simpletreeouch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(simpletreeouch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>We will return to ouch in the comparative methods section.</p>
+</section>
+</section>
+</section>
+<section id="treedata-from-package-tidytree" class="level1">
+<h1><code>treedata</code> from package <code>tidytree</code></h1>
+<p>The class <code>treedata</code> comes from the <code>tidytree</code> package which was developed by Guangchuang Yu and colleagues <span class="citation" data-cites="Yu:2022">(<a href="#ref-Yu:2022" role="doc-biblioref">Yu 2022</a>)</span>, who also developed the <code>treeio</code> package which is the <em>Swiss Army Knife</em> of phylogenetic tree formats (<a href="#fig-treeio">Figure&nbsp;2</a>), and the <code>ggtree</code> package which is quickly becoming the tree plotting package of choice. <code>ggtree</code> was written to use <code>ggplot2</code> and in general all three packages interact nicely with the <code>tidyverse</code>.</p>
+<div id="fig-treeio" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="../../images/treeio-diagram.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Overview of the treeio package and its relations with tidytree and ggtree. Treeio supports parsing a tree with data from a number of file formats and software outputs. A treedata object stores a phylogenetic tree with node/branch-associated data. Treeio provides several functions to manipulate a tree with data. Users can convert the treedata object into a tidy data frame (each row represents a node in the tree and each column represents a variable) and process the tree with data using the tidy interface implemented in tidytree. The tree can be extracted from the treedata object and exported to a Newick and NEXUS file or can be exported with associated data into a single file (either in the BEAST NEXUS or jtree format). Associated data stored in the treedata object can be used to annotate the tree using ggtree. In addition, ggtree supports a number of tree objects, including phyloseq for microbiome data and obkData for outbreak data. The phylo, multiPhylo (ape package), phylo4, phylo4d (phylobase package), phylog (ade4 package), phyloseq (phyloseq package), and obkData (OutbreakTools package) are tree objects defined by the R community to store tree with or without domain-specific data. All these tree objects as well as hierarchical clustering results (e.g., hclust and dendrogram objects) are supported by ggtree.</figcaption><p></p>
+</figure>
+</div>
+<p><a href="https://yulab-smu.top/treedata-book/chapter1.html">Source: Yu, 2022 Fig. 1.3</a></p>
+<p>Extensive examples and explanation are provided in his new book, which is availble online <a href="https://yulab-smu.top/treedata-book" class="uri">https://yulab-smu.top/treedata-book</a>. To get started on <a href="https://yulab-smu.top/treedata-book/chapter2.html#the-treedata-object">treedata check out this page</a>.</p>
+<p><code>treedata</code> is also an S4 object, which is excellent, as it is easy to hand-create a <code>phylo</code> object with some content that may be not obvious to the user but will cause functions to throw errors. S4 objects avoid all that by having constructor functions.</p>
+<p>The philosophy of <code>treedata</code> is to create rigorous tree objects that store phylogenetic trees with associated data. One main drawback of class <code>phylo</code> is that trees and data are stored separately, and it is up to the user to ensure that the data lines up with <code>phylo</code>ʻs edge matrix properly. This is scary! <code>treedata</code> allow the opportunity to bind the tree and the data together correctly.</p>
+<section id="treedata-slots" class="level4">
+<h4 class="anchored" data-anchor-id="treedata-slots"><code>treedata</code> Slots</h4>
+<p>Class <code>treedata</code> stores phylogenetic tree with associated data</p>
+<ul>
+<li><code>file</code> = tree file</li>
+<li><code>treetext</code> = newick tree string</li>
+<li><code>phylo</code> = phylo object for tree structure</li>
+<li><code>data</code> = associated data</li>
+<li><code>extraInfo</code> = extra information, reserve for merge_tree</li>
+<li><code>tip_seq</code> = tip sequences</li>
+<li><code>anc_seq</code> = ancestral sequences</li>
+<li><code>seq_type</code> = sequence type, one of NT or AA</li>
+<li><code>tipseq_file</code> = tip sequence file</li>
+<li><code>ancseq_file</code> = ancestral sequence file</li>
+<li><code>info</code> = extra information, e.g.&nbsp;metadata, software version etc.</li>
+</ul>
+</section>
+<section id="reading-trees-into-treedata" class="level3">
+<h3 class="anchored" data-anchor-id="reading-trees-into-treedata">Reading trees into <code>treedata</code></h3>
+<p>There are functions to read in tree formats from every major phylogenetics reconstruction formats. There are <code>read.</code>, functions for all of the formats illustrated in <a href="#fig-treeio">Figure&nbsp;2</a>, such as <code>read.nexus</code>, <code>read.beast</code> and <code>read.iqtree</code>.</p>
+<p>It is also easy to coerce <code>phylo</code> to <code>treedata</code> or vice versa:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>tdat <span class="ot">&lt;-</span> <span class="fu">as.treedata</span>(simpletree)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>tdat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'treedata' S4 object'.
+
+...@ phylo:
+
+Phylogenetic tree with 7 tips and 6 internal nodes.
+
+Tip labels:
+  A, B, C, D, E, F, ...
+
+Rooted; includes branch lengths.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.phylo</span>(tdat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Phylogenetic tree with 7 tips and 6 internal nodes.
+
+Tip labels:
+  A, B, C, D, E, F, ...
+
+Rooted; includes branch lengths.</code></pre>
+</div>
+</div>
+<p>A lot more detail is provided in the book sections 1.2, 1.3 <span class="citation" data-cites="Yu:2022">(<a href="#ref-Yu:2022" role="doc-biblioref">Yu 2022</a>)</span>.</p>
+</section>
+<section id="combining-tree-with-data" class="level3">
+<h3 class="anchored" data-anchor-id="combining-tree-with-data">Combining tree with data</h3>
+<p><code>treedata</code> is a special kind of tibble. So again, it is easy to undersatnd as it is presented as a rectangular dataframe-like object.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>simpletree <span class="sc">%&gt;%</span> as.treedata <span class="sc">%&gt;%</span> as_tibble</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 4
+   parent  node branch.length label
+    &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;
+ 1     10     1           0.5 A    
+ 2     10     2           0.5 B    
+ 3     11     3           0.5 C    
+ 4     11     4           0.5 D    
+ 5     12     5           1   E    
+ 6     13     6           0.5 F    
+ 7     13     7           0.5 G    
+ 8      8     8          NA   &lt;NA&gt; 
+ 9      8     9           1.5 &lt;NA&gt; 
+10      9    10           1   &lt;NA&gt; 
+11      9    11           1   &lt;NA&gt; 
+12      8    12           2   &lt;NA&gt; 
+13     12    13           0.5 &lt;NA&gt; </code></pre>
+</div>
+</div>
+</section>
+<section id="methods-to-extract-information-from-treedata" class="level3">
+<h3 class="anchored" data-anchor-id="methods-to-extract-information-from-treedata">Methods to extract information from <code>treedata</code></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get.tree</span>()</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get.data</span>()</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">get.fields</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plotting-ggtree" class="level3">
+
 
 
 
 </section>
+</section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Plotting ggtree</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-Butler:2004" class="csl-entry" role="doc-biblioentry">
 Butler, Marguerite A., and Aaron A. King. 2004. <span>“Phylogenetic Comparative Analysis: A Modeling Approach for Adaptive Evolution.”</span> <em>American Naturalist</em> 164: 683–95. <a href="https://doi.org/10.1086/426002">https://doi.org/10.1086/426002</a>.
 </div>
@@ -622,6 +982,9 @@ King, Aaron A., and Marguerite A. Butler. 2022. <em>Ouch: Ornstein-Uhlenbeck Mod
 </div>
 <div id="ref-Paradis:2019" class="csl-entry" role="doc-biblioentry">
 Paradis, Emmanuel, and Klaus Schliep. 2019. <span>“Ape 5.0: An Environment for Modern Phylogenetics and Evolutionary Analyses in <span>R</span>.”</span> <em>Bioinformatics</em> 35: 526–28. <a href="https://doi.org/10.1093/bioinformatics/bty633">https://doi.org/10.1093/bioinformatics/bty633</a>.
+</div>
+<div id="ref-Yu:2022" class="csl-entry" role="doc-biblioentry">
+Yu, Guangchuang. 2022. <em>Data Integration, Manipulation and Visualization of Phylogenetic Treess</em>. 1st edition. Chapman; Hall/<span>CRC</span>. <a href="https://doi.org/10.1201/9781003279242">https://doi.org/10.1201/9781003279242</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

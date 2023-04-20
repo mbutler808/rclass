@@ -15,7 +15,7 @@ bibliography: ../refs.bib
 
 References for this Material:
 
-- This was adapted from the chapter "All about trees" written by Brian OʻMeara from the manual "Getting started in R for Phylogenetics" by Marguerite A. Butler, Brian C. O’Meara, Jason Pienaar, Michael Alfaro, Graham Slater, and Todd Oakley
+- Some of this material was adapted from the chapter "All about trees" originally written by Brian OʻMeara from the manual "Getting started in R for Phylogenetics" by Marguerite A. Butler, Brian C. O’Meara, Jason Pienaar, Michael Alfaro, Graham Slater, and Todd Oakley
 
 
 # Learning objectives
@@ -39,7 +39,20 @@ References for this Material:
 # R packages you will need
 - `ape`
 - `ouch`
+- `ggtree` which will also install `treeio`, `tidytree`, and others
+
+`ggtree` is distributed through `bioconductor`. 
+* To install ggtree:
+
+```{r}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("ggtree")
+```
 :::
+
+
 
 # Tree vocabulary
 
@@ -68,13 +81,16 @@ A very basic tree format is __Newick__ (`.tree`), named after the [seafood resta
 
 ![Photo from the Newick restaurant [home page](https://www.newicks.com)](http://www.newicks.com/Web2014/Ed7.1.jpg)
 
+
+NOTE: You would never construct a `phylo` tree as below, this is just to illustrate its structure (see following sections for how to read in trees): 
+
 ```{r}
 #| label: fig-simpletree
 #| fig-cap: "A simple tree"
 #| warning: false
 require(ape)
 require(ouch)
-require(phylobase)
+require(treeio)
 # simpletree <- rcoal(length(LETTERS[1:7]), rooted = TRUE, tip.label = LETTERS[1:7], br = "coalescent")
 
 simpletree<-structure(list(
@@ -125,11 +141,11 @@ describe the same trees, though it might not be easy to tell at first glance. Th
 
 # NEXUS -- More soon
 
-The NEXUS format (`*.nex` or `*.nxs`) is widely used in bioinformatics. Many phylogenetics programs use nexus format including $PAUP^*$, MrBayes, Mesquite, MacClade, etc., and many more can read nexus.  
+The NEXUS format (`*.nex` or `*.nxs`) is widely used in bioinformatics. Many phylogenetics programs use nexus format including $PAUP^*$, MrBayes, Mesquite, MacClade, IQTREE2, etc., and many more can read nexus.  
 
 One of the key features is that it is very _extensible_ with information in __blocks__. We will only be concerned with blocks of DNA sequence data, but any type of information can be added.  This flexibilityy, however, can be a curse when you encounter new extensions to the format that your code did not anticipate. However, for the most part we will be using packages that read in nexus so you can reasonable hope that someone has dealt with the headache for you. 
 
-Nexus files are often used as inputs to phylogenetic programs. In that case, they typically only have a TAXA block and a DATA block. In our IQTREE2 example we also had a partition file in nexus format. But they can also return the output of the phylogenetic reconstruction, in that case they will have a TREES block as well. 
+Nexus files are often used as inputs to phylogenetic programs, to hold the DNA (or other) alignments and the taxon names. In that case, they typically only have a TAXA block and a DATA block. In our IQTREE2 example we also had a partition file in nexus format. But they can also return the output of the phylogenetic reconstruction, in that case they will have a TREES block as well. 
 
 ### Nexus syntax:
 
@@ -171,6 +187,45 @@ BEGIN TREES;
 END; 
 ```  
 
+### Note: Partition files in IQTREE
+
+NEXUS files are also used for a wide variety of other purposes to supply additional information to phylogenetic reconstruction. Partition files for IQTREE use a nexus format with the block labeled `SETS`, with the information coded as `charset LOCUSNAME = startposition - endposition;` The positions being along the alignment specified in the DNA alignment file (which could also be in nexus format, phylip format, or many others. 
+
+I like to use the gene name to label the partitions. For example, a by-locus partition file can be indicated as so:
+
+```{.bash}
+#nexus
+begin sets;
+  charset sia = 1-407;  
+  charset bdnf = 408-924;
+  charset nxc = 925-1479;
+  charset cyb = 1480-1989;
+  charset nd4 = 1990-2475;
+end;
+```
+
+And a by locus and codon partition file, where the range of positions is `\3` for each third position, and the start is adjusted to indicate 1st, 2nd, 3rd codon positions:
+
+```{.bash}
+#nexus
+begin sets;
+  charset sia_pos1 = 1-407\3;
+  charset sia_pos2 = 2-407\3;
+  charset sia_pos3 = 3-407\3;
+  charset bdnf_pos1 = 408-924\3;
+  charset bdnf_pos2 = 409-924\3;
+  charset bdnf_pos3 = 410-924\3;
+  charset nxc_pos1 = 925-1479\3;
+  charset nxc_pos2 = 926-1479\3;
+  charset nxc_pos3 = 927-1479\3;
+  charset cyb_pos1 = 1480-1989\3;
+  charset cyb_pos2 = 1481-1989\3;
+  charset cyb_pos3 = 1482-1989\3;
+  charset nd4_pos1 = 1990-2475\3;
+  charset nd4_pos2 = 1991-2475\3;
+  charset nd4_pos3 = 1992-2475\3;
+end;
+```
 
 # `phylo` (`ape` 5.0 or above)
 
@@ -196,8 +251,9 @@ This alone is enough for a basic topology. However, it might be nice to know wha
 simpletree$tip.label
 ```
 It's possible that internal nodes have labels, too (for example, the most recent common ancestor of a set of birds might be labeled Aves). If so, an optional `node.label` is used.
-If branch lengths are known, they are included as the numeric vector `edge.length`.
-```{r include=FALSE,echo=FALSE}
+If branch lengths are known, they are included as the numeric vector `edge.length`. Letʻs some add using ape functions:
+
+```{r}
 simpletreebrlen<-compute.brlen(simpletree)
 simpletreebrlen$edge.length<-3*simpletreebrlen$edge.length
 simpletree<-simpletreebrlen
@@ -211,77 +267,214 @@ unclass(simpletree)
 ```
 `phylo` trees are S3 objects. We'll be learning more about them later, but an important thing to know is that you directly access any element of them by using the `$` operator (as was done above). Optional elements, or even elements of your own devising, can be added to them, too, using the same operator.
 
+### Getting trees into phylo format
+
+`ape` has many of functions for reading in trees (the `read.` series) and writing trees to file (the `write.` series). The most commonly used are:
+
+```{r}
+#| eval: false
+read.nexus(file, tree.names = NULL, force.multi = FALSE)
+read.tree(file = "", text = NULL, tree.names = NULL, skip = 0,
+    comment.char = "", keep.multi = FALSE, ...)
+read.FASTA(file, type = "DNA")
+read.GenBank(access.nb, seq.names = access.nb, species.names = TRUE,
+             as.character = FALSE, chunk.size = 400, quiet = TRUE)    
+write.nexus(..., file = "", translate = TRUE)
+write.tree(tree, file = "", append = FALSE,
+           digits = 10, tree.names = FALSE)
+```
+
+To see more, invoke the package help page `?ape` and look under `read.` and `write.`
+
+Examples:
+
+```{r}
+#| eval: false
+write.tree(simpletree, "mytree.tree")
+tree <- read.tree("mytree.tree")
+```
+```{r}
+tree2 <- read.tree(text="((G:1.0,F:1.0):1.1,E:2.1):3.5;")
+plot(tree2)
+```
+
+`phylo` is widely used in other packages as well. `ape` itself has many functions as it was written primarily to perform phylogenetic comparative analyses. 
+
+#### Methods 
+
+In line with the style of object-oriented programming, R has a generic function convention that will dispatch the correct function after looking at the class of the first object passed to it as an argument. For example, when you tell it to `plot(vector_object)` R takes a look -- "oh, youʻre a vector, Iʻll send you to the plotting method for vectors". 
+
+The developer of the class (usually bundled in a package) has to write all of the generic methods for their new class. You can see all of the methods available for S3 classes like `phylo` like so: 
+
+```{r}
+methods(class=class(simpletree)) # same as methods(class="phylo")
+```
+
+Remember these are functions, so these are all functions that are written to work with any `phylo` object. 
+
+Try some, like `Ntip(simpletree)`.  Both `drop.tip` and `keep.tip` are really helpful for cutting your tree down to a subset of taxa. 
+
 # ouchtree (`ouch` version 2.0 or above)
 
-`OUCH` [@Butler:2004,@King:2022] uses a different tree structure than does `ape`. First, `OUCH`'s is an S4 class, rather than S3. There are several differences between them, which you'll learn later. There are two main distinctions that will be important now. It helps to have a metaphor: think of a car. The S3 representation of a car is all the parts, neatly disassembled and laid out. The S4 representation of a car is a closed box. With S3, you can look at and manipulate any part of the car directly and manipulate it (using the `$` operator). You could check the amount of gas in the tank by directly accessing the gas. With S4, you should use a method, if one exists, to access and manipulate elements. For example, you could check the gas in the tank using the fuel gauge, if the fuel gauge method exists and works properly. S3 objects can be built up piecemeal, and there aren't built-in checks to make sure that everything is correct: if you forget to add a wheel element to the S3 char, you won't know there's a problem until some function tries to access it and fails. S4 objects are instantiated once, when you pass them all the initialization info they need (they often have defaults, and often have internal consistency checks).
-`OUCH` uses the `ouchtree` class as a basic tree class, then derives other classes from this for storing information on analyses. 
-The `ouchtree` class is:
+Trees in the package `ouch` [@Butler:2004,@King:2022] are of class `ouchtree`, and are written as an S4 object, as opposed to the S3 object class used by `ape`. 
 
-`setClass(`
+Whereas S3 objects can be created on the fly by putting primitive object types together, S4 objects are created by a constructor function that puts the object together in a more structured way and importantly, _checks that the object is actually constructed correctly_.  This makes it a lot easier for developers to reliably depend on objects of that class. 
 
-`  'ouchtree',`
+### Building ouchtree format from dataframes
 
-`  representation=representation(`
+The `ouchtree()` function is the constructor for objects of class `ouchtree`. 
 
-`    nnodes = 'integer',`
-
-`    nodes = 'character',`
-
-`    ancestors = 'character',`
-
-`    nodelabels = 'character',`
-
-`    times = 'numeric',`
-
-`    root = 'integer',`
-
-`    nterm = 'integer',`
-
-`    term = 'integer',`
-
-`    anc.numbers = 'integer',`
-
-`    lineages = 'list',`
-
-`    epochs = 'list',`
-
-`    branch.times = 'matrix',`
-
-`    depth = 'numeric'`
-
-`  )`
-
-`)`
-
-At first glance, it looks like creating a new `ouchtree` object will be a lot of work: there are 13 different elements, some of them vectors, built in the class. However, with S4 objects, the beauty of constructors comes into play. The constructor function for a new `ouchtree` is just the function
-
-`ouchtree(nodes, ancestors, times, labels = as.character(nodes))`
-
-__The `ouchtree` function only has four arguments__, one of them optional. Using the function and these elements, all the other elements of the class are initialized.
-
-- The first element is `nodes`, a character vector of node ids (including internal nodes). Unlike `ape`, the leaves do not need to have smaller ids than internal nodes. 
-- The second argument is `ancestors`, a character vector of node ids of the ancestors for the nodes in the `nodes` vector. The `nodes` and `ancestors` vectors almost correspond to the second and first columns of the `ape` `edge` matrix, respectively, with the exception that `ouchtree` includes the root node with an ancestor of `NA`. 
-- The third element, `times`, represents the height of each node from the root. Remember that `ape`'s `edge.length` vector has the length of the branch subtending each node; instead, `ouchtree` has the sum of the lengths of all branches connecting a given node to the root. Again, the root node is included in `ouchtree` (with height 0) but not in ape. 
-- The fourth argument, `labels`, is a vector of labels for both tips and internal nodes. If internal nodes do not have names, they get a label of `<NA>`.
-
-```{r include=FALSE,echo=FALSE}
-simpletreeouch<-ape2ouch(tree=simpletree)
+```{r}
+#| eval: false
+ouchtree(nodes, ancestors, times, labels = as.character(nodes))
 ```
-For example, our example tree, when converted to ouchtree format, is
+__The `ouchtree` function only has four arguments__, one of them optional. 
+
+- `nodes`: a character vector of node ids (including internal nodes). Unlike `ape`, the leaves do not need to have smaller ids than internal nodes. 
+- `ancestors`: a character vector of node ids of the ancestors for the nodes in the `nodes` vector. The `nodes` and `ancestors` vectors almost correspond to the second and first columns of the `ape` `edge` matrix, respectively, with the exception that `ouchtree` includes the root node with an ancestor of `NA`. 
+- `times`: represents the height of each node from the root. Remember that `ape`'s `edge.length` vector has the length of the branch subtending each node; instead, `ouchtree` has the sum of the lengths of all branches connecting a given node to the root. Again, the root node is included in `ouchtree` (with height 0) but not in ape. 
+- `labels`: is a vector of labels for both tips and internal nodes. It is optional, if no argument is supplied then the `nodes` are used as labels. If internal nodes do not have names, they get a label of `<NA>`.
+
+We can use `ouch`ʻs built-in dataset `anolis.ssd`:
+
+```{r}
+data(anolis.ssd)
+class(anolis.ssd)
+anolis.ssd
+```
+
+This is a dataframe containing sexual size dimorphism data on 38 species of `Anolis` lizard [@Butler:2004]. The tree information is provided by `node`, `species`, `ancestor`, and `time`.  The `log.SSD` contains the phenotypic data we are interested in studying, and the other vectors (`OU.1`, `OU.7`) contain hypotheses for the evolution of these phenotypes (they are potential covariates). (More on this later).
+
+We construct the ouchtree like so, and check with a plot:
+
+```{r}
+tree <- with(anolis.ssd,ouchtree(node,ancestor,time/max(time),species))
+plot(tree)
+```
+
+### Converting from `ape` to `ouch`
+
+However, most people donʻt know how to easily convert their newick or nexus format trees to a dataframe (and would be afraid to make errors), so probably the most commonly used method to obtain ouchtrees is to read in the treefile to `phylo` format using `ape`, then use ouchʻs `ape2ouch()` function. 
+
+For example:
+
+```{r}
+osimpletree<-ape2ouch(tree=simpletree)
+```
+Our example tree, when converted to ouchtree format, is
 ```{r }
-attributes(simpletreeouch)$nodes
-attributes(simpletreeouch)$ancestors
-attributes(simpletreeouch)$times
-attributes(simpletreeouch)$nodelabels
+osimpletree
 ```
-One other element of `ouchtree`, created on initialization, is a matrix showing shared amount of time on a tree between two tips (which may be the same tip). This, multiplied by a rate parameter, becomes a variance-covariance matrix under a Brownian motion model, which we'll be discussing in the course.
+
+Note that the print method for the tree displays the vectors used to construct the tree (the user input). 
+
+### Coerce to data.frame
+
+ouchtree objects can also be coerced to dataframes, which is helpful for adding hypotheses or metadata. Because `ouchtree` is an S4 object, to coerce it to a dataframe you use:
+
+```{r}
+as(osimpletree, "data.frame")
+```
+
+### Hidden components of `ouchtree`
+
+`ouch` was written primarily to perform computations along phylogenies to test models of evolution, and thus the `ouctree` object constructor creates many informational matrices and vectors that are used for rapid computations. Itʻs plotting function is mainly to check that the phylogeny and models were entered correctly, but itʻs also probably the fastest plotting algorithm around. 
+
+For example, the `branch.times` matrix, created on initialization, is part of the `ouchtree` object and is a matrix showing shared amount of time on a tree between two tips (which may be the same tip). This, multiplied by a rate parameter, becomes a variance-covariance matrix under a Brownian motion model, which we'll be discussing later.
 
 ```{r }
-attributes(simpletreeouch)$branch.times
+attributes(osimpletree)$branch.times
 ```
+
+#### `ouchtree` Slots
+
+The `ouchtree()` function (from the 3-4 user supplied arguments), initializes all of the other elements (slots) of class `ouchtree` which is defined as:
+
+- `nnodes` = 'integer' vector, number of nodes
+- `nodes` = 'character' vector, names for nodes
+- `ancestors` = 'character', names for ancestors
+- `nodelabels` = 'character', user-specified labels (i.e., species names)
+- `times` = 'numeric', time from root to node
+- `root` = 'integer', identity of the root node
+- `nterm` = 'integer', number of terminal taxa or tips
+- `term` = 'integer', vector of terminal nodes
+- `anc.numbers` = 'integer', numbers of ancestors
+- `lineages` = 'list', nodes traversed from root to each node
+- `epochs` = 'list', 
+- `branch.times` = 'matrix',
+- `depth` = 'numeric'
+
 
 The entire content of the `simpletreeouch` object can be dumped to screen using the following command (not executed here to save paper):
+
 ```{r eval=F}
 attributes(simpletreeouch)
 ```
 
+We will return to ouch in the comparative methods section.
+
+
+# `treedata` from package `tidytree`
+
+The class `treedata` comes from the `tidytree` package which was developed by Guangchuang Yu and colleagues [@Yu:2022], who also developed the `treeio` package which is the _Swiss Army Knife_ of phylogenetic tree formats ([@fig-treeio]), and the `ggtree` package which is quickly becoming the tree plotting package of choice. `ggtree` was written to use `ggplot2` and in general all three packages interact nicely with the `tidyverse`. 
+
+![Overview of the treeio package and its relations with tidytree and ggtree. Treeio supports parsing a tree with data from a number of file formats and software outputs. A treedata object stores a phylogenetic tree with node/branch-associated data. Treeio provides several functions to manipulate a tree with data. Users can convert the treedata object into a tidy data frame (each row represents a node in the tree and each column represents a variable) and process the tree with data using the tidy interface implemented in tidytree. The tree can be extracted from the treedata object and exported to a Newick and NEXUS file or can be exported with associated data into a single file (either in the BEAST NEXUS or jtree format). Associated data stored in the treedata object can be used to annotate the tree using ggtree. In addition, ggtree supports a number of tree objects, including phyloseq for microbiome data and obkData for outbreak data. The phylo, multiPhylo (ape package), phylo4, phylo4d (phylobase package), phylog (ade4 package), phyloseq (phyloseq package), and obkData (OutbreakTools package) are tree objects defined by the R community to store tree with or without domain-specific data. All these tree objects as well as hierarchical clustering results (e.g., hclust and dendrogram objects) are supported by ggtree.](../../images/treeio-diagram.png){#fig-treeio}
+
+[Source: Yu, 2022 Fig. 1.3](https://yulab-smu.top/treedata-book/chapter1.html)
+
+Extensive examples and explanation are provided in his new book, which is availble online <https://yulab-smu.top/treedata-book>. To get started on [treedata check out this page](https://yulab-smu.top/treedata-book/chapter2.html#the-treedata-object). 
+
+
+`treedata` is also an S4 object, which is excellent, as it is easy to hand-create a `phylo` object with some content that may be not obvious to the user but will cause functions to throw errors. S4 objects avoid all that by having constructor functions. 
+
+The philosophy of `treedata` is to create rigorous tree objects that store phylogenetic trees with associated data.  One main drawback of class `phylo` is that trees and data are stored separately, and it is up to the user to ensure that the data lines up with `phylo`ʻs edge matrix properly. This is scary! `treedata` allow the opportunity to bind the tree and the data together correctly.  
+
+#### `treedata` Slots
+
+Class `treedata` stores phylogenetic tree with associated data
+
+- `file` = tree file
+- `treetext` = newick tree string
+- `phylo` = phylo object for tree structure
+- `data` = associated data
+- `extraInfo` = extra information, reserve for merge_tree
+- `tip_seq` = tip sequences
+- `anc_seq` = ancestral sequences
+- `seq_type` = sequence type, one of NT or AA
+- `tipseq_file` = tip sequence file
+- `ancseq_file` = ancestral sequence file
+- `info` = extra information, e.g. metadata, software version etc.
+
+### Reading trees into `treedata`
+
+There are functions to read in tree formats from every major phylogenetics reconstruction formats. There are `read.`, functions for all of the formats illustrated in [@fig-treeio], such as `read.nexus`, `read.beast` and
+`read.iqtree`. 
+
+It is also easy to coerce `phylo` to `treedata` or vice versa:
+
+```{r}
+tdat <- as.treedata(simpletree)
+tdat
+as.phylo(tdat)
+```
+
+A lot more detail is provided in the book sections 1.2, 1.3 [@Yu:2022]. 
+
+### Combining tree with data
+
+`treedata` is a special kind of tibble. So again, it is easy to undersatnd as it is presented as a rectangular dataframe-like object. 
+
+```{r}
+simpletree %>% as.treedata %>% as_tibble
+```
+
+### Methods to extract information from `treedata`
+
+```{r}
+#| eval: false
+get.tree()
+get.data()
+get.fields()
+```
+
+### Plotting ggtree
