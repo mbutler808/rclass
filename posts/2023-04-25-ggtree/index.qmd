@@ -1,0 +1,285 @@
+---
+title: "The ggtree-verse"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Working with trees with tidytree and plotting with ggtree"
+date: 2023-04-25
+categories: [module 7, week 13, phylogenetic trees, phylo, ggtree, treedata]
+bibliography: ../refs.bib
+---
+
+### Acknowledgements
+
+References for this Material:
+
+- Treedata book by Guangchuang Yu <https://yulab-smu.top/treedata-book/>
+- <https://bioconnector.github.io/workshops/r-ggtree.html>
+
+# Learning objectives
+
+::: callout-note
+# Learning Objectives
+
+**At the end of this lesson you will:**
+
+-  Understand information content of phylogenetically structured data
+-  Understand particular R tree formats in ape, phylobase, and ouch
+-  Be able to hand-make trees
+-  Be able to import trees from nexus, newick, and other major formats in use today
+-  Be able to convert trees  from one format to another
+-   Be able to perform basic tree manipulations
+
+:::
+
+
+:::{.callout-note}
+# R packages you will need
+- `ape`
+- `ggtree`
+- `tidytree`
+- `treeio`
+:::
+
+# Overview
+
+`ggtree` is a powerful phylogenetic tree plotting package, that is used alongside `treeio` and `tidytree` packages to import/export and to manipulate phylogenetic trees, respectively. These packages allow you to subset or combine trees with data, annotate, and plot in so many different ways using the grammar of graphics. 
+
+Because itʻs written in the style of `ggplot2` and the `tidyverse`, there are a lot of functions to remember, and now there are also multiple object types. The key to working effectively with `ggtree` is to be aware of what type of object you are working with, whether it is a `dataframe`, a `tibble`, a `phylo` tree, a `treedata` tibble, or `ggtree` object. It is easy to convert between these at will if you know what you are dealing with. 
+
+
+# phylo -> treedata
+
+Functions like `read.tree` amd `read.nexus`, etc. will read in objects of class `phylo` (they are actually referencing the ape function). 
+
+To show this, letʻs first generate a random tree using `ape::rtree()`
+
+```{r}
+#| warning: false
+require(ape)
+require(ggtree)
+require(treeio)
+```
+
+
+```{r}
+tree <- rtree(20)
+class(tree)
+plot(tree)  # ape plotting function
+```
+
+Note: `ggtree` can also accept `phylo` objects as arguments:
+
+```{r}
+ggtree(tree)  # ggtree plotting function
+```
+
+To save as newick and nexus formats, `treeio` has the following:
+
+```{r}
+treeio::write.nexus(tree, file="tree.nex")
+treeio::write.tree(tree, file="tree.tree")
+list.files()
+```
+
+Take a look at these files. They should be in nexus and newick formats, respectively.
+
+```{r}
+tree_nex <- treeio::read.nexus(file="tree.nex")
+tree_new <- treeio::read.newick(file="tree.tree")
+class(tree_nex)
+class(tree_new)
+```
+
+::: callout-note
+If you have trees from `iqtree`, `BEAST` etc., you should use the specialized read functions because they will capture the metadata embedded in the treeformat including support values. 
+:::
+
+
+## Coverting between data types
+
+
+The main functions for coersion are:
+
+
+```{r}
+as.phylo (tree)  # to phylo
+as.treedata(tree) # to treedata
+treedata <- as.treedata(tree)  
+as_tibble(treedata)  # to tibble
+```
+
+
+
+# Simulate phenotypic data
+
+### Add tiplabels
+
+```{r}
+ggtree(tree) + geom_tiplab()
+```
+
+### Get the tip labels
+
+There is a function `get_taxa_name()` which is very handy, but NOTE: its argument is a `ggtree` object, not a `treedata` object. 
+
+```{r}
+p <- ggtree(tree) + geom_tiplab()
+get_taxa_name(p)
+taxa <- get_taxa_name(p)
+```
+
+Simulate a data matrix:
+
+```{r}
+n <- length(taxa)
+size <- rnorm(n, mean=20, sd=5)
+habitat <- sample(c("desert", "grassland", "forest", "intertidal"), size=n, replace=T)
+dat <- data.frame( "label"= taxa, size, habitat)
+dat
+```
+
+See our ggtree as a treedata object:
+
+```{r}
+as.treedata(p) %>% as_tibble %>% as.data.frame  # ggtree -> treedata -> tibble -> dataframe
+```
+
+# Merge tree with data
+
+Now that we have a matching key in both the tree and data objects, we can join the tree with the dataframe by those matching labels using `ggtree`ʻs `full_join`:
+
+```{r}
+ttree <- full_join(tree, dat, by = "label") 
+ttree
+ttree %>% as_tibble %>% as.data.frame
+```
+
+And thatʻs what our `treedata` object looks like flattened out! 
+
+
+## Subsetting the tree
+
+Functions:  `drop.tip()` and `keep.tip()`
+
+Suppose we want to drop all of the even tips:
+
+```{r}
+todrop <- paste("t", 1:10*2, sep="")
+todrop
+smalltree <- drop.tip(ttree, todrop)
+smalltree
+ggtree(smalltree) + geom_tiplab()
+```
+
+`drop.tip` keeps all of the metadata! `keep.tip` is imported from `ape` so it has to be converted to `phylo` and then the data joined again after. 
+
+
+## Plotting with node labels
+
+The geometries `geom_text()` and `geom_node()` are helpful for labelling all of the nodes. The function `geom_tiplab()` labels only the tips. 
+
+
+Add node labels so you know what the internal node numbers are:
+
+```{r}
+ggtree(smalltree) + 
+    geom_tiplab() +
+    geom_text(aes(label=node), hjust=-.3)    # node numbers
+```    
+
+Note: The tiplabels and the node labels crashed!
+
+There are also `2` versions: `geom_text2()` and `geom_node2()` that allow subsetting the nodes, when you want the geometry to apply to only some of the nodes.  
+
+```{r}
+ggtree(smalltree) + 
+    geom_tiplab() +
+    geom_text2(aes(label=node, subset=!isTip), hjust=-.3)    # node numbers
+```    
+
+`isTip` is a column of the ggtree object, so it is inherited when we provide the ggtree object. 
+
+
+## Plotting with alternative tip labels 
+
+The dataframe portion of the treedata object can hold any number of columns of metadata. Perhaps you have some real names in a different column (like a display name), it is easy to swap out the tip labels. Here letʻs just use the `habitat` column
+
+```{r}
+ggtree(smalltree) + 
+    geom_tiplab(aes(label=habitat)) +
+    geom_text2(aes(label=node, subset=!isTip), hjust=-.3)    # node numbers
+```
+
+## When your tip labels get cut off
+
+Add an x scale (usually time):
+
+```{r}
+ggtree(smalltree) + 
+    geom_tiplab(aes(label=habitat)) +
+    geom_text2(aes(label=node, subset=!isTip), hjust=-.3) +   # node numbers
+    theme_tree2()
+```     
+
+You can increase the size of the plot area to accommodate the longer labels:
+
+```{r}
+ggtree(smalltree) + 
+    geom_tiplab(aes(label=habitat)) +
+    geom_text2(aes(label=node, subset=!isTip), hjust=-.3) +   # node numbers
+    theme_tree2() +
+    xlim(0,5)
+```
+
+# Tree layouts 
+
+```{r}
+#| warning: false
+require(cowplot)
+
+plot_grid(
+  ggtree(ttree),
+  ggtree(ttree, layout="roundrect"),
+  ggtree(ttree, layout="slanted"),
+  ggtree(ttree, layout="ellipse"),
+  ggtree(ttree, layout="circular"),
+  ggtree(ttree, layout="fan", open.angle=120),
+  ggtree(ttree, layout="equal_angle"),
+  ggtree(ttree, layout="daylight"),
+  ggtree(ttree, branch.length='none'),
+  ggtree(ttree, layout="ellipse", branch.length="none"),
+  ggtree(ttree, branch.length='none', layout='circular'),
+  ggtree(ttree, layout="daylight", branch.length = 'none')
+)  
+```
+
+# Plotting data on the tree
+
+NEED TO WORK ON THIS A BIT MORE
+
+```{r, eval=F}
+require(ggplot2)
+smdat <- smalltree %>% as_tibble 
+
+ggtree(smalltree) + 
+    geom_tiplab(aes(label=habitat)) +
+    geom_text2(aes(label=node, subset=!isTip), hjust=-.3) +   # node numbers
+    theme_tree2() +
+    xlim(0,5) +
+    geom_facet(panel = "Size", data=smdat, geom = geom_col, 
+                aes(x = size), orientation = 'y', width = .6)
+```
+
+# Example datasets
+
+save to your working directory:
+
+[bigtree.nex](bigtree.nex)
+[anolis.SSD.raw.csv](anolis.SSD.raw.csv)
+[ggtree.R](ggtree.R)
+
+This is an example of a typical workflow. We have carefully collected phenotypic data, and someone has published a massive phylogeny. We need to subset the tree to just the taxa we want to work on.   
+
