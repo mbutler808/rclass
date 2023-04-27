@@ -3,6 +3,9 @@
 # Mac Finder information
 .DS_Store
 
+# Lecture keynotes
+lectures/
+
 # History files
 .Rhistory
 .Rapp.history

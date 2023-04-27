@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Marguerite Butler">
+<meta name="dcterms.date" content="2023-04-11">
+<meta name="description" content="A tour of analyses with geometric morphometric data">
+
+<title>ZOOL710 Data Science in R for Biologists - Procrustes Superimposition and Analyses</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">ZOOL710 Data Science in R for Biologists</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">General Information</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">    
+        <li>
+    <a class="dropdown-item" href="../../syllabus.html">
+ <span class="dropdown-text">Syllabus</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../schedule.html">
+ <span class="dropdown-text">Schedule</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Course Materials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
+        <li>
+    <a class="dropdown-item" href="../../lectures.html">
+ <span class="dropdown-text">Lectures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../projects.html">
+ <span class="dropdown-text">Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../resources.html">
+ <span class="dropdown-text">Resources</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Procrustes Superimposition and Analyses</h1>
+                  <div>
+        <div class="description">
+          A tour of analyses with geometric morphometric data
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">module 6</div>
+                <div class="quarto-category">week 13</div>
+                <div class="quarto-category">geometric morphometrics</div>
+                <div class="quarto-category">GPA</div>
+                <div class="quarto-category">procrustes superimposition</div>
+                <div class="quarto-category">size</div>
+                <div class="quarto-category">shape</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <a href="https://butlerlab.org">Marguerite Butler</a> 
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              School of Life Sciences, University of Hawaii
+            </p>
+        </div>
+      </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 11, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link active" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li><a href="#the-goals-of-geometric-morphometrics" id="toc-the-goals-of-geometric-morphometrics" class="nav-link" data-scroll-target="#the-goals-of-geometric-morphometrics">The goals of Geometric Morphometrics</a></li>
+  <li><a href="#size-adjustment-with-procrustes-superimposition" id="toc-size-adjustment-with-procrustes-superimposition" class="nav-link" data-scroll-target="#size-adjustment-with-procrustes-superimposition">Size Adjustment with Procrustes Superimposition</a>
+  <ul class="collapse">
+  <li><a href="#centroid" id="toc-centroid" class="nav-link" data-scroll-target="#centroid">Centroid</a></li>
+  <li><a href="#centroid-size" id="toc-centroid-size" class="nav-link" data-scroll-target="#centroid-size">Centroid size</a></li>
+  <li><a href="#shape-variables" id="toc-shape-variables" class="nav-link" data-scroll-target="#shape-variables">Shape Variables</a></li>
+  </ul></li>
+  <li><a href="#geomorph-package" id="toc-geomorph-package" class="nav-link" data-scroll-target="#geomorph-package">Geomorph Package</a>
+  <ul class="collapse">
+  <li><a href="#data-structures" id="toc-data-structures" class="nav-link" data-scroll-target="#data-structures">Data Structures</a></li>
+  <li><a href="#built-in-example" id="toc-built-in-example" class="nav-link" data-scroll-target="#built-in-example">Built-in Example</a></li>
+  </ul></li>
+  <li><a href="#more-geomorphic-morphometrics-software" id="toc-more-geomorphic-morphometrics-software" class="nav-link" data-scroll-target="#more-geomorphic-morphometrics-software">More geomorphic morphometrics software</a></li>
+  <li><a href="#more-reading" id="toc-more-reading" class="nav-link" data-scroll-target="#more-reading">More reading</a></li>
+  </ul>
+</nav>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="acknowledgements" class="level3">
+<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>References for this Material:</p>
+<ul>
+<li>The authors of the <code>geomorph</code> package for developing many useful vignettes (Antigoni Kaliontzopoulou) and sample datasets which is drawn upon below</li>
+<li>Bardua et al (2019) A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses<a href="https://academic.oup.com/iob/article/1/1/obz016/5526881" class="uri">https://academic.oup.com/iob/article/1/1/obz016/5526881</a></li>
+<li><a href="https://www.researchgate.net/profile/Alexandre-Palaoro/post/Geomorph-Package-in-R/attachment/5cffb777cfe4a7968da98557/AS%3A768610867900420%401560262519604/download/Quick_Guide_to_Geomorph-3.0.pdf">Emma Sherratʻs quick guide to Geomorph</a></li>
+</ul>
+</section>
+<section id="learning-objectives" class="level1">
+<h1>Learning objectives</h1>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Be able to create shape data from geometric morphometric data</li>
+<li>Understand the general concepts for Procrustes superimposition</li>
+<li>Be able to perform basic analyses on geometric morphometric data</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="the-goals-of-geometric-morphometrics" class="level1">
+<h1>The goals of Geometric Morphometrics</h1>
+<p>From <span class="citation" data-cites="MacLeod:2010">(<a href="#ref-MacLeod:2010" role="doc-biblioref">MacLeod 2010</a>)</span>:</p>
+<blockquote class="blockquote">
+<p><strong>The ultimate goals for any geometric morphometric analysis</strong> - to define a mathematical space in which we can compare sets of landmark configurations that (1) ordinates shapes on the basis of their similarity, (2) treats these configurations as a <strong>whole entity</strong> rather than an accumulation of <em>independent parts</em>, (3) respects the conventions of the Kendall shape space, (4) supports shape modelling, and (5) is stable in the face of minor changes to the sample and/or reference shape.</p>
+</blockquote>
+<p>What is a Kendall shape space, you ask? A shape space or coordinate system is used to describes shapes, and importantly, be used to understand differences between shapes. Kendallʻs shape space describes curves and local approxmation to curves using tangents <span class="citation" data-cites="Kendall:1984">Klingenberg (<a href="#ref-Klingenberg:2020" role="doc-biblioref">2020</a>)</span>. For this lesson just remember that shapes are connected by geometries, which we can describe mathematically. This makes it much easier to compare the major differences between multidimensional shapes.</p>
+</section>
+<section id="size-adjustment-with-procrustes-superimposition" class="level1">
+<h1>Size Adjustment with Procrustes Superimposition</h1>
+<p>Procrustes superimposition is the most widely used method to create size and shape variables from landmark data. The basic idea is that larger objects should have landmarks that are farther apart than the same landmarks in smaller objects.</p>
+<section id="centroid" class="level3">
+<h3 class="anchored" data-anchor-id="centroid">Centroid</h3>
+<p>A key concept is the <strong>centroid</strong>, which the center point of all of the landmarks. It is easily calculated for each specimen by taking the average of all of the landmark coordinates along each axis. For <em>p</em> landmarks in two dimensions the coordinates of the centroid would be:</p>
+<p><span class="math display">\[
+C_{x} = \frac{X_1+X_2+X_3+ ... + X_p}{p}
+\]</span> <span class="math display">\[
+C_{y} = \frac{Y_1+Y_2+Y_3 ... + Y_p}{p}
+\]</span></p>
+</section>
+<section id="centroid-size" class="level3">
+<h3 class="anchored" data-anchor-id="centroid-size">Centroid size</h3>
+<p>The concept of <strong>centroid size</strong> describes geometric size. It is calculated from the distances of each landmark from the centroid, but it is a geometric mean because it is caculated by taking the square-root of the sums of squared distances of each landmark from the centroid.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/Triangle.Centroid.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">The centroid of a triangle (with landmarks at the vertices) is the point in the center.</figcaption><p></p>
+</figure>
+</div>
+<p>[Source: Wikipedia]</p>
+</section>
+<section id="shape-variables" class="level3">
+<h3 class="anchored" data-anchor-id="shape-variables">Shape Variables</h3>
+<p>Shape variables calculated from Procrustes superimposition mathematically separate scale (size) from shape by applying shape-preserving transformations to make the landmarks as similar as possible.</p>
+<p>The concept: In order to compare differences in shape, we can remove size (in other words, normalize by size or bring all of the specimens to the same size) with the following transformations:</p>
+<ul>
+<li><strong>Scale</strong>: Bring each set of landmarks to the same size by magnifing or reducing the distances of the landmarks around their centroid.<br>
+</li>
+<li><strong>Translate</strong>: Shift the landmarks in the coordinate space to place the centroids at a common point.<br>
+</li>
+<li><strong>Rotate</strong>: Rotate the landmarks with an angular transformation to bring them into a common orientation.</li>
+</ul>
+<p>At the end of Procrustes superimposition, the landmarks for the different specimens will be scaled to the same size and their coordinates will lie as close together as possible while preserving the differences in shape. The figure below illustrates these steps.</p>
+<p>The mathematics of these transofrmations come from basic linear algebra operations on matrices, which are beyond the scope of the class, but to understand what is happening we can analogize it to univariate arithmetic.</p>
+<p><em>Scaling</em> is like dividing each variable by a size variable to put all of the individuals on the same baseline with regard to size (magnitude).</p>
+<p><em>Translation</em> brings the centers of all of the landmarks into alignment. Think of a situation where we measured the length of specimens according to wherever they fell within the picture frame, for example if one specimen started at 2 and extended to 10, and another started at 6 and extended to 12. We could translate (or slide) each of these to place their midpoint at zero by subtracting the mean value from each of their endpoints. For the first specimen, we would subtract 6, translating the specimen from (2,10) to (-4,4), and for the second we would subtract 9, tanslating the specimen from (6,12) to (-3,3).</p>
+<p><em>Rotation</em> is an angular rotation to bring a 2 or 3D object into a common orientation. For a more thorough discussion please see <span class="citation" data-cites="Zelditch:2012">(<a href="#ref-Zelditch:2012" role="doc-biblioref">Zelditch, Swiderski, and Sheets 2012</a>)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/Procrustes_superimposition.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure: Procrustes superimposition. The figure shows the three transformation steps of an ordinary Procrustes fit for two configurations of landmarks. (a) Scaling of both configurations to the same size; (b) Translation to the same position of the center of gravity; (c) Rotation to the orientation that provides the minimum sum of squared distances between corresponding landmarks.</figcaption><p></p>
+</figure>
+</div>
+<p><a href="https://commons.wikimedia.org/wiki/File:Procrustes_superimposition.png">Source: Christian Klingenberg</a></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+From the documentation for <code>gpagen()</code> in <code>geomorph</code>:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>GPA translates all specimens to the origin, scales them to unit-centroid size, and optimally rotates them (using a least-squares criterion) until the coordinates of corresponding points align as closely as possible. The resulting aligned Procrustes coordinates represent the shape of each specimen, and are found in a curved space related to Kendall’s shape space (Kendall 1984). Typically, these are projected into a linear tangent space yielding Kendall’s tangent space coordinates (i.e., Procrustes shape variables), which are used for subsequent multivariate analyses (Dryden and Mardia 1993, Rohlf 1999).</p>
+</div>
+</div>
+</section>
+</section>
+<section id="geomorph-package" class="level1">
+<h1>Geomorph Package</h1>
+<section id="data-structures" class="level3">
+<h3 class="anchored" data-anchor-id="data-structures">Data Structures</h3>
+<p>The package <code>geomorph</code> is written to work with standard geomorphic morphometrics data file types such as TPS and NTS, as well as others <span class="citation" data-cites="Adams:2022">Baken et al. (<a href="#ref-Baken:2021" role="doc-biblioref">2021</a>)</span>.</p>
+<p><code>readland.tps()</code> reads morphometric data in TPS format. It returns an array for storing landmark data: <em>p</em> landmarks X <em>k</em> dimensions X <em>N</em> specimens</p>
+<p>The third dimension of this array contains names for each specimen, which are obtained from the image names in the <em>.tps</em> file.</p>
+</section>
+<section id="built-in-example" class="level3">
+<h3 class="anchored" data-anchor-id="built-in-example">Built-in Example</h3>
+<p>Letʻs look again at the built-in dataset <code>plethodon</code> that comes with <code>geomorph</code>. It has skull landmark data for 40 specimens of two species of plethdon salamanders <span class="citation" data-cites="Adams:2004">(<a href="#ref-Adams:2004" role="doc-biblioref">Dean C. Adams 2004</a>)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/plethodonjordani.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption"><em>Plethodon jordani</em>, Photo by Kevin Stohlgren</figcaption><p></p>
+</figure>
+</div>
+<p><a href="https://herpsofnc.org/jordans-salamander/">Source: Ambibians and Reptiles of North Carolina website</a></p>
+<p>The dataset <code>plethodon</code> is a list.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(geomorph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: geomorph</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: RRPP</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: rgl</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Matrix</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(plethodon) </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(plethodon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(plethodon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$names
+[1] "land"    "links"   "species" "site"    "outline"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(plethodon<span class="sc">$</span>species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Jord Teyah 
+   20    20 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(plethodon<span class="sc">$</span>land)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12  2 40</code></pre>
+</div>
+</div>
+<p>The landmarks are in <code>plethodon$land</code>. There are twenty of each species, and from the dimensions of <code>plethodon$land</code> we see that each of the 40 specimens has 12 landmarks in two dimensions.</p>
+<p><code>plotAllSpecimens</code> plots the coordinates of all samples, so we can start to look at variation.</p>
+<section id="shape-general-procrustes-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="shape-general-procrustes-analysis">Shape: General Procrustes Analysis</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|warning: false</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAllSpecimens</span>(plethodon<span class="sc">$</span>land)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Y.gpa <span class="ot">&lt;-</span> <span class="fu">gpagen</span>(plethodon<span class="sc">$</span>land, <span class="at">PrinAxes =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Performing GPA
+
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |==================                                                    |  25%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |======================================================================| 100%
+
+Making projections... Finished!</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Y.gpa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+gpagen(A = plethodon$land, PrinAxes = FALSE) 
+
+
+
+Generalized Procrustes Analysis
+with Partial Procrustes Superimposition
+
+12 fixed landmarks
+0 semilandmarks (sliders)
+2-dimensional landmarks
+2 GPA iterations to converge
+
+
+Consensus (mean) Configuration
+
+             X            Y
+1   0.15263287 -0.023350400
+2   0.19445064 -0.092643121
+3  -0.03361223 -0.007346212
+4  -0.28069721 -0.092850147
+5  -0.30998751 -0.061672264
+6  -0.32557841 -0.036112255
+7  -0.31804390  0.036125318
+8  -0.18947114  0.098010902
+9   0.02036829  0.099112877
+10  0.18852641  0.077278061
+11  0.35134314  0.065866346
+12  0.55006905 -0.062419105</code></pre>
+</div>
+</div>
+<p>The summary provides the mean for each of the coordinates after GPA. We can see the mean of the coordinates among the individual coordinates by plotting:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Y.gpa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Letʻs compare the plot of all specimens before and after Generalized Procrustes Analysis. The below plot is before GPA, on the raw landmarks <code>plethodon$land</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAllSpecimens</span>(plethodon<span class="sc">$</span>land)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Plotting again after alignment with Generalized Procrustes Analysis gives a good representation of shape variation. Plotting links between the landmarks helps with visualization.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAllSpecimens</span>(Y.gpa<span class="sc">$</span>coords,<span class="at">links=</span>plethodon<span class="sc">$</span>links)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="principal-components-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="principal-components-analysis">Principal Components Analysis</h4>
+<p>PCA on the procrustes coordinates (size-adjusted or shape variables) can be done with:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pleth.pca <span class="ot">&lt;-</span> <span class="fu">gm.prcomp</span>(Y.gpa<span class="sc">$</span>coords)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>pleth.pca </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Ordination type: Principal Component Analysis 
+Centering by OLS mean
+Orthogonal projection of OLS residuals
+Number of observations: 40 
+Number of vectors 20 
+
+Importance of Components:
+                             Comp1       Comp2        Comp3        Comp4
+Eigenvalues            0.001855441 0.001566597 0.0004141056 0.0002278444
+Proportion of Variance 0.367433295 0.310233333 0.0820053761 0.0451200584
+Cumulative Proportion  0.367433295 0.677666628 0.7596720044 0.8047920628
+                              Comp5        Comp6        Comp7        Comp8
+Eigenvalues            0.0001725997 0.0001672575 0.0001549008 0.0001251132
+Proportion of Variance 0.0341799312 0.0331220169 0.0306750315 0.0247761773
+Cumulative Proportion  0.8389719940 0.8720940109 0.9027690424 0.9275452197
+                              Comp9       Comp10       Comp11       Comp12
+Eigenvalues            8.468503e-05 6.869926e-05 5.430853e-05 4.423148e-05
+Proportion of Variance 1.677019e-02 1.360452e-02 1.075473e-02 8.759165e-03
+Cumulative Proportion  9.443154e-01 9.579199e-01 9.686747e-01 9.774338e-01
+                             Comp13       Comp14       Comp15       Comp16
+Eigenvalues            0.0000261742 0.0000192644 1.741769e-05 1.715141e-05
+Proportion of Variance 0.0051832795 0.0038149309 3.449226e-03 3.396495e-03
+Cumulative Proportion  0.9826170994 0.9864320303 9.898813e-01 9.932778e-01
+                             Comp17       Comp18       Comp19       Comp20
+Eigenvalues            1.555244e-05 9.253679e-06 5.336746e-06 3.802714e-06
+Proportion of Variance 3.079853e-03 1.832507e-03 1.056837e-03 7.530520e-04
+Cumulative Proportion  9.963576e-01 9.981901e-01 9.992469e-01 1.000000e+00</code></pre>
+</div>
+</div>
+<p>There are 20 PC axes, with 67% of the total shape variation in the first two axes. A plot on PC1 vs PC2 reveals several distinct clusters, suggesting shape differences. The scores are in <code>pleth.pca$x</code>. There is a plot method for geomorph pca results:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pleth.pca.plot <span class="ot">&lt;-</span> <span class="fu">plot</span>(pleth.pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The specimens are from two species in two distinct environments, and there seems to be some separation between the points along PC1 vs.&nbsp;PC2. These points correspond to specimens of two different species in the original TPS data that information is in <code>plethodon$species</code>. Because the species names are a factor, we can use this to do a quick and dirty plot colored by species. We can plot additional PC axes by specifying the axes to plot:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(plethodon<span class="sc">$</span>species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) <span class="co"># set up 2x2 plots</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pleth.pca, <span class="at">main =</span> <span class="st">"PCA"</span>, </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span>plethodon<span class="sc">$</span>species <span class="co"># color points by species</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pleth.pca, <span class="at">main =</span> <span class="st">"PCA"</span>, </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis1 =</span> <span class="dv">1</span>, <span class="at">axis2 =</span> <span class="dv">3</span>, <span class="co"># plot PC axes 1 vs 3</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span>plethodon<span class="sc">$</span>species </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pleth.pca, <span class="at">main =</span> <span class="st">"PCA"</span>, </span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis1 =</span> <span class="dv">2</span>, <span class="at">axis2 =</span> <span class="dv">3</span>, <span class="co"># PC 2 vs PC3</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span>plethodon<span class="sc">$</span>species</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    ) </span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pleth.pca, <span class="at">main =</span> <span class="st">"PCA"</span>, </span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis1 =</span> <span class="dv">3</span>, <span class="at">axis2 =</span> <span class="dv">4</span>, <span class="co"># PC3 vs PC4</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span>plethodon<span class="sc">$</span>species</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>All of the separation between species comes from PC1 vs.&nbsp;2, with no additional separation by adding PC3 or PC4.</p>
+</section>
+<section id="statistical-test-for-differences-among-species-and-sites" class="level4">
+<h4 class="anchored" data-anchor-id="statistical-test-for-differences-among-species-and-sites">Statistical test for differences among species and sites</h4>
+<p>We can test the shape variables (GPA coordinates) as explanatory variables for phenotypic varation. Because there are multiple pheontypic (Y) variables, we use MANOVA (multivariate ANOVA).</p>
+<p><code>geomorph</code> has custom linear model functions that use <strong>randomized residuals</strong> (permutation test) to assess linear model fits on the high-dimensional geomorphic morphometric data <span class="citation" data-cites="Collyer:2018">Collyer and Adams (<a href="#ref-Collyer:2021" role="doc-biblioref">2021</a>)</span> (rather than assume the data come from a multivariate normal distribution).</p>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>procD.lm</code></td>
+<td>Procrustes ANOVA/regression for Procrustes shape variables</td>
+</tr>
+<tr class="even">
+<td><code>procD.pgls</code></td>
+<td>Phylogenetic version of <code>procD.lm</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>geomorph</code> has a helper function <code>geomorph.data.frame</code> that creates an object of class <code>geomorph.data.frame</code> from your procrustes shape coordinates that includes the centroid size (<code>Csize</code>), and allows you to associate your metadata such as species and site together with the shape data. The idea is keep it organized in a data-frame like manner, even though it is a list (it makes sure that all the elements have the same length).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>gdf <span class="ot">&lt;-</span><span class="fu">geomorph.data.frame</span>(Y.gpa<span class="sc">$</span>coords)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(gdf) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$class
+[1] "geomorph.data.frame"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>gdf <span class="ot">&lt;-</span><span class="fu">geomorph.data.frame</span>(Y.gpa, </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">species =</span> plethodon<span class="sc">$</span>species, </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">site =</span> plethodon<span class="sc">$</span>site</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>              )</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(gdf) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$names
+[1] "coords"  "Csize"   "species" "site"   
+
+$class
+[1] "geomorph.data.frame"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">procD.lm</span>(coords<span class="sc">~</span>species <span class="sc">*</span> site, <span class="at">data=</span>gdf)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Analysis of Variance, using Residual Randomization
+Permutation procedure: Randomization of null model residuals 
+Number of permutations: 1000 
+Estimation method: Ordinary Least Squares 
+Sums of Squares and Cross-products: Type I 
+Effect sizes (Z) based on F distributions
+
+             Df       SS       MS     Rsq      F      Z Pr(&gt;F)   
+species       1 0.029258 0.029258 0.14856 14.544 4.2241  0.001 **
+site          1 0.064375 0.064375 0.32688 32.000 5.2101  0.001 **
+species:site  1 0.030885 0.030885 0.15682 15.352 5.4075  0.001 **
+Residuals    36 0.072422 0.002012 0.36774                        
+Total        39 0.196940                                         
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Call: procD.lm(f1 = coords ~ species * site, data = gdf)</code></pre>
+</div>
+</div>
+<p>The MANOVA reveals significant shape differences between species, between sites, and in the interaction between the two factors (species and site).</p>
+<p>We can also look at variation with centroid size:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(<span class="fu">procD.lm</span>(coords <span class="sc">~</span> Csize <span class="sc">+</span> species <span class="sc">*</span> site, <span class="at">data =</span> gdf))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Analysis of Variance, using Residual Randomization
+Permutation procedure: Randomization of null model residuals 
+Number of permutations: 1000 
+Estimation method: Ordinary Least Squares 
+Sums of Squares and Cross-products: Type I 
+Effect sizes (Z) based on F distributions
+
+             Df       SS       MS     Rsq       F      Z Pr(&gt;F)   
+Csize         1 0.010409 0.010409 0.05286  5.2986 2.8820  0.001 **
+species       1 0.025661 0.025661 0.13030 13.0625 4.0712  0.001 **
+site          1 0.063018 0.063018 0.31999 32.0780 5.3722  0.001 **
+species:site  1 0.029093 0.029093 0.14773 14.8093 5.2418  0.001 **
+Residuals    35 0.068758 0.001965 0.34913                         
+Total        39 0.196940                                          
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Call: procD.lm(f1 = coords ~ Csize + species * site, data = gdf)</code></pre>
+</div>
+</div>
+<p>There is signficant multivariate difference among the shape data by size as well as by species and site. This is a good place to note that while size and shape are <em>mathematically</em> uncorrelated by GPA, there could still be some <em>biological</em> variation that produces some pattern of shape variation with size.</p>
+</section>
+<section id="relative-warps" class="level4">
+<h4 class="anchored" data-anchor-id="relative-warps">Relative Warps</h4>
+<p>We can look at the relative shape change between the specimens. This is a common technique you will see in the literature using <em>relative warps analysis</em>. It uses a shape analysis technique called <strong>thin plate splines</strong> which is a smoothing method that is forced to go through the landmarks, but will fit a surface between them (in as many diemsions as there are in the data).</p>
+<p><strong>Relative warps analysis</strong> will show the shape deformation needed to move from a reference shape to a another shape.</p>
+<p>First we calcuate the mean shape in all of the data as the reference shape.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>ref<span class="ot">&lt;-</span><span class="fu">mshape</span>(gdf<span class="sc">$</span>coords)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Calculate the mean shape of <em>Plethodon jordanii</em>, and we can compare this species to the mean of both species:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>gp1.mn<span class="ot">&lt;-</span><span class="fu">mshape</span>(gdf<span class="sc">$</span>coords[,,gdf<span class="sc">$</span>species<span class="sc">==</span><span class="st">"Jord"</span>])</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRefToTarget</span>(ref,gp1.mn,<span class="at">mag=</span><span class="dv">2</span>, <span class="at">links=</span>plethodon<span class="sc">$</span>links)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAllSpecimens</span>(gdf<span class="sc">$</span>coords,<span class="at">links=</span>plethodon<span class="sc">$</span>links)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can see that most of the shape change between <em>P. jordanii</em> and the mean shape is around the jaw hinge (points 1,2) and top of the skull (post cranial, points 11,12). Compare to the sketch of the landmark coordinates.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/plethodonlandmarks.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Skull landmarks from <span class="citation" data-cites="Adams:2004">Dean C. Adams (<a href="#ref-Adams:2004" role="doc-biblioref">2004</a>)</span></figcaption><p></p>
+</figure>
+</div>
+<p>Can you do the same but comparing the mean of the two species against each other?</p>
+</section>
+</section>
+</section>
+<section id="more-geomorphic-morphometrics-software" class="level1">
+<h1>More geomorphic morphometrics software</h1>
+<p><a href="https://academic.oup.com/view-large/223239151" class="uri">https://academic.oup.com/view-large/223239151</a></p>
+</section>
+<section id="more-reading" class="level1">
+<h1>More reading</h1>
+<ul>
+<li><p><span class="citation" data-cites="Bookstein:1992">(<a href="#ref-Bookstein:1992" role="doc-biblioref">Bookstein 1992</a>)</span> Morphometric Tools for Landmark Data: Geometry and Biology</p></li>
+<li><p><span class="citation" data-cites="Webster:2010">(<a href="#ref-Webster:2010" role="doc-biblioref">Webster and Sheets 2010</a>)</span> A Practical Introduction to Landmark-Based Geometric Morphometrics</p></li>
+<li><p><span class="citation" data-cites="Bardua:2019">(<a href="#ref-Bardua:2019" role="doc-biblioref">Bardua et al. 2019</a>)</span> A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses</p></li>
+<li><p><span class="citation" data-cites="Savriama:2018">(<a href="#ref-Savriama:2018" role="doc-biblioref">Savriama 2018</a>)</span> A Step-by-Step Guide for Geometric Morphometrics of Floral Symmetry</p></li>
+<li><p><span class="citation" data-cites="Zelditch:2012">(<a href="#ref-Zelditch:2012" role="doc-biblioref">Zelditch, Swiderski, and Sheets 2012</a>)</span> Geometric morphometrics for biologists a primer (the green book)</p></li>
+</ul>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Adams:2022" class="csl-entry" role="doc-biblioentry">
+Adams, D. C., M. L. Collyer, A. Kaliontzopoulou, and E. K. Baken. 2022. <span>“Geomorph: Software for Geometric Morphometric Analyses. R Package Version 4.0.4.”</span> <a href="https://cran.r-project.org/package=geomorph">https://cran.r-project.org/package=geomorph</a>.
+</div>
+<div id="ref-Adams:2004" class="csl-entry" role="doc-biblioentry">
+Adams, Dean C. 2004. <span>“Character Displacement via Aggressive Interference in Appalachian Salamanders.”</span> <em>Ecology</em> 85 (10): 2664–70. <a href="http://www.jstor.org/stable/3450422">http://www.jstor.org/stable/3450422</a>.
+</div>
+<div id="ref-Baken:2021" class="csl-entry" role="doc-biblioentry">
+Baken, E. K., M. L. Collyer, A. Kaliontzopoulou, and D. C. Adams. 2021. <span>“Geomorphic V4.0 and gmShiny: Enhanced Analytics and a New Graphical Interface for a Comprehensive Morphometric Experience.”</span> <em>Methods in Ecology and Evolution</em>.
+</div>
+<div id="ref-Bardua:2019" class="csl-entry" role="doc-biblioentry">
+Bardua, C, R N Felice, A Watanabe, A -C Fabre, and A Goswami. 2019. <span>“<span class="nocase">A Practical Guide to Sliding and Surface Semilandmarks in Morphometric Analyses</span>.”</span> <em>Integrative Organismal Biology</em> 1 (1). <a href="https://doi.org/10.1093/iob/obz016">https://doi.org/10.1093/iob/obz016</a>.
+</div>
+<div id="ref-Bookstein:1992" class="csl-entry" role="doc-biblioentry">
+Bookstein, Fred L. 1992. <em>Morphometric Tools for Landmark Data: Geometry and Biology</em>. Cambridge: Cambridge University Press. <a href="https://doi.org/DOI: 10.1017/CBO9780511573064">https://doi.org/DOI: 10.1017/CBO9780511573064</a>.
+</div>
+<div id="ref-Collyer:2018" class="csl-entry" role="doc-biblioentry">
+Collyer, M. L., and D. C. Adams. 2018. <span>“<span>RRPP</span>: An r Package for Fitting Linear Models to High‐dimensional Data Using Residual Randomization.”</span> <em>Methods in Ecology and Evolution</em>.
+</div>
+<div id="ref-Collyer:2021" class="csl-entry" role="doc-biblioentry">
+———. 2021. <span>“<span>RRPP</span>: Linear Model Evaluation with Randomized Residuals in a Permutation Procedure, r Package Version 1.1.2.”</span> <a href="https://cran.r-project.org/package=RRPP">https://cran.r-project.org/package=RRPP</a>.
+</div>
+<div id="ref-Kendall:1984" class="csl-entry" role="doc-biblioentry">
+Kendall, David G. 1984. <span>“<span class="nocase">Shape Manifolds, Procrustean Metrics, and Complex Projective Spaces</span>.”</span> <em>Bulletin of the London Mathematical Society</em> 16 (2): 81–121. <a href="https://doi.org/10.1112/blms/16.2.81">https://doi.org/10.1112/blms/16.2.81</a>.
+</div>
+<div id="ref-Klingenberg:2020" class="csl-entry" role="doc-biblioentry">
+Klingenberg, Christian Peter. 2020. <span>“Walking on Kendall’s Shape Space: Understanding Shape Spaces and Their Coordinate Systems.”</span> <em>Evolutionary Biology</em> 47 (4): 334–52. <a href="https://doi.org/10.1007/s11692-020-09513-x">https://doi.org/10.1007/s11692-020-09513-x</a>.
+</div>
+<div id="ref-MacLeod:2010" class="csl-entry" role="doc-biblioentry">
+MacLeod, Norm. 2010. <span>“PalaeoMath: Part 21 - Principal Warps, Relative Warps, and Procrustes PCA.”</span> Newsletter 75. <em>PaleoMath 101</em>. The Paleontological Association.
+</div>
+<div id="ref-Savriama:2018" class="csl-entry" role="doc-biblioentry">
+Savriama, Yoland. 2018. <span>“A Step-by-Step Guide for Geometric Morphometrics of Floral Symmetry.”</span> <em>Frontiers in Plant Science</em> 9. <a href="https://doi.org/10.3389/fpls.2018.01433">https://doi.org/10.3389/fpls.2018.01433</a>.
+</div>
+<div id="ref-Webster:2010" class="csl-entry" role="doc-biblioentry">
+Webster, Mark, and H. David Sheets. 2010. <span>“A Practical Introduction to Landmark-Based Geometric Morphometrics.”</span> <em>The Paleontological Society Papers</em> 16: 163–88. <a href="https://doi.org/DOI: 10.1017/S1089332600001868">https://doi.org/DOI: 10.1017/S1089332600001868</a>.
+</div>
+<div id="ref-Zelditch:2012" class="csl-entry" role="doc-biblioentry">
+Zelditch, Miriam Leah, Donald L. Swiderski, and H. David Sheets. 2012. <em>Geometric Morphometrics for Biologists a Primer</em>. Amsterdam ; Elsevier Academic Press.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

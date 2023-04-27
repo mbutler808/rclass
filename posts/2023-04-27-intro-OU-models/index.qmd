@@ -6,7 +6,7 @@ author:
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
 description: "Comparative analyses with Ornstein-Uhlenbeck models"
-date: 2023-04-25
+date: 2023-04-27
 categories: [module 8, week 15, comparative analysis, phylogenetic trees, Ornstein Uhlenbeck, Brownian motion]
 bibliography: ../refs.bib
 ---

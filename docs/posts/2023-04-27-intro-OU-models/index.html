@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Marguerite Butler">
-<meta name="dcterms.date" content="2023-04-25">
+<meta name="dcterms.date" content="2023-04-27">
 <meta name="description" content="Comparative analyses with Ornstein-Uhlenbeck models">
 
 <title>ZOOL710 Data Science in R for Biologists - Introduction to OU Models</title>
@@ -265,7 +265,7 @@ div.csl-indent {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 25, 2023</p>
+        <p class="date">April 27, 2023</p>
       </div>
     </div>
     
@@ -596,32 +596,32 @@ NULL
 
 $alpha
          [,1]
-[1,] 7.518533
+[1,] 8.392276
 
 $sigma.squared
-         [,1]
-[1,] 0.147433
+           [,1]
+[1,] 0.09983292
 
 $optima
 $optima$size
    large   medium    small 
-3.227890 3.025055 2.702505 
+3.344278 3.070945 2.631086 
 
 
 $loglik
-[1] 21.57065
+[1] 27.13919
 
 $deviance
-[1] -43.14129
+[1] -54.27839
 
 $aic
-[1] -33.14129
+[1] -44.27839
 
 $aic.c
-[1] -29.61188
+[1] -40.74897
 
 $sic
-[1] -27.46382
+[1] -38.60091
 
 $dof
 [1] 5</code></pre>
@@ -634,28 +634,28 @@ $dof
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bootstrap</span>( <span class="at">object =</span> h5, <span class="at">nboot=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      alpha sigma.squared optima.size.large optima.size.medium
-1  4.314375    0.05269199          3.251418           3.000098
-2  3.413239    0.04215836          3.309926           2.956670
-3  7.709968    0.06632372          3.273562           3.070939
-4  2.766781    0.02691600          3.394636           3.025804
-5  3.715158    0.06536193          3.340144           3.052428
-6  4.525718    0.04019941          3.303909           2.996026
-7  3.614497    0.04792204          3.433925           3.035024
-8  7.648233    0.06990530          3.307988           2.953451
-9  2.219933    0.06286895          3.345550           3.005724
-10 5.982860    0.08044119          3.226410           3.046734
+<pre><code>       alpha sigma.squared optima.size.large optima.size.medium
+1   4.509064    0.06047168          3.382374           3.066330
+2   6.348272    0.09173081          3.299242           3.073397
+3   1.980013    0.02010269          3.333394           3.058281
+4   1.103510    0.01744121          3.743397           2.996831
+5   5.156975    0.10256261          3.326747           3.012767
+6   9.114715    0.07260093          3.278572           2.956888
+7   6.527241    0.07706683          3.321212           3.052777
+8   6.190893    0.09651432          3.375882           3.030895
+9   5.297947    0.10416088          3.319447           3.013204
+10 12.239595    0.13677278          3.363249           3.040159
    optima.size.small   loglik       aic     aic.c       sic dof
-1           2.643785 28.31241 -46.62481 -43.09540 -40.94734   5
-2           2.621137 28.94706 -47.89411 -44.36470 -42.21664   5
-3           2.590975 31.00525 -52.01050 -48.48109 -46.33303   5
-4           2.633032 32.49237 -54.98475 -51.45534 -49.30728   5
-5           2.615143 24.58665 -39.17330 -35.64389 -33.49583   5
-6           2.550247 31.83803 -53.67606 -50.14665 -47.99859   5
-7           2.635848 27.93108 -45.86215 -42.33274 -40.18468   5
-8           2.564476 30.32028 -50.64057 -47.11115 -44.96309   5
-9           2.539223 21.17698 -32.35395 -28.82454 -26.67648   5
-10          2.675224 26.36369 -42.72739 -39.19797 -37.04991   5</code></pre>
+1           2.688133 27.10829 -44.21658 -40.68716 -38.53910   5
+2           2.685279 25.40847 -40.81695 -37.28753 -35.13947   5
+3           2.499604 33.54321 -57.08642 -53.55701 -51.40895   5
+4           2.436465 31.98457 -53.96913 -50.43972 -48.29166   5
+5           2.716415 22.21390 -34.42779 -30.89838 -28.75032   5
+6           2.708731 31.62931 -53.25863 -49.72922 -47.58116   5
+7           2.646340 27.67098 -45.34195 -41.81254 -39.66448   5
+8           2.609083 24.58700 -39.17400 -35.64458 -33.49652   5
+9           2.548397 22.28052 -34.56104 -31.03163 -28.88357   5
+10          2.659869 27.40743 -44.81486 -41.28544 -39.13738   5</code></pre>
 </div>
 </div>
 </section>

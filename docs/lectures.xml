@@ -10,7 +10,470 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023</description>
 <generator>quarto-1.2.313</generator>
-<lastBuildDate>Tue, 25 Apr 2023 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 27 Apr 2023 10:00:00 GMT</lastBuildDate>
+<item>
+  <title>Introduction to OU Models</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="learning-objectives" class="level1">
+<h1>Learning objectives</h1>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Goals:</strong> - Approaches for adaptive evolution (<code>ouch</code>, <code>slouch</code>, others) - Model-based vs statistical approaches</p>
+<p><strong>Concepts:</strong> - Model comparison tools in R - Process-based models</p>
+</div>
+</div>
+</section>
+<section id="introduction-to-ou-models" class="level1">
+<h1>Introduction to OU Models</h1>
+<section id="the-ou-model-for-comparative-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="the-ou-model-for-comparative-analysis">The OU Model for Comparative Analysis</h2>
+<p>A Brownian motion process can be described using the following differential equation:</p>
+<p><span id="eq-bm"><img src="https://latex.codecogs.com/png.latex?%0A%20%20dX(t)%20=%20%5Csigma%5C,dB(t).%0A%5Ctag%7B1%7D"></span></p>
+<p>If we imagine the phenotype <img src="https://latex.codecogs.com/png.latex?X"> as changing through time <img src="https://latex.codecogs.com/png.latex?t">, this equation says that in a small increment of time, the change will be proportional to the parameter <img src="https://latex.codecogs.com/png.latex?%5Csigma">. Here, <img src="https://latex.codecogs.com/png.latex?dB(t)"> is a sample from a Brownian (white noise) process.</p>
+<p>A small step towards reality is the OU Process:</p>
+<p><span id="eq-basic_ou"><img src="https://latex.codecogs.com/png.latex?%0A%20%20dX(t)%20=%20%5Calpha%5C,(%5Ctheta%20-%20X(t))%5C,dt%20+%20%5Csigma%5C,dB(t).%0A%5Ctag%7B2%7D"></span></p>
+<p>Eq.~@ref(eq:basic_ou) expresses the amount of change in character <img src="https://latex.codecogs.com/png.latex?X"> over the course of a small increment of time: specifically, <img src="https://latex.codecogs.com/png.latex?dX(t)"> is the infinitesimal change in the character <img src="https://latex.codecogs.com/png.latex?X"> over the infinitesimal interval from time <img src="https://latex.codecogs.com/png.latex?t"> to time <img src="https://latex.codecogs.com/png.latex?t+dt">. The term <img src="https://latex.codecogs.com/png.latex?dB(t)"> is <em>white noise</em>; that is, the random variables <img src="https://latex.codecogs.com/png.latex?dB(t)"> are independent and identically-distributed normal random variables, each with mean zero and variance <img src="https://latex.codecogs.com/png.latex?dt">. The parameter <img src="https://latex.codecogs.com/png.latex?%5Calpha"> measures the strength of selection. When <img src="https://latex.codecogs.com/png.latex?%5Calpha%20=%200">, the deterministic part of the OU model is diminished and Equation&nbsp;2 approaches the familiar BM model of pure drift,</p>
+</section>
+<section id="ouch-package" class="level2">
+<h2 class="anchored" data-anchor-id="ouch-package"><code>ouch</code> package</h2>
+<p>See <code>ouch</code> lecture.</p>
+<p>Good starting points available in package <code>ouch</code>:<br>
+- <code>?bimac</code> help page for <em>Bimaculatus</em> character displacement dataset<br>
+- <code>example(bimac)</code> example of bimac analysis - <code>?anolis.ssd</code> help page for <em>Anolis</em> sexual size dimorphism dataset</p>
+<p><code>ouch</code> is a package designed to test adaptive hypotheses using variations of the OU process, including BM <span class="citation" data-cites="Butler:2004 King:2022">(Butler and King 2004; King and Butler 2022)</span>. OUCH implements a model that fits <em>alpha</em> and <em>sigma</em> parameters to the entire phylogeny, but allows the user to specify which branches belong to different selective regimes. The location of the optima are also fit.</p>
+<section id="the-data" class="level3">
+<h3 class="anchored" data-anchor-id="the-data">The Data</h3>
+<p>The data in OUCH are most easily assembled as a data frame. Load the built in example from ouch and then print it to the screen (I only printed the head of the dataset here):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">require</span>(ouch)</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;">data</span>(bimac)</span>
+<span id="cb1-3">bimac</span></code></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ouch</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  node spcode species island size ancestor time OU.1   OU.3 OU.4  OU.LP
+1    1   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA       NA    0   ns medium  anc medium
+2    2   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        1   12   ns medium  anc medium
+3    3   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        2   32   ns medium  anc  small
+4    4   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        3   34   ns medium  anc  small
+5    5   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        4   36   ns medium  anc  small
+6    6   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        3   36   ns medium  anc  small</code></pre>
+</div>
+</div>
+<p>NOTE: a very important detail about <code>ouch</code> is that it matches trees with data and regimes using the node labels stored in the rownames of the objects you pass to the <code>ouch</code> functions. So it is important to make sure that your dataframes and vectors are appropriately named. <em>The dataframe bimac already has the correct row names</em>, but we do so here just to illustrate.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;">rownames</span>(bimac) <span class="ot" style="color: #003B4F;">&lt;-</span> bimac<span class="sc" style="color: #5E5E5E;">$</span>node</span></code></pre></div>
+</div>
+<p><code>ouch</code> was designed around a rectangular data model, so although the tree object is not a dataframe internally, it still helps us to build the data as a dataframe before making the <code>ouchtree</code> objects. The central organizing element is the <code>node</code>: it has a node number (usually an integer but it is actually a unique character string), an <code>ancestor</code> to which it is joined by a branch, a <code>time</code> since the root of the tree, and optional <code>label</code> such as a species name.</p>
+</section>
+<section id="the-hypotheses" class="level3">
+<h3 class="anchored" data-anchor-id="the-hypotheses">The hypotheses</h3>
+<p><em>The hypotheses which we use are assigned by painting particular regimes on branches</em>. It is convenient to represent each model or hypothesis as a column on the dataframe, with the regime assigned to the node (that is, it is assigned to the branch connecting the node to its ancestor).</p>
+<p>Make an <code>ouchtree</code> object using the <code>ouchtree</code> constructor. <code>with</code> is a very nice function to create a small local environment so that you can use a dataframe’s elements directly without using the <code>bimac$</code> prefix.</p>
+<p>It is similar to an <code>attach</code> but it is temporary – only lasting as long as the call itself. I like it much better than <code>attach</code> because I sometimes forget what I’ve attached and run into problems later. Also, with <code>attach</code>, you are actually working with a copy of the original dataframe object, so updating values is tricky. With <code>with</code>, it is more clear what’s going on, and I don’t tend to make those mistakes.</p>
+<div class="cell" data-fig="true">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">tree <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">with</span>(bimac, <span class="fu" style="color: #4758AB;">ouchtree</span>(node,ancestor,time<span class="sc" style="color: #5E5E5E;">/</span><span class="fu" style="color: #4758AB;">max</span>(time),species))</span>
+<span id="cb5-2"><span class="fu" style="color: #4758AB;">plot</span>(tree)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><code>ouch</code> fits the OU model Eq.~@ref(eq:basic_ou) along each branch of the phylogeny. While <img src="https://latex.codecogs.com/png.latex?%5Calpha"> and <img src="https://latex.codecogs.com/png.latex?%5Csigma"> are held constant across the entire tree, the optima along each branch <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> are allowed to vary. Users can then paint various combinations of optima on the tree to reflect various biological scenarios.</p>
+<p>For example, the dataset <code>bimac</code> was used to test the hypothesis of character displacement using an interspecific daaset of body sizes and sympatry/allopatry <span class="citation" data-cites="Butler:2004">Butler and King (2004)</span>. The analysis tested several different models, which are included with <code>bimac</code>. They are: OU.1 or global optimum, OU.3 or small, medium, and large regimes depending on the body size of the observed species (terminal branches only, internal branches painted medium, OU.4 or the same as OU.3 but with internal branches given their own unique regime called ancestral, and OU.LP based on a linear parsimony reconstruction of the colonization events (i.e., that as species came into sympatry, they diverged in body size).</p>
+</section>
+<section id="plotting-ouchtrees" class="level3">
+<h3 class="anchored" data-anchor-id="plotting-ouchtrees">Plotting <code>ouchtree</code>s</h3>
+<p>You can plot the regime paintings on the tree, and set options such as line widths for prettier plots. <code>ouch</code> has a very nice feature which allows plotting of the alternative models on one plot.</p>
+<div class="cell" data-fig="true">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">plot</span>(tree, <span class="at" style="color: #657422;">regimes=</span>bimac[<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"OU.1"</span>, <span class="st" style="color: #20794D;">"OU.3"</span>, <span class="st" style="color: #20794D;">"OU.4"</span>, <span class="st" style="color: #20794D;">"OU.LP"</span>)], <span class="at" style="color: #657422;">lwd=</span><span class="dv" style="color: #AD0000;">6</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Remember that you can pass a single vector or a data frame to the regimes parameter, but it must have the appropriate row names or names in the case of a vector. The regimes are not part of the ouchtree object, because they represent our hypothesis of evolution along the tree, rather than the tree itself. It is part of the original dataframe from which we derived the tree, so remember to refer to <code>bimac</code> when passing the regimes to the <code>plot</code> function.</p>
+</section>
+<section id="fitting-models" class="level3">
+<h3 class="anchored" data-anchor-id="fitting-models">Fitting models</h3>
+<p>There are two main model fitting functions in <code>ouch</code>, <code>brown</code>, which fits Brownian motion models, and <code>hansen</code>, which fits OU models to comparative data. The call to <code>brown</code> is particularly simple, as it takes only the data and the tree:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;">brown</span>(<span class="fu" style="color: #4758AB;">log</span>(bimac[<span class="st" style="color: #20794D;">'size'</span>]),tree)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+call:
+brown(data = log(bimac["size"]), tree = tree)
+   nodes ancestors     times             labels     size
+1      1      &lt;NA&gt; 0.0000000               &lt;NA&gt;       NA
+2      2         1 0.3157895               &lt;NA&gt;       NA
+3      3         2 0.8421053               &lt;NA&gt;       NA
+4      4         3 0.8947368               &lt;NA&gt;       NA
+5      5         4 0.9473684               &lt;NA&gt;       NA
+6      6         3 0.9473684               &lt;NA&gt;       NA
+7      7         1 0.2105263               &lt;NA&gt;       NA
+8      8         7 0.3421053               &lt;NA&gt;       NA
+9      9         8 0.4736842               &lt;NA&gt;       NA
+10    10         9 0.6052632               &lt;NA&gt;       NA
+11    11        10 0.7368421               &lt;NA&gt;       NA
+12    12         9 0.7368421               &lt;NA&gt;       NA
+13    13         8 0.5789474               &lt;NA&gt;       NA
+14    14        13 0.6842105               &lt;NA&gt;       NA
+15    15        14 0.8947368               &lt;NA&gt;       NA
+16    16        15 0.9473684               &lt;NA&gt;       NA
+17    17         7 0.7368421               &lt;NA&gt;       NA
+18    18        17 0.7894737               &lt;NA&gt;       NA
+19    19        18 0.8947368               &lt;NA&gt;       NA
+20    20        19 0.9473684               &lt;NA&gt;       NA
+21    21        20 0.9736842               &lt;NA&gt;       NA
+22    22        19 0.9473684               &lt;NA&gt;       NA
+23    23         2 1.0000000       Anolis pogus 2.602690
+24    24         4 1.0000000   Anolis schwartzi 2.660260
+25    25         5 1.0000000   Anolis schwartzi 2.660260
+26    26         5 1.0000000   Anolis schwartzi 2.653242
+27    27         6 1.0000000     Anolis wattsii 2.674149
+28    28         6 1.0000000     Anolis wattsii 2.701361
+29    29        10 1.0000000 Anolis bimaculatus 3.161247
+30    30        11 1.0000000 Anolis bimaculatus 3.299534
+31    31        11 1.0000000 Anolis bimaculatus 3.328627
+32    32        12 1.0000000      Anolis leachi 3.353407
+33    33        12 1.0000000      Anolis leachi 3.360375
+34    34        13 1.0000000     Anolis nubilus 3.049273
+35    35        14 1.0000000     Anolis sabanus 2.906901
+36    36        15 1.0000000  Anolis gingivinus 2.980619
+37    37        16 1.0000000  Anolis gingivinus 2.933857
+38    38        16 1.0000000  Anolis gingivinus 2.975530
+39    39        17 1.0000000    Anolis oculatus 3.104587
+40    40        18 1.0000000     Anolis ferreus 3.346389
+41    41        20 1.0000000     Anolis lividus 2.928524
+42    42        21 1.0000000  Anolis marmoratus 2.939162
+43    43        21 1.0000000  Anolis marmoratus 2.990720
+44    44        22 1.0000000 Anolis terraealtae 3.058707
+45    45        22 1.0000000 Anolis terraealtae 3.068053
+
+sigma squared:
+           [,1]
+[1,] 0.04311003
+
+theta:
+NULL
+   loglik  deviance       aic     aic.c       sic       dof 
+ 17.33129 -34.66257 -30.66257 -30.06257 -28.39158   2.00000 </code></pre>
+</div>
+</div>
+<p>What is returned is an object of class <code>browntree</code>. It contains all input including the function call, the tree and data), as well as the parameter estimate for <img src="https://latex.codecogs.com/png.latex?%5Csigma"> and the model fit statistics including: the log-likelihood, the deviance (<img src="https://latex.codecogs.com/png.latex?-2*log(L)">), the information criteria <img src="https://latex.codecogs.com/png.latex?AIC">, <img src="https://latex.codecogs.com/png.latex?AIC_c"> (corrected for small sample size), and <img src="https://latex.codecogs.com/png.latex?SIC">, and the model degrees of freedom.</p>
+<p>It is a good practice to save this, as it encapsulates the analysis. From this, we can rerun the model fit.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">h1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">brown</span>(<span class="fu" style="color: #4758AB;">log</span>(bimac[<span class="st" style="color: #20794D;">'size'</span>]),tree)</span></code></pre></div>
+</div>
+<p><code>hansen</code> models are slightly more complex. In addition to <img src="https://latex.codecogs.com/png.latex?%5Csigma">, we are now fitting <img src="https://latex.codecogs.com/png.latex?%5Calpha">, the strength of selection, and all of the optima <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> specified by our model. This maximum-likelihood search now requires an initial guess. If you have no idea, a good starting guess is 1. If you want to be sure, you can intiate searches with different starting guesses. You can also specify alternative optimization algorithms and increase or decrease the relative tolerance, which is the stringency by which convergence is assessed. Typically, the default is roughly <code>reltol=1e-8</code>, and the limit of machine precision is in the neighborhood of <code>reltol=1e-15</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">h2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">hansen</span>(<span class="fu" style="color: #4758AB;">log</span>(bimac[<span class="st" style="color: #20794D;">'size'</span>]),</span>
+<span id="cb10-2">             tree,</span>
+<span id="cb10-3">             bimac[<span class="st" style="color: #20794D;">'OU.1'</span>],</span>
+<span id="cb10-4">             <span class="at" style="color: #657422;">sqrt.alpha=</span><span class="dv" style="color: #AD0000;">1</span>,</span>
+<span id="cb10-5">             <span class="at" style="color: #657422;">sigma=</span><span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb10-6">h3 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">hansen</span>(<span class="fu" style="color: #4758AB;">log</span>(bimac[<span class="st" style="color: #20794D;">'size'</span>]),</span>
+<span id="cb10-7">             tree,bimac[<span class="st" style="color: #20794D;">'OU.3'</span>], </span>
+<span id="cb10-8">             <span class="at" style="color: #657422;">sqrt.alpha=</span><span class="dv" style="color: #AD0000;">1</span>,</span>
+<span id="cb10-9">             <span class="at" style="color: #657422;">sigma=</span><span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb10-10">h4 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">hansen</span>(<span class="fu" style="color: #4758AB;">log</span>(bimac[<span class="st" style="color: #20794D;">'size'</span>]),</span>
+<span id="cb10-11">             tree,</span>
+<span id="cb10-12">             bimac[<span class="st" style="color: #20794D;">'OU.4'</span>], </span>
+<span id="cb10-13">             <span class="at" style="color: #657422;">sqrt.alpha=</span><span class="dv" style="color: #AD0000;">1</span>,</span>
+<span id="cb10-14">             <span class="at" style="color: #657422;">sigma=</span><span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb10-15">h5 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">hansen</span>(<span class="fu" style="color: #4758AB;">log</span>(bimac[<span class="st" style="color: #20794D;">'size'</span>]),</span>
+<span id="cb10-16">             tree,</span>
+<span id="cb10-17">             bimac[<span class="st" style="color: #20794D;">'OU.LP'</span>], </span>
+<span id="cb10-18">             <span class="at" style="color: #657422;">sqrt.alpha=</span><span class="dv" style="color: #AD0000;">1</span>,</span>
+<span id="cb10-19">             <span class="at" style="color: #657422;">sigma=</span><span class="dv" style="color: #AD0000;">1</span>,</span>
+<span id="cb10-20">             <span class="at" style="color: #657422;">reltol=</span><span class="fl" style="color: #AD0000;">1e-5</span>)</span></code></pre></div>
+</div>
+</section>
+<section id="hansentree-and-ouchtree-methods" class="level3">
+<h3 class="anchored" data-anchor-id="hansentree-and-ouchtree-methods"><code>hansentree</code> and <code>ouchtree</code> methods</h3>
+<p>We can see the model results by typing <code>h5</code>, which will execute the <code>print</code> method for this class. You could also use the <code>attributes</code> function, but this will dump too much information. <code>ouchtree</code> objects and the classes derived from them contain information that is used in internal calculations of the algorithms, not of general interest to users.</p>
+<p>Additional accessor functions include:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;">coef</span>(h5)    <span class="co" style="color: #5E5E5E;"># the coefficients of the fitted model</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$sqrt.alpha
+[1] 1.61658
+
+$sigma
+[1] 0.2249274
+
+$theta
+$theta$size
+   large   medium    small 
+3.355087 3.040729 2.565249 
+
+
+$alpha.matrix
+        [,1]
+[1,] 2.61333
+
+$sigma.sq.matrix
+           [,1]
+[1,] 0.05059232</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;">logLik</span>(h5)   <span class="co" style="color: #5E5E5E;"># the log-likelihood value</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 24.81823</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;">summary</span>(h5) <span class="co" style="color: #5E5E5E;"># (not printed) everything except the tree+data</span></span></code></pre></div>
+</div>
+<p>We can now generate a table of our model fits:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">    <span class="co" style="color: #5E5E5E;"># just the model fit statistics on a single line</span></span>
+<span id="cb16-2"><span class="fu" style="color: #4758AB;">unlist</span>(<span class="fu" style="color: #4758AB;">summary</span>(h5)[<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'aic'</span>, <span class="st" style="color: #20794D;">'aic.c'</span>, <span class="st" style="color: #20794D;">'sic'</span>, <span class="st" style="color: #20794D;">'dof'</span>)])  </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      aic     aic.c       sic       dof 
+-39.63645 -36.10704 -33.95898   5.00000 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1">h <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">list</span>(h1, h2, h3, h4, h5)   <span class="co" style="color: #5E5E5E;"># store fitted models in a list</span></span>
+<span id="cb18-2"><span class="fu" style="color: #4758AB;">names</span>(h) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'BM'</span>, <span class="st" style="color: #20794D;">'OU.1'</span>, <span class="st" style="color: #20794D;">'OU.3'</span>, <span class="st" style="color: #20794D;">'OU.4'</span>, <span class="st" style="color: #20794D;">'OU.LP'</span>)</span>
+<span id="cb18-3"><span class="fu" style="color: #4758AB;">sapply</span>( h, <span class="cf" style="color: #003B4F;">function</span>(x)</span>
+<span id="cb18-4">             <span class="fu" style="color: #4758AB;">unlist</span>(</span>
+<span id="cb18-5">                <span class="fu" style="color: #4758AB;">summary</span>(x)[<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'aic'</span>, <span class="st" style="color: #20794D;">'aic.c'</span>, <span class="st" style="color: #20794D;">'sic'</span>, <span class="st" style="color: #20794D;">'dof'</span>)]</span>
+<span id="cb18-6">             ) </span>
+<span id="cb18-7">      )                         <span class="co" style="color: #5E5E5E;"># table with all models</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             BM      OU.1      OU.3      OU.4     OU.LP
+aic   -30.66257 -25.39364 -29.15573 -35.22319 -39.63645
+aic.c -30.06257 -24.13048 -25.62631 -29.97319 -36.10704
+sic   -28.39158 -21.98715 -23.47826 -28.41022 -33.95898
+dof     2.00000   3.00000   5.00000   6.00000   5.00000</code></pre>
+</div>
+</div>
+<p>By storing the model fits in a list, we can use apply methods to get the statistics from all the models at once. <code>sapply</code> returns a matrix if possible.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1">h.ic <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sapply</span>( h, <span class="cf" style="color: #003B4F;">function</span>(x) </span>
+<span id="cb20-2">                     <span class="fu" style="color: #4758AB;">unlist</span>(</span>
+<span id="cb20-3">                      <span class="fu" style="color: #4758AB;">summary</span>(x)[<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'aic'</span>, <span class="st" style="color: #20794D;">'aic.c'</span>, <span class="st" style="color: #20794D;">'sic'</span>, <span class="st" style="color: #20794D;">'dof'</span>)]</span>
+<span id="cb20-4">                     ) </span>
+<span id="cb20-5">               )  </span>
+<span id="cb20-6"><span class="fu" style="color: #4758AB;">print</span>( h.ic, <span class="at" style="color: #657422;">digits =</span> <span class="dv" style="color: #AD0000;">3</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         BM  OU.1  OU.3  OU.4 OU.LP
+aic   -30.7 -25.4 -29.2 -35.2 -39.6
+aic.c -30.1 -24.1 -25.6 -30.0 -36.1
+sic   -28.4 -22.0 -23.5 -28.4 -34.0
+dof     2.0   3.0   5.0   6.0   5.0</code></pre>
+</div>
+</div>
+</section>
+<section id="simulation-and-bootstrap-methods" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-and-bootstrap-methods">Simulation and bootstrap methods:</h3>
+<p><code>simulate</code> generates random deviates or sets of simulated tip data based on the fitted model. The input is a fitted model <code>hansentree</code> or <code>browntree</code>, and the output is a list of dataframes, each comparable to the original data. These can then be used to refit the model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">h5.sim <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">simulate</span>(<span class="at" style="color: #657422;">object =</span> h5, <span class="at" style="color: #657422;">nsim=</span><span class="dv" style="color: #AD0000;">10</span>)   <span class="co" style="color: #5E5E5E;"># saves 10 sets of simulated data</span></span>
+<span id="cb22-2">                                  <span class="co" style="color: #5E5E5E;">#  based on OU.LP</span></span></code></pre></div>
+</div>
+<p><code>update</code> refits the model, with one or more parameters changed.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><span class="fu" style="color: #4758AB;">summary</span>( <span class="fu" style="color: #4758AB;">update</span>( <span class="at" style="color: #657422;">object =</span> h5, </span>
+<span id="cb23-2">                 <span class="at" style="color: #657422;">data =</span> h5.sim[[<span class="dv" style="color: #AD0000;">1</span>]] </span>
+<span id="cb23-3">                )  <span class="co" style="color: #5E5E5E;"># fit the first dataset</span></span>
+<span id="cb23-4">        )   </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$call
+hansen(data = data, tree = object, regimes = regimes, sqrt.alpha = sqrt.alpha, 
+    sigma = sigma)
+
+$conv.code
+[1] 0
+
+$optimizer.message
+NULL
+
+$alpha
+         [,1]
+[1,] 8.392276
+
+$sigma.squared
+           [,1]
+[1,] 0.09983292
+
+$optima
+$optima$size
+   large   medium    small 
+3.344278 3.070945 2.631086 
+
+
+$loglik
+[1] 27.13919
+
+$deviance
+[1] -54.27839
+
+$aic
+[1] -44.27839
+
+$aic.c
+[1] -40.74897
+
+$sic
+[1] -38.60091
+
+$dof
+[1] 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1">h5.sim.fit <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">lapply</span>( h5.sim, </span>
+<span id="cb25-2">                      <span class="cf" style="color: #003B4F;">function</span>(x) <span class="fu" style="color: #4758AB;">update</span>(h5, x)</span>
+<span id="cb25-3">                    ) <span class="co" style="color: #5E5E5E;"># fit all 10 simulations</span></span></code></pre></div>
+</div>
+<p><code>bootstrap</code> is a convenience function for generating parametric bootstraps of the parameter estimates. It takes the fitted model, performs the simulations, refits, and outputs a dataframe of parameter estimates.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><span class="fu" style="color: #4758AB;">bootstrap</span>( <span class="at" style="color: #657422;">object =</span> h5, <span class="at" style="color: #657422;">nboot=</span><span class="dv" style="color: #AD0000;">10</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       alpha sigma.squared optima.size.large optima.size.medium
+1   4.509064    0.06047168          3.382374           3.066330
+2   6.348272    0.09173081          3.299242           3.073397
+3   1.980013    0.02010269          3.333394           3.058281
+4   1.103510    0.01744121          3.743397           2.996831
+5   5.156975    0.10256261          3.326747           3.012767
+6   9.114715    0.07260093          3.278572           2.956888
+7   6.527241    0.07706683          3.321212           3.052777
+8   6.190893    0.09651432          3.375882           3.030895
+9   5.297947    0.10416088          3.319447           3.013204
+10 12.239595    0.13677278          3.363249           3.040159
+   optima.size.small   loglik       aic     aic.c       sic dof
+1           2.688133 27.10829 -44.21658 -40.68716 -38.53910   5
+2           2.685279 25.40847 -40.81695 -37.28753 -35.13947   5
+3           2.499604 33.54321 -57.08642 -53.55701 -51.40895   5
+4           2.436465 31.98457 -53.96913 -50.43972 -48.29166   5
+5           2.716415 22.21390 -34.42779 -30.89838 -28.75032   5
+6           2.708731 31.62931 -53.25863 -49.72922 -47.58116   5
+7           2.646340 27.67098 -45.34195 -41.81254 -39.66448   5
+8           2.609083 24.58700 -39.17400 -35.64458 -33.49652   5
+9           2.548397 22.28052 -34.56104 -31.03163 -28.88357   5
+10          2.659869 27.40743 -44.81486 -41.28544 -39.13738   5</code></pre>
+</div>
+</div>
+</section>
+<section id="painting-regimes-on-trees" class="level3">
+<h3 class="anchored" data-anchor-id="painting-regimes-on-trees"><code>paint</code>ing regimes on trees</h3>
+<p>A new function in <code>ouch</code> is <code>paint</code>. Previously, it was up to users to set up regimes manually by editing spreadsheets. <code>paint</code> helps with this task by specifying the regimes on particular species, subtrees, or particular branches.</p>
+<p>There are two parameters to <code>paint</code>, <code>subtrees</code>, which paints the entire subtree which descends from the node, and <code>branch</code>, which paints the branch connecting the node to it’s ancestor. For either, you specify the node label (remember it’s a character and needs to be quoted), and set it equal to the name of the regime you want to specify.</p>
+<p>Let’s try it on the <code>bimac</code> tree and try to recreate the OU.LP regime:</p>
+<div class="cell" data-fig="true">
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><span class="fu" style="color: #4758AB;">plot</span>(tree, <span class="at" style="color: #657422;">node.names=</span>T)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Paint the subtrees first, take a look:</p>
+<div class="cell" data-fig="true">
+<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1">ou.lp <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">paint</span>( tree, </span>
+<span id="cb29-2">                <span class="at" style="color: #657422;">subtree=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"1"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"medium"</span>,<span class="st" style="color: #20794D;">"9"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"large"</span>,<span class="st" style="color: #20794D;">"2"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"small"</span>) </span>
+<span id="cb29-3">               )</span>
+<span id="cb29-4"><span class="fu" style="color: #4758AB;">plot</span>(tree, <span class="at" style="color: #657422;">regimes=</span>ou.lp, <span class="at" style="color: #657422;">node.names=</span>T)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>But there was an independent switch from medium to large at species gm, or node 38, and the node connecting 9 to its ancestor:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1">ou.lp <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">paint</span>( tree, </span>
+<span id="cb30-2">                <span class="at" style="color: #657422;">subtree=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"1"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">'medium'</span>,<span class="st" style="color: #20794D;">"9"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">'large'</span>,<span class="st" style="color: #20794D;">"2"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">'small'</span>),</span>
+<span id="cb30-3">                <span class="at" style="color: #657422;">branch=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"38"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">'large'</span>,<span class="st" style="color: #20794D;">"2"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">'medium'</span>)</span>
+<span id="cb30-4">              )  </span></code></pre></div>
+</div>
+<p>Compare it to the original OU.LP from above.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><span class="fu" style="color: #4758AB;">plot</span>(tree, <span class="at" style="color: #657422;">regimes=</span>ou.lp, <span class="at" style="color: #657422;">node.names=</span>T)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can create alternative paintings of the regimes to test against the data. Suppose we wanted to add a clade specific hypothesis that diverged in a similar time period (this is a completely made-up hypothesis, just for example):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1">ou.clades <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">paint</span>( tree, </span>
+<span id="cb32-2">                    <span class="at" style="color: #657422;">subtree=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"1"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"A"</span>,<span class="st" style="color: #20794D;">"7"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"B"</span>, <span class="st" style="color: #20794D;">"8"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"C"</span>), </span>
+<span id="cb32-3">                    <span class="at" style="color: #657422;">branch=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"8"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"C"</span>, <span class="st" style="color: #20794D;">"7"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"C"</span>, <span class="st" style="color: #20794D;">"1"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"A"</span>)</span>
+<span id="cb32-4">                   )</span>
+<span id="cb32-5"><span class="fu" style="color: #4758AB;">plot</span>(tree, <span class="at" style="color: #657422;">regimes=</span>ou.clades, <span class="at" style="color: #657422;">node.names=</span>T)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Run the model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1">h6 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">hansen</span>( </span>
+<span id="cb33-2">              <span class="fu" style="color: #4758AB;">log</span>(bimac[<span class="st" style="color: #20794D;">'size'</span>]),</span>
+<span id="cb33-3">              tree, </span>
+<span id="cb33-4">              <span class="at" style="color: #657422;">regimes=</span>ou.clades, </span>
+<span id="cb33-5">              <span class="at" style="color: #657422;">sqrt.alpha=</span><span class="dv" style="color: #AD0000;">1</span>,</span>
+<span id="cb33-6">              <span class="at" style="color: #657422;">sigma=</span><span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb33-7">            )</span></code></pre></div>
+</div>
+<p>Rebuild our table and compare models:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1">h <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">append</span>(h, h6)         <span class="co" style="color: #5E5E5E;"># append (add on) new model results to our list h</span></span>
+<span id="cb34-2"><span class="fu" style="color: #4758AB;">names</span>(h)[<span class="fu" style="color: #4758AB;">length</span>(h)] <span class="ot" style="color: #003B4F;">&lt;-</span> ou.clades    <span class="co" style="color: #5E5E5E;"># add the name of the new model</span></span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in names(h)[length(h)] &lt;- ou.clades: number of items to replace is not a
+multiple of replacement length</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><span class="fu" style="color: #4758AB;">names</span>(h)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "BM"    "OU.1"  "OU.3"  "OU.4"  "OU.LP" "1"    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1">h.ic <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sapply</span>( h, <span class="cf" style="color: #003B4F;">function</span>(x) </span>
+<span id="cb38-2">                     <span class="fu" style="color: #4758AB;">unlist</span>(</span>
+<span id="cb38-3">                        <span class="fu" style="color: #4758AB;">summary</span>(x)[<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'aic'</span>, <span class="st" style="color: #20794D;">'aic.c'</span>, <span class="st" style="color: #20794D;">'sic'</span>, <span class="st" style="color: #20794D;">'dof'</span>)]</span>
+<span id="cb38-4">                     ) </span>
+<span id="cb38-5">               )  </span>
+<span id="cb38-6"><span class="fu" style="color: #4758AB;">print</span>( h.ic, <span class="at" style="color: #657422;">digits =</span> <span class="dv" style="color: #AD0000;">3</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         BM  OU.1  OU.3  OU.4 OU.LP     1
+aic   -30.7 -25.4 -29.2 -35.2 -39.6 -30.7
+aic.c -30.1 -24.1 -25.6 -30.0 -36.1 -27.1
+sic   -28.4 -22.0 -23.5 -28.4 -34.0 -25.0
+dof     2.0   3.0   5.0   6.0   5.0   5.0</code></pre>
+</div>
+</div>
+
+
+
+</section>
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Butler:2004" class="csl-entry">
+Butler, Marguerite A., and Aaron A. King. 2004. <span>“Phylogenetic Comparative Analysis: A Modeling Approach for Adaptive Evolution.”</span> <em>American Naturalist</em> 164: 683–95. <a href="https://doi.org/10.1086/426002">https://doi.org/10.1086/426002</a>.
+</div>
+<div id="ref-King:2022" class="csl-entry">
+King, Aaron A., and Marguerite A. Butler. 2022. <em>Ouch: Ornstein-Uhlenbeck Models for Phylogenetic Comparative Hypotheses</em>. <a href="https://kingaa.github.io/ouch/">https://kingaa.github.io/ouch/</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>module 8</category>
+  <category>week 15</category>
+  <category>comparative analysis</category>
+  <category>phylogenetic trees</category>
+  <category>Ornstein Uhlenbeck</category>
+  <category>Brownian motion</category>
+  <guid>https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index.html</guid>
+  <pubDate>Thu, 27 Apr 2023 10:00:00 GMT</pubDate>
+</item>
 <item>
   <title>The ggtree-verse</title>
   <dc:creator>Marguerite Butler</dc:creator>
@@ -682,469 +1145,6 @@ Yu, G. 2022. <em>Data Integration, Manipulation and Visualization of Phylogeneti
   <category>ggtree</category>
   <category>treedata</category>
   <guid>https://mbutler808.github.io/posts/2023-04-25-ggtree/index.html</guid>
-  <pubDate>Tue, 25 Apr 2023 10:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Introduction to OU Models</title>
-  <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Learning Objectives
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Goals:</strong> - Approaches for adaptive evolution (<code>ouch</code>, <code>slouch</code>, others) - Model-based vs statistical approaches</p>
-<p><strong>Concepts:</strong> - Model comparison tools in R - Process-based models</p>
-</div>
-</div>
-</section>
-<section id="introduction-to-ou-models" class="level1">
-<h1>Introduction to OU Models</h1>
-<section id="the-ou-model-for-comparative-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="the-ou-model-for-comparative-analysis">The OU Model for Comparative Analysis</h2>
-<p>A Brownian motion process can be described using the following differential equation:</p>
-<p><span id="eq-bm"><img src="https://latex.codecogs.com/png.latex?%0A%20%20dX(t)%20=%20%5Csigma%5C,dB(t).%0A%5Ctag%7B1%7D"></span></p>
-<p>If we imagine the phenotype <img src="https://latex.codecogs.com/png.latex?X"> as changing through time <img src="https://latex.codecogs.com/png.latex?t">, this equation says that in a small increment of time, the change will be proportional to the parameter <img src="https://latex.codecogs.com/png.latex?%5Csigma">. Here, <img src="https://latex.codecogs.com/png.latex?dB(t)"> is a sample from a Brownian (white noise) process.</p>
-<p>A small step towards reality is the OU Process:</p>
-<p><span id="eq-basic_ou"><img src="https://latex.codecogs.com/png.latex?%0A%20%20dX(t)%20=%20%5Calpha%5C,(%5Ctheta%20-%20X(t))%5C,dt%20+%20%5Csigma%5C,dB(t).%0A%5Ctag%7B2%7D"></span></p>
-<p>Eq.~@ref(eq:basic_ou) expresses the amount of change in character <img src="https://latex.codecogs.com/png.latex?X"> over the course of a small increment of time: specifically, <img src="https://latex.codecogs.com/png.latex?dX(t)"> is the infinitesimal change in the character <img src="https://latex.codecogs.com/png.latex?X"> over the infinitesimal interval from time <img src="https://latex.codecogs.com/png.latex?t"> to time <img src="https://latex.codecogs.com/png.latex?t+dt">. The term <img src="https://latex.codecogs.com/png.latex?dB(t)"> is <em>white noise</em>; that is, the random variables <img src="https://latex.codecogs.com/png.latex?dB(t)"> are independent and identically-distributed normal random variables, each with mean zero and variance <img src="https://latex.codecogs.com/png.latex?dt">. The parameter <img src="https://latex.codecogs.com/png.latex?%5Calpha"> measures the strength of selection. When <img src="https://latex.codecogs.com/png.latex?%5Calpha%20=%200">, the deterministic part of the OU model is diminished and Equation&nbsp;2 approaches the familiar BM model of pure drift,</p>
-</section>
-<section id="ouch-package" class="level2">
-<h2 class="anchored" data-anchor-id="ouch-package"><code>ouch</code> package</h2>
-<p>See <code>ouch</code> lecture.</p>
-<p>Good starting points available in package <code>ouch</code>:<br>
-- <code>?bimac</code> help page for <em>Bimaculatus</em> character displacement dataset<br>
-- <code>example(bimac)</code> example of bimac analysis - <code>?anolis.ssd</code> help page for <em>Anolis</em> sexual size dimorphism dataset</p>
-<p><code>ouch</code> is a package designed to test adaptive hypotheses using variations of the OU process, including BM <span class="citation" data-cites="Butler:2004 King:2022">(Butler and King 2004; King and Butler 2022)</span>. OUCH implements a model that fits <em>alpha</em> and <em>sigma</em> parameters to the entire phylogeny, but allows the user to specify which branches belong to different selective regimes. The location of the optima are also fit.</p>
-<section id="the-data" class="level3">
-<h3 class="anchored" data-anchor-id="the-data">The Data</h3>
-<p>The data in OUCH are most easily assembled as a data frame. Load the built in example from ouch and then print it to the screen (I only printed the head of the dataset here):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">require</span>(ouch)</span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;">data</span>(bimac)</span>
-<span id="cb1-3">bimac</span></code></pre></div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: ouch</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  node spcode species island size ancestor time OU.1   OU.3 OU.4  OU.LP
-1    1   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA       NA    0   ns medium  anc medium
-2    2   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        1   12   ns medium  anc medium
-3    3   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        2   32   ns medium  anc  small
-4    4   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        3   34   ns medium  anc  small
-5    5   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        4   36   ns medium  anc  small
-6    6   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        3   36   ns medium  anc  small</code></pre>
-</div>
-</div>
-<p>NOTE: a very important detail about <code>ouch</code> is that it matches trees with data and regimes using the node labels stored in the rownames of the objects you pass to the <code>ouch</code> functions. So it is important to make sure that your dataframes and vectors are appropriately named. <em>The dataframe bimac already has the correct row names</em>, but we do so here just to illustrate.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;">rownames</span>(bimac) <span class="ot" style="color: #003B4F;">&lt;-</span> bimac<span class="sc" style="color: #5E5E5E;">$</span>node</span></code></pre></div>
-</div>
-<p><code>ouch</code> was designed around a rectangular data model, so although the tree object is not a dataframe internally, it still helps us to build the data as a dataframe before making the <code>ouchtree</code> objects. The central organizing element is the <code>node</code>: it has a node number (usually an integer but it is actually a unique character string), an <code>ancestor</code> to which it is joined by a branch, a <code>time</code> since the root of the tree, and optional <code>label</code> such as a species name.</p>
-</section>
-<section id="the-hypotheses" class="level3">
-<h3 class="anchored" data-anchor-id="the-hypotheses">The hypotheses</h3>
-<p><em>The hypotheses which we use are assigned by painting particular regimes on branches</em>. It is convenient to represent each model or hypothesis as a column on the dataframe, with the regime assigned to the node (that is, it is assigned to the branch connecting the node to its ancestor).</p>
-<p>Make an <code>ouchtree</code> object using the <code>ouchtree</code> constructor. <code>with</code> is a very nice function to create a small local environment so that you can use a dataframe’s elements directly without using the <code>bimac$</code> prefix.</p>
-<p>It is similar to an <code>attach</code> but it is temporary – only lasting as long as the call itself. I like it much better than <code>attach</code> because I sometimes forget what I’ve attached and run into problems later. Also, with <code>attach</code>, you are actually working with a copy of the original dataframe object, so updating values is tricky. With <code>with</code>, it is more clear what’s going on, and I don’t tend to make those mistakes.</p>
-<div class="cell" data-fig="true">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">tree <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">with</span>(bimac, <span class="fu" style="color: #4758AB;">ouchtree</span>(node,ancestor,time<span class="sc" style="color: #5E5E5E;">/</span><span class="fu" style="color: #4758AB;">max</span>(time),species))</span>
-<span id="cb5-2"><span class="fu" style="color: #4758AB;">plot</span>(tree)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p><code>ouch</code> fits the OU model Eq.~@ref(eq:basic_ou) along each branch of the phylogeny. While <img src="https://latex.codecogs.com/png.latex?%5Calpha"> and <img src="https://latex.codecogs.com/png.latex?%5Csigma"> are held constant across the entire tree, the optima along each branch <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> are allowed to vary. Users can then paint various combinations of optima on the tree to reflect various biological scenarios.</p>
-<p>For example, the dataset <code>bimac</code> was used to test the hypothesis of character displacement using an interspecific daaset of body sizes and sympatry/allopatry <span class="citation" data-cites="Butler:2004">Butler and King (2004)</span>. The analysis tested several different models, which are included with <code>bimac</code>. They are: OU.1 or global optimum, OU.3 or small, medium, and large regimes depending on the body size of the observed species (terminal branches only, internal branches painted medium, OU.4 or the same as OU.3 but with internal branches given their own unique regime called ancestral, and OU.LP based on a linear parsimony reconstruction of the colonization events (i.e., that as species came into sympatry, they diverged in body size).</p>
-</section>
-<section id="plotting-ouchtrees" class="level3">
-<h3 class="anchored" data-anchor-id="plotting-ouchtrees">Plotting <code>ouchtree</code>s</h3>
-<p>You can plot the regime paintings on the tree, and set options such as line widths for prettier plots. <code>ouch</code> has a very nice feature which allows plotting of the alternative models on one plot.</p>
-<div class="cell" data-fig="true">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">plot</span>(tree, <span class="at" style="color: #657422;">regimes=</span>bimac[<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"OU.1"</span>, <span class="st" style="color: #20794D;">"OU.3"</span>, <span class="st" style="color: #20794D;">"OU.4"</span>, <span class="st" style="color: #20794D;">"OU.LP"</span>)], <span class="at" style="color: #657422;">lwd=</span><span class="dv" style="color: #AD0000;">6</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Remember that you can pass a single vector or a data frame to the regimes parameter, but it must have the appropriate row names or names in the case of a vector. The regimes are not part of the ouchtree object, because they represent our hypothesis of evolution along the tree, rather than the tree itself. It is part of the original dataframe from which we derived the tree, so remember to refer to <code>bimac</code> when passing the regimes to the <code>plot</code> function.</p>
-</section>
-<section id="fitting-models" class="level3">
-<h3 class="anchored" data-anchor-id="fitting-models">Fitting models</h3>
-<p>There are two main model fitting functions in <code>ouch</code>, <code>brown</code>, which fits Brownian motion models, and <code>hansen</code>, which fits OU models to comparative data. The call to <code>brown</code> is particularly simple, as it takes only the data and the tree:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;">brown</span>(<span class="fu" style="color: #4758AB;">log</span>(bimac[<span class="st" style="color: #20794D;">'size'</span>]),tree)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-call:
-brown(data = log(bimac["size"]), tree = tree)
-   nodes ancestors     times             labels     size
-1      1      &lt;NA&gt; 0.0000000               &lt;NA&gt;       NA
-2      2         1 0.3157895               &lt;NA&gt;       NA
-3      3         2 0.8421053               &lt;NA&gt;       NA
-4      4         3 0.8947368               &lt;NA&gt;       NA
-5      5         4 0.9473684               &lt;NA&gt;       NA
-6      6         3 0.9473684               &lt;NA&gt;       NA
-7      7         1 0.2105263               &lt;NA&gt;       NA
-8      8         7 0.3421053               &lt;NA&gt;       NA
-9      9         8 0.4736842               &lt;NA&gt;       NA
-10    10         9 0.6052632               &lt;NA&gt;       NA
-11    11        10 0.7368421               &lt;NA&gt;       NA
-12    12         9 0.7368421               &lt;NA&gt;       NA
-13    13         8 0.5789474               &lt;NA&gt;       NA
-14    14        13 0.6842105               &lt;NA&gt;       NA
-15    15        14 0.8947368               &lt;NA&gt;       NA
-16    16        15 0.9473684               &lt;NA&gt;       NA
-17    17         7 0.7368421               &lt;NA&gt;       NA
-18    18        17 0.7894737               &lt;NA&gt;       NA
-19    19        18 0.8947368               &lt;NA&gt;       NA
-20    20        19 0.9473684               &lt;NA&gt;       NA
-21    21        20 0.9736842               &lt;NA&gt;       NA
-22    22        19 0.9473684               &lt;NA&gt;       NA
-23    23         2 1.0000000       Anolis pogus 2.602690
-24    24         4 1.0000000   Anolis schwartzi 2.660260
-25    25         5 1.0000000   Anolis schwartzi 2.660260
-26    26         5 1.0000000   Anolis schwartzi 2.653242
-27    27         6 1.0000000     Anolis wattsii 2.674149
-28    28         6 1.0000000     Anolis wattsii 2.701361
-29    29        10 1.0000000 Anolis bimaculatus 3.161247
-30    30        11 1.0000000 Anolis bimaculatus 3.299534
-31    31        11 1.0000000 Anolis bimaculatus 3.328627
-32    32        12 1.0000000      Anolis leachi 3.353407
-33    33        12 1.0000000      Anolis leachi 3.360375
-34    34        13 1.0000000     Anolis nubilus 3.049273
-35    35        14 1.0000000     Anolis sabanus 2.906901
-36    36        15 1.0000000  Anolis gingivinus 2.980619
-37    37        16 1.0000000  Anolis gingivinus 2.933857
-38    38        16 1.0000000  Anolis gingivinus 2.975530
-39    39        17 1.0000000    Anolis oculatus 3.104587
-40    40        18 1.0000000     Anolis ferreus 3.346389
-41    41        20 1.0000000     Anolis lividus 2.928524
-42    42        21 1.0000000  Anolis marmoratus 2.939162
-43    43        21 1.0000000  Anolis marmoratus 2.990720
-44    44        22 1.0000000 Anolis terraealtae 3.058707
-45    45        22 1.0000000 Anolis terraealtae 3.068053
-
-sigma squared:
-           [,1]
-[1,] 0.04311003
-
-theta:
-NULL
-   loglik  deviance       aic     aic.c       sic       dof 
- 17.33129 -34.66257 -30.66257 -30.06257 -28.39158   2.00000 </code></pre>
-</div>
-</div>
-<p>What is returned is an object of class <code>browntree</code>. It contains all input including the function call, the tree and data), as well as the parameter estimate for <img src="https://latex.codecogs.com/png.latex?%5Csigma"> and the model fit statistics including: the log-likelihood, the deviance (<img src="https://latex.codecogs.com/png.latex?-2*log(L)">), the information criteria <img src="https://latex.codecogs.com/png.latex?AIC">, <img src="https://latex.codecogs.com/png.latex?AIC_c"> (corrected for small sample size), and <img src="https://latex.codecogs.com/png.latex?SIC">, and the model degrees of freedom.</p>
-<p>It is a good practice to save this, as it encapsulates the analysis. From this, we can rerun the model fit.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">h1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">brown</span>(<span class="fu" style="color: #4758AB;">log</span>(bimac[<span class="st" style="color: #20794D;">'size'</span>]),tree)</span></code></pre></div>
-</div>
-<p><code>hansen</code> models are slightly more complex. In addition to <img src="https://latex.codecogs.com/png.latex?%5Csigma">, we are now fitting <img src="https://latex.codecogs.com/png.latex?%5Calpha">, the strength of selection, and all of the optima <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> specified by our model. This maximum-likelihood search now requires an initial guess. If you have no idea, a good starting guess is 1. If you want to be sure, you can intiate searches with different starting guesses. You can also specify alternative optimization algorithms and increase or decrease the relative tolerance, which is the stringency by which convergence is assessed. Typically, the default is roughly <code>reltol=1e-8</code>, and the limit of machine precision is in the neighborhood of <code>reltol=1e-15</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">h2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">hansen</span>(<span class="fu" style="color: #4758AB;">log</span>(bimac[<span class="st" style="color: #20794D;">'size'</span>]),</span>
-<span id="cb10-2">             tree,</span>
-<span id="cb10-3">             bimac[<span class="st" style="color: #20794D;">'OU.1'</span>],</span>
-<span id="cb10-4">             <span class="at" style="color: #657422;">sqrt.alpha=</span><span class="dv" style="color: #AD0000;">1</span>,</span>
-<span id="cb10-5">             <span class="at" style="color: #657422;">sigma=</span><span class="dv" style="color: #AD0000;">1</span>)</span>
-<span id="cb10-6">h3 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">hansen</span>(<span class="fu" style="color: #4758AB;">log</span>(bimac[<span class="st" style="color: #20794D;">'size'</span>]),</span>
-<span id="cb10-7">             tree,bimac[<span class="st" style="color: #20794D;">'OU.3'</span>], </span>
-<span id="cb10-8">             <span class="at" style="color: #657422;">sqrt.alpha=</span><span class="dv" style="color: #AD0000;">1</span>,</span>
-<span id="cb10-9">             <span class="at" style="color: #657422;">sigma=</span><span class="dv" style="color: #AD0000;">1</span>)</span>
-<span id="cb10-10">h4 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">hansen</span>(<span class="fu" style="color: #4758AB;">log</span>(bimac[<span class="st" style="color: #20794D;">'size'</span>]),</span>
-<span id="cb10-11">             tree,</span>
-<span id="cb10-12">             bimac[<span class="st" style="color: #20794D;">'OU.4'</span>], </span>
-<span id="cb10-13">             <span class="at" style="color: #657422;">sqrt.alpha=</span><span class="dv" style="color: #AD0000;">1</span>,</span>
-<span id="cb10-14">             <span class="at" style="color: #657422;">sigma=</span><span class="dv" style="color: #AD0000;">1</span>)</span>
-<span id="cb10-15">h5 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">hansen</span>(<span class="fu" style="color: #4758AB;">log</span>(bimac[<span class="st" style="color: #20794D;">'size'</span>]),</span>
-<span id="cb10-16">             tree,</span>
-<span id="cb10-17">             bimac[<span class="st" style="color: #20794D;">'OU.LP'</span>], </span>
-<span id="cb10-18">             <span class="at" style="color: #657422;">sqrt.alpha=</span><span class="dv" style="color: #AD0000;">1</span>,</span>
-<span id="cb10-19">             <span class="at" style="color: #657422;">sigma=</span><span class="dv" style="color: #AD0000;">1</span>,</span>
-<span id="cb10-20">             <span class="at" style="color: #657422;">reltol=</span><span class="fl" style="color: #AD0000;">1e-5</span>)</span></code></pre></div>
-</div>
-</section>
-<section id="hansentree-and-ouchtree-methods" class="level3">
-<h3 class="anchored" data-anchor-id="hansentree-and-ouchtree-methods"><code>hansentree</code> and <code>ouchtree</code> methods</h3>
-<p>We can see the model results by typing <code>h5</code>, which will execute the <code>print</code> method for this class. You could also use the <code>attributes</code> function, but this will dump too much information. <code>ouchtree</code> objects and the classes derived from them contain information that is used in internal calculations of the algorithms, not of general interest to users.</p>
-<p>Additional accessor functions include:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;">coef</span>(h5)    <span class="co" style="color: #5E5E5E;"># the coefficients of the fitted model</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$sqrt.alpha
-[1] 1.61658
-
-$sigma
-[1] 0.2249274
-
-$theta
-$theta$size
-   large   medium    small 
-3.355087 3.040729 2.565249 
-
-
-$alpha.matrix
-        [,1]
-[1,] 2.61333
-
-$sigma.sq.matrix
-           [,1]
-[1,] 0.05059232</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;">logLik</span>(h5)   <span class="co" style="color: #5E5E5E;"># the log-likelihood value</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 24.81823</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;">summary</span>(h5) <span class="co" style="color: #5E5E5E;"># (not printed) everything except the tree+data</span></span></code></pre></div>
-</div>
-<p>We can now generate a table of our model fits:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">    <span class="co" style="color: #5E5E5E;"># just the model fit statistics on a single line</span></span>
-<span id="cb16-2"><span class="fu" style="color: #4758AB;">unlist</span>(<span class="fu" style="color: #4758AB;">summary</span>(h5)[<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'aic'</span>, <span class="st" style="color: #20794D;">'aic.c'</span>, <span class="st" style="color: #20794D;">'sic'</span>, <span class="st" style="color: #20794D;">'dof'</span>)])  </span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      aic     aic.c       sic       dof 
--39.63645 -36.10704 -33.95898   5.00000 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1">h <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">list</span>(h1, h2, h3, h4, h5)   <span class="co" style="color: #5E5E5E;"># store fitted models in a list</span></span>
-<span id="cb18-2"><span class="fu" style="color: #4758AB;">names</span>(h) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'BM'</span>, <span class="st" style="color: #20794D;">'OU.1'</span>, <span class="st" style="color: #20794D;">'OU.3'</span>, <span class="st" style="color: #20794D;">'OU.4'</span>, <span class="st" style="color: #20794D;">'OU.LP'</span>)</span>
-<span id="cb18-3"><span class="fu" style="color: #4758AB;">sapply</span>( h, <span class="cf" style="color: #003B4F;">function</span>(x)</span>
-<span id="cb18-4">             <span class="fu" style="color: #4758AB;">unlist</span>(</span>
-<span id="cb18-5">                <span class="fu" style="color: #4758AB;">summary</span>(x)[<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'aic'</span>, <span class="st" style="color: #20794D;">'aic.c'</span>, <span class="st" style="color: #20794D;">'sic'</span>, <span class="st" style="color: #20794D;">'dof'</span>)]</span>
-<span id="cb18-6">             ) </span>
-<span id="cb18-7">      )                         <span class="co" style="color: #5E5E5E;"># table with all models</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>             BM      OU.1      OU.3      OU.4     OU.LP
-aic   -30.66257 -25.39364 -29.15573 -35.22319 -39.63645
-aic.c -30.06257 -24.13048 -25.62631 -29.97319 -36.10704
-sic   -28.39158 -21.98715 -23.47826 -28.41022 -33.95898
-dof     2.00000   3.00000   5.00000   6.00000   5.00000</code></pre>
-</div>
-</div>
-<p>By storing the model fits in a list, we can use apply methods to get the statistics from all the models at once. <code>sapply</code> returns a matrix if possible.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1">h.ic <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sapply</span>( h, <span class="cf" style="color: #003B4F;">function</span>(x) </span>
-<span id="cb20-2">                     <span class="fu" style="color: #4758AB;">unlist</span>(</span>
-<span id="cb20-3">                      <span class="fu" style="color: #4758AB;">summary</span>(x)[<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'aic'</span>, <span class="st" style="color: #20794D;">'aic.c'</span>, <span class="st" style="color: #20794D;">'sic'</span>, <span class="st" style="color: #20794D;">'dof'</span>)]</span>
-<span id="cb20-4">                     ) </span>
-<span id="cb20-5">               )  </span>
-<span id="cb20-6"><span class="fu" style="color: #4758AB;">print</span>( h.ic, <span class="at" style="color: #657422;">digits =</span> <span class="dv" style="color: #AD0000;">3</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         BM  OU.1  OU.3  OU.4 OU.LP
-aic   -30.7 -25.4 -29.2 -35.2 -39.6
-aic.c -30.1 -24.1 -25.6 -30.0 -36.1
-sic   -28.4 -22.0 -23.5 -28.4 -34.0
-dof     2.0   3.0   5.0   6.0   5.0</code></pre>
-</div>
-</div>
-</section>
-<section id="simulation-and-bootstrap-methods" class="level3">
-<h3 class="anchored" data-anchor-id="simulation-and-bootstrap-methods">Simulation and bootstrap methods:</h3>
-<p><code>simulate</code> generates random deviates or sets of simulated tip data based on the fitted model. The input is a fitted model <code>hansentree</code> or <code>browntree</code>, and the output is a list of dataframes, each comparable to the original data. These can then be used to refit the model.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">h5.sim <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">simulate</span>(<span class="at" style="color: #657422;">object =</span> h5, <span class="at" style="color: #657422;">nsim=</span><span class="dv" style="color: #AD0000;">10</span>)   <span class="co" style="color: #5E5E5E;"># saves 10 sets of simulated data</span></span>
-<span id="cb22-2">                                  <span class="co" style="color: #5E5E5E;">#  based on OU.LP</span></span></code></pre></div>
-</div>
-<p><code>update</code> refits the model, with one or more parameters changed.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><span class="fu" style="color: #4758AB;">summary</span>( <span class="fu" style="color: #4758AB;">update</span>( <span class="at" style="color: #657422;">object =</span> h5, </span>
-<span id="cb23-2">                 <span class="at" style="color: #657422;">data =</span> h5.sim[[<span class="dv" style="color: #AD0000;">1</span>]] </span>
-<span id="cb23-3">                )  <span class="co" style="color: #5E5E5E;"># fit the first dataset</span></span>
-<span id="cb23-4">        )   </span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$call
-hansen(data = data, tree = object, regimes = regimes, sqrt.alpha = sqrt.alpha, 
-    sigma = sigma)
-
-$conv.code
-[1] 0
-
-$optimizer.message
-NULL
-
-$alpha
-         [,1]
-[1,] 7.518533
-
-$sigma.squared
-         [,1]
-[1,] 0.147433
-
-$optima
-$optima$size
-   large   medium    small 
-3.227890 3.025055 2.702505 
-
-
-$loglik
-[1] 21.57065
-
-$deviance
-[1] -43.14129
-
-$aic
-[1] -33.14129
-
-$aic.c
-[1] -29.61188
-
-$sic
-[1] -27.46382
-
-$dof
-[1] 5</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1">h5.sim.fit <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">lapply</span>( h5.sim, </span>
-<span id="cb25-2">                      <span class="cf" style="color: #003B4F;">function</span>(x) <span class="fu" style="color: #4758AB;">update</span>(h5, x)</span>
-<span id="cb25-3">                    ) <span class="co" style="color: #5E5E5E;"># fit all 10 simulations</span></span></code></pre></div>
-</div>
-<p><code>bootstrap</code> is a convenience function for generating parametric bootstraps of the parameter estimates. It takes the fitted model, performs the simulations, refits, and outputs a dataframe of parameter estimates.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><span class="fu" style="color: #4758AB;">bootstrap</span>( <span class="at" style="color: #657422;">object =</span> h5, <span class="at" style="color: #657422;">nboot=</span><span class="dv" style="color: #AD0000;">10</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      alpha sigma.squared optima.size.large optima.size.medium
-1  4.314375    0.05269199          3.251418           3.000098
-2  3.413239    0.04215836          3.309926           2.956670
-3  7.709968    0.06632372          3.273562           3.070939
-4  2.766781    0.02691600          3.394636           3.025804
-5  3.715158    0.06536193          3.340144           3.052428
-6  4.525718    0.04019941          3.303909           2.996026
-7  3.614497    0.04792204          3.433925           3.035024
-8  7.648233    0.06990530          3.307988           2.953451
-9  2.219933    0.06286895          3.345550           3.005724
-10 5.982860    0.08044119          3.226410           3.046734
-   optima.size.small   loglik       aic     aic.c       sic dof
-1           2.643785 28.31241 -46.62481 -43.09540 -40.94734   5
-2           2.621137 28.94706 -47.89411 -44.36470 -42.21664   5
-3           2.590975 31.00525 -52.01050 -48.48109 -46.33303   5
-4           2.633032 32.49237 -54.98475 -51.45534 -49.30728   5
-5           2.615143 24.58665 -39.17330 -35.64389 -33.49583   5
-6           2.550247 31.83803 -53.67606 -50.14665 -47.99859   5
-7           2.635848 27.93108 -45.86215 -42.33274 -40.18468   5
-8           2.564476 30.32028 -50.64057 -47.11115 -44.96309   5
-9           2.539223 21.17698 -32.35395 -28.82454 -26.67648   5
-10          2.675224 26.36369 -42.72739 -39.19797 -37.04991   5</code></pre>
-</div>
-</div>
-</section>
-<section id="painting-regimes-on-trees" class="level3">
-<h3 class="anchored" data-anchor-id="painting-regimes-on-trees"><code>paint</code>ing regimes on trees</h3>
-<p>A new function in <code>ouch</code> is <code>paint</code>. Previously, it was up to users to set up regimes manually by editing spreadsheets. <code>paint</code> helps with this task by specifying the regimes on particular species, subtrees, or particular branches.</p>
-<p>There are two parameters to <code>paint</code>, <code>subtrees</code>, which paints the entire subtree which descends from the node, and <code>branch</code>, which paints the branch connecting the node to it’s ancestor. For either, you specify the node label (remember it’s a character and needs to be quoted), and set it equal to the name of the regime you want to specify.</p>
-<p>Let’s try it on the <code>bimac</code> tree and try to recreate the OU.LP regime:</p>
-<div class="cell" data-fig="true">
-<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><span class="fu" style="color: #4758AB;">plot</span>(tree, <span class="at" style="color: #657422;">node.names=</span>T)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Paint the subtrees first, take a look:</p>
-<div class="cell" data-fig="true">
-<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1">ou.lp <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">paint</span>( tree, </span>
-<span id="cb29-2">                <span class="at" style="color: #657422;">subtree=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"1"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"medium"</span>,<span class="st" style="color: #20794D;">"9"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"large"</span>,<span class="st" style="color: #20794D;">"2"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"small"</span>) </span>
-<span id="cb29-3">               )</span>
-<span id="cb29-4"><span class="fu" style="color: #4758AB;">plot</span>(tree, <span class="at" style="color: #657422;">regimes=</span>ou.lp, <span class="at" style="color: #657422;">node.names=</span>T)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>But there was an independent switch from medium to large at species gm, or node 38, and the node connecting 9 to its ancestor:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1">ou.lp <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">paint</span>( tree, </span>
-<span id="cb30-2">                <span class="at" style="color: #657422;">subtree=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"1"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">'medium'</span>,<span class="st" style="color: #20794D;">"9"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">'large'</span>,<span class="st" style="color: #20794D;">"2"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">'small'</span>),</span>
-<span id="cb30-3">                <span class="at" style="color: #657422;">branch=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"38"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">'large'</span>,<span class="st" style="color: #20794D;">"2"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">'medium'</span>)</span>
-<span id="cb30-4">              )  </span></code></pre></div>
-</div>
-<p>Compare it to the original OU.LP from above.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><span class="fu" style="color: #4758AB;">plot</span>(tree, <span class="at" style="color: #657422;">regimes=</span>ou.lp, <span class="at" style="color: #657422;">node.names=</span>T)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>We can create alternative paintings of the regimes to test against the data. Suppose we wanted to add a clade specific hypothesis that diverged in a similar time period (this is a completely made-up hypothesis, just for example):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1">ou.clades <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">paint</span>( tree, </span>
-<span id="cb32-2">                    <span class="at" style="color: #657422;">subtree=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"1"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"A"</span>,<span class="st" style="color: #20794D;">"7"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"B"</span>, <span class="st" style="color: #20794D;">"8"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"C"</span>), </span>
-<span id="cb32-3">                    <span class="at" style="color: #657422;">branch=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"8"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"C"</span>, <span class="st" style="color: #20794D;">"7"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"C"</span>, <span class="st" style="color: #20794D;">"1"</span><span class="ot" style="color: #003B4F;">=</span><span class="st" style="color: #20794D;">"A"</span>)</span>
-<span id="cb32-4">                   )</span>
-<span id="cb32-5"><span class="fu" style="color: #4758AB;">plot</span>(tree, <span class="at" style="color: #657422;">regimes=</span>ou.clades, <span class="at" style="color: #657422;">node.names=</span>T)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Run the model:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1">h6 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">hansen</span>( </span>
-<span id="cb33-2">              <span class="fu" style="color: #4758AB;">log</span>(bimac[<span class="st" style="color: #20794D;">'size'</span>]),</span>
-<span id="cb33-3">              tree, </span>
-<span id="cb33-4">              <span class="at" style="color: #657422;">regimes=</span>ou.clades, </span>
-<span id="cb33-5">              <span class="at" style="color: #657422;">sqrt.alpha=</span><span class="dv" style="color: #AD0000;">1</span>,</span>
-<span id="cb33-6">              <span class="at" style="color: #657422;">sigma=</span><span class="dv" style="color: #AD0000;">1</span></span>
-<span id="cb33-7">            )</span></code></pre></div>
-</div>
-<p>Rebuild our table and compare models:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1">h <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">append</span>(h, h6)         <span class="co" style="color: #5E5E5E;"># append (add on) new model results to our list h</span></span>
-<span id="cb34-2"><span class="fu" style="color: #4758AB;">names</span>(h)[<span class="fu" style="color: #4758AB;">length</span>(h)] <span class="ot" style="color: #003B4F;">&lt;-</span> ou.clades    <span class="co" style="color: #5E5E5E;"># add the name of the new model</span></span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in names(h)[length(h)] &lt;- ou.clades: number of items to replace is not a
-multiple of replacement length</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><span class="fu" style="color: #4758AB;">names</span>(h)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "BM"    "OU.1"  "OU.3"  "OU.4"  "OU.LP" "1"    </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1">h.ic <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sapply</span>( h, <span class="cf" style="color: #003B4F;">function</span>(x) </span>
-<span id="cb38-2">                     <span class="fu" style="color: #4758AB;">unlist</span>(</span>
-<span id="cb38-3">                        <span class="fu" style="color: #4758AB;">summary</span>(x)[<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'aic'</span>, <span class="st" style="color: #20794D;">'aic.c'</span>, <span class="st" style="color: #20794D;">'sic'</span>, <span class="st" style="color: #20794D;">'dof'</span>)]</span>
-<span id="cb38-4">                     ) </span>
-<span id="cb38-5">               )  </span>
-<span id="cb38-6"><span class="fu" style="color: #4758AB;">print</span>( h.ic, <span class="at" style="color: #657422;">digits =</span> <span class="dv" style="color: #AD0000;">3</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         BM  OU.1  OU.3  OU.4 OU.LP     1
-aic   -30.7 -25.4 -29.2 -35.2 -39.6 -30.7
-aic.c -30.1 -24.1 -25.6 -30.0 -36.1 -27.1
-sic   -28.4 -22.0 -23.5 -28.4 -34.0 -25.0
-dof     2.0   3.0   5.0   6.0   5.0   5.0</code></pre>
-</div>
-</div>
-
-
-
-</section>
-</section>
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-Butler:2004" class="csl-entry">
-Butler, Marguerite A., and Aaron A. King. 2004. <span>“Phylogenetic Comparative Analysis: A Modeling Approach for Adaptive Evolution.”</span> <em>American Naturalist</em> 164: 683–95. <a href="https://doi.org/10.1086/426002">https://doi.org/10.1086/426002</a>.
-</div>
-<div id="ref-King:2022" class="csl-entry">
-King, Aaron A., and Marguerite A. Butler. 2022. <em>Ouch: Ornstein-Uhlenbeck Models for Phylogenetic Comparative Hypotheses</em>. <a href="https://kingaa.github.io/ouch/">https://kingaa.github.io/ouch/</a>.
-</div>
-</div></section></div> ]]></description>
-  <category>module 8</category>
-  <category>week 15</category>
-  <category>comparative analysis</category>
-  <category>phylogenetic trees</category>
-  <category>Ornstein Uhlenbeck</category>
-  <category>Brownian motion</category>
-  <guid>https://mbutler808.github.io/posts/2023-04-27-intro-OU-models/index.html</guid>
   <pubDate>Tue, 25 Apr 2023 10:00:00 GMT</pubDate>
 </item>
 <item>

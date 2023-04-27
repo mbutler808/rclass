@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Marguerite Butler">
+<meta name="dcterms.date" content="2023-04-18">
+<meta name="description" content="Getting trees in to R and understanding their formats">
+
+<title>ZOOL710 Data Science in R for Biologists - All about trees</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">ZOOL710 Data Science in R for Biologists</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">General Information</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">    
+        <li>
+    <a class="dropdown-item" href="../../syllabus.html">
+ <span class="dropdown-text">Syllabus</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../schedule.html">
+ <span class="dropdown-text">Schedule</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Course Materials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
+        <li>
+    <a class="dropdown-item" href="../../lectures.html">
+ <span class="dropdown-text">Lectures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../projects.html">
+ <span class="dropdown-text">Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../resources.html">
+ <span class="dropdown-text">Resources</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">All about trees</h1>
+                  <div>
+        <div class="description">
+          Getting trees in to R and understanding their formats
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">module 7</div>
+                <div class="quarto-category">week 13</div>
+                <div class="quarto-category">phylogenetic trees</div>
+                <div class="quarto-category">nexus</div>
+                <div class="quarto-category">fasta</div>
+                <div class="quarto-category">newick</div>
+                <div class="quarto-category">beast</div>
+                <div class="quarto-category">iqtree</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <a href="https://butlerlab.org">Marguerite Butler</a> 
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              School of Life Sciences, University of Hawaii
+            </p>
+        </div>
+      </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 18, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link active" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li><a href="#tree-vocabulary" id="toc-tree-vocabulary" class="nav-link" data-scroll-target="#tree-vocabulary">Tree vocabulary</a></li>
+  <li><a href="#newick-format" id="toc-newick-format" class="nav-link" data-scroll-target="#newick-format">Newick format</a></li>
+  <li><a href="#nexus-more-soon" id="toc-nexus-more-soon" class="nav-link" data-scroll-target="#nexus-more-soon">NEXUS – More soon</a>
+  <ul class="collapse">
+  <li><a href="#nexus-syntax" id="toc-nexus-syntax" class="nav-link" data-scroll-target="#nexus-syntax">Nexus syntax:</a></li>
+  </ul></li>
+  <li><a href="#phylo-ape-5.0-or-above" id="toc-phylo-ape-5.0-or-above" class="nav-link" data-scroll-target="#phylo-ape-5.0-or-above"><code>phylo</code> (<code>ape</code> 5.0 or above)</a></li>
+  <li><a href="#ouchtree-ouch-version-2.0-or-above" id="toc-ouchtree-ouch-version-2.0-or-above" class="nav-link" data-scroll-target="#ouchtree-ouch-version-2.0-or-above">ouchtree (<code>ouch</code> version 2.0 or above)</a></li>
+  </ul>
+</nav>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="acknowledgements" class="level3">
+<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>References for this Material:</p>
+<ul>
+<li>This was adapted from the chapter “All about trees” written by Brian OʻMeara from the manual “Getting started in R for Phylogenetics” by Marguerite A. Butler, Brian C. O’Meara, Jason Pienaar, Michael Alfaro, Graham Slater, and Todd Oakley</li>
+</ul>
+</section>
+<section id="learning-objectives" class="level1">
+<h1>Learning objectives</h1>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Understand information content of phylogenetically structured data</li>
+<li>Understand particular R tree formats in ape, phylobase, and ouch</li>
+<li>Be able to hand-make trees</li>
+<li>Be able to import trees from nexus, newick, and other major formats in use today</li>
+<li>Be able to convert trees from one format to another</li>
+<li>Be able to perform basic tree manipulations</li>
+</ul>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+R packages you will need
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><code>ape</code></li>
+<li><code>ouch</code></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="tree-vocabulary" class="level1">
+<h1>Tree vocabulary</h1>
+<p>In nature, a tree is a large perennial woody plant. It has roots, a main trunk, branches, and leaves. In graph theory, a tree is a network where there is only one path between any two nodes (in other words, a network with no loops or cycles).</p>
+<p>In phylogenetics, we use ideas and terminology from both graph theory and nature:</p>
+<ul>
+<li><strong>Terminal taxa</strong> are also known as <strong>leaves</strong>, <strong>terminals</strong>, <strong>OTU</strong>s (“<strong>Operational Taxonomic Units</strong>”), <strong>tips</strong>, or simply <strong>taxa</strong>.</li>
+<li><strong>Branches</strong> are also called <strong>edges</strong> or <strong>internodes</strong>.</li>
+<li><strong>Internal</strong> nodes (places where two or more branches connect) are also known as <strong>vertices</strong> and sometimes simply <strong>nodes</strong> (technically, leaves are also nodes).</li>
+<li>A <strong>rooted</strong> tree has one node designated as the <strong>root</strong>, and all other nodes are descended from this root. Traditionally, the root node has at least two descendants; it may also have a subtending branch (an ancestral branch).</li>
+<li>An <strong>unrooted</strong> tree has no root designated, making the oldest ancestor ambiguous.<br>
+</li>
+<li>A tree where every internal node has two and only two descendants is known as a <strong>binary</strong> or <strong>bifurcating</strong> tree.</li>
+<li>A tree where at least one internal node has more than two descendants is said to be <strong>multifurcating</strong>; such a node is a <strong>polytomy</strong>.</li>
+<li>Trees in phylogenetics generally represent either <strong>species trees</strong> (a history of the splitting of interbreeding populations) or <strong>gene trees</strong> (a history of the coalescence of gene copies). In both cases, it is generally believed that the true process is bifurcating, so that each split results in two descendants. Thus, polytomies on trees are generally taken as representing <em>uncertainty in the relationships</em>. However in the case of adaptive radiations, and other <strong>rapidly speciating processes</strong>, the true process may be approaching multifurcation.</li>
+<li><strong>Branches</strong> may have <strong>lengths</strong>; these lengths may correspond to <em>time</em>, <em>amount of change</em> (e.g., mutations) in some set of characters, <em>number of speciation events</em>, or some other measure.</li>
+<li>A tree where all <strong>branch lengths</strong> from root to tips are equal is known as an <strong>ultrametric</strong> tree.</li>
+<li>A tree without branch lengths is known as a <strong>topology</strong>.</li>
+<li>A <strong>monophyletic clade</strong> is an ancestor and all its descendants.</li>
+<li>Any <strong>edge</strong> or <strong>branch</strong> corresponds to a <strong>bipartition</strong>: <em>a division of the tree into two parts connected by that edge</em> (if a root were inserted on the edge, then each of those parts would be a clade).</li>
+</ul>
+</section>
+<section id="newick-format" class="level1">
+<h1>Newick format</h1>
+<p>A very basic tree format is <strong>Newick</strong> (<code>.tree</code>), named after the <a href="https://www.newicks.com">seafood restaurant</a> in New Hampshire where it was formalized in 1986 by James Archie, William H. E. Day, Joseph Felsenstein, Wayne Maddison, Christopher Meacham, F. James Rohlf, and David Swofford - the second meeting was at the restaurant; it is also called New Hampshire format for that reason). It is widely used in graph theory as well. It is simply a string. Each nesting on the tree corresponds to a parenthetical statement. For example, for this tree (drawn brute-force):</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="http://www.newicks.com/Web2014/Ed7.1.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Photo from the Newick restaurant <a href="https://www.newicks.com">home page</a></figcaption><p></p>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ape)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ouch)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(phylobase)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># simpletree &lt;- rcoal(length(LETTERS[1:7]), rooted = TRUE, tip.label = LETTERS[1:7], br = "coalescent")</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>simpletree<span class="ot">&lt;-</span><span class="fu">structure</span>(<span class="fu">list</span>(</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">edge =</span> <span class="fu">matrix</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">11</span>, <span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">13</span>, </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">11</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">12</span>, <span class="dv">5</span>, <span class="dv">13</span>, <span class="dv">6</span>, <span class="dv">7</span>),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">nrow=</span>12L), </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">tip.label =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>, <span class="st">"F"</span>, <span class="st">"G"</span>), </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">Nnode =</span> 6L</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  ), </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">"phylo"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simpletree,<span class="at">no.margin=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-simpletree" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-simpletree-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: A simple tree</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Taxa G and F form a <strong>clade</strong>, as do G, F, and E, as do A and B, and so forth. Thus, to create a Newick string, just go down the tree, nesting as you go:</p>
+<p><strong>(G,F)</strong></p>
+<p><strong>((G,F),E)</strong></p>
+<p>other side:</p>
+<p><strong>(A,B)</strong></p>
+<p><strong>(C,D)</strong></p>
+<p><strong>((A,B),(C,D))</strong></p>
+<p>all together:</p>
+<p><strong>(((G,F),E),((A,B),(C,D)))</strong></p>
+<p>And that’s it (it will be clearer in the lecture) If a tree has branch lengths, these are entered following the descendant clade. For example, if the branch leading to G has length 1.0, we would write <code>G:1.0</code> rather than just <code>G</code>. If the tree is ultrametric, and the branch below the common ancestor of G and F is of length <code>1.1</code>, and the branch below that of length <code>3.5</code>, we could write (note: a semicolon <code>;</code> ends the newick string):</p>
+<p><code>((G:1.0,F:1.0):1.1,E:2.1):3.5;</code></p>
+<p>One aspect of the Newick (and most tree) representation is that there are many ways of representing the same tree. At every node, one can rotate the descendant branches (switching the left and right positions) and get the same tree (for example, imagine switching the G and E labels). Thus, the Newick strings</p>
+<p><strong>((G,F),E)</strong></p>
+<p>and</p>
+<p><strong>((F,G),E)</strong></p>
+<p>describe the same trees, though it might not be easy to tell at first glance. This is generally an issue for any tree representation. While Newick strings are compact and easy to understand, they also don’t lend themselves to easy <em>tree traversal</em> (moving up or down the tree). In most analysis software that performs computations along trees, some other representation is used.</p>
+</section>
+<section id="nexus-more-soon" class="level1">
+<h1>NEXUS – More soon</h1>
+<p>The NEXUS format (<code>*.nex</code> or <code>*.nxs</code>) is widely used in bioinformatics. Many phylogenetics programs use nexus format including <span class="math inline">\(PAUP^*\)</span>, MrBayes, Mesquite, MacClade, etc., and many more can read nexus.</p>
+<p>One of the key features is that it is very <em>extensible</em> with information in <strong>blocks</strong>. We will only be concerned with blocks of DNA sequence data, but any type of information can be added. This flexibilityy, however, can be a curse when you encounter new extensions to the format that your code did not anticipate. However, for the most part we will be using packages that read in nexus so you can reasonable hope that someone has dealt with the headache for you.</p>
+<p>Nexus files are often used as inputs to phylogenetic programs. In that case, they typically only have a TAXA block and a DATA block. In our IQTREE2 example we also had a partition file in nexus format. But they can also return the output of the phylogenetic reconstruction, in that case they will have a TREES block as well.</p>
+<section id="nexus-syntax" class="level3">
+<h3 class="anchored" data-anchor-id="nexus-syntax">Nexus syntax:</h3>
+<p>A NEXUS file begins with <code>#NEXUS</code> on the first line.</p>
+<p><strong>Blocks</strong> of information follow, tyically on multiple lines, enclosed by a <strong>BEGIN blockname;</strong> and <strong>END;</strong> (Key words are case-insensitive).</p>
+<p>Comments are enclosed by square brackets <code>[comments]</code></p>
+<p>Typical blocks:</p>
+<ul>
+<li><strong>TAXA</strong>: The taxa block contains the names of the taxa.</li>
+<li><strong>DATA</strong>: The data block contains a data matrix (we will use DNA sequences).</li>
+<li><strong>TREES</strong>: The trees block contains one or more phylogenetic trees in newick format.</li>
+</ul>
+<p>For example <a href="https://en.wikipedia.org/wiki/Nexus_file">From Wikipedia</a>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#NEXUS</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Begin</span> TAXA<span class="kw">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Dimensions</span> ntax=4<span class="kw">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">TaxLabels</span> SpaceDog SpaceCat SpaceOrc SpaceElf<span class="kw">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">End</span><span class="kw">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Begin</span> data<span class="kw">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Dimensions</span> nchar=15<span class="kw">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Format</span> datatype=dna missing=<span class="pp">?</span> gap=- matchchar=.<span class="kw">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Matrix</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">[</span> When a position <span class="er">is</span> <span class="ex">a</span> <span class="st">"matchchar"</span>, it means that it is the same as the first entry at the same position. ]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SpaceDog</span>   atgctagctagctcg</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SpaceCat</span>   ......<span class="pp">??</span>...-.a.</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SpaceOrc</span>   ...t.......-.g. [ same as atgttagctag-tgg ]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SpaceElf</span>   ...t.......-.a.           </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ex">End</span><span class="kw">;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="ex">BEGIN</span> TREES<span class="kw">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Tree</span> tree1 = <span class="er">(</span><span class="kw">((</span><span class="ex">SpaceDog,SpaceCat</span><span class="kw">)</span><span class="ex">,SpaceOrc,SpaceElf</span><span class="kw">));</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ex">END</span><span class="kw">;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="phylo-ape-5.0-or-above" class="level1">
+<h1><code>phylo</code> (<code>ape</code> 5.0 or above)</h1>
+<p>The <a href="http://ape-package.ird.fr"><code>ape</code> package</a> <span class="citation" data-cites="Paradis:2019">(<a href="#ref-Paradis:2019" role="doc-biblioref">Paradis and Schliep 2019</a>)</span> uses a different representation of trees. It uses R <code>structures</code>, <code>lists</code>, <code>matrices</code>, and <code>vectors</code> to store a tree. Each node in the tree receives a number. For example, here is the tree from before in <code>ape</code> format.</p>
+<p>Here is <code>simpletree</code> with the node numbers printed. It is printed with the following commands:</p>
+<div class="cell" data-caption="A simple tree with ape's numbering of nodes included">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simpletree,<span class="at">no.margin=</span><span class="cn">TRUE</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nodelabels</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tiplabels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/simpletreeplotnodelabels-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>For a tree with <strong>N tips</strong>, the tips have <strong>numbers 1…N</strong> and the <strong>nodes</strong> have <strong>numbers greater than N</strong> (this is in contrast to how this was done in early (&lt;1.9) versions of <code>ape</code>). These numbers are used to store information about the tree’s structure.</p>
+<p>To do this, a matrix is created, with height corresponding to the number of internal and terminal nodes and width 2. The first column of the matrix has the node at the beginning of the branch, the second has the node at the end of the branch. For example, for our simple tree, this matrix is</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>simpletree<span class="sc">$</span>edge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      [,1] [,2]
+ [1,]    8    9
+ [2,]    9   10
+ [3,]   10    1
+ [4,]   10    2
+ [5,]    9   11
+ [6,]   11    3
+ [7,]   11    4
+ [8,]    8   12
+ [9,]   12    5
+[10,]   12   13
+[11,]   13    6
+[12,]   13    7</code></pre>
+</div>
+</div>
+<p>This alone is enough for a basic topology. However, it might be nice to know what the taxa actually are, rather than just numbers. To do this, a character vector with as many entries as the number of tips is used. In the example tree, this is</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>simpletree<span class="sc">$</span>tip.label</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "A" "B" "C" "D" "E" "F" "G"</code></pre>
+</div>
+</div>
+<p>It’s possible that internal nodes have labels, too (for example, the most recent common ancestor of a set of birds might be labeled Aves). If so, an optional <code>node.label</code> is used. If branch lengths are known, they are included as the numeric vector <code>edge.length</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>simpletree<span class="sc">$</span>edge.length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1.5 1.0 0.5 0.5 1.0 0.5 0.5 2.0 1.0 0.5 0.5 0.5</code></pre>
+</div>
+</div>
+<p>Finally, there are a few other elements (<code>Nnode</code>, the number of internal nodes; <code>class=phylo</code>) to set the class. To dump the the internal representation of phylo tree to screen, you can use <code>unclass()</code> which strips the class attribute (the S4 analog is <code>attributes</code>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unclass</span>(simpletree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$edge
+      [,1] [,2]
+ [1,]    8    9
+ [2,]    9   10
+ [3,]   10    1
+ [4,]   10    2
+ [5,]    9   11
+ [6,]   11    3
+ [7,]   11    4
+ [8,]    8   12
+ [9,]   12    5
+[10,]   12   13
+[11,]   13    6
+[12,]   13    7
+
+$tip.label
+[1] "A" "B" "C" "D" "E" "F" "G"
+
+$Nnode
+[1] 6
+
+$edge.length
+ [1] 1.5 1.0 0.5 0.5 1.0 0.5 0.5 2.0 1.0 0.5 0.5 0.5</code></pre>
+</div>
+</div>
+<p><code>phylo</code> trees are S3 objects. We’ll be learning more about them later, but an important thing to know is that you directly access any element of them by using the <code>$</code> operator (as was done above). Optional elements, or even elements of your own devising, can be added to them, too, using the same operator.</p>
+</section>
+<section id="ouchtree-ouch-version-2.0-or-above" class="level1">
+<h1>ouchtree (<code>ouch</code> version 2.0 or above)</h1>
+<p><code>OUCH</code> <span class="citation" data-cites="Butler:2004">King and Butler (<a href="#ref-King:2022" role="doc-biblioref">2022</a>)</span> uses a different tree structure than does <code>ape</code>. First, <code>OUCH</code>’s is an S4 class, rather than S3. There are several differences between them, which you’ll learn later. There are two main distinctions that will be important now. It helps to have a metaphor: think of a car. The S3 representation of a car is all the parts, neatly disassembled and laid out. The S4 representation of a car is a closed box. With S3, you can look at and manipulate any part of the car directly and manipulate it (using the <code>$</code> operator). You could check the amount of gas in the tank by directly accessing the gas. With S4, you should use a method, if one exists, to access and manipulate elements. For example, you could check the gas in the tank using the fuel gauge, if the fuel gauge method exists and works properly. S3 objects can be built up piecemeal, and there aren’t built-in checks to make sure that everything is correct: if you forget to add a wheel element to the S3 char, you won’t know there’s a problem until some function tries to access it and fails. S4 objects are instantiated once, when you pass them all the initialization info they need (they often have defaults, and often have internal consistency checks). <code>OUCH</code> uses the <code>ouchtree</code> class as a basic tree class, then derives other classes from this for storing information on analyses. The <code>ouchtree</code> class is:</p>
+<p><code>setClass(</code></p>
+<p><code>'ouchtree',</code></p>
+<p><code>representation=representation(</code></p>
+<p><code>nnodes = 'integer',</code></p>
+<p><code>nodes = 'character',</code></p>
+<p><code>ancestors = 'character',</code></p>
+<p><code>nodelabels = 'character',</code></p>
+<p><code>times = 'numeric',</code></p>
+<p><code>root = 'integer',</code></p>
+<p><code>nterm = 'integer',</code></p>
+<p><code>term = 'integer',</code></p>
+<p><code>anc.numbers = 'integer',</code></p>
+<p><code>lineages = 'list',</code></p>
+<p><code>epochs = 'list',</code></p>
+<p><code>branch.times = 'matrix',</code></p>
+<p><code>depth = 'numeric'</code></p>
+<p><code>)</code></p>
+<p><code>)</code></p>
+<p>At first glance, it looks like creating a new <code>ouchtree</code> object will be a lot of work: there are 13 different elements, some of them vectors, built in the class. However, with S4 objects, the beauty of constructors comes into play. The constructor function for a new <code>ouchtree</code> is just the function</p>
+<p><code>ouchtree(nodes, ancestors, times, labels = as.character(nodes))</code></p>
+<p><strong>The <code>ouchtree</code> function only has four arguments</strong>, one of them optional. Using the function and these elements, all the other elements of the class are initialized.</p>
+<ul>
+<li>The first element is <code>nodes</code>, a character vector of node ids (including internal nodes). Unlike <code>ape</code>, the leaves do not need to have smaller ids than internal nodes.</li>
+<li>The second argument is <code>ancestors</code>, a character vector of node ids of the ancestors for the nodes in the <code>nodes</code> vector. The <code>nodes</code> and <code>ancestors</code> vectors almost correspond to the second and first columns of the <code>ape</code> <code>edge</code> matrix, respectively, with the exception that <code>ouchtree</code> includes the root node with an ancestor of <code>NA</code>.</li>
+<li>The third element, <code>times</code>, represents the height of each node from the root. Remember that <code>ape</code>’s <code>edge.length</code> vector has the length of the branch subtending each node; instead, <code>ouchtree</code> has the sum of the lengths of all branches connecting a given node to the root. Again, the root node is included in <code>ouchtree</code> (with height 0) but not in ape.</li>
+<li>The fourth argument, <code>labels</code>, is a vector of labels for both tips and internal nodes. If internal nodes do not have names, they get a label of <code>&lt;NA&gt;</code>.</li>
+</ul>
+<p>For example, our example tree, when converted to ouchtree format, is</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(simpletreeouch)<span class="sc">$</span>nodes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(simpletreeouch)<span class="sc">$</span>ancestors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] NA  "3" "1" "6" "6" "1" "2" "2" "3" "4" "4" "5" "5"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(simpletreeouch)<span class="sc">$</span>times</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0.0000000 0.8333333 0.6666667 0.8333333 0.8333333 0.5000000 1.0000000
+ [8] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(simpletreeouch)<span class="sc">$</span>nodelabels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] ""  ""  ""  ""  ""  ""  "G" "F" "E" "D" "C" "B" "A"</code></pre>
+</div>
+</div>
+<p>One other element of <code>ouchtree</code>, created on initialization, is a matrix showing shared amount of time on a tree between two tips (which may be the same tip). This, multiplied by a rate parameter, becomes a variance-covariance matrix under a Brownian motion model, which we’ll be discussing in the course.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(simpletreeouch)<span class="sc">$</span>branch.times</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          [,1]      [,2]      [,3]      [,4]      [,5]      [,6]      [,7]
+[1,] 1.0000000 0.8333333 0.6666667 0.0000000 0.0000000 0.0000000 0.0000000
+[2,] 0.8333333 1.0000000 0.6666667 0.0000000 0.0000000 0.0000000 0.0000000
+[3,] 0.6666667 0.6666667 1.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+[4,] 0.0000000 0.0000000 0.0000000 1.0000000 0.8333333 0.5000000 0.5000000
+[5,] 0.0000000 0.0000000 0.0000000 0.8333333 1.0000000 0.5000000 0.5000000
+[6,] 0.0000000 0.0000000 0.0000000 0.5000000 0.5000000 1.0000000 0.8333333
+[7,] 0.0000000 0.0000000 0.0000000 0.5000000 0.5000000 0.8333333 1.0000000</code></pre>
+</div>
+</div>
+<p>The entire content of the <code>simpletreeouch</code> object can be dumped to screen using the following command (not executed here to save paper):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(simpletreeouch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Butler:2004" class="csl-entry" role="doc-biblioentry">
+Butler, Marguerite A., and Aaron A. King. 2004. <span>“Phylogenetic Comparative Analysis: A Modeling Approach for Adaptive Evolution.”</span> <em>American Naturalist</em> 164: 683–95. <a href="https://doi.org/10.1086/426002">https://doi.org/10.1086/426002</a>.
+</div>
+<div id="ref-King:2022" class="csl-entry" role="doc-biblioentry">
+King, Aaron A., and Marguerite A. Butler. 2022. <em>Ouch: Ornstein-Uhlenbeck Models for Phylogenetic Comparative Hypotheses</em>. <a href="https://kingaa.github.io/ouch/">https://kingaa.github.io/ouch/</a>.
+</div>
+<div id="ref-Paradis:2019" class="csl-entry" role="doc-biblioentry">
+Paradis, Emmanuel, and Klaus Schliep. 2019. <span>“Ape 5.0: An Environment for Modern Phylogenetics and Evolutionary Analyses in <span>R</span>.”</span> <em>Bioinformatics</em> 35: 526–28. <a href="https://doi.org/10.1093/bioinformatics/bty633">https://doi.org/10.1093/bioinformatics/bty633</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
