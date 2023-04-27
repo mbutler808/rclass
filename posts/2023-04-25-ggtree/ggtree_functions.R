@@ -7,6 +7,8 @@ get.data(beast_tree)
 
 # merging trees with data (exported from dplyr)
 full_join(tree, dat, by="label")
+p <- ggtree(tree_boots) %<+% df_tip_data + xlim(-.1, 4)
+
 
 # merge two trees together 
 merge_tree(tree1, tree2)

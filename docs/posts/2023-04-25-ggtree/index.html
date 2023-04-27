@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.333">
+<meta name="generator" content="quarto-1.2.313">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -20,10 +20,9 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -50,13 +49,43 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -111,68 +140,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">ZOOL710 Data Science in R for Biologists</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html" rel="" target="">
+    <a class="nav-link" href="../../index.html">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">General Information</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">    
         <li>
-    <a class="dropdown-item" href="../../syllabus.html" rel="" target="">
+    <a class="dropdown-item" href="../../syllabus.html">
  <span class="dropdown-text">Syllabus</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../schedule.html" rel="" target="">
+    <a class="dropdown-item" href="../../schedule.html">
  <span class="dropdown-text">Schedule</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Course Materials</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
         <li>
-    <a class="dropdown-item" href="../../lectures.html" rel="" target="">
+    <a class="dropdown-item" href="../../lectures.html">
  <span class="dropdown-text">Lectures</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../projects.html" rel="" target="">
+    <a class="dropdown-item" href="../../projects.html">
  <span class="dropdown-text">Projects</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../resources.html" rel="" target="">
+    <a class="dropdown-item" href="../../resources.html">
  <span class="dropdown-text">Resources</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com"><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="../../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
+              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -203,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="quarto-title-meta-heading">Affiliation</div>
     
       <div class="quarto-title-meta-contents">
-      <p class="author"><a href="https://butlerlab.org">Marguerite Butler</a> </p>
+      <a href="https://butlerlab.org">Marguerite Butler</a> 
     </div>
       <div class="quarto-title-meta-contents">
           <p class="affiliation">
@@ -228,7 +255,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
@@ -253,12 +280,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#when-your-tip-labels-get-cut-off" id="toc-when-your-tip-labels-get-cut-off" class="nav-link" data-scroll-target="#when-your-tip-labels-get-cut-off">When your tip labels get cut off</a></li>
   </ul></li>
   <li><a href="#tree-layouts" id="toc-tree-layouts" class="nav-link" data-scroll-target="#tree-layouts">Tree layouts</a></li>
-  <li><a href="#plotting-data-on-the-tree" id="toc-plotting-data-on-the-tree" class="nav-link" data-scroll-target="#plotting-data-on-the-tree">Plotting data on the tree</a></li>
+  <li><a href="#plotting-data-on-the-tree" id="toc-plotting-data-on-the-tree" class="nav-link" data-scroll-target="#plotting-data-on-the-tree">Plotting data on the tree</a>
+  <ul class="collapse">
+  <li><a href="#example-plot-smalltree-with-size-in-a-barplot" id="toc-example-plot-smalltree-with-size-in-a-barplot" class="nav-link" data-scroll-target="#example-plot-smalltree-with-size-in-a-barplot">Example: plot <code>smalltree</code> with <code>size</code> in a barplot</a></li>
+  <li><a href="#a-tree-panel-example-from-the-tree-data-book" id="toc-a-tree-panel-example-from-the-tree-data-book" class="nav-link" data-scroll-target="#a-tree-panel-example-from-the-tree-data-book">A tree-panel example from the Tree Data Book:</a></li>
+  <li><a href="#the-operator-for-ggtree-objects" id="toc-the-operator-for-ggtree-objects" class="nav-link" data-scroll-target="#the-operator-for-ggtree-objects">The %+&gt;% operator for ggtree objects</a></li>
+  <li><a href="#example-of-the-operator-to-add-data-to-a-ggtree-object." id="toc-example-of-the-operator-to-add-data-to-a-ggtree-object." class="nav-link" data-scroll-target="#example-of-the-operator-to-add-data-to-a-ggtree-object.">Example of the %+&gt;% operator to add data to a ggtree object.</a>
+  <ul class="collapse">
+  <li><a href="#explore-df_info" id="toc-explore-df_info" class="nav-link" data-scroll-target="#explore-df_info">Explore <code>df_info</code></a></li>
+  <li><a href="#add-snp-and-trait-plots-aligned-to-the-tree" id="toc-add-snp-and-trait-plots-aligned-to-the-tree" class="nav-link" data-scroll-target="#add-snp-and-trait-plots-aligned-to-the-tree">Add SNP and Trait plots aligned to the tree</a></li>
+  </ul></li>
+  </ul></li>
   <li><a href="#example-datasets" id="toc-example-datasets" class="nav-link" data-scroll-target="#example-datasets">Example datasets</a></li>
   </ul>
 </nav>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
@@ -278,12 +314,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="learning-objectives" class="level1">
 <h1>Learning objectives</h1>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Learning Objectives
 </div>
 </div>
@@ -299,12 +335,12 @@ Learning Objectives
 </ul>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 R packages you will need
 </div>
 </div>
@@ -356,10 +392,10 @@ R packages you will need
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>treeio<span class="sc">::</span><span class="fu">write.tree</span>(tree, <span class="at">file=</span><span class="st">"tree.tree"</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "anolis.SSD.raw.csv" "bigtree.nex"        "ggtree_functions.R"
- [4] "ggtree.R"           "index_files"        "index.qmd"         
- [7] "index.rmarkdown"    "mytree.tree"        "rnw2qmd.R"         
-[10] "tree.nex"           "tree.tree"         </code></pre>
+<pre><code> [1] "_index.qmd"         "anolis.SSD.raw.csv" "bigtree.nex"       
+ [4] "ggtree_functions.R" "ggtree.R"           "index_files"       
+ [7] "index.qmd"          "index.rmarkdown"    "tree.nex"          
+[10] "tree.tree"         </code></pre>
 </div>
 </div>
 <p>Take a look at these files. They should be in nexus and newick formats, respectively.</p>
@@ -375,12 +411,12 @@ R packages you will need
 <pre><code>[1] "phylo"</code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Note
 </div>
 </div>
@@ -398,7 +434,7 @@ Note
 Phylogenetic tree with 20 tips and 19 internal nodes.
 
 Tip labels:
-  t11, t9, t10, t2, t6, t5, ...
+  t10, t1, t8, t15, t17, t9, ...
 
 Rooted; includes branch lengths.</code></pre>
 </div>
@@ -411,7 +447,7 @@ Rooted; includes branch lengths.</code></pre>
 Phylogenetic tree with 20 tips and 19 internal nodes.
 
 Tip labels:
-  t11, t9, t10, t2, t6, t5, ...
+  t10, t1, t8, t15, t17, t9, ...
 
 Rooted; includes branch lengths.</code></pre>
 </div>
@@ -421,16 +457,16 @@ Rooted; includes branch lengths.</code></pre>
 <pre><code># A tibble: 39 × 4
    parent  node branch.length label
     &lt;int&gt; &lt;int&gt;         &lt;dbl&gt; &lt;chr&gt;
- 1     22     1        0.279  t11  
- 2     22     2        0.127  t9   
- 3     26     3        0.300  t10  
- 4     27     4        0.435  t2   
- 5     27     5        0.553  t6   
- 6     28     6        0.764  t5   
- 7     28     7        0.499  t1   
- 8     30     8        0.0345 t7   
- 9     30     9        0.787  t16  
-10     33    10        0.871  t20  
+ 1     26     1        0.818  t10  
+ 2     27     2        0.164  t1   
+ 3     27     3        0.0430 t8   
+ 4     25     4        0.823  t15  
+ 5     24     5        0.391  t17  
+ 6     29     6        0.385  t9   
+ 7     29     7        0.690  t12  
+ 8     28     8        0.734  t5   
+ 9     30     9        0.349  t13  
+10     30    10        0.536  t20  
 # … with 29 more rows
 # ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
@@ -455,8 +491,8 @@ Rooted; includes branch lengths.</code></pre>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggtree</span>(tree) <span class="sc">+</span> <span class="fu">geom_tiplab</span>()</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_taxa_name</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "t19" "t20" "t15" "t13" "t16" "t7"  "t6"  "t2"  "t10" "t1"  "t5"  "t4" 
-[13] "t17" "t14" "t3"  "t12" "t18" "t8"  "t9"  "t11"</code></pre>
+<pre><code> [1] "t19" "t18" "t2"  "t7"  "t3"  "t6"  "t14" "t4"  "t16" "t11" "t8"  "t1" 
+[13] "t10" "t15" "t17" "t12" "t9"  "t5"  "t20" "t13"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>taxa <span class="ot">&lt;-</span> <span class="fu">get_taxa_name</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -468,74 +504,75 @@ Rooted; includes branch lengths.</code></pre>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="st">"label"</span><span class="ot">=</span> taxa, size, habitat)</span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   label      size    habitat
-1    t19 18.925902  grassland
-2    t20 23.708948     forest
-3    t15 17.667552     forest
-4    t13 26.492428 intertidal
-5    t16 23.094844     forest
-6     t7 28.153165     desert
-7     t6 27.525594     forest
-8     t2 18.492712  grassland
-9    t10 24.009872     forest
-10    t1 16.825641  grassland
-11    t5 24.801745     forest
-12    t4  8.793568     forest
-13   t17 17.280791     desert
-14   t14 22.973981     desert
-15    t3 25.381193 intertidal
-16   t12 23.971733  grassland
-17   t18 14.399356  grassland
-18    t8 17.719463     forest
-19    t9 18.044723 intertidal
-20   t11 16.778249  grassland</code></pre>
+<pre><code>   label     size    habitat
+1    t19 22.98137     desert
+2    t18 20.44099  grassland
+3     t2 19.32736     desert
+4     t7 23.92095  grassland
+5     t3 28.24564     desert
+6     t6 28.60875  grassland
+7    t14 22.78129  grassland
+8     t4 11.67237  grassland
+9    t16 17.74394  grassland
+10   t11 25.49744     forest
+11    t8 25.91309  grassland
+12    t1 14.44900  grassland
+13   t10 24.42166 intertidal
+14   t15 22.06341  grassland
+15   t17 21.84471 intertidal
+16   t12 15.07329     forest
+17    t9 25.56858     desert
+18    t5 22.49335     desert
+19   t20 16.09884     desert
+20   t13 16.28131     desert</code></pre>
 </div>
 </div>
 <p>See our ggtree as a treedata object:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.treedata</span>(p) <span class="sc">%&gt;%</span> as_tibble <span class="sc">%&gt;%</span> as.data.frame  <span class="co"># ggtree -&gt; treedata -&gt; tibble -&gt; dataframe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.treedata</span>(p) <span class="sc">%&gt;%</span> as_tibble <span class="sc">%&gt;%</span> as.data.frame  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   parent node branch.length label
-1      22    1   0.278939538   t11
-2      22    2   0.127345336    t9
-3      26    3   0.300447684   t10
-4      27    4   0.435377757    t2
-5      27    5   0.552980925    t6
-6      28    6   0.764464183    t5
-7      28    7   0.499308378    t1
-8      30    8   0.034501367    t7
-9      30    9   0.787341947   t16
-10     33   10   0.870559227   t20
-11     33   11   0.813121315   t19
-12     32   12   0.177632412   t15
-13     31   13   0.715450910   t13
-14     36   14   0.197539931    t3
-15     38   15   0.214468429   t17
-16     38   16   0.751333333    t4
-17     37   17   0.581087446   t14
-18     39   18   0.183712207   t18
-19     39   19   0.798547462   t12
-20     34   20   0.688117656    t8
+1      26    1    0.81774185   t10
+2      27    2    0.16354625    t1
+3      27    3    0.04303048    t8
+4      25    4    0.82274108   t15
+5      24    5    0.39103841   t17
+6      29    6    0.38464254    t9
+7      29    7    0.69022037   t12
+8      28    8    0.73358899    t5
+9      30    9    0.34889773   t13
+10     30   10    0.53616700   t20
+11     32   11    0.25030571   t11
+12     34   12    0.42410770   t16
+13     34   13    0.79246017    t4
+14     35   14    0.60763492   t14
+15     35   15    0.30937879    t6
+16     38   16    0.32602006    t2
+17     39   17    0.44228411   t18
+18     39   18    0.82654581   t19
+19     37   19    0.41624807    t7
+20     36   20    0.34757335    t3
 21     21   21            NA  &lt;NA&gt;
-22     21   22   0.412084444  &lt;NA&gt;
-23     21   23   0.991313945  &lt;NA&gt;
-24     23   24   0.847770900  &lt;NA&gt;
-25     24   25   0.128256809  &lt;NA&gt;
-26     25   26   0.611658429  &lt;NA&gt;
-27     26   27   0.721636676  &lt;NA&gt;
-28     25   28   0.355111233  &lt;NA&gt;
-29     24   29   0.010121288  &lt;NA&gt;
-30     29   30   0.344141605  &lt;NA&gt;
-31     29   31   0.316786686  &lt;NA&gt;
-32     31   32   0.058795683  &lt;NA&gt;
-33     32   33   0.032994980  &lt;NA&gt;
-34     23   34   0.798382514  &lt;NA&gt;
-35     34   35   0.007182305  &lt;NA&gt;
-36     35   36   0.930358109  &lt;NA&gt;
-37     36   37   0.984382103  &lt;NA&gt;
-38     37   38   0.277136115  &lt;NA&gt;
-39     35   39   0.942967743  &lt;NA&gt;</code></pre>
+22     21   22    0.92545255  &lt;NA&gt;
+23     22   23    0.22005686  &lt;NA&gt;
+24     23   24    0.88808046  &lt;NA&gt;
+25     24   25    0.82230607  &lt;NA&gt;
+26     25   26    0.63251172  &lt;NA&gt;
+27     26   27    0.51024049  &lt;NA&gt;
+28     23   28    0.11226124  &lt;NA&gt;
+29     28   29    0.53201729  &lt;NA&gt;
+30     22   30    0.82057405  &lt;NA&gt;
+31     21   31    0.56287947  &lt;NA&gt;
+32     31   32    0.89219876  &lt;NA&gt;
+33     32   33    0.44222569  &lt;NA&gt;
+34     33   34    0.13222855  &lt;NA&gt;
+35     33   35    0.56228871  &lt;NA&gt;
+36     31   36    0.46338076  &lt;NA&gt;
+37     36   37    0.17502085  &lt;NA&gt;
+38     37   38    0.04818124  &lt;NA&gt;
+39     38   39    0.72056397  &lt;NA&gt;</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ggtree -&gt; treedata -&gt; tibble -&gt; dataframe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -543,8 +580,8 @@ Rooted; includes branch lengths.</code></pre>
 <h1>Merge tree with data</h1>
 <p>Now that we have a matching key in both the tree and data objects, we can join the tree with the dataframe by those matching labels using <code>ggtree</code>ʻs <code>full_join</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ttree <span class="ot">&lt;-</span> <span class="fu">full_join</span>(tree, dat, <span class="at">by =</span> <span class="st">"label"</span>) </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>ttree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ttree <span class="ot">&lt;-</span> <span class="fu">full_join</span>(tree, dat, <span class="at">by =</span> <span class="st">"label"</span>) </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>ttree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'treedata' S4 object'.
 
@@ -553,7 +590,7 @@ Rooted; includes branch lengths.</code></pre>
 Phylogenetic tree with 20 tips and 19 internal nodes.
 
 Tip labels:
-  t11, t9, t10, t2, t6, t5, ...
+  t10, t1, t8, t15, t17, t9, ...
 
 Rooted; includes branch lengths.
 
@@ -564,61 +601,61 @@ with the following features available:
 # The 'node', 'label' and 'isTip' are from the phylo tree.
     node label isTip  size habitat   
    &lt;int&gt; &lt;chr&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;     
- 1     1 t11   TRUE   16.8 grassland 
- 2     2 t9    TRUE   18.0 intertidal
- 3     3 t10   TRUE   24.0 forest    
- 4     4 t2    TRUE   18.5 grassland 
- 5     5 t6    TRUE   27.5 forest    
- 6     6 t5    TRUE   24.8 forest    
- 7     7 t1    TRUE   16.8 grassland 
- 8     8 t7    TRUE   28.2 desert    
- 9     9 t16   TRUE   23.1 forest    
-10    10 t20   TRUE   23.7 forest    
+ 1     1 t10   TRUE   24.4 intertidal
+ 2     2 t1    TRUE   14.4 grassland 
+ 3     3 t8    TRUE   25.9 grassland 
+ 4     4 t15   TRUE   22.1 grassland 
+ 5     5 t17   TRUE   21.8 intertidal
+ 6     6 t9    TRUE   25.6 desert    
+ 7     7 t12   TRUE   15.1 forest    
+ 8     8 t5    TRUE   22.5 desert    
+ 9     9 t13   TRUE   16.3 desert    
+10    10 t20   TRUE   16.1 desert    
 # … with 29 more rows
 # ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>ttree <span class="sc">%&gt;%</span> as_tibble <span class="sc">%&gt;%</span> as.data.frame</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>ttree <span class="sc">%&gt;%</span> as_tibble <span class="sc">%&gt;%</span> as.data.frame</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   parent node branch.length label      size    habitat
-1      22    1   0.278939538   t11 16.778249  grassland
-2      22    2   0.127345336    t9 18.044723 intertidal
-3      26    3   0.300447684   t10 24.009872     forest
-4      27    4   0.435377757    t2 18.492712  grassland
-5      27    5   0.552980925    t6 27.525594     forest
-6      28    6   0.764464183    t5 24.801745     forest
-7      28    7   0.499308378    t1 16.825641  grassland
-8      30    8   0.034501367    t7 28.153165     desert
-9      30    9   0.787341947   t16 23.094844     forest
-10     33   10   0.870559227   t20 23.708948     forest
-11     33   11   0.813121315   t19 18.925902  grassland
-12     32   12   0.177632412   t15 17.667552     forest
-13     31   13   0.715450910   t13 26.492428 intertidal
-14     36   14   0.197539931    t3 25.381193 intertidal
-15     38   15   0.214468429   t17 17.280791     desert
-16     38   16   0.751333333    t4  8.793568     forest
-17     37   17   0.581087446   t14 22.973981     desert
-18     39   18   0.183712207   t18 14.399356  grassland
-19     39   19   0.798547462   t12 23.971733  grassland
-20     34   20   0.688117656    t8 17.719463     forest
-21     21   21            NA  &lt;NA&gt;        NA       &lt;NA&gt;
-22     21   22   0.412084444  &lt;NA&gt;        NA       &lt;NA&gt;
-23     21   23   0.991313945  &lt;NA&gt;        NA       &lt;NA&gt;
-24     23   24   0.847770900  &lt;NA&gt;        NA       &lt;NA&gt;
-25     24   25   0.128256809  &lt;NA&gt;        NA       &lt;NA&gt;
-26     25   26   0.611658429  &lt;NA&gt;        NA       &lt;NA&gt;
-27     26   27   0.721636676  &lt;NA&gt;        NA       &lt;NA&gt;
-28     25   28   0.355111233  &lt;NA&gt;        NA       &lt;NA&gt;
-29     24   29   0.010121288  &lt;NA&gt;        NA       &lt;NA&gt;
-30     29   30   0.344141605  &lt;NA&gt;        NA       &lt;NA&gt;
-31     29   31   0.316786686  &lt;NA&gt;        NA       &lt;NA&gt;
-32     31   32   0.058795683  &lt;NA&gt;        NA       &lt;NA&gt;
-33     32   33   0.032994980  &lt;NA&gt;        NA       &lt;NA&gt;
-34     23   34   0.798382514  &lt;NA&gt;        NA       &lt;NA&gt;
-35     34   35   0.007182305  &lt;NA&gt;        NA       &lt;NA&gt;
-36     35   36   0.930358109  &lt;NA&gt;        NA       &lt;NA&gt;
-37     36   37   0.984382103  &lt;NA&gt;        NA       &lt;NA&gt;
-38     37   38   0.277136115  &lt;NA&gt;        NA       &lt;NA&gt;
-39     35   39   0.942967743  &lt;NA&gt;        NA       &lt;NA&gt;</code></pre>
+<pre><code>   parent node branch.length label     size    habitat
+1      26    1    0.81774185   t10 24.42166 intertidal
+2      27    2    0.16354625    t1 14.44900  grassland
+3      27    3    0.04303048    t8 25.91309  grassland
+4      25    4    0.82274108   t15 22.06341  grassland
+5      24    5    0.39103841   t17 21.84471 intertidal
+6      29    6    0.38464254    t9 25.56858     desert
+7      29    7    0.69022037   t12 15.07329     forest
+8      28    8    0.73358899    t5 22.49335     desert
+9      30    9    0.34889773   t13 16.28131     desert
+10     30   10    0.53616700   t20 16.09884     desert
+11     32   11    0.25030571   t11 25.49744     forest
+12     34   12    0.42410770   t16 17.74394  grassland
+13     34   13    0.79246017    t4 11.67237  grassland
+14     35   14    0.60763492   t14 22.78129  grassland
+15     35   15    0.30937879    t6 28.60875  grassland
+16     38   16    0.32602006    t2 19.32736     desert
+17     39   17    0.44228411   t18 20.44099  grassland
+18     39   18    0.82654581   t19 22.98137     desert
+19     37   19    0.41624807    t7 23.92095  grassland
+20     36   20    0.34757335    t3 28.24564     desert
+21     21   21            NA  &lt;NA&gt;       NA       &lt;NA&gt;
+22     21   22    0.92545255  &lt;NA&gt;       NA       &lt;NA&gt;
+23     22   23    0.22005686  &lt;NA&gt;       NA       &lt;NA&gt;
+24     23   24    0.88808046  &lt;NA&gt;       NA       &lt;NA&gt;
+25     24   25    0.82230607  &lt;NA&gt;       NA       &lt;NA&gt;
+26     25   26    0.63251172  &lt;NA&gt;       NA       &lt;NA&gt;
+27     26   27    0.51024049  &lt;NA&gt;       NA       &lt;NA&gt;
+28     23   28    0.11226124  &lt;NA&gt;       NA       &lt;NA&gt;
+29     28   29    0.53201729  &lt;NA&gt;       NA       &lt;NA&gt;
+30     22   30    0.82057405  &lt;NA&gt;       NA       &lt;NA&gt;
+31     21   31    0.56287947  &lt;NA&gt;       NA       &lt;NA&gt;
+32     31   32    0.89219876  &lt;NA&gt;       NA       &lt;NA&gt;
+33     32   33    0.44222569  &lt;NA&gt;       NA       &lt;NA&gt;
+34     33   34    0.13222855  &lt;NA&gt;       NA       &lt;NA&gt;
+35     33   35    0.56228871  &lt;NA&gt;       NA       &lt;NA&gt;
+36     31   36    0.46338076  &lt;NA&gt;       NA       &lt;NA&gt;
+37     36   37    0.17502085  &lt;NA&gt;       NA       &lt;NA&gt;
+38     37   38    0.04818124  &lt;NA&gt;       NA       &lt;NA&gt;
+39     38   39    0.72056397  &lt;NA&gt;       NA       &lt;NA&gt;</code></pre>
 </div>
 </div>
 <p>And thatʻs what our <code>treedata</code> object looks like flattened out!</p>
@@ -627,13 +664,13 @@ with the following features available:
 <p>Functions: <code>drop.tip()</code> and <code>keep.tip()</code></p>
 <p>Suppose we want to drop all of the even tips:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>todrop <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"t"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span><span class="sc">*</span><span class="dv">2</span>, <span class="at">sep=</span><span class="st">""</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>todrop</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>todrop <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"t"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span><span class="sc">*</span><span class="dv">2</span>, <span class="at">sep=</span><span class="st">""</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>todrop</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "t2"  "t4"  "t6"  "t8"  "t10" "t12" "t14" "t16" "t18" "t20"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>smalltree <span class="ot">&lt;-</span> <span class="fu">drop.tip</span>(ttree, todrop)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>smalltree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>smalltree <span class="ot">&lt;-</span> <span class="fu">drop.tip</span>(ttree, todrop)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>smalltree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'treedata' S4 object'.
 
@@ -642,7 +679,7 @@ with the following features available:
 Phylogenetic tree with 10 tips and 9 internal nodes.
 
 Tip labels:
-  t11, t9, t5, t1, t7, t19, ...
+  t1, t15, t17, t9, t5, t13, ...
 
 Rooted; includes branch lengths.
 
@@ -653,20 +690,20 @@ with the following features available:
 # The 'node', 'label' and 'isTip' are from the phylo tree.
     node label isTip  size habitat   
    &lt;int&gt; &lt;chr&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;     
- 1     1 t11   TRUE   16.8 grassland 
- 2     2 t9    TRUE   18.0 intertidal
- 3     3 t5    TRUE   24.8 forest    
- 4     4 t1    TRUE   16.8 grassland 
- 5     5 t7    TRUE   28.2 desert    
- 6     6 t19   TRUE   18.9 grassland 
- 7     7 t15   TRUE   17.7 forest    
- 8     8 t13   TRUE   26.5 intertidal
- 9     9 t3    TRUE   25.4 intertidal
-10    10 t17   TRUE   17.3 desert    
+ 1     1 t1    TRUE   14.4 grassland 
+ 2     2 t15   TRUE   22.1 grassland 
+ 3     3 t17   TRUE   21.8 intertidal
+ 4     4 t9    TRUE   25.6 desert    
+ 5     5 t5    TRUE   22.5 desert    
+ 6     6 t13   TRUE   16.3 desert    
+ 7     7 t11   TRUE   25.5 forest    
+ 8     8 t19   TRUE   23.0 desert    
+ 9     9 t7    TRUE   23.9 grassland 
+10    10 t3    TRUE   28.2 desert    
 # … with 9 more rows
 # ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(smalltree) <span class="sc">+</span> <span class="fu">geom_tiplab</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(smalltree) <span class="sc">+</span> <span class="fu">geom_tiplab</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -678,9 +715,9 @@ with the following features available:
 <p>The geometries <code>geom_text()</code> and <code>geom_node()</code> are helpful for labelling all of the nodes. The function <code>geom_tiplab()</code> labels only the tips.</p>
 <p>Add node labels so you know what the internal node numbers are:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(smalltree) <span class="sc">+</span> </span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tiplab</span>() <span class="sc">+</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>node), <span class="at">hjust=</span><span class="sc">-</span>.<span class="dv">3</span>)    <span class="co"># node numbers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(smalltree) <span class="sc">+</span> </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tiplab</span>() <span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>node), <span class="at">hjust=</span><span class="sc">-</span>.<span class="dv">3</span>)    <span class="co"># node numbers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -688,9 +725,9 @@ with the following features available:
 <p>Note: The tiplabels and the node labels crashed!</p>
 <p>There are also <code>2</code> versions: <code>geom_text2()</code> and <code>geom_node2()</code> that allow subsetting the nodes, when you want the geometry to apply to only some of the nodes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(smalltree) <span class="sc">+</span> </span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tiplab</span>() <span class="sc">+</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text2</span>(<span class="fu">aes</span>(<span class="at">label=</span>node, <span class="at">subset=</span><span class="sc">!</span>isTip), <span class="at">hjust=</span><span class="sc">-</span>.<span class="dv">3</span>)    <span class="co"># node numbers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(smalltree) <span class="sc">+</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tiplab</span>() <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text2</span>(<span class="fu">aes</span>(<span class="at">label=</span>node, <span class="at">subset=</span><span class="sc">!</span>isTip), <span class="at">hjust=</span><span class="sc">-</span>.<span class="dv">3</span>)    <span class="co"># node numbers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -701,9 +738,9 @@ with the following features available:
 <h2 class="anchored" data-anchor-id="plotting-with-alternative-tip-labels">Plotting with alternative tip labels</h2>
 <p>The dataframe portion of the treedata object can hold any number of columns of metadata. Perhaps you have some real names in a different column (like a display name), it is easy to swap out the tip labels. Here letʻs just use the <code>habitat</code> column</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(smalltree) <span class="sc">+</span> </span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tiplab</span>(<span class="fu">aes</span>(<span class="at">label=</span>habitat)) <span class="sc">+</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text2</span>(<span class="fu">aes</span>(<span class="at">label=</span>node, <span class="at">subset=</span><span class="sc">!</span>isTip), <span class="at">hjust=</span><span class="sc">-</span>.<span class="dv">3</span>)    <span class="co"># node numbers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(smalltree) <span class="sc">+</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tiplab</span>(<span class="fu">aes</span>(<span class="at">label=</span>habitat)) <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text2</span>(<span class="fu">aes</span>(<span class="at">label=</span>node, <span class="at">subset=</span><span class="sc">!</span>isTip), <span class="at">hjust=</span><span class="sc">-</span>.<span class="dv">3</span>)    <span class="co"># node numbers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -713,21 +750,21 @@ with the following features available:
 <h2 class="anchored" data-anchor-id="when-your-tip-labels-get-cut-off">When your tip labels get cut off</h2>
 <p>Add an x scale (usually time):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(smalltree) <span class="sc">+</span> </span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tiplab</span>(<span class="fu">aes</span>(<span class="at">label=</span>habitat)) <span class="sc">+</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text2</span>(<span class="fu">aes</span>(<span class="at">label=</span>node, <span class="at">subset=</span><span class="sc">!</span>isTip), <span class="at">hjust=</span><span class="sc">-</span>.<span class="dv">3</span>) <span class="sc">+</span>   <span class="co"># node numbers</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tree2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(smalltree) <span class="sc">+</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tiplab</span>(<span class="fu">aes</span>(<span class="at">label=</span>habitat)) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text2</span>(<span class="fu">aes</span>(<span class="at">label=</span>node, <span class="at">subset=</span><span class="sc">!</span>isTip), <span class="at">hjust=</span><span class="sc">-</span>.<span class="dv">3</span>) <span class="sc">+</span>   <span class="co"># node numbers</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tree2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>You can increase the size of the plot area to accommodate the longer labels:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(smalltree) <span class="sc">+</span> </span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tiplab</span>(<span class="fu">aes</span>(<span class="at">label=</span>habitat)) <span class="sc">+</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text2</span>(<span class="fu">aes</span>(<span class="at">label=</span>node, <span class="at">subset=</span><span class="sc">!</span>isTip), <span class="at">hjust=</span><span class="sc">-</span>.<span class="dv">3</span>) <span class="sc">+</span>   <span class="co"># node numbers</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tree2</span>() <span class="sc">+</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlim</span>(<span class="dv">0</span>,<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(smalltree) <span class="sc">+</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tiplab</span>(<span class="fu">aes</span>(<span class="at">label=</span>habitat)) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text2</span>(<span class="fu">aes</span>(<span class="at">label=</span>node, <span class="at">subset=</span><span class="sc">!</span>isTip), <span class="at">hjust=</span><span class="sc">-</span>.<span class="dv">3</span>) <span class="sc">+</span>   <span class="co"># node numbers</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tree2</span>() <span class="sc">+</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlim</span>(<span class="dv">0</span>,<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -737,47 +774,174 @@ with the following features available:
 <section id="tree-layouts" class="level1">
 <h1>Tree layouts</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(cowplot)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree),</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"roundrect"</span>),</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"slanted"</span>),</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"ellipse"</span>),</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"circular"</span>),</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"fan"</span>, <span class="at">open.angle=</span><span class="dv">120</span>),</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"equal_angle"</span>),</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"daylight"</span>),</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">branch.length=</span><span class="st">'none'</span>),</span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"ellipse"</span>, <span class="at">branch.length=</span><span class="st">"none"</span>),</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">branch.length=</span><span class="st">'none'</span>, <span class="at">layout=</span><span class="st">'circular'</span>),</span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"daylight"</span>, <span class="at">branch.length =</span> <span class="st">'none'</span>)</span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
-</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(cowplot)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree),</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">branch.length=</span><span class="st">'none'</span>),</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"dendrogram"</span>),</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"roundrect"</span>),</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"ellipse"</span>),</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"ellipse"</span>, <span class="at">branch.length=</span><span class="st">"none"</span>),</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"circular"</span>),</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">branch.length=</span><span class="st">'none'</span>, <span class="at">layout=</span><span class="st">'circular'</span>),</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"fan"</span>, <span class="at">open.angle=</span><span class="dv">120</span>),</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtree</span>(ttree, <span class="at">layout=</span><span class="st">"inward_circular"</span>)</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="plotting-data-on-the-tree" class="level1">
 <h1>Plotting data on the tree</h1>
-<p>NEED TO WORK ON THIS A BIT MORE</p>
+<p><code>geom_facet()</code> and <code>facet_plot()</code> are general methods to link graphical layers to a tree.</p>
+<p>These functions require an input dataframe with the first column containing the taxon labels (the key which matches to the tip labels of the phylogeny).</p>
+<p>Internally these functions reorder the input data based on the tree structure so that you donʻt have to worry about the order of the rows.</p>
+<p>Multiple layers can be added to the same dataset. Also different datasets can be added to the same figure.</p>
+<p>A table of the <strong>geom layers</strong> that work with <code>geom_facet</code> is <a href="https://yulab-smu.top/treedata-book/figures-and-tables.html#tab:facet-geom">provided here</a>.</p>
+<section id="example-plot-smalltree-with-size-in-a-barplot" class="level2">
+<h2 class="anchored" data-anchor-id="example-plot-smalltree-with-size-in-a-barplot">Example: plot <code>smalltree</code> with <code>size</code> in a barplot</h2>
+<p>First make a tibble to attach to the tree. As of this writing, <code>geom_facet</code> will not accept a <code>treedata</code> object. It wants a dataframe or tibble of only the tips. But this is easy to make from the treedata. We just have to filter out the non-tip rows, then rearrange the columns to put the labels first:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>smdat <span class="ot">&lt;-</span> smalltree <span class="sc">%&gt;%</span> as_tibble </span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(smalltree) <span class="sc">+</span> </span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tiplab</span>(<span class="fu">aes</span>(<span class="at">label=</span>habitat)) <span class="sc">+</span></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text2</span>(<span class="fu">aes</span>(<span class="at">label=</span>node, <span class="at">subset=</span><span class="sc">!</span>isTip), <span class="at">hjust=</span><span class="sc">-</span>.<span class="dv">3</span>) <span class="sc">+</span>   <span class="co"># node numbers</span></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tree2</span>() <span class="sc">+</span></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlim</span>(<span class="dv">0</span>,<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_facet</span>(<span class="at">panel =</span> <span class="st">"Size"</span>, <span class="at">data=</span>smdat, <span class="at">geom =</span> geom_col, </span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> size), <span class="at">orientation =</span> <span class="st">'y'</span>, <span class="at">width =</span> .<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(dplyr)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>smdat <span class="ot">&lt;-</span> smalltree <span class="sc">%&gt;%</span> </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>           as_tibble <span class="sc">%&gt;%</span> </span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>           <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(label)) <span class="sc">%&gt;%</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>           <span class="fu">relocate</span>(label, <span class="at">.before=</span><span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>We can then add the barplot as a panel next to the tree plot using <code>geom_facet</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(smalltree) <span class="sc">+</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tiplab</span>() <span class="sc">+</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tree2</span>()  <span class="sc">+</span> </span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_facet</span>(<span class="at">panel =</span> <span class="st">"Size"</span>, </span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">data=</span>smdat, </span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">geom =</span> geom_col, </span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x =</span> smdat<span class="sc">$</span>size), </span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">orientation =</span> <span class="st">'y'</span>, </span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">width =</span> .<span class="dv">6</span>, </span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill=</span><span class="st">"blue"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The arguments for geom_facet() are:</p>
+<ul>
+<li><code>panel</code> : The name of the panel, displayed on top</li>
+<li><code>data</code> : a <code>tibble</code> or <code>dataframe</code> containing the metadata to plot. Must have as the first column the tip labels that are found in the phylogenetic tree.</li>
+<li><code>geom</code> : a <a href="https://yulab-smu.top/treedata-book/figures-and-tables.html#tab:facet-geom">geom layer</a> specifying the style of plot</li>
+<li><code>mapping</code> : the aesthetic mapping. I should not have to supply the <code>smdat$</code> here but it wonʻt work otherwise.</li>
+<li>any additional parameters for the plot</li>
+</ul>
+</section>
+<section id="a-tree-panel-example-from-the-tree-data-book" class="level2">
+<h2 class="anchored" data-anchor-id="a-tree-panel-example-from-the-tree-data-book">A tree-panel example from the Tree Data Book:</h2>
+<p>This example plots a phylogeny alongside SNP (single nucleotide polymorphism) data and a barplot of some simulated data.</p>
+</section>
+<section id="the-operator-for-ggtree-objects" class="level2">
+<h2 class="anchored" data-anchor-id="the-operator-for-ggtree-objects">The %+&gt;% operator for ggtree objects</h2>
+<p>The %+&gt;% operator is used to add data (<code>dataframe</code>, <code>tibble</code>) to a <code>ggtree</code> object:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">my_ggtree</span> <span class="op">&lt;</span>- my_ggtree %<span class="op">&lt;</span>+% new_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The result is a combined object that can be used for plotting, but it does not modify the original <code>treedata</code> object (which is a different object from the <code>ggtree</code> object). The <code>full_join()</code> function can be used to combine a tree with data to produce a new <code>treedata</code> object.</p>
+</section>
+<section id="example-of-the-operator-to-add-data-to-a-ggtree-object." class="level2">
+<h2 class="anchored" data-anchor-id="example-of-the-operator-to-add-data-to-a-ggtree-object.">Example of the %+&gt;% operator to add data to a ggtree object.</h2>
+<p>The package <code>TDbook</code> is the data accompanyment to Yuʻs <a href="https://yulab-smu.top/treedata-book/index.html">Tree Data book</a>. It is available on CRAN so you can install it with the usual <code>install.packages("TDbook")</code> function call.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggtree)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(dplyr)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(TDbook)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co"># load `tree_boots`, `df_tip_data`, and `df_inode_data` from 'TDbook'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggtree</span>(tree_boots) <span class="sc">%&lt;+%</span> df_tip_data <span class="sc">+</span> <span class="fu">xlim</span>(<span class="sc">-</span>.<span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">geom_tiplab</span>(<span class="at">offset =</span> .<span class="dv">6</span>, <span class="at">hjust =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tippoint</span>(<span class="fu">aes</span>(<span class="at">shape =</span> trophic_habit, <span class="at">color =</span> trophic_habit, </span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">size =</span> mass_in_kg)) <span class="sc">+</span> </span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>) <span class="sc">+</span> </span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">10</span>))</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>p2 <span class="sc">%&lt;+%</span> df_inode_data <span class="sc">+</span> </span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label =</span> vernacularName.y, <span class="at">fill =</span> posterior)) <span class="sc">+</span> </span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_gradientn</span>(<span class="at">colors =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">3</span>, <span class="st">"YlGnBu"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 7 rows containing missing values (geom_label).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="explore-df_info" class="level3">
+<h3 class="anchored" data-anchor-id="explore-df_info">Explore <code>df_info</code></h3>
+<p><code>df_info</code> A dataframe containing sampling info for the tips of the tree. 386 rows and 6 variables, with the first column being taxa labels (<code>id</code>).</p>
+<p><code>df_alleles</code> The allele table with original raw data to be processed to SNP data. It is a table of nucleotides with 386 rows x 385 variables. The first row contains tips labels. Column names are non-sense. The rownames (exept for the first one) contains the snp position along the genome.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="do">## load `tree_nwk`, `df_info`, `df_alleles`, and `df_bar_data` from 'TDbook'</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> tree_nwk</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>snps <span class="ot">&lt;-</span> df_alleles</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>snps_strainCols <span class="ot">&lt;-</span> snps[<span class="dv">1</span>,] </span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>snps<span class="ot">&lt;-</span>snps[<span class="sc">-</span><span class="dv">1</span>,] <span class="co"># drop strain names</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(snps) <span class="ot">&lt;-</span> snps_strainCols</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>gapChar <span class="ot">&lt;-</span> <span class="st">"?"</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>snp <span class="ot">&lt;-</span> <span class="fu">t</span>(snps)  <span class="co"># not rectangular!</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>lsnp <span class="ot">&lt;-</span> <span class="fu">apply</span>(snp, <span class="dv">1</span>, <span class="cf">function</span>(x) {</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>        x <span class="sc">!=</span> snp[<span class="dv">1</span>,] <span class="sc">&amp;</span> x <span class="sc">!=</span> gapChar <span class="sc">&amp;</span> snp[<span class="dv">1</span>,] <span class="sc">!=</span> gapChar</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>    })  <span class="co"># different from row 1, not missing</span></span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>lsnp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(lsnp) </span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>lsnp<span class="sc">$</span>pos <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">rownames</span>(lsnp))  <span class="co"># position from rownames</span></span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>lsnp <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(lsnp, name, value, <span class="sc">-</span>pos)  </span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>snp_data <span class="ot">&lt;-</span> lsnp[lsnp<span class="sc">$</span>value, <span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"pos"</span>)] <span class="co"># only TRUEs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>snp_data</code> A dataframe containing SNP position data. 6482 x 2. The first column contains taxa labels coresponding to the tips of the tree (<code>name</code>). There are multiple rows per taxon, the second colum is the position <code>pos</code> of the snp in the genome. This is used as the x-variable in the plot.</p>
+<p>In the dataframe <code>snp_data</code> the rows are ordered by position along the sequence (the x-dimension of this data), but the first column is the strain (taxon) name which matches the tips in the phylogenetic tree.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="do">## visualize the tree </span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggtree</span>(tree) </span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="do">## attach the sampling information data set </span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="do">## and add symbols colored by location</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p <span class="sc">%&lt;+%</span> df_info <span class="sc">+</span> <span class="fu">geom_tippoint</span>(<span class="fu">aes</span>(<span class="at">color=</span>location))</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="add-snp-and-trait-plots-aligned-to-the-tree" class="level3">
+<h3 class="anchored" data-anchor-id="add-snp-and-trait-plots-aligned-to-the-tree">Add SNP and Trait plots aligned to the tree</h3>
+<p>Use <code>geom_facet</code> with reference to the respective dataframes/tibbles to add plots alignted to the tree. For the SNP plot, we will use <code>geom_point</code> which allows x-y plotting, with x-coordinate determined by <code>pos</code> and the y-coordinate aligned with the taxon. The symbol is the vertical line <code>|</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="do">## visualize SNP and Trait data using dot and bar charts,</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="do">## and align them based on tree structure</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">geom_facet</span>(<span class="at">panel =</span> <span class="st">"SNP"</span>, <span class="at">data =</span> snp_data, <span class="at">geom =</span> geom_point, </span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x =</span> pos, <span class="at">color =</span> location), <span class="at">shape =</span> <span class="st">'|'</span>) </span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>p1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><code>df_bar_data</code> is some simulated data with an <code>id</code> column specifying the taxon names, and a <code>dummy_bar_value</code> containing some data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> <span class="fu">geom_facet</span>(<span class="at">panel =</span> <span class="st">"Trait"</span>, <span class="at">data =</span> df_bar_data, <span class="at">geom =</span> geom_col, </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> dummy_bar_value, <span class="at">color =</span> location, </span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">fill =</span> location), <span class="at">orientation =</span> <span class="st">'y'</span>, <span class="at">width =</span> .<span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tree2</span>(<span class="at">legend.position=</span><span class="fu">c</span>(.<span class="dv">05</span>, .<span class="dv">85</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
 </section>
 <section id="example-datasets" class="level1">
 <h1>Example datasets</h1>
 <p>save to your working directory:</p>
-<p><a href="bigtree.nex">bigtree.nex</a> <a href="anolis.SSD.raw.csv">anolis.SSD.raw.csv</a> <a href="ggtree.R">ggtree.R</a></p>
+<p><a href="bigtree.nex">bigtree.nex</a><br>
+<a href="anolis.SSD.raw.csv">anolis.SSD.raw.csv</a><br>
+<a href="ggtree.R">ggtree.R</a></p>
 <p>This is an example of a typical workflow. We have carefully collected phenotypic data, and someone has published a massive phylogeny. We need to subset the tree to just the taxa we want to work on.</p>
 
 
@@ -811,23 +975,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -892,92 +1042,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
