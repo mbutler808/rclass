@@ -2,6 +2,7 @@
   {
     "listing": "/projects.html",
     "items": [
+      "/projects/2023-03-22-oral-presentation/index.html",
       "/projects/2023-03-22-project-2-3/index.html",
       "/projects/2023-02-16-project-1/index.html",
       "/projects/2023-01-24-project-0/index.html"
@@ -11,6 +12,7 @@
     "listing": "/lectures.html",
     "items": [
       "/posts/2023-04-25-ggtree/index.html",
+      "/posts/2023-04-27-intro-OU-models/index.html",
       "/posts/2023-04-18-Tree-Formats/index.html",
       "/posts/2023-04-13-iqtree-setup/index.html",
       "/posts/2023-04-13-iqtree-phylogenetics/index.html",

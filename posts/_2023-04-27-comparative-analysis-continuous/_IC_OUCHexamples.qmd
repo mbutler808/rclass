@@ -1,0 +1,190 @@
+\documentclass[letterpaper]{article}
+\SweaveOpts{eps=FALSE}
+\SweaveOpts{keep.source=TRUE}
+
+\usepackage{paralist}
+\usepackage{amsmath}
+\usepackage{authblk}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage[colorlinks=true,urlcolor=blue, citecolor=red]{hyperref}
+\usepackage{fullpage}
+\newcommand{\degree}{\ensuremath{^\circ}}
+
+%\setlength{\textwidth}{7.25in}
+%\setlength{\textheight}{8.75in}
+%\setlength{\evensidemargin}{-.5in}
+%\setlength{\oddsidemargin}{-.5in}
+%\setlength{\topmargin}{-.35in}
+%\setlength{\parskip}{.1in}
+%\setlength{\parindent}{0.0in}
+
+\newcommand{\code}{\texttt}
+
+\title{Comparative Analysis Practice - Independent Contrasts and OUCH}
+\author{Marguerite A. Butler}
+
+\begin{document}
+\maketitle
+
+\section*{Instructions}
+
+In this exercise, we'll go through some comparative analyses.  We'll be analyzing the sexual size dimorphism dataset published in \citet{Butler2004,Butler2000}, and provided with \code{ouch}.
+
+The evolutionary hypothesis that we are exploring is whether sexual size dimorphism (SSD) evolves in response to mirco-habitat type or ``ecomorphs'', and in particular whether it is *adaptive*; versus the alternative that SSD evolves at random with respect to ecomorph.
+
+For background, please read the help page for the dataset \code{?anolis.ssd} after loading the package \code{ouch}.  
+
+The tasks we need to accomplish are:
+\begin{itemize}
+-  copy the nexus tree file \code{anolis.ssd.23tree.nex} to your Rawdata directory
+-  explore the data (non-phylogenetic)
+-  do a non-phylogenetic ANOVA on SSD with ecomorph
+-  do a phylogenetic GLS
+-  do an \code{ouch} analysis
+\end{itemize}
+
+\section*{Exploring the data}
+```{r echo=F}
+options(width=75)
+```
+After installing the package (see chapter on "preliminaries" if you didn't do this yet), load the package using the \code{require()} function. Then, load in the dataframe using the \code{data()} function and have a look at it:
+```{r echo=T, eval=T}
+require(ouch)
+data(anolis.ssd)
+anolis.ssd
+```
+This dataframe is laid out to be easily made into an \code{ouchtree}. First we want just the SSD data, as well as being able to use the data in \code{ape} functions, so first let's grab just the species data (dropping the rows which correspond to internal branches):
+```{r }
+dat <- anolis.ssd[!is.na(anolis.ssd$species),]   # dropping the rows with NA (internal nodes)
+dat
+```
+
+Actually, all we want is the species, log.SSD, and OU7 columns (which contains the ecomorph data). So let's get rid of the rest. 
+These are all equivalent ways of accessing just those columns:
+```{r eval=F}
+dat[ c("species", "log.SSD", "OU.7" ) ]   # by column name
+dat[ c(2, 3, 7) ]   # by column number
+dat[ - c(1, 4, 5, 6) ]   # by excluding some column numbers (-)
+```
+```{r }
+dat <- dat[ c(2, 3, 7) ]   # resave just the columns we need
+```
+
+Here are two codes that do the same thing -- rename the columns to more convenient names
+```{r }
+names(dat) <- c( "species", "lssd", "ecomorph")   # rename all the columns
+names(dat)[2:3]  <- c("lssd", "ecomorph")     # rename just the 2, 3 columns (first was OK)
+```
+
+Let's also make vectors for lssd and ecomorph, and name the elements of the vector with the species they are associated with (this is required by ape later):
+```{r }
+lssd <- dat$lssd
+ecomorph <- dat$ecomorph
+names(lssd) <- names(ecomorph) <-  dat$species
+```
+
+\begin{enumerate}
+-  **Exploratory plots**
+  \begin{enumerate}
+  -  Plot the data, with \code{ecomorph} as the independent variable and \code{lssd} as the dependent variable, which should produce a box-and-whiskers plot. 
+```{r fig=T}
+plot( ecomorph, lssd)
+```
+  -  What do you notice about the data?  Is this a good way to show the data? What is the difference between this and a scatterplot?
+  -  Notice that there is a pesky \code{anc} category which does not have any observations. Get rid of it by running \code{factor} on it and then replot:
+  \end{enumerate}
+```{r }
+ecomorph <- factor(ecomorph)
+```
+
+\section*{ANOVA}
+-  Run an ANOVA to test the hypothesis that \code{lssd} varies with \code{ecomorph} and interpret the results.
+```{r }
+ssd.lm <- lm( lssd ~ ecomorph, data=dat)   # use data to specify dataframe, and then the objects are columns of dat
+  # the ~ operator is read "model lssd as a function of ecomorph"
+ssd.lm
+anova( ssd.lm )
+```
+  
+\section*{Phylogenetic GLS}  
+Now run a phylogenetically-corrected ANOVA (one that assumes an underlying model of evolution by Brownian motion for \code{lssd}). First load \code{ape}, and read in the tree \code{anolis.ssd.23tree.nex}
+
+```{r fig=T}
+require(ape)
+atree <- read.nexus("Data/anolis.ssd.23tree.nex")  # read in as ape tree
+plot(atree)   # check that it looks OK
+```
+
+NOTE: This tree has been jury-rigged to work with \code{pic} and other \code{ape} functions, by artificially splitting polytomies by adding tiny branches. Open up the nexus file in a text editor to see what I mean. 
+
+-  Run a phylogenetic GLS on the data and write a few lines of interpretation (is anything significant? What tells you that it is so?). Remember that \code{ape} will match up your data with the tree if you name the data vector with the species names (we did this earlier). For convenience, we bind the ssd data and the ecomorph data together into a dataframe.
+```{r }
+ssd.pgls <- gls( lssd ~ ecomorph, correlation=corBrownian(phy=atree), data=dat)
+summary(ssd.pgls)
+anova(ssd.pgls)   # produces the ANOVA F-ratio test for the overall effect of ecomorph
+```
+
+\section*{OUCH}
+-  Look up the help page for \code{anolis.ssd} and perform the analysis on the bottom. You will be fitting a Brownian-motion model of evolution to the SSD data, as well as an adaptive model with a global optimum (all species share the same adaptive regime) versus an adaptive model with seven optima (a separate regime for each of the ecomorph types as well as an unknown ancestral regime). 
+
+```{r quiet=T}
+data(anolis.ssd)
+tree <- with(anolis.ssd,ouchtree(node,ancestor,time/max(time),species))
+plot(tree,node.names=TRUE)
+h1 <- brown(anolis.ssd['log.SSD'],tree)
+plot(h1)
+h2 <- hansen(anolis.ssd['log.SSD'],tree,anolis.ssd['OU.1'],sqrt.alpha=1,sigma=1)
+plot(h2)
+h3 <- hansen(anolis.ssd['log.SSD'],tree,anolis.ssd['OU.7'],sqrt.alpha=1,sigma=1)
+plot(h3)
+```
+
+We can see the model results by typing \code{h3}, which will execute the \code{print} method for this class. You could also use the \code{attributes} function, but this will dump too much information. \code{ouchtree} objects and the classes derived from them contain information that is used in internal calculations of the algorithms, not of general interest to users. 
+
+Additional accessor functions include: 
+```{r }
+coef(h3)    # the coefficients of the fitted model
+logLik(h3)   # the log-likelihood value
+```
+```{r eval=F}
+summary(h3)   # everything in the print method except the tree+data
+```
+
+We can now generate a table of our model fits: 
+```{r }
+unlist(summary(h3)[c('aic', 'aic.c', 'sic', 'dof')])  # just the model fit statistics
+                                   # on a single line
+h <- list(h1, h2, h3)   # store all our fitted models in a list
+names(h) <- c("BM", "OU.1", "OU.7")
+sapply( h, function(x) unlist(summary(x)[c('aic', 'aic.c', 'sic', 'dof')]) )  
+                                   # table with all models
+```
+
+By storing the model fits in a list, we can use apply methods to get the statistics from all the models at once. \code{sapply} returns a matrix if possible. 
+
+```{r }
+h.ic <- sapply( h, function(x) unlist(summary(x)[c('aic', 'aic.c', 'sic', 'dof')]) )  
+print( h.ic, digits = 3)
+```
+
+
+  \begin{enumerate}
+-  Illustrate the different models and how they map onto the phylogeny by plotting the regimes on the tree. Plot the three hypotheses side-by-side. Look at the example of how to do this in the tutorial (Chapter 12).
+-  Write a few sentences of interpretation. Is there evidence for adaptive evolution, and moreover for adaptation to habitat type? Comparison of which models tells you this is so? 
+  \end{enumerate}
+
+\section*{Synthesis}
+-  Compare the non-phylogenetic, and the two phylogenetic analysis methods. 
+  \begin{enumerate}
+-  Overall, what do they tell you about the adaptive association of the characters in question, and about the ``influence of phylogeny'' (this is a bit of a loaded phrase)?
+-  What are the benefits and limitations of each method?
+  \end{enumerate}
+\end{enumerate}
+
+\bibliographystyle{ecology} 
+\bibliography{evmod}
+
+\end{document}

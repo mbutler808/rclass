@@ -1,0 +1,146 @@
+\chapter{Bivariate \code{ouch}}
+
+The \code{ouch} package has been completely rewritten by Aaron King to implement a bivariate model, as well as the new S4 class system described previously. 
+
+Correlated evolution is a major feature of evolutionary theory, and of great interest among comparative biologists. However, there have been few attempts to develop a bivariate OU model for comparative analysis.  NOTE: We are about to submit a paper on this, please cite us (and wait for us to publish first!).
+
+### The Bivariate model
+
+The Hansen model describes the evolutionary processes operative on a single quantitative character \citet{Hansen1997,Butler2004}. In the case of two characters, we will accordingly have two equations. 
+
+\begin{align} {#eq:two_ous}
+  &dX_1(t) = \alpha_1\,(\theta_1 - X_1(t))\,dt + \sigma_1\,dB_1(t).\\
+  &dX_2(t) = \alpha_2\,(\theta _2- X_2(t))\,dt + \sigma_2\,dB_2(t).
+\end{align}
+ 
+The above system of eqs.~\@ref(eq:two_ous) can be written in matrix form with vectors in the place of $dX$, $X$, and $dB(t)$, and square matrices in place of $\alpha$ and $\sigma$. The $\theta$ are already vector valued in the univariate case with a single value per adaptive regime. Here we simply have separate $\theta$ vectors for each character.
+
+### No Correlations
+When evolution is uncorrelated, the $\alpha$ and $\sigma$ matrices are diagonal:
+
+\begin{equation*}
+  \begin{gathered}
+    \alpha = 
+      \begin{pmatrix}
+         \alpha_{11}  &0  \\      0 &\alpha_{22}
+       \end{pmatrix}
+  \qquad     
+  \sigma = 
+      \begin{pmatrix}
+         \sigma_{11}  &0  \\      0 &\sigma_{22}
+       \end{pmatrix}.
+  \end{gathered}
+\end{equation*}
+
+This form implies that neither character influences the evolution of the other (i.e., they are evolving independently of one another, and we have a simple duplication of the univariate case).
+
+## Correlated Evolution
+We can readily see, however, that the matrices may have off-diagonal elements. These evolutionary correlations can enter in as off-diagonal terms in either the $\alpha$ or the $\sigma$ terms. In particular, they will have the following form:
+
+\begin{equation*}
+  \begin{gathered}
+    \alpha = 
+      \begin{pmatrix}
+         \alpha_{11}  &\alpha_{21}  \\   \alpha_{12}  &\alpha_{22}
+       \end{pmatrix}
+  \qquad     
+  \sigma = 
+      \begin{pmatrix}
+         \sigma_{11}  &0  \\  \sigma_{12}  &\sigma_{22}
+       \end{pmatrix}.
+  \end{gathered}
+\end{equation*}
+
+Where $\alpha_{12} = \alpha_{21}$, and without loss of generality,  $\sigma$ is lower-triangular.
+
+Written out as separate equations, the model has the following form:
+
+\begin{eqnarray*} {#eq:two_ous}
+  &dX_1(t) = \alpha_{11}\,(\theta_{1} - X_1(t))\,dt +  \alpha_{12}\,(\theta_{2} - X_2(t))\,dt+\sigma_{11}\,dB_1(t).\\
+  &dX_2(t) = \alpha_{22}\,(\theta _2- X_2(t))\,dt + \alpha_{12}\,(\theta_1 - X_1(t))\,dt  + \sigma_{22}\,dB_2(t)+\sigma_{12}\,dB_1(t).
+\end{eqnarray*}
+
+\section{Implementation in \code{ouch}}
+
+To illustrate, we reanalyzed the evolution of sexual size dimorphism in association with habitat specialization in *Anolis* lizards [@Butler2004], reformulated as evolution in male and female body size. 
+
+Load the data (tree+quantitive data) and regimes:
+```{r }
+require(ouch)
+
+regimes <- read.csv('Data/regimes.csv',row.names=1)    # regimes
+ssd <- read.csv('Data/ssd.data.csv',row.names=1)    # tree + body size data
+otree <- with(ssd,ouchtree(nodes,ancestors,times,labels))
+xdata <- log(ssd[c('fSVL','mSVL')])
+names(xdata) <- paste('log',names(xdata),sep='.')
+nreg <- length(regimes)
+```
+
+\code{ouch} now requires you to specify an initial guess for the \code{alpha} and \code{sigma} matrices. Univariate models are specified by providing a single value.  \textbf{The bivariate model is specified by providing multiple values for these guesses. The three element vector will be transformed into a symmetric \code{2x2} matrix for \code{alpha} and a lower-triangular matrix for \code{sigma}.} 
+
+```{r }
+alpha.guess <- c(1, 0, 1)
+sigma.guess <- c(1, 1, 1)
+```
+
+Fit the model for the first regime:
+```{r }
+tic <- Sys.time()
+hansen(
+       data=xdata,
+       tree=otree,
+       regimes=regimes[5],
+       sqrt.alpha =alpha.guess,
+       sigma=sigma.guess,
+       method="Nelder-Mead",
+       maxit=3000,
+       reltol=1e-12
+       )
+toc <- Sys.time()
+print(toc-tic)
+```
+
+Fitting the Hansen model is much more complex than the Brownian motion, because the $\alpha$ enters non-linearly into the likelihood function. With more variables, the complexity increases, with a less well-behaved likelihood surface than the univariate case. There are frequently convergence issues. 
+
+Using the subplex method from package \code{subplex} helps. Other things to try include increasing the tolerance, increasing the number of maximum iterations allowed to reach convergence, and drawing initial guesses for alpha and sigma at random (and discarding the bad guesses). This of course increases computer time. 
+
+```{r eval=T}
+tic <- Sys.time()
+h.subplex <- hansen(
+       data=xdata,
+       tree=otree,
+       regimes=regimes[1],
+       sqrt.alpha =alpha.guess,
+       sigma=sigma.guess,
+       method="subplex",
+       maxit=20000,
+       reltol=1e-12
+       )
+toc <- Sys.time()
+print(toc-tic)
+summary(h.subplex)
+```
+
+The Brownian motion model is fit:
+
+```{r }
+brown.fit <- brown(
+               data=xdata,
+               tree=otree
+             )
+summary(brown.fit)             
+```
+
+## Exercises
+
+\begin{enumerate}
+-  Run the Hansen model on the remaining regimes. Can you use an apply method to run them all at once?
+-  Plot the multiple regime hypotheses.
+-  Compare results.
+\end{enumerate}
+
+## Variations of the OU Model --- Brian?
+
+Instead of assuming a constant $\sigma$ across the entire tree, @OMeara:2006wo developed a Brownian motion model that allows two or more $\sigma$ values. This can be interpreted as having different rates of evolution in different regions of the tree. 
+
+Other possibilities exist. The difficulty for the future will be twofold: (1) Ensuring that the complexity of the model is reasonable given the information content of the data (i.e., are the parameter estimates and likelihoods well-behaved?). (2) Thinking hard about the best evolutionary and biological interpretations of the models. 

@@ -1,0 +1,155 @@
+\chapter{Verification: Computing Phylogenetic GLS "by hand"}
+
+\textbf{Chapter Topics:} 
+\begin{itemize}
+\item Checking your computations by other means
+\item Deconstructing \code{ape} objects
+\end{itemize}
+
+\textbf{Skills: } accessing object elements, constructing similarity matrices, using R matrix math functions, using R linear model functions.
+
+A good practice is to try to verify the software you are using by doing things another way. Phylo GLS is a good one because it is fairly simple mathematically. Recall the equation \eqref{eq:pt}. All we need to do is take our data and, using matrix math, divide by the square root of the phylogenetic covariance matrix. Thus we need to do the following steps:
+
+\begin{enumerate}
+\item Compute the phylogenetic covariance matrix expected under BM. This is a "similarity" matrix based on the amount of time they share along the phylogeny. Let's call this \code{tbm}
+\item Take the inverse of the matrix, \code{tbmi}.
+\item Find the square root of \code{tbmi}, a good way to do this is by cholesky decomposition.
+\item Multiply our data vectors by \code{roottbmi} to get our phylogenetically transformed data.
+\item Run regression analysis on the transformed data.
+\end{enumerate}
+
+We will analyze two continuous characters, \code{X} and \code{Y} evolving along a very simple five-species phylogeny of primates. 
+
+The continuous characters are given below.  We also assign "names" to the entries so we know which species are associated with which datapoint. 
+
+<<>>=
+X <- c(4.09434, 3.61092, 2.37024, 2.02815, -1.46968)
+Y <- c(4.74493, 3.33220, 3.36730, 2.89037, 2.30259)
+X
+Y
+names(X) <- names(Y) <- c("Homo", "Pongo", "Macaca", "Ateles", "Galago")
+X
+Y
+@
+
+
+The example below is modified from the sample code given in the pic documentation and \cite{Paradis:2006}. First use the \code{read.tree} function to create a phylogenetic tree in R for the primates, save it in an object called ``tree".  We begin by loading a package callled \code{ape} along with \code{nlme} and \code{MASS} to perform some of the matrix algebra:
+
+<<>>=
+require(ape)
+require(nlme)
+require(MASS)
+@
+
+
+Summary is generally a good way to get basic information about R objects:
+<<echo=T>>=
+tree <- read.tree(text="((((Homo:0.21,Pongo:0.21):0.28,Macaca:0.49):
+0.13,Ateles:0.62):0.38,Galago:1.00);")
+tree
+summary(tree)
+@
+
+For trees, perhaps the best thing to do to check if it was read in properly is to plot it:
+
+<<fig=T>>=
+plot(tree)
+@
+
+Let?s take a look at some of the attributes of a tree object in \code{ape}. The tree is stored as a a series of nodes. Each node is listed on a row with a connection to it?s ancestral node. For a tree object with N tips, the tips have numbers 1...N and the nodes have numbers greater than N. These numbers  are used to store information about the tree's structure. To do this, a matrix is created, with rows corresponding to the number of internal and terminal nodes and two columns. The first column of the matrix has the node at the beginning of the branch, the second has the node at the end of the branch. For example, for our simple tree, this matrix is
+
+<<>>=
+names(tree)
+tree$edge
+@
+
+This alone is enough for a basic topology. However, it might be nice to know what the taxa actually are, rather than just numbers. To do this, a character vector with as many entries as the number of tips is used. In the example tree, this is
+
+<<>>=
+tree$tip.label
+@
+
+In \code{ape}, the first column in the edge matrix is the ancestral node, and the second column is the descendant node. If you think of the descendant node as the reference point, then the tips are nodes 1-5, and the internal nodes are therefore 6-9. We can assign the node.labels and plot them on the tree:
+
+<<fig=T>>=
+tree$node.label <- c(6:9)
+plot(tree, show.node.label=TRUE)
+@
+
+Let's make a dataframe so that we can see the tree structure and associated metadata more clearly. We're using the function \code{with}, which defines a small local environment where we are using the object \code{tree}. 
+
+Let's \code{cbind} together the \code{edge} matrix, which describes the ancestor-descendant pairs, with the appropriate branch lengths, and species and tip labels. Note that the edge matrix doesn't have a row for the most basal node in the tree as a descendant, so we have to drop the first node label from our vector (otherwise the label vector will be too long by one). 
+
+<<>>=
+with( tree, cbind(tree$edge, edge.length, 
+labels=c(node.label[-1], tip.label)))
+@
+
+The Brownian motion model predicts that species should covary according to how long they have shared their evolutionary histories.  Species that have only recently diverged should be more similar than those that diverged a long time ago. This implies that their phylogenetic covariance should be proportional to their shared history. Therefore we need to calculate a similarity matrix based on time in shared evolutionary history. 
+
+It would actually be much more convenient to have for each node, the time from the root to the node. Let's call this "times". For a small and simple phylogeny, we can do this by "hand". Looking at the dataframe we just made, we can add up the branches to each node, with the base of the tree at time zero and the tips at time 1, and then remake the matrix (again, we drop the basal node from this vector):
+
+<<>>=
+times <- c(0, .38, .38+.13, .38+.13+.28, 1, 1, 1, 1, 1)
+with( tree, cbind(tree$edge, edge.length, 
+labels= c(node.label[-1], tip.label), times=times[-1]))
+@
+
+Looks good so far. Let's plot these "times" on the tree. Replace the node.label with times values and replot:
+
+<<fig=T>>=
+tree$node.label <- as.character(times[1:4])
+plot(tree, show.node.label=TRUE)
+@
+
+Now, looking at the tree, let's make our \code{tbm} matrix. First, make an empty matrix with just species names to help us with a mental image of what we're doing:
+
+<<>>=
+tbm <- matrix(nrow = 5, ncol = 5)   # could also use length(tree$tip.label)
+                          # instead of 5
+rownames(tbm) <- colnames(tbm) <- tree$tip.label
+tbm
+@
+
+Look at the phylogeny and fill in the pairwise similarities by the amount of evolutionary history they share:
+
+<<>>=
+tbm[1, ] <- c(1, .79, .51, .38, 0)
+tbm[2, ] <- c(.79, 1, .51, .38, 0)
+tbm[3, ] <- c(.51, .51, 1, .38, 0)
+tbm[4, ] <- c(.38, .38, .38, 1, 0)
+tbm[5, ] <- c(rep(0, 4), 1)
+tbm
+@
+
+Of course, one could program an automated way to do this, but that would take a lot of time and skill. But this is a verification, so we compute it by hand. Now we are ready to begin transforming our data. First do the inversion and root of \code{tbm} using the \code{ginv()} and \code{chol()} functions, respectively. These are part of the \code{MASS} and \code{base} packages, respectively.
+
+<<>>=
+tbmi <- ginv(tbm)
+roottbmi <- chol(tbmi)
+@
+
+
+
+Now transform our data. For the regression model, we will also have to transform the intercept, so we bind a column of 1's with the X variable (independent variable in this example) and make transformed variables Z and U. Note that matrix multiplication is designated by \%*\% (Otherwise multiplication is element-by-element, the default in R) :
+
+<<>>=
+Z <- roottbmi %*% Y 
+U <- roottbmi %*% cbind(1, X)
+@
+
+(Feel free to look at any of these matrices we're creating). Now we just have to run the regression. Since the intercept term is inside the X matrix now, we do a regression without an intercept (one is added automatically unless you say no). You can use either \code{lm} or \code{gls} in this case because we don't have to specify a correlation structure. The \code{gls} function computes generalized least squares regression, or regressions where one can specify correlated errors in the error structure, for example what we expect in a phylogeny due to relationship. Let's compare that with the phylogenetic GLS:
+
+<<>>=
+summary(lm(Z ~ U -1))
+XY <- data.frame(Y, X)
+summary(gls(Y ~ X, correlation=corBrownian(phy=tree), data=XY))
+@
+
+and with the regression from PIC:
+<<>>=
+pic.X <- pic(X, tree)
+pic.Y <- pic(Y, tree)
+summary(lm( pic.Y ~ pic.X -1))
+@
+

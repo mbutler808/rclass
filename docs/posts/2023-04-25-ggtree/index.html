@@ -86,6 +86,25 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -283,7 +302,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#plotting-data-on-the-tree" id="toc-plotting-data-on-the-tree" class="nav-link" data-scroll-target="#plotting-data-on-the-tree">Plotting data on the tree</a>
   <ul class="collapse">
   <li><a href="#example-plot-smalltree-with-size-in-a-barplot" id="toc-example-plot-smalltree-with-size-in-a-barplot" class="nav-link" data-scroll-target="#example-plot-smalltree-with-size-in-a-barplot">Example: plot <code>smalltree</code> with <code>size</code> in a barplot</a></li>
-  <li><a href="#a-tree-panel-example-from-the-tree-data-book" id="toc-a-tree-panel-example-from-the-tree-data-book" class="nav-link" data-scroll-target="#a-tree-panel-example-from-the-tree-data-book">A tree-panel example from the Tree Data Book:</a></li>
+  </ul></li>
+  <li><a href="#a-tree-panel-and-annotation-example-from-the-tree-data-book" id="toc-a-tree-panel-and-annotation-example-from-the-tree-data-book" class="nav-link" data-scroll-target="#a-tree-panel-and-annotation-example-from-the-tree-data-book">A tree-panel and annotation example from the Tree Data Book:</a>
+  <ul class="collapse">
   <li><a href="#the-operator-for-ggtree-objects" id="toc-the-operator-for-ggtree-objects" class="nav-link" data-scroll-target="#the-operator-for-ggtree-objects">The %+&gt;% operator for ggtree objects</a></li>
   <li><a href="#example-of-the-operator-to-add-data-to-a-ggtree-object." id="toc-example-of-the-operator-to-add-data-to-a-ggtree-object." class="nav-link" data-scroll-target="#example-of-the-operator-to-add-data-to-a-ggtree-object.">Example of the %+&gt;% operator to add data to a ggtree object.</a>
   <ul class="collapse">
@@ -308,7 +329,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>References for this Material:</p>
 <ul>
-<li>Treedata book by Guangchuang Yu <a href="https://yulab-smu.top/treedata-book/" class="uri">https://yulab-smu.top/treedata-book/</a></li>
+<li>Treedata book by Guangchuang Yu <span class="citation" data-cites="Yu:2022">(<a href="#ref-Yu:2022" role="doc-biblioref">Yu 2022</a>)</span> <a href="https://yulab-smu.top/treedata-book/" class="uri">https://yulab-smu.top/treedata-book/</a></li>
 <li><a href="https://bioconnector.github.io/workshops/r-ggtree.html" class="uri">https://bioconnector.github.io/workshops/r-ggtree.html</a></li>
 </ul>
 </section>
@@ -434,7 +455,7 @@ Note
 Phylogenetic tree with 20 tips and 19 internal nodes.
 
 Tip labels:
-  t10, t1, t8, t15, t17, t9, ...
+  t20, t10, t3, t7, t6, t18, ...
 
 Rooted; includes branch lengths.</code></pre>
 </div>
@@ -447,7 +468,7 @@ Rooted; includes branch lengths.</code></pre>
 Phylogenetic tree with 20 tips and 19 internal nodes.
 
 Tip labels:
-  t10, t1, t8, t15, t17, t9, ...
+  t20, t10, t3, t7, t6, t18, ...
 
 Rooted; includes branch lengths.</code></pre>
 </div>
@@ -457,16 +478,16 @@ Rooted; includes branch lengths.</code></pre>
 <pre><code># A tibble: 39 × 4
    parent  node branch.length label
     &lt;int&gt; &lt;int&gt;         &lt;dbl&gt; &lt;chr&gt;
- 1     26     1        0.818  t10  
- 2     27     2        0.164  t1   
- 3     27     3        0.0430 t8   
- 4     25     4        0.823  t15  
- 5     24     5        0.391  t17  
- 6     29     6        0.385  t9   
- 7     29     7        0.690  t12  
- 8     28     8        0.734  t5   
- 9     30     9        0.349  t13  
-10     30    10        0.536  t20  
+ 1     22     1       0.915   t20  
+ 2     26     2       0.532   t10  
+ 3     26     3       0.847   t3   
+ 4     25     4       0.118   t7   
+ 5     28     5       0.690   t6   
+ 6     28     6       0.725   t18  
+ 7     29     7       0.261   t14  
+ 8     31     8       0.00314 t9   
+ 9     31     9       0.0128  t4   
+10     30    10       0.289   t12  
 # … with 29 more rows
 # ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
@@ -491,8 +512,8 @@ Rooted; includes branch lengths.</code></pre>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggtree</span>(tree) <span class="sc">+</span> <span class="fu">geom_tiplab</span>()</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_taxa_name</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "t19" "t18" "t2"  "t7"  "t3"  "t6"  "t14" "t4"  "t16" "t11" "t8"  "t1" 
-[13] "t10" "t15" "t17" "t12" "t9"  "t5"  "t20" "t13"</code></pre>
+<pre><code> [1] "t4"  "t9"  "t12" "t14" "t18" "t6"  "t3"  "t10" "t7"  "t17" "t15" "t13"
+[13] "t11" "t5"  "t2"  "t16" "t20" "t1"  "t8"  "t19"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>taxa <span class="ot">&lt;-</span> <span class="fu">get_taxa_name</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -504,27 +525,27 @@ Rooted; includes branch lengths.</code></pre>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="st">"label"</span><span class="ot">=</span> taxa, size, habitat)</span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   label     size    habitat
-1    t19 22.98137     desert
-2    t18 20.44099  grassland
-3     t2 19.32736     desert
-4     t7 23.92095  grassland
-5     t3 28.24564     desert
-6     t6 28.60875  grassland
-7    t14 22.78129  grassland
-8     t4 11.67237  grassland
-9    t16 17.74394  grassland
-10   t11 25.49744     forest
-11    t8 25.91309  grassland
-12    t1 14.44900  grassland
-13   t10 24.42166 intertidal
-14   t15 22.06341  grassland
-15   t17 21.84471 intertidal
-16   t12 15.07329     forest
-17    t9 25.56858     desert
-18    t5 22.49335     desert
-19   t20 16.09884     desert
-20   t13 16.28131     desert</code></pre>
+<pre><code>   label      size    habitat
+1     t4 13.190731     desert
+2     t9 19.541849  grassland
+3    t12 24.957978 intertidal
+4    t14 14.831695     forest
+5    t18 21.221452     desert
+6     t6 10.671196 intertidal
+7     t3 15.308488 intertidal
+8    t10 19.347808     desert
+9     t7 21.088887     forest
+10   t17  7.394603     desert
+11   t15 14.215988 intertidal
+12   t13 11.341547     desert
+13   t11 17.769369 intertidal
+14    t5 13.667986  grassland
+15    t2 18.265933  grassland
+16   t16 18.950921     desert
+17   t20 21.236842 intertidal
+18    t1 17.947431  grassland
+19    t8 11.629983 intertidal
+20   t19 13.964597     forest</code></pre>
 </div>
 </div>
 <p>See our ggtree as a treedata object:</p>
@@ -532,45 +553,45 @@ Rooted; includes branch lengths.</code></pre>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.treedata</span>(p) <span class="sc">%&gt;%</span> as_tibble <span class="sc">%&gt;%</span> as.data.frame  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   parent node branch.length label
-1      26    1    0.81774185   t10
-2      27    2    0.16354625    t1
-3      27    3    0.04303048    t8
-4      25    4    0.82274108   t15
-5      24    5    0.39103841   t17
-6      29    6    0.38464254    t9
-7      29    7    0.69022037   t12
-8      28    8    0.73358899    t5
-9      30    9    0.34889773   t13
-10     30   10    0.53616700   t20
-11     32   11    0.25030571   t11
-12     34   12    0.42410770   t16
-13     34   13    0.79246017    t4
-14     35   14    0.60763492   t14
-15     35   15    0.30937879    t6
-16     38   16    0.32602006    t2
-17     39   17    0.44228411   t18
-18     39   18    0.82654581   t19
-19     37   19    0.41624807    t7
-20     36   20    0.34757335    t3
+1      22    1   0.914660785   t20
+2      26    2   0.531915339   t10
+3      26    3   0.847355583    t3
+4      25    4   0.117541116    t7
+5      28    5   0.689902873    t6
+6      28    6   0.725284685   t18
+7      29    7   0.260759907   t14
+8      31    8   0.003144709    t9
+9      31    9   0.012793490    t4
+10     30   10   0.289318340   t12
+11     33   11   0.102822345   t16
+12     33   12   0.361748627    t2
+13     34   13   0.406217780    t5
+14     36   14   0.855577735   t13
+15     37   15   0.122123984   t15
+16     37   16   0.055801166   t17
+17     35   17   0.411075242   t11
+18     38   18   0.613953796   t19
+19     39   19   0.453259011    t8
+20     39   20   0.470733995    t1
 21     21   21            NA  &lt;NA&gt;
-22     21   22    0.92545255  &lt;NA&gt;
-23     22   23    0.22005686  &lt;NA&gt;
-24     23   24    0.88808046  &lt;NA&gt;
-25     24   25    0.82230607  &lt;NA&gt;
-26     25   26    0.63251172  &lt;NA&gt;
-27     26   27    0.51024049  &lt;NA&gt;
-28     23   28    0.11226124  &lt;NA&gt;
-29     28   29    0.53201729  &lt;NA&gt;
-30     22   30    0.82057405  &lt;NA&gt;
-31     21   31    0.56287947  &lt;NA&gt;
-32     31   32    0.89219876  &lt;NA&gt;
-33     32   33    0.44222569  &lt;NA&gt;
-34     33   34    0.13222855  &lt;NA&gt;
-35     33   35    0.56228871  &lt;NA&gt;
-36     31   36    0.46338076  &lt;NA&gt;
-37     36   37    0.17502085  &lt;NA&gt;
-38     37   38    0.04818124  &lt;NA&gt;
-39     38   39    0.72056397  &lt;NA&gt;</code></pre>
+22     21   22   0.768506521  &lt;NA&gt;
+23     22   23   0.153267556  &lt;NA&gt;
+24     23   24   0.854931734  &lt;NA&gt;
+25     24   25   0.451706708  &lt;NA&gt;
+26     25   26   0.354669122  &lt;NA&gt;
+27     24   27   0.472259514  &lt;NA&gt;
+28     27   28   0.512345967  &lt;NA&gt;
+29     27   29   0.681458147  &lt;NA&gt;
+30     29   30   0.226860373  &lt;NA&gt;
+31     30   31   0.391176049  &lt;NA&gt;
+32     23   32   0.034940638  &lt;NA&gt;
+33     32   33   0.130967953  &lt;NA&gt;
+34     32   34   0.677282662  &lt;NA&gt;
+35     34   35   0.356319352  &lt;NA&gt;
+36     35   36   0.147734449  &lt;NA&gt;
+37     36   37   0.980167842  &lt;NA&gt;
+38     21   38   0.107984108  &lt;NA&gt;
+39     38   39   0.106352382  &lt;NA&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ggtree -&gt; treedata -&gt; tibble -&gt; dataframe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -590,7 +611,7 @@ Rooted; includes branch lengths.</code></pre>
 Phylogenetic tree with 20 tips and 19 internal nodes.
 
 Tip labels:
-  t10, t1, t8, t15, t17, t9, ...
+  t20, t10, t3, t7, t6, t18, ...
 
 Rooted; includes branch lengths.
 
@@ -601,61 +622,61 @@ with the following features available:
 # The 'node', 'label' and 'isTip' are from the phylo tree.
     node label isTip  size habitat   
    &lt;int&gt; &lt;chr&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;     
- 1     1 t10   TRUE   24.4 intertidal
- 2     2 t1    TRUE   14.4 grassland 
- 3     3 t8    TRUE   25.9 grassland 
- 4     4 t15   TRUE   22.1 grassland 
- 5     5 t17   TRUE   21.8 intertidal
- 6     6 t9    TRUE   25.6 desert    
- 7     7 t12   TRUE   15.1 forest    
- 8     8 t5    TRUE   22.5 desert    
- 9     9 t13   TRUE   16.3 desert    
-10    10 t20   TRUE   16.1 desert    
+ 1     1 t20   TRUE   21.2 intertidal
+ 2     2 t10   TRUE   19.3 desert    
+ 3     3 t3    TRUE   15.3 intertidal
+ 4     4 t7    TRUE   21.1 forest    
+ 5     5 t6    TRUE   10.7 intertidal
+ 6     6 t18   TRUE   21.2 desert    
+ 7     7 t14   TRUE   14.8 forest    
+ 8     8 t9    TRUE   19.5 grassland 
+ 9     9 t4    TRUE   13.2 desert    
+10    10 t12   TRUE   25.0 intertidal
 # … with 29 more rows
 # ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>ttree <span class="sc">%&gt;%</span> as_tibble <span class="sc">%&gt;%</span> as.data.frame</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   parent node branch.length label     size    habitat
-1      26    1    0.81774185   t10 24.42166 intertidal
-2      27    2    0.16354625    t1 14.44900  grassland
-3      27    3    0.04303048    t8 25.91309  grassland
-4      25    4    0.82274108   t15 22.06341  grassland
-5      24    5    0.39103841   t17 21.84471 intertidal
-6      29    6    0.38464254    t9 25.56858     desert
-7      29    7    0.69022037   t12 15.07329     forest
-8      28    8    0.73358899    t5 22.49335     desert
-9      30    9    0.34889773   t13 16.28131     desert
-10     30   10    0.53616700   t20 16.09884     desert
-11     32   11    0.25030571   t11 25.49744     forest
-12     34   12    0.42410770   t16 17.74394  grassland
-13     34   13    0.79246017    t4 11.67237  grassland
-14     35   14    0.60763492   t14 22.78129  grassland
-15     35   15    0.30937879    t6 28.60875  grassland
-16     38   16    0.32602006    t2 19.32736     desert
-17     39   17    0.44228411   t18 20.44099  grassland
-18     39   18    0.82654581   t19 22.98137     desert
-19     37   19    0.41624807    t7 23.92095  grassland
-20     36   20    0.34757335    t3 28.24564     desert
-21     21   21            NA  &lt;NA&gt;       NA       &lt;NA&gt;
-22     21   22    0.92545255  &lt;NA&gt;       NA       &lt;NA&gt;
-23     22   23    0.22005686  &lt;NA&gt;       NA       &lt;NA&gt;
-24     23   24    0.88808046  &lt;NA&gt;       NA       &lt;NA&gt;
-25     24   25    0.82230607  &lt;NA&gt;       NA       &lt;NA&gt;
-26     25   26    0.63251172  &lt;NA&gt;       NA       &lt;NA&gt;
-27     26   27    0.51024049  &lt;NA&gt;       NA       &lt;NA&gt;
-28     23   28    0.11226124  &lt;NA&gt;       NA       &lt;NA&gt;
-29     28   29    0.53201729  &lt;NA&gt;       NA       &lt;NA&gt;
-30     22   30    0.82057405  &lt;NA&gt;       NA       &lt;NA&gt;
-31     21   31    0.56287947  &lt;NA&gt;       NA       &lt;NA&gt;
-32     31   32    0.89219876  &lt;NA&gt;       NA       &lt;NA&gt;
-33     32   33    0.44222569  &lt;NA&gt;       NA       &lt;NA&gt;
-34     33   34    0.13222855  &lt;NA&gt;       NA       &lt;NA&gt;
-35     33   35    0.56228871  &lt;NA&gt;       NA       &lt;NA&gt;
-36     31   36    0.46338076  &lt;NA&gt;       NA       &lt;NA&gt;
-37     36   37    0.17502085  &lt;NA&gt;       NA       &lt;NA&gt;
-38     37   38    0.04818124  &lt;NA&gt;       NA       &lt;NA&gt;
-39     38   39    0.72056397  &lt;NA&gt;       NA       &lt;NA&gt;</code></pre>
+<pre><code>   parent node branch.length label      size    habitat
+1      22    1   0.914660785   t20 21.236842 intertidal
+2      26    2   0.531915339   t10 19.347808     desert
+3      26    3   0.847355583    t3 15.308488 intertidal
+4      25    4   0.117541116    t7 21.088887     forest
+5      28    5   0.689902873    t6 10.671196 intertidal
+6      28    6   0.725284685   t18 21.221452     desert
+7      29    7   0.260759907   t14 14.831695     forest
+8      31    8   0.003144709    t9 19.541849  grassland
+9      31    9   0.012793490    t4 13.190731     desert
+10     30   10   0.289318340   t12 24.957978 intertidal
+11     33   11   0.102822345   t16 18.950921     desert
+12     33   12   0.361748627    t2 18.265933  grassland
+13     34   13   0.406217780    t5 13.667986  grassland
+14     36   14   0.855577735   t13 11.341547     desert
+15     37   15   0.122123984   t15 14.215988 intertidal
+16     37   16   0.055801166   t17  7.394603     desert
+17     35   17   0.411075242   t11 17.769369 intertidal
+18     38   18   0.613953796   t19 13.964597     forest
+19     39   19   0.453259011    t8 11.629983 intertidal
+20     39   20   0.470733995    t1 17.947431  grassland
+21     21   21            NA  &lt;NA&gt;        NA       &lt;NA&gt;
+22     21   22   0.768506521  &lt;NA&gt;        NA       &lt;NA&gt;
+23     22   23   0.153267556  &lt;NA&gt;        NA       &lt;NA&gt;
+24     23   24   0.854931734  &lt;NA&gt;        NA       &lt;NA&gt;
+25     24   25   0.451706708  &lt;NA&gt;        NA       &lt;NA&gt;
+26     25   26   0.354669122  &lt;NA&gt;        NA       &lt;NA&gt;
+27     24   27   0.472259514  &lt;NA&gt;        NA       &lt;NA&gt;
+28     27   28   0.512345967  &lt;NA&gt;        NA       &lt;NA&gt;
+29     27   29   0.681458147  &lt;NA&gt;        NA       &lt;NA&gt;
+30     29   30   0.226860373  &lt;NA&gt;        NA       &lt;NA&gt;
+31     30   31   0.391176049  &lt;NA&gt;        NA       &lt;NA&gt;
+32     23   32   0.034940638  &lt;NA&gt;        NA       &lt;NA&gt;
+33     32   33   0.130967953  &lt;NA&gt;        NA       &lt;NA&gt;
+34     32   34   0.677282662  &lt;NA&gt;        NA       &lt;NA&gt;
+35     34   35   0.356319352  &lt;NA&gt;        NA       &lt;NA&gt;
+36     35   36   0.147734449  &lt;NA&gt;        NA       &lt;NA&gt;
+37     36   37   0.980167842  &lt;NA&gt;        NA       &lt;NA&gt;
+38     21   38   0.107984108  &lt;NA&gt;        NA       &lt;NA&gt;
+39     38   39   0.106352382  &lt;NA&gt;        NA       &lt;NA&gt;</code></pre>
 </div>
 </div>
 <p>And thatʻs what our <code>treedata</code> object looks like flattened out!</p>
@@ -679,7 +700,7 @@ with the following features available:
 Phylogenetic tree with 10 tips and 9 internal nodes.
 
 Tip labels:
-  t1, t15, t17, t9, t5, t13, ...
+  t3, t7, t9, t5, t13, t15, ...
 
 Rooted; includes branch lengths.
 
@@ -690,16 +711,16 @@ with the following features available:
 # The 'node', 'label' and 'isTip' are from the phylo tree.
     node label isTip  size habitat   
    &lt;int&gt; &lt;chr&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;     
- 1     1 t1    TRUE   14.4 grassland 
- 2     2 t15   TRUE   22.1 grassland 
- 3     3 t17   TRUE   21.8 intertidal
- 4     4 t9    TRUE   25.6 desert    
- 5     5 t5    TRUE   22.5 desert    
- 6     6 t13   TRUE   16.3 desert    
- 7     7 t11   TRUE   25.5 forest    
- 8     8 t19   TRUE   23.0 desert    
- 9     9 t7    TRUE   23.9 grassland 
-10    10 t3    TRUE   28.2 desert    
+ 1     1 t3    TRUE  15.3  intertidal
+ 2     2 t7    TRUE  21.1  forest    
+ 3     3 t9    TRUE  19.5  grassland 
+ 4     4 t5    TRUE  13.7  grassland 
+ 5     5 t13   TRUE  11.3  desert    
+ 6     6 t15   TRUE  14.2  intertidal
+ 7     7 t17   TRUE   7.39 desert    
+ 8     8 t11   TRUE  17.8  intertidal
+ 9     9 t19   TRUE  14.0  forest    
+10    10 t1    TRUE  17.9  grassland 
 # … with 9 more rows
 # ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
@@ -834,10 +855,10 @@ with the following features available:
 <li>any additional parameters for the plot</li>
 </ul>
 </section>
-<section id="a-tree-panel-example-from-the-tree-data-book" class="level2">
-<h2 class="anchored" data-anchor-id="a-tree-panel-example-from-the-tree-data-book">A tree-panel example from the Tree Data Book:</h2>
-<p>This example plots a phylogeny alongside SNP (single nucleotide polymorphism) data and a barplot of some simulated data.</p>
 </section>
+<section id="a-tree-panel-and-annotation-example-from-the-tree-data-book" class="level1">
+<h1>A tree-panel and annotation example from the Tree Data Book:</h1>
+<p>This example plots a phylogeny alongside SNP (single nucleotide polymorphism) data and a barplot of some simulated data <span class="citation" data-cites="Yu:2022">(<a href="#ref-Yu:2022" role="doc-biblioref">Yu 2022</a>)</span>.</p>
 <section id="the-operator-for-ggtree-objects" class="level2">
 <h2 class="anchored" data-anchor-id="the-operator-for-ggtree-objects">The %+&gt;% operator for ggtree objects</h2>
 <p>The %+&gt;% operator is used to add data (<code>dataframe</code>, <code>tibble</code>) to a <code>ggtree</code> object:</p>
@@ -846,7 +867,7 @@ with the following features available:
 </section>
 <section id="example-of-the-operator-to-add-data-to-a-ggtree-object." class="level2">
 <h2 class="anchored" data-anchor-id="example-of-the-operator-to-add-data-to-a-ggtree-object.">Example of the %+&gt;% operator to add data to a ggtree object.</h2>
-<p>The package <code>TDbook</code> is the data accompanyment to Yuʻs <a href="https://yulab-smu.top/treedata-book/index.html">Tree Data book</a>. It is available on CRAN so you can install it with the usual <code>install.packages("TDbook")</code> function call.</p>
+<p>The package <code>TDbook</code> is the data accompanyment to <span class="citation" data-cites="Yu:2022">(<a href="#ref-Yu:2022" role="doc-biblioref">Yu 2022</a>)</span>ʻs <a href="https://yulab-smu.top/treedata-book/index.html">Tree Data book</a>. It is available on CRAN so you can install it with the usual <code>install.packages("TDbook")</code> function call.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggtree)</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2)</span>
@@ -867,7 +888,7 @@ with the following features available:
 <span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label =</span> vernacularName.y, <span class="at">fill =</span> posterior)) <span class="sc">+</span> </span>
 <span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_gradientn</span>(<span class="at">colors =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">3</span>, <span class="st">"YlGnBu"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 7 rows containing missing values (geom_label).</code></pre>
+<pre><code>Warning: Removed 7 rows containing missing values (`geom_label()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
@@ -945,9 +966,14 @@ with the following features available:
 <p>This is an example of a typical workflow. We have carefully collected phenotypic data, and someone has published a massive phylogeny. We need to subset the tree to just the taxa we want to work on.</p>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Yu:2022" class="csl-entry" role="doc-biblioentry">
+Yu, G. 2022. <em>Data Integration, Manipulation and Visualization of Phylogenetic Trees</em>. A Chapman &amp; Hall Book. CRC Press. <a href="https://yulab-smu.top/treedata-book/">https://yulab-smu.top/treedata-book/</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
