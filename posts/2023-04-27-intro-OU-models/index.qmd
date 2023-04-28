@@ -42,7 +42,7 @@ $$
   dX(t) = \alpha\,(\theta - X(t))\,dt + \sigma\,dB(t).
 $${#eq-basic_ou}
 
-Eq.~\@ref(eq:basic_ou) expresses the amount of change in character $X$ over the course of a small increment of time: specifically, $dX(t)$ is the infinitesimal change in the character $X$ over the infinitesimal interval from time $t$ to time $t+dt$. The term $dB(t)$ is _white noise_; that is, the random variables $dB(t)$ are independent and identically-distributed normal random variables, each with mean zero and variance $dt$.  The parameter $\alpha$ measures the strength of selection.  When $\alpha = 0$, the deterministic part of the OU model is diminished and @eq-basic_ou approaches the familiar BM model of pure drift,
+Eq. @eq-basic_ou expresses the amount of change in character $X$ over the course of a small increment of time: specifically, $dX(t)$ is the infinitesimal change in the character $X$ over the infinitesimal interval from time $t$ to time $t+dt$. The term $dB(t)$ is _white noise_; that is, the random variables $dB(t)$ are independent and identically-distributed normal random variables, each with mean zero and variance $dt$.  The parameter $\alpha$ measures the strength of selection.  When $\alpha = 0$, the deterministic part of the OU model is diminished and @eq-basic_ou approaches the familiar BM model of pure drift,
 
 ## `ouch` package
 
@@ -92,7 +92,7 @@ tree <- with(bimac, ouchtree(node,ancestor,time/max(time),species))
 plot(tree)
 ```
 
-`ouch` fits the OU model Eq.~\@ref(eq:basic_ou) along each branch of the phylogeny. While $\alpha$ and $\sigma$ are held constant across the entire tree, the optima along each branch $\theta$ are allowed to vary. Users can then paint various combinations of optima on the tree to reflect various biological scenarios. 
+`ouch` fits the OU model Eq. @eq-basic_ou along each branch of the phylogeny. While $\alpha$ and $\sigma$ are held constant across the entire tree, the optima along each branch $\theta$ are allowed to vary. Users can then paint various combinations of optima on the tree to reflect various biological scenarios. 
 
 For example, the dataset `bimac` was used to test the hypothesis of character displacement using an interspecific daaset of body sizes and sympatry/allopatry @Butler:2004. The analysis tested several different models, which are included with `bimac`. They are: OU.1 or global optimum, OU.3 or small, medium, and large regimes depending on the body size of the observed species (terminal branches only, internal branches painted medium, OU.4 or the same as OU.3 but with internal branches given their own unique regime called ancestral, and OU.LP based on a linear parsimony reconstruction of the colonization events (i.e., that as species came into sympatry, they diverged in body size). 
 
