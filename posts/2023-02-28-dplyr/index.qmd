@@ -167,6 +167,8 @@ The __dplyr__ package, which is part of the __tidyverse__ was written to supply 
 
 -   `arrange()`: reorder rows of a data frame
 
+-   `relocate()`: rearrange the columns of a data frame 
+
 -   `rename()`: rename columns in a data frame
 
 -   `mutate()`: add new columns or transform existing variables
@@ -334,6 +336,12 @@ head(select(starwars, name, birth_year), 3)
 tail(select(starwars, name, birth_year), 3)
 ```
 
+### Rearranging columns with `relocate()`
+
+
+**Moving a column to a new location** is done by specifying the column names, and indicating where they go with the `.before=` or `.after=` arguments specifing a location (another column).
+
+`relocate(.data, ..., .before = NULL, .after = NULL)`
 
 ### Renaming columns with `rename()`
 

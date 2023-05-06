@@ -256,6 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#selecting-columns-with-select" id="toc-selecting-columns-with-select" class="nav-link" data-scroll-target="#selecting-columns-with-select">Selecting columns with <code>select()</code></a></li>
   <li><a href="#subsetting-with-filter" id="toc-subsetting-with-filter" class="nav-link" data-scroll-target="#subsetting-with-filter">Subsetting with <code>filter()</code></a></li>
   <li><a href="#sorting-data-with-arrange" id="toc-sorting-data-with-arrange" class="nav-link" data-scroll-target="#sorting-data-with-arrange">Sorting data with <code>arrange()</code></a></li>
+  <li><a href="#rearranging-columns-with-relocate" id="toc-rearranging-columns-with-relocate" class="nav-link" data-scroll-target="#rearranging-columns-with-relocate">Rearranging columns with <code>relocate()</code></a></li>
   <li><a href="#renaming-columns-with-rename" id="toc-renaming-columns-with-rename" class="nav-link" data-scroll-target="#renaming-columns-with-rename">Renaming columns with <code>rename()</code></a></li>
   <li><a href="#adding-columns-with-mutate" id="toc-adding-columns-with-mutate" class="nav-link" data-scroll-target="#adding-columns-with-mutate">Adding columns with <code>mutate()</code></a></li>
   <li><a href="#perform-functions-on-groups-using-group_by" id="toc-perform-functions-on-groups-using-group_by" class="nav-link" data-scroll-target="#perform-functions-on-groups-using-group_by">Perform functions on groups using <code>group_by()</code></a></li>
@@ -495,6 +496,7 @@ Can you imagine what this dataset looks like in terms of organization?
 <li><p><code>select()</code>: return a subset of the data frame, using a flexible notation</p></li>
 <li><p><code>filter()</code>: extract a subset of rows from a data frame using logical conditions</p></li>
 <li><p><code>arrange()</code>: reorder rows of a data frame</p></li>
+<li><p><code>relocate()</code>: rearrange the columns of a data frame</p></li>
 <li><p><code>rename()</code>: rename columns in a data frame</p></li>
 <li><p><code>mutate()</code>: add new columns or transform existing variables</p></li>
 <li><p><code>summarize()</code>: generate summary statistics of the variables in the data frame, by strata if data are hierarchical</p></li>
@@ -914,16 +916,15 @@ Example
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(age100)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 14
-  name         height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
-  &lt;chr&gt;         &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
-1 C-3PO           167    75 &lt;NA&gt;    gold    yellow      112 none  mascu… Tatooi…
-2 Chewbacca       228   112 brown   unknown blue        200 male  mascu… Kashyy…
-3 Jabba Desil…    175  1358 &lt;NA&gt;    green-… orange      600 herm… mascu… Nal Hu…
-4 Yoda             66    17 white   green   brown       896 male  mascu… &lt;NA&gt;   
-5 Dooku           193    80 white   fair    brown       102 male  mascu… Serenno
-# … with 4 more variables: species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;,
-#   starships &lt;list&gt;, and abbreviated variable names ¹​hair_color, ²​skin_color,
-#   ³​eye_color, ⁴​birth_year, ⁵​homeworld</code></pre>
+  name      height  mass hair_color skin_color eye_color birth_year sex   gender
+  &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
+2 Chewbacca    228   112 brown      unknown    blue             200 male  mascu…
+3 Jabba De…    175  1358 &lt;NA&gt;       green-tan… orange           600 herm… mascu…
+4 Yoda          66    17 white      green      brown            896 male  mascu…
+5 Dooku        193    80 white      fair       brown            102 male  mascu…
+# ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -1083,6 +1084,11 @@ Note
 </div>
 </div>
 </section>
+<section id="rearranging-columns-with-relocate" class="level3">
+<h3 class="anchored" data-anchor-id="rearranging-columns-with-relocate">Rearranging columns with <code>relocate()</code></h3>
+<p><strong>Moving a column to a new location</strong> is done by specifying the column names, and indicating where they go with the <code>.before=</code> or <code>.after=</code> arguments specifing a location (another column).</p>
+<p><code>relocate(.data, ..., .before = NULL, .after = NULL)</code></p>
+</section>
 <section id="renaming-columns-with-rename" class="level3">
 <h3 class="anchored" data-anchor-id="renaming-columns-with-rename">Renaming columns with <code>rename()</code></h3>
 <p><strong>Renaming a variable</strong> in a data frame in R is accomplished using the <code>names()</code> function. The <code>rename()</code> function is designed to make this process easier.</p>
@@ -1141,16 +1147,16 @@ Question
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(starwars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 15
-  name       height  mass hair  skin  eye   birth…¹ sex   gender homew…² species
-  &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;  
-1 Yoda           66    17 white green brown     896 male  mascu… &lt;NA&gt;    Yoda's…
-2 Jabba Des…    175  1358 &lt;NA&gt;  gree… oran…     600 herm… mascu… Nal Hu… Hutt   
-3 Chewbacca     228   112 brown unkn… blue      200 male  mascu… Kashyy… Wookiee
-4 C-3PO         167    75 &lt;NA&gt;  gold  yell…     112 none  mascu… Tatooi… Droid  
-5 Dooku         193    80 white fair  brown     102 male  mascu… Serenno Human  
-6 Qui-Gon J…    193    89 brown fair  blue       92 male  mascu… &lt;NA&gt;    Human  
-# … with 4 more variables: films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;,
-#   heightsize &lt;dbl&gt;, and abbreviated variable names ¹​birth_year, ²​homeworld</code></pre>
+  name  height  mass hair  skin  eye   birth_year sex   gender homeworld species
+  &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;  
+1 Yoda      66    17 white green brown        896 male  mascu… &lt;NA&gt;      Yoda's…
+2 Jabb…    175  1358 &lt;NA&gt;  gree… oran…        600 herm… mascu… Nal Hutta Hutt   
+3 Chew…    228   112 brown unkn… blue         200 male  mascu… Kashyyyk  Wookiee
+4 C-3PO    167    75 &lt;NA&gt;  gold  yell…        112 none  mascu… Tatooine  Droid  
+5 Dooku    193    80 white fair  brown        102 male  mascu… Serenno   Human  
+6 Qui-…    193    89 brown fair  blue          92 male  mascu… &lt;NA&gt;      Human  
+# ℹ 4 more variables: films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;,
+#   heightsize &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <p>There is also the related <code>transmute()</code> function, which <code>mutate()</code>s and <em>keeps only the transformed variables</em>. Therefore, the result is only two columns in the transmuted data frame.</p>
@@ -1210,7 +1216,7 @@ Example
  8 Chandrila        150       150   NA  
  9 Concord Dawn     183       183   79  
 10 Corellia         175       175   78.5
-# … with 39 more rows</code></pre>
+# ℹ 39 more rows</code></pre>
 </div>
 </div>
 </div>
@@ -1300,7 +1306,7 @@ Example
  8 Chandrila        150       150   NA  
  9 Concord Dawn     183       183   79  
 10 Corellia         175       175   78.5
-# … with 39 more rows</code></pre>
+# ℹ 39 more rows</code></pre>
 </div>
 </div>
 </div>
@@ -1339,21 +1345,20 @@ Example
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_sample</span>(starwars, <span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 16
-   name      height  mass hair  skin  eye   birth…¹ sex   gender homew…² species
-   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;  
- 1 C-3PO        167    75 &lt;NA&gt;  gold  yell…     112 none  mascu… Tatooi… Droid  
- 2 Eeth Koth    171    NA black brown brown      NA male  mascu… Iridon… Zabrak 
- 3 Poe Dame…     NA    NA brown light brown      NA male  mascu… &lt;NA&gt;    Human  
- 4 Cordé        157    NA brown light brown      NA fema… femin… Naboo   Human  
- 5 Wilhuff …    180    NA aubu… fair  blue       64 male  mascu… Eriadu  Human  
- 6 Kit Fisto    196    87 none  green black      NA male  mascu… Glee A… Nautol…
- 7 Quarsh P…    183    NA black dark  brown      62 &lt;NA&gt;  &lt;NA&gt;   Naboo   &lt;NA&gt;   
- 8 Rugor Na…    206    NA none  green oran…      NA male  mascu… Naboo   Gungan 
- 9 Cliegg L…    183    NA brown fair  blue       82 male  mascu… Tatooi… Human  
-10 Mas Amed…    196    NA none  blue  blue       NA male  mascu… Champa… Chagri…
-# … with 5 more variables: films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;,
-#   heightsize &lt;dbl&gt;, height.quint &lt;fct&gt;, and abbreviated variable names
-#   ¹​birth_year, ²​homeworld</code></pre>
+   name         height  mass hair  skin  eye   birth_year sex   gender homeworld
+   &lt;chr&gt;         &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;    
+ 1 Darth Vader     202   136 none  white yell…       41.9 male  mascu… Tatooine 
+ 2 San Hill        191    NA none  grey  gold        NA   male  mascu… Muunilin…
+ 3 Bail Presto…    191    NA black tan   brown       67   male  mascu… Alderaan 
+ 4 Mon Mothma      150    NA aubu… fair  blue        48   fema… femin… Chandrila
+ 5 Zam Wesell      168    55 blon… fair… yell…       NA   fema… femin… Zolan    
+ 6 Anakin Skyw…    188    84 blond fair  blue        41.9 male  mascu… Tatooine 
+ 7 Cliegg Lars     183    NA brown fair  blue        82   male  mascu… Tatooine 
+ 8 Sebulba         112    40 none  grey… oran…       NA   male  mascu… Malastare
+ 9 Quarsh Pana…    183    NA black dark  brown       62   &lt;NA&gt;  &lt;NA&gt;   Naboo    
+10 Gregar Typho    185    85 black dark  brown       NA   male  mascu… Naboo    
+# ℹ 6 more variables: species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;,
+#   starships &lt;list&gt;, heightsize &lt;dbl&gt;, height.quint &lt;fct&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -1364,16 +1369,15 @@ Example
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_head</span>(starwars, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 16
-  name       height  mass hair  skin  eye   birth…¹ sex   gender homew…² species
-  &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;  
-1 Yoda           66    17 white green brown     896 male  mascu… &lt;NA&gt;    Yoda's…
-2 Jabba Des…    175  1358 &lt;NA&gt;  gree… oran…     600 herm… mascu… Nal Hu… Hutt   
-3 Chewbacca     228   112 brown unkn… blue      200 male  mascu… Kashyy… Wookiee
-4 C-3PO         167    75 &lt;NA&gt;  gold  yell…     112 none  mascu… Tatooi… Droid  
-5 Dooku         193    80 white fair  brown     102 male  mascu… Serenno Human  
-# … with 5 more variables: films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;,
-#   heightsize &lt;dbl&gt;, height.quint &lt;fct&gt;, and abbreviated variable names
-#   ¹​birth_year, ²​homeworld</code></pre>
+  name  height  mass hair  skin  eye   birth_year sex   gender homeworld species
+  &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;  
+1 Yoda      66    17 white green brown        896 male  mascu… &lt;NA&gt;      Yoda's…
+2 Jabb…    175  1358 &lt;NA&gt;  gree… oran…        600 herm… mascu… Nal Hutta Hutt   
+3 Chew…    228   112 brown unkn… blue         200 male  mascu… Kashyyyk  Wookiee
+4 C-3PO    167    75 &lt;NA&gt;  gold  yell…        112 none  mascu… Tatooine  Droid  
+5 Dooku    193    80 white fair  brown        102 male  mascu… Serenno   Human  
+# ℹ 5 more variables: films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;,
+#   heightsize &lt;dbl&gt;, height.quint &lt;fct&gt;</code></pre>
 </div>
 </div>
 <p>This will show the last 5 rows.</p>
@@ -1381,16 +1385,15 @@ Example
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_tail</span>(starwars, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 16
-  name       height  mass hair  skin  eye   birth…¹ sex   gender homew…² species
-  &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;  
-1 Finn           NA    NA black dark  dark       NA male  mascu… &lt;NA&gt;    Human  
-2 Rey            NA    NA brown light hazel      NA fema… femin… &lt;NA&gt;    Human  
-3 Poe Damer…     NA    NA brown light brown      NA male  mascu… &lt;NA&gt;    Human  
-4 BB8            NA    NA none  none  black      NA none  mascu… &lt;NA&gt;    Droid  
-5 Captain P…     NA    NA unkn… unkn… unkn…      NA &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;   
-# … with 5 more variables: films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;,
-#   heightsize &lt;dbl&gt;, height.quint &lt;fct&gt;, and abbreviated variable names
-#   ¹​birth_year, ²​homeworld</code></pre>
+  name  height  mass hair  skin  eye   birth_year sex   gender homeworld species
+  &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;  
+1 Finn      NA    NA black dark  dark          NA male  mascu… &lt;NA&gt;      Human  
+2 Rey       NA    NA brown light hazel         NA fema… femin… &lt;NA&gt;      Human  
+3 Poe …     NA    NA brown light brown         NA male  mascu… &lt;NA&gt;      Human  
+4 BB8       NA    NA none  none  black         NA none  mascu… &lt;NA&gt;      Droid  
+5 Capt…     NA    NA unkn… unkn… unkn…         NA &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;      &lt;NA&gt;   
+# ℹ 5 more variables: films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;,
+#   heightsize &lt;dbl&gt;, height.quint &lt;fct&gt;</code></pre>
 </div>
 </div>
 </section>
