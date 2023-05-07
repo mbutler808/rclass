@@ -123,7 +123,7 @@ __((F,G),E)__
 describe the same trees, though it might not be easy to tell at first glance. This is generally an issue for any tree representation. While Newick strings are compact and easy to understand, they also don't lend themselves to easy _tree traversal_ (moving up or down the tree). In most analysis software that performs computations along trees, some other representation is used.
 
 
-# NEXUS -- More soon
+# NEXUS 
 
 The NEXUS format (`*.nex` or `*.nxs`) is widely used in bioinformatics. Many phylogenetics programs use nexus format including $PAUP^*$, MrBayes, Mesquite, MacClade, etc., and many more can read nexus.  
 
@@ -285,3 +285,50 @@ The entire content of the `simpletreeouch` object can be dumped to screen using 
 attributes(simpletreeouch)
 ```
 
+# A note about node numbering
+
+### `phylo` (`ape`) node numbers and order
+
+In `ape` the node numbering is implied by the order of rows in the `$egde` matrix. Letʻs make a simple example, a tree with three tips:
+
+Remember in the edge matrix, the first column is the ancestral node (parent), and the second column is the node number.
+
+```{r}
+tree <- rtree(3)
+tree$edge
+plot(tree)
+nodelabels()
+tiplabels()
+```
+The nodes are listed in a rightward tree traversal order. 
+
+### `treedata` (`ggtree`) node numbers and order
+
+In the `treedata` object used by `ggtree`, `treeio`, and `tidytree`, the node numbers are the same (referring to the same nodes and ancestors), but the order that they are stored in is different. _(Also note that `ggtree` plots trees ladderized by default)_.
+
+```{r}
+#| warning: FALSE
+library(treeio)
+library(ggtree)
+td <- as.treedata(tree)
+td %>% as_tibble %>% as.data.frame
+ggtree(td) + 
+     geom_tiplab(hjust=-1) +
+     geom_label(aes(label=node))
+```
+
+Compare `tree$edge` vs `treedata`:
+```{r}
+tree$edge
+td %>% as_tibble %>% as.data.frame
+```
+
+::: callout-warning
+# Combining `phylo` with data and other tree formats
+
+-  **It is important** when combining `phylo` and `treedata` objects to always **match by `node`** (or when only tips are involved, **by `label`**).  
+
+-  If one simply pastes matrices together (e.g., `cbind`), the information will be connected to the wrong node! 
+
+Weʻll cover this in more detail in the next section.
+:::

@@ -260,12 +260,17 @@ div.csl-indent {
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
   <li><a href="#tree-vocabulary" id="toc-tree-vocabulary" class="nav-link" data-scroll-target="#tree-vocabulary">Tree vocabulary</a></li>
   <li><a href="#newick-format" id="toc-newick-format" class="nav-link" data-scroll-target="#newick-format">Newick format</a></li>
-  <li><a href="#nexus-more-soon" id="toc-nexus-more-soon" class="nav-link" data-scroll-target="#nexus-more-soon">NEXUS – More soon</a>
+  <li><a href="#nexus" id="toc-nexus" class="nav-link" data-scroll-target="#nexus">NEXUS</a>
   <ul class="collapse">
   <li><a href="#nexus-syntax" id="toc-nexus-syntax" class="nav-link" data-scroll-target="#nexus-syntax">Nexus syntax:</a></li>
   </ul></li>
   <li><a href="#phylo-ape-5.0-or-above" id="toc-phylo-ape-5.0-or-above" class="nav-link" data-scroll-target="#phylo-ape-5.0-or-above"><code>phylo</code> (<code>ape</code> 5.0 or above)</a></li>
   <li><a href="#ouchtree-ouch-version-2.0-or-above" id="toc-ouchtree-ouch-version-2.0-or-above" class="nav-link" data-scroll-target="#ouchtree-ouch-version-2.0-or-above">ouchtree (<code>ouch</code> version 2.0 or above)</a></li>
+  <li><a href="#a-note-about-node-numbering" id="toc-a-note-about-node-numbering" class="nav-link" data-scroll-target="#a-note-about-node-numbering">A note about node numbering</a>
+  <ul class="collapse">
+  <li><a href="#phylo-ape-node-numbers-and-order" id="toc-phylo-ape-node-numbers-and-order" class="nav-link" data-scroll-target="#phylo-ape-node-numbers-and-order"><code>phylo</code> (<code>ape</code>) node numbers and order</a></li>
+  <li><a href="#treedata-ggtree-node-numbers-and-order" id="toc-treedata-ggtree-node-numbers-and-order" class="nav-link" data-scroll-target="#treedata-ggtree-node-numbers-and-order"><code>treedata</code> (<code>ggtree</code>) node numbers and order</a></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -398,8 +403,8 @@ R packages you will need
 <p><strong>((F,G),E)</strong></p>
 <p>describe the same trees, though it might not be easy to tell at first glance. This is generally an issue for any tree representation. While Newick strings are compact and easy to understand, they also don’t lend themselves to easy <em>tree traversal</em> (moving up or down the tree). In most analysis software that performs computations along trees, some other representation is used.</p>
 </section>
-<section id="nexus-more-soon" class="level1">
-<h1>NEXUS – More soon</h1>
+<section id="nexus" class="level1">
+<h1>NEXUS</h1>
 <p>The NEXUS format (<code>*.nex</code> or <code>*.nxs</code>) is widely used in bioinformatics. Many phylogenetics programs use nexus format including <span class="math inline">\(PAUP^*\)</span>, MrBayes, Mesquite, MacClade, etc., and many more can read nexus.</p>
 <p>One of the key features is that it is very <em>extensible</em> with information in <strong>blocks</strong>. We will only be concerned with blocks of DNA sequence data, but any type of information can be added. This flexibilityy, however, can be a curse when you encounter new extensions to the format that your code did not anticipate. However, for the most part we will be using packages that read in nexus so you can reasonable hope that someone has dealt with the headache for you.</p>
 <p>Nexus files are often used as inputs to phylogenetic programs. In that case, they typically only have a TAXA block and a DATA block. In our IQTREE2 example we also had a partition file in nexus format. But they can also return the output of the phylogenetic reconstruction, in that case they will have a TREES block as well.</p>
@@ -583,9 +588,96 @@ $edge.length
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(simpletreeouch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="a-note-about-node-numbering" class="level1">
+<h1>A note about node numbering</h1>
+<section id="phylo-ape-node-numbers-and-order" class="level3">
+<h3 class="anchored" data-anchor-id="phylo-ape-node-numbers-and-order"><code>phylo</code> (<code>ape</code>) node numbers and order</h3>
+<p>In <code>ape</code> the node numbering is implied by the order of rows in the <code>$egde</code> matrix. Letʻs make a simple example, a tree with three tips:</p>
+<p>Remember in the edge matrix, the first column is the ancestral node (parent), and the second column is the node number.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">rtree</span>(<span class="dv">3</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>tree<span class="sc">$</span>edge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    4    5
+[2,]    5    1
+[3,]    5    2
+[4,]    4    3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nodelabels</span>()</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tiplabels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The nodes are listed in a rightward tree traversal order.</p>
+</section>
+<section id="treedata-ggtree-node-numbers-and-order" class="level3">
+<h3 class="anchored" data-anchor-id="treedata-ggtree-node-numbers-and-order"><code>treedata</code> (<code>ggtree</code>) node numbers and order</h3>
+<p>In the <code>treedata</code> object used by <code>ggtree</code>, <code>treeio</code>, and <code>tidytree</code>, the node numbers are the same (referring to the same nodes and ancestors), but the order that they are stored in is different. <em>(Also note that <code>ggtree</code> plots trees ladderized by default)</em>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(treeio)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtree)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">as.treedata</span>(tree)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>td <span class="sc">%&gt;%</span> as_tibble <span class="sc">%&gt;%</span> as.data.frame</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  parent node branch.length label
+1      5    1    0.07643294    t3
+2      5    2    0.47511996    t2
+3      4    3    0.88937079    t1
+4      4    4            NA  &lt;NA&gt;
+5      4    5    0.02867213  &lt;NA&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(td) <span class="sc">+</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_tiplab</span>(<span class="at">hjust=</span><span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label=</span>node))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Compare <code>tree$edge</code> vs <code>treedata</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tree<span class="sc">$</span>edge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    4    5
+[2,]    5    1
+[3,]    5    2
+[4,]    4    3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>td <span class="sc">%&gt;%</span> as_tibble <span class="sc">%&gt;%</span> as.data.frame</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  parent node branch.length label
+1      5    1    0.07643294    t3
+2      5    2    0.47511996    t2
+3      4    3    0.88937079    t1
+4      4    4            NA  &lt;NA&gt;
+5      4    5    0.02867213  &lt;NA&gt;</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Combining <code>phylo</code> with data and other tree formats
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>It is important</strong> when combining <code>phylo</code> and <code>treedata</code> objects to always <strong>match by <code>node</code></strong> (or when only tips are involved, <strong>by <code>label</code></strong>).</p></li>
+<li><p>If one simply pastes matrices together (e.g., <code>cbind</code>), the information will be connected to the wrong node!</p></li>
+</ul>
+<p>Weʻll cover this in more detail in the next section.</p>
+</div>
+</div>
 
 
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
