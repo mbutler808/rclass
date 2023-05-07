@@ -298,7 +298,7 @@ tree <- rtree(3)
 tree$edge
 plot(tree)
 nodelabels()
-tiplabels()
+tiplabels(adj=c(2))
 ```
 The nodes are listed in a rightward tree traversal order. 
 

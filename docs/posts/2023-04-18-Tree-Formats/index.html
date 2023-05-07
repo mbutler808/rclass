@@ -607,7 +607,7 @@ $edge.length
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nodelabels</span>()</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tiplabels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tiplabels</span>(<span class="at">adj=</span><span class="fu">c</span>(<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -624,11 +624,11 @@ $edge.length
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>td <span class="sc">%&gt;%</span> as_tibble <span class="sc">%&gt;%</span> as.data.frame</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  parent node branch.length label
-1      5    1    0.07643294    t3
-2      5    2    0.47511996    t2
-3      4    3    0.88937079    t1
+1      5    1     0.8941764    t3
+2      5    2     0.8153808    t2
+3      4    3     0.7322952    t1
 4      4    4            NA  &lt;NA&gt;
-5      4    5    0.02867213  &lt;NA&gt;</code></pre>
+5      4    5     0.5673610  &lt;NA&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(td) <span class="sc">+</span> </span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_tiplab</span>(<span class="at">hjust=</span><span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
@@ -650,11 +650,11 @@ $edge.length
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>td <span class="sc">%&gt;%</span> as_tibble <span class="sc">%&gt;%</span> as.data.frame</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  parent node branch.length label
-1      5    1    0.07643294    t3
-2      5    2    0.47511996    t2
-3      4    3    0.88937079    t1
+1      5    1     0.8941764    t3
+2      5    2     0.8153808    t2
+3      4    3     0.7322952    t1
 4      4    4            NA  &lt;NA&gt;
-5      4    5    0.02867213  &lt;NA&gt;</code></pre>
+5      4    5     0.5673610  &lt;NA&gt;</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
