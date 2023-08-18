@@ -4,6 +4,9 @@ description: |
  Schedule and course materials for Data Science in R for Biologists (Zool 710 Spring 2023).
 tbl-colwidths: [15,10, 55, 25]
 ---
+```{r}
+#| echo: false
+```
 
 ## Schedule and course materials
 
