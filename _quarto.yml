@@ -25,9 +25,9 @@ website:
         - text: "Resources"
           href: resources.qmd
       - icon: github
-        href: https://github.com/
+        href: https://github.com/mbutler808
       - icon: twitter
-        href: https://twitter.com
+        href: https://twitter.com/mbutler808
       - icon: rss
         href: index.xml
 format:
@@ -35,6 +35,7 @@ format:
     css: styles.css
     theme: simplex
     toc: true
+    code-link: true
 
 editor: visual
 

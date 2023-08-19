@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.333">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Marguerite Butler">
 <meta name="dcterms.date" content="2023-03-30">
 <meta name="description" content="No measurements are perfect, so quantifying repeatability is important">
-
 <title>ZOOL710 Data Science in R for Biologists - Measurement Error</title>
 <style>
 code{white-space: pre-wrap;}
@@ -78,7 +75,6 @@ div.csl-indent {
   margin-left: 2em;
 }</style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -94,8 +90,7 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -113,20 +108,12 @@ div.csl-indent {
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<link rel="stylesheet" href="../../styles.css">
+}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><link rel="stylesheet" href="../../styles.css">
 </head>
-
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">ZOOL710 Data Science in R for Biologists</span>
@@ -138,7 +125,7 @@ div.csl-indent {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
@@ -146,8 +133,8 @@ div.csl-indent {
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">General Information</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">
+<li>
     <a class="dropdown-item" href="../../syllabus.html" rel="" target="">
  <span class="dropdown-text">Syllabus</span></a>
   </li>  
@@ -156,13 +143,13 @@ div.csl-indent {
  <span class="dropdown-text">Schedule</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Course Materials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">
+<li>
     <a class="dropdown-item" href="../../lectures.html" rel="" target="">
  <span class="dropdown-text">Lectures</span></a>
   </li>  
@@ -175,14 +162,14 @@ div.csl-indent {
  <span class="dropdown-text">Resources</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/mbutler808" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/mbutler808" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -192,15 +179,11 @@ div.csl-indent {
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+<div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Measurement Error</h1>
                   <div>
@@ -249,47 +232,38 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link active" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link active" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#measurement-error-and-repeatability" id="toc-measurement-error-and-repeatability" class="nav-link" data-scroll-target="#measurement-error-and-repeatability">Measurement Error and Repeatability</a>
+  <li>
+<a href="#measurement-error-and-repeatability" id="toc-measurement-error-and-repeatability" class="nav-link" data-scroll-target="#measurement-error-and-repeatability">Measurement Error and Repeatability</a>
   <ul class="collapse">
-  <li><a href="#protocol-for-assessing-me" id="toc-protocol-for-assessing-me" class="nav-link" data-scroll-target="#protocol-for-assessing-me">Protocol for assessing ME</a></li>
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a>
+<li><a href="#protocol-for-assessing-me" id="toc-protocol-for-assessing-me" class="nav-link" data-scroll-target="#protocol-for-assessing-me">Protocol for assessing ME</a></li>
+  <li>
+<a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a>
   <ul class="collapse">
-  <li><a href="#plan-your-data-management" id="toc-plan-your-data-management" class="nav-link" data-scroll-target="#plan-your-data-management">Plan your data management</a></li>
+<li><a href="#plan-your-data-management" id="toc-plan-your-data-management" class="nav-link" data-scroll-target="#plan-your-data-management">Plan your data management</a></li>
   <li><a href="#statistical-methods-for-measurement-error" id="toc-statistical-methods-for-measurement-error" class="nav-link" data-scroll-target="#statistical-methods-for-measurement-error">Statistical methods for Measurement Error:</a></li>
   <li><a href="#analyze-with-anova" id="toc-analyze-with-anova" class="nav-link" data-scroll-target="#analyze-with-anova">Analyze with ANOVA:</a></li>
   <li><a href="#simplifed-simulated-example" id="toc-simplifed-simulated-example" class="nav-link" data-scroll-target="#simplifed-simulated-example">Simplifed Simulated example:</a></li>
-  </ul></li>
-  </ul></li>
   </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</li>
+  </ul>
+</li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<section id="acknowledgements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
 <li><a href="https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/" class="uri">https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/</a></li>
-</ul>
-</section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
+</ul></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -306,12 +280,8 @@ Learning objectives
 </ul>
 </div>
 </div>
-</section>
-<section id="overview" class="level1">
-<h1>Overview</h1>
-</section>
-<section id="measurement-error-and-repeatability" class="level1">
-<h1>Measurement Error and Repeatability</h1>
+</section><section id="overview" class="level1"><h1>Overview</h1>
+</section><section id="measurement-error-and-repeatability" class="level1"><h1>Measurement Error and Repeatability</h1>
 <p>Morphometrics is all about assessing variability, within and between individuals. One of those sources of variability is measurement error.</p>
 <p>Measurement Error (ME) itself comes from many potential sources:</p>
 <ul>
@@ -323,8 +293,7 @@ Learning objectives
 <li>measurement protocol</li>
 </ul>
 <p>We try to minimize ME so that we can reveal the underlying patterns we are interested in, but there will always be some ME. So it is important to quantify at least once at the beginning of the study.</p>
-<section id="protocol-for-assessing-me" class="level2">
-<h2 class="anchored" data-anchor-id="protocol-for-assessing-me">Protocol for assessing ME</h2>
+<section id="protocol-for-assessing-me" class="level2"><h2 class="anchored" data-anchor-id="protocol-for-assessing-me">Protocol for assessing ME</h2>
 <p>The percentage of measurement error is defined as the within-group component of variance divided by the total (within + betwee group) variance <span class="citation" data-cites="Claude:2008">(<a href="#ref-Claude:2008" role="doc-biblioref">Claude 2008</a>)</span>:</p>
 <p><span class="math display">\[
 \%ME = \frac{s^{2}_{within}}{s^{2}_{within} + s^{2}_{among}} \times 100
@@ -337,76 +306,68 @@ s^{2}_{among} = \frac{MSS_{among} - MSS_{within}}{m}
 <p><span class="math display">\[
 s^{2}_{within} = MSS_{within}
 \]</span></p>
-</section>
-<section id="example" class="level2">
-<h2 class="anchored" data-anchor-id="example">Example</h2>
+</section><section id="example" class="level2"><h2 class="anchored" data-anchor-id="example">Example</h2>
 <p>Suppose we are taking photographs of specimens, and then collecting landmark data from the photos. This is a pretty typical data collection pipeline.</p>
 <p>Because we are taking 2D photos from 3D objects, one potential issue is whether the shape variation we obtain is real, or whether it is introduced by placing either the object or the camera at slightly different angles.</p>
 <p>Another potential issue is whether we are placing the digitized landmarks in exactly the same place.</p>
 <p>There may be additional issues as well - for example some small ambiguity on the physical object, or the material or photos may be of different quality.</p>
-<section id="plan-your-data-management" class="level3">
-<h3 class="anchored" data-anchor-id="plan-your-data-management">Plan your data management</h3>
+<section id="plan-your-data-management" class="level3"><h3 class="anchored" data-anchor-id="plan-your-data-management">Plan your data management</h3>
 <p>I always recommend storing your metadata in the filenames. That way you never lose the information.</p>
 <p><strong>Photo files:</strong> A good strategy for data management is to label the photo files: <code>id_picture_replicate.jpg</code></p>
 <p>Where: - <strong>id</strong> refers to the specimen, - <strong>picture</strong> the replicate photo (photo1 or photo2), and - <strong>replicate</strong> the replicate landmark coordinates (rep1 or rep2).</p>
 <p>We can parse the metadata from the filenames by code such as:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>()  <span class="co"># to read the file names from the current drectory</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> files <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"id1_photo1_rep1.jpg"</span>, </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"id1_photo1_rep2.jpg"</span>, </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"id1_photo2_rep1.jpg"</span>, </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"id1_photo2_rep2.jpg"</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                    )  <span class="co"># made up example to practice </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect metadata, approach 1 - substr</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>meta <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(files, <span class="st">"_|</span><span class="sc">\\</span><span class="st">."</span>)  <span class="co"># metadata. split filenames by _ or . </span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                                  <span class="co"># Need to use \\ to escape the .</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">sapply</span>(meta, <span class="st">"[["</span>, <span class="dv">1</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>photo <span class="ot">&lt;-</span> <span class="fu">sapply</span>(meta, <span class="st">"[["</span>, <span class="dv">2</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>rep <span class="ot">&lt;-</span> <span class="fu">sapply</span>(meta, <span class="st">"[["</span>, <span class="dv">3</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect metadata approach 2 - sub</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># using sub and regular expressions to select (string1)_(string2)_(string3)</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># also ignoring the final .jpg, where . is escaped by \\</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">sub</span>(</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(</span><span class="sc">\\</span><span class="st">.jpg)"</span>, </span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, </span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        files</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>photo <span class="ot">&lt;-</span> <span class="fu">sub</span>(</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>         <span class="st">"^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(</span><span class="sc">\\</span><span class="st">.jpg)"</span>, </span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>         <span class="st">"</span><span class="sc">\\</span><span class="st">2"</span>, </span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>         files</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>       )</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>rep <span class="ot">&lt;-</span> <span class="fu">sub</span>(</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>         <span class="st">"^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(</span><span class="sc">\\</span><span class="st">.jpg)"</span>, </span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>         <span class="st">"</span><span class="sc">\\</span><span class="st">3"</span>, </span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>         files</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>       )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># to read the file names from the current drectory</span></span>
+<span><span class="va">files</span> <span class="op">&lt;-</span> <span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"id1_photo1_rep1.jpg"</span>, </span>
+<span>                    <span class="st">"id1_photo1_rep2.jpg"</span>, </span>
+<span>                    <span class="st">"id1_photo2_rep1.jpg"</span>, </span>
+<span>                    <span class="st">"id1_photo2_rep2.jpg"</span></span>
+<span>                    <span class="op">)</span>  <span class="co"># made up example to practice </span></span>
+<span></span>
+<span><span class="co"># Collect metadata, approach 1 - substr</span></span>
+<span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="va">files</span>, <span class="st">"_|\\."</span><span class="op">)</span>  <span class="co"># metadata. split filenames by _ or . </span></span>
+<span>                                  <span class="co"># Need to use \\ to escape the .</span></span>
+<span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">meta</span>, <span class="st">"[["</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">photo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">meta</span>, <span class="st">"[["</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">rep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">meta</span>, <span class="st">"[["</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Collect metadata approach 2 - sub</span></span>
+<span><span class="co"># using sub and regular expressions to select (string1)_(string2)_(string3)</span></span>
+<span><span class="co"># also ignoring the final .jpg, where . is escaped by \\</span></span>
+<span></span>
+<span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span></span>
+<span>        <span class="st">"^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(\\.jpg)"</span>, </span>
+<span>        <span class="st">"\\1"</span>, </span>
+<span>        <span class="va">files</span></span>
+<span>      <span class="op">)</span></span>
+<span><span class="va">photo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span></span>
+<span>         <span class="st">"^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(\\.jpg)"</span>, </span>
+<span>         <span class="st">"\\2"</span>, </span>
+<span>         <span class="va">files</span></span>
+<span>       <span class="op">)</span></span>
+<span><span class="va">rep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span></span>
+<span>         <span class="st">"^([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(\\.jpg)"</span>, </span>
+<span>         <span class="st">"\\3"</span>, </span>
+<span>         <span class="va">files</span></span>
+<span>       <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can use these vectors along with the coordinates to test for measurement error with ANOVA.</p>
-</section>
-<section id="statistical-methods-for-measurement-error" class="level3">
-<h3 class="anchored" data-anchor-id="statistical-methods-for-measurement-error">Statistical methods for Measurement Error:</h3>
+</section><section id="statistical-methods-for-measurement-error" class="level3"><h3 class="anchored" data-anchor-id="statistical-methods-for-measurement-error">Statistical methods for Measurement Error:</h3>
 <p>We will assess measurement error at two levels, photography error and digitizing error:</p>
 <p><strong>Photography error:</strong> Take <strong>two sets of photos</strong>, each time placing the object in front of the camera and positioning the specimen. (I.e., the entire process to give us a good estimate of photo capture error)</p>
 <p><strong>Landmark digitizing error:</strong> Collect landmarks twice, ideally in different sessions on different days or weeks.</p>
 <p><strong>Data:</strong> In this example we will have 4 sets of landmark data for each specimen, 2 photos x 2 digitizing replicates, allowing assessment of error associated with the digitization as well as error in capturing the shapes via the photographs.</p>
 <p><strong>Model:</strong> We will use a <a href="http://www.biostathandbook.com/nestedanova.html">nested ANOVA</a> to estimate repeatability and (measurement error) of the landmarks, to try to separate the variation introduced by the digitization process, apart from the other sources of variation.</p>
-</section>
-<section id="analyze-with-anova" class="level3">
-<h3 class="anchored" data-anchor-id="analyze-with-anova">Analyze with ANOVA:</h3>
+</section><section id="analyze-with-anova" class="level3"><h3 class="anchored" data-anchor-id="analyze-with-anova">Analyze with ANOVA:</h3>
 <p>Nested ANOVA indicates that we have a nested structure of replicates within groups (i.e., <code>rep1</code> of <code>photo1</code> has nothing to do with <code>rep1</code> of <code>photo2</code>. <code>rep</code> is nested within <code>photo</code>.</p>
 <p>In R we specify a nested model forumula <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html">using :</a> in the model term (to indicate interaction terms only with no main effect):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(coords <span class="sc">~</span> id<span class="sc">:</span>photo<span class="sc">:</span>rep)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">coords</span> <span class="op">~</span> <span class="va">id</span><span class="op">:</span><span class="va">photo</span><span class="op">:</span><span class="va">rep</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Data and model term objects:</strong> - <strong>coords</strong> is the data object (a vector or array) - <strong>id</strong> is a vector containing labels for each specimen - <strong>photo</strong> is a vector (photo is 1 or 2) - <strong>rep</strong> is a vector (digitizing replicate 1 or 2)</p>
 <p>Look at the values of the Mean Squares (MS) column in the ANOVA table. Compare the value for <code>id:photo</code> and <code>id:photo:rep</code> with <code>id</code>.</p>
-<section id="repeatability" class="level4">
-<h4 class="anchored" data-anchor-id="repeatability">Repeatability</h4>
+<section id="repeatability" class="level4"><h4 class="anchored" data-anchor-id="repeatability">Repeatability</h4>
 <p>To calculate the <strong>repeatability</strong> of our digitizing ability, we subtract the <strong>MS</strong> of the <strong>rep</strong> term from the <strong>individual</strong> term and divide by <strong>two</strong> (because we have two replicates):</p>
 <center>
 <strong>((MS(id) – MS(id:photo:rep))/2 )</strong>
@@ -416,23 +377,20 @@ s^{2}_{within} = MSS_{within}
 <strong>((MS(id) – MS(id:photo:rep))/2 ) / (MS(id)+MS(id:photo)+MS(id:photo:rep))</strong>
 </center>
 <p>The result is the <strong>repeatability</strong>, which in good circumstances is somewhere above 0.95; and thus 5% <strong>measurement error</strong>.</p>
-</section>
-</section>
-<section id="simplifed-simulated-example" class="level3">
-<h3 class="anchored" data-anchor-id="simplifed-simulated-example">Simplifed Simulated example:</h3>
+</section></section><section id="simplifed-simulated-example" class="level3"><h3 class="anchored" data-anchor-id="simplifed-simulated-example">Simplifed Simulated example:</h3>
 <p>Simplifed example: 20 specimens, 1 photo, 2 digitzing reps:</p>
 <p>20 specimens: (single measurement dataset). 2 repetitons: Digitize each photo twice (once in each of two sessions on different days).<br>
 How repeatable are the measurements?</p>
 <p>Simulate the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>true_m <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">20</span>,<span class="dv">3</span>)  <span class="co"># true values for  specimens</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> true_m <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">0</span>,<span class="fl">0.5</span>)  <span class="co"># measurement 1</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> true_m <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">0</span>,<span class="fl">0.5</span>)  <span class="co"># measurement 2</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">times=</span><span class="dv">2</span>))</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>rep <span class="ot">&lt;-</span> <span class="fu">gl</span>(<span class="dv">2</span>, <span class="dv">20</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>total_m <span class="ot">&lt;-</span> <span class="fu">c</span>(m1, m2)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(id, total_m, rep)  <span class="co"># the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">true_m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">20</span>,<span class="fl">3</span><span class="op">)</span>  <span class="co"># true values for  specimens</span></span>
+<span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="va">true_m</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">0</span>,<span class="fl">0.5</span><span class="op">)</span>  <span class="co"># measurement 1</span></span>
+<span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="va">true_m</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">0</span>,<span class="fl">0.5</span><span class="op">)</span>  <span class="co"># measurement 2</span></span>
+<span></span>
+<span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, times<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">rep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/gl.html">gl</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">20</span><span class="op">)</span></span>
+<span><span class="va">total_m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">total_m</span>, <span class="va">rep</span><span class="op">)</span>  <span class="co"># the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      id  total_m rep
  [1,]  1 24.15721   1
@@ -479,7 +437,7 @@ How repeatable are the measurements?</p>
 </div>
 <p>Is there a difference between the measurement sessions?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(<span class="fu">lm</span> ( total_m <span class="sc">~</span> rep)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span> <span class="op">(</span> <span class="va">total_m</span> <span class="op">~</span> <span class="va">rep</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
 rep          1   0.01   0.014   0.002  0.962
@@ -489,8 +447,8 @@ Residuals   38 230.77   6.073               </code></pre>
 <p>No (<em>thatʻs good!</em>)</p>
 <p>Is there a difference between individual specimens?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">aov</span>(<span class="fu">lm</span>( total_m <span class="sc">~</span> id )))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span> <span class="va">total_m</span> <span class="op">~</span> <span class="va">id</span> <span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">mod</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 id          19 228.00  12.000   86.17 3.82e-15 ***
@@ -501,15 +459,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>Yes, and the resigual mean squared error looks small too (good!). How big is the measurement error?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>s2_within <span class="ot">&lt;-</span> ms_within <span class="ot">&lt;-</span> mod[[<span class="dv">1</span>]][<span class="dv">2</span>,<span class="dv">3</span>]</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>s2_within</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">s2_within</span> <span class="op">&lt;-</span> <span class="va">ms_within</span> <span class="op">&lt;-</span> <span class="va">mod</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">]</span></span>
+<span><span class="va">s2_within</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1392685</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ms_among <span class="ot">&lt;-</span> mod[[<span class="dv">1</span>]][<span class="dv">1</span>,<span class="dv">3</span>]</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>s2_among <span class="ot">&lt;-</span> (ms_among<span class="sc">-</span>ms_within)<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ME <span class="ot">&lt;-</span> s2_within<span class="sc">/</span>(s2_within<span class="sc">+</span>s2_among) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>ME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ms_among</span> <span class="op">&lt;-</span> <span class="va">mod</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">]</span></span>
+<span><span class="va">s2_among</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">ms_among</span><span class="op">-</span><span class="va">ms_within</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span><span class="va">ME</span> <span class="op">&lt;-</span> <span class="va">s2_within</span><span class="op">/</span><span class="op">(</span><span class="va">s2_within</span><span class="op">+</span><span class="va">s2_among</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span></span>
+<span><span class="va">ME</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.294503</code></pre>
 </div>
@@ -518,16 +476,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 
 
 
-</section>
-</section>
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+</section></section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-Claude:2008" class="csl-entry" role="listitem">
 Claude, Julien. 2008. <em>Morphometrics with r</em>. 1. Aufl. New York, NY: Springer-Verlag.
 </div>
-</div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");

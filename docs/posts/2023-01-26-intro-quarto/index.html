@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.333">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Marguerite Butler">
 <meta name="dcterms.date" content="2023-01-26">
 <meta name="description" content="Introduction to literate statistical programming tools including Quarto Markdown">
-
 <title>ZOOL710 Data Science in R for Biologists - Literate Statistical Programming and Quarto</title>
 <style>
 code{white-space: pre-wrap;}
@@ -59,7 +56,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -75,8 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -94,18 +89,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-
-<link rel="stylesheet" href="../../styles.css">
+}</script><link rel="stylesheet" href="../../styles.css">
 </head>
-
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">ZOOL710 Data Science in R for Biologists</span>
@@ -117,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
@@ -125,8 +114,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">General Information</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">
+<li>
     <a class="dropdown-item" href="../../syllabus.html" rel="" target="">
  <span class="dropdown-text">Syllabus</span></a>
   </li>  
@@ -135,13 +124,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Schedule</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Course Materials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">
+<li>
     <a class="dropdown-item" href="../../lectures.html" rel="" target="">
  <span class="dropdown-text">Lectures</span></a>
   </li>  
@@ -154,14 +143,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Resources</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/mbutler808" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/mbutler808" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -171,15 +160,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+<div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Literate Statistical Programming and Quarto</h1>
                   <div>
@@ -227,71 +212,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#pre-lecture-materials" id="toc-pre-lecture-materials" class="nav-link active" data-scroll-target="#pre-lecture-materials">Pre-lecture materials</a>
+<li>
+<a href="#pre-lecture-materials" id="toc-pre-lecture-materials" class="nav-link active" data-scroll-target="#pre-lecture-materials">Pre-lecture materials</a>
   <ul class="collapse">
-  <li><a href="#read-ahead" id="toc-read-ahead" class="nav-link" data-scroll-target="#read-ahead">Read ahead</a></li>
+<li><a href="#read-ahead" id="toc-read-ahead" class="nav-link" data-scroll-target="#read-ahead">Read ahead</a></li>
   <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
-  </ul></li>
+  </ul>
+</li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
   <li><a href="#literate-programming" id="toc-literate-programming" class="nav-link" data-scroll-target="#literate-programming">Literate Programming</a></li>
   <li><a href="#the-data-science-pipeline" id="toc-the-data-science-pipeline" class="nav-link" data-scroll-target="#the-data-science-pipeline">The Data Science Pipeline</a></li>
-  <li><a href="#literate-programming-in-practice" id="toc-literate-programming-in-practice" class="nav-link" data-scroll-target="#literate-programming-in-practice">Literate Programming in Practice</a>
+  <li>
+<a href="#literate-programming-in-practice" id="toc-literate-programming-in-practice" class="nav-link" data-scroll-target="#literate-programming-in-practice">Literate Programming in Practice</a>
   <ul class="collapse">
-  <li><a href="#weaving-and-tangling" id="toc-weaving-and-tangling" class="nav-link" data-scroll-target="#weaving-and-tangling">Weaving and Tangling</a></li>
+<li><a href="#weaving-and-tangling" id="toc-weaving-and-tangling" class="nav-link" data-scroll-target="#weaving-and-tangling">Weaving and Tangling</a></li>
   <li><a href="#sweave" id="toc-sweave" class="nav-link" data-scroll-target="#sweave">Sweave</a></li>
-  <li><a href="#rmarkdown" id="toc-rmarkdown" class="nav-link" data-scroll-target="#rmarkdown">rmarkdown</a>
+  <li>
+<a href="#rmarkdown" id="toc-rmarkdown" class="nav-link" data-scroll-target="#rmarkdown">rmarkdown</a>
   <ul class="collapse">
-  <li><a href="#knitr" id="toc-knitr" class="nav-link" data-scroll-target="#knitr">knitr</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#in-comes-quarto" id="toc-in-comes-quarto" class="nav-link" data-scroll-target="#in-comes-quarto">In comes Quarto</a>
+<li><a href="#knitr" id="toc-knitr" class="nav-link" data-scroll-target="#knitr">knitr</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#in-comes-quarto" id="toc-in-comes-quarto" class="nav-link" data-scroll-target="#in-comes-quarto">In comes Quarto</a>
   <ul class="collapse">
-  <li><a href="#create-your-website-locally-with-quarto" id="toc-create-your-website-locally-with-quarto" class="nav-link" data-scroll-target="#create-your-website-locally-with-quarto">Create your website locally with Quarto</a>
+<li>
+<a href="#create-your-website-locally-with-quarto" id="toc-create-your-website-locally-with-quarto" class="nav-link" data-scroll-target="#create-your-website-locally-with-quarto">Create your website locally with Quarto</a>
   <ul class="collapse">
-  <li><a href="#make-your-website-directory-and-template" id="toc-make-your-website-directory-and-template" class="nav-link" data-scroll-target="#make-your-website-directory-and-template">Make your website directory and template</a></li>
+<li><a href="#make-your-website-directory-and-template" id="toc-make-your-website-directory-and-template" class="nav-link" data-scroll-target="#make-your-website-directory-and-template">Make your website directory and template</a></li>
   <li><a href="#render-your-website-to-html" id="toc-render-your-website-to-html" class="nav-link" data-scroll-target="#render-your-website-to-html">Render your website to html</a></li>
   <li><a href="#personalize-your-content" id="toc-personalize-your-content" class="nav-link" data-scroll-target="#personalize-your-content">Personalize your content</a></li>
-  </ul></li>
-  <li><a href="#publishing-your-website-to-github" id="toc-publishing-your-website-to-github" class="nav-link" data-scroll-target="#publishing-your-website-to-github">Publishing your website to GitHub</a>
+  </ul>
+</li>
+  <li>
+<a href="#publishing-your-website-to-github" id="toc-publishing-your-website-to-github" class="nav-link" data-scroll-target="#publishing-your-website-to-github">Publishing your website to GitHub</a>
   <ul class="collapse">
-  <li><a href="#render-your-html-to-docs" id="toc-render-your-html-to-docs" class="nav-link" data-scroll-target="#render-your-html-to-docs">Render your html to <code>docs</code></a></li>
+<li><a href="#render-your-html-to-docs" id="toc-render-your-html-to-docs" class="nav-link" data-scroll-target="#render-your-html-to-docs">Render your html to <code>docs</code></a></li>
   <li><a href="#supress-github-jekyll-html-processing" id="toc-supress-github-jekyll-html-processing" class="nav-link" data-scroll-target="#supress-github-jekyll-html-processing">Supress GitHub <code>jekyll</code> html processing</a></li>
   <li><a href="#setup-a-github-repo-for-your-website" id="toc-setup-a-github-repo-for-your-website" class="nav-link" data-scroll-target="#setup-a-github-repo-for-your-website">Setup a GitHub repo for your website</a></li>
   <li><a href="#github-settings-to-serve-your-webpage" id="toc-github-settings-to-serve-your-webpage" class="nav-link" data-scroll-target="#github-settings-to-serve-your-webpage">GitHub settings to serve your webpage</a></li>
-  </ul></li>
+  </ul>
+</li>
   <li><a href="#now-make-more-changes" id="toc-now-make-more-changes" class="nav-link" data-scroll-target="#now-make-more-changes">Now make more changes!</a></li>
   <li><a href="#for-fun" id="toc-for-fun" class="nav-link" data-scroll-target="#for-fun">For fun</a></li>
   <li><a href="#final-tips" id="toc-final-tips" class="nav-link" data-scroll-target="#final-tips">Final tips</a></li>
-  </ul></li>
-  <li><a href="#post-lecture-materials" id="toc-post-lecture-materials" class="nav-link" data-scroll-target="#post-lecture-materials">Post-lecture materials</a>
+  </ul>
+</li>
+  <li>
+<a href="#post-lecture-materials" id="toc-post-lecture-materials" class="nav-link" data-scroll-target="#post-lecture-materials">Post-lecture materials</a>
   <ul class="collapse">
-  <li><a href="#final-questions" id="toc-final-questions" class="nav-link" data-scroll-target="#final-questions">Final Questions</a></li>
+<li><a href="#final-questions" id="toc-final-questions" class="nav-link" data-scroll-target="#final-questions">Final Questions</a></li>
   <li><a href="#questions-1" id="toc-questions-1" class="nav-link" data-scroll-target="#questions-1">Questions</a></li>
   <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a></li>
-  </ul></li>
   </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<!-- Add interesting quote -->
-<section id="pre-lecture-materials" class="level1">
-<h1>Pre-lecture materials</h1>
-<section id="read-ahead" class="level2">
-<h2 class="anchored" data-anchor-id="read-ahead">Read ahead</h2>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><!-- Add interesting quote --><section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
+<section id="read-ahead" class="level2"><h2 class="anchored" data-anchor-id="read-ahead">Read ahead</h2>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -305,25 +292,21 @@ Read ahead
 <p><strong>Before class, you can prepare by reading the following materials:</strong></p>
 <ol type="1">
 <li><a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522" class="uri">https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522</a></li>
-<li>Creating a Website in Quarto quickstart <em>up to and including Render</em> <a href="https://quarto.org/docs/websites/" class="uri">https://quarto.org/docs/websites/</a></li>
-<li>Publishing to GitHub <em>up to and including Render to docs</em> <a href="https://quarto.org/docs/publishing/github-pages.html" class="uri">https://quarto.org/docs/publishing/github-pages.html</a></li>
+<li>Creating a Website in Quarto quickstart <em>up to and including Render</em> <a href="https://quarto.org/docs/websites/" class="uri">https://quarto.org/docs/websites/</a>
+</li>
+<li>Publishing to GitHub <em>up to and including Render to docs</em> <a href="https://quarto.org/docs/publishing/github-pages.html" class="uri">https://quarto.org/docs/publishing/github-pages.html</a>
+</li>
 </ol>
 </div>
 </div>
-</section>
-<section id="acknowledgements" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+</section><section id="acknowledgements" class="level2"><h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
 <li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-01-literate-programming/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-01-literate-programming/</a></li>
 <li><a href="http://users.stat.umn.edu/~geyer/Sweave/" class="uri">http://users.stat.umn.edu/~geyer/Sweave/</a></li>
 <li><a href="https://rdpeng.github.io/Biostat776/lecture-literate-statistical-programming.html" class="uri">https://rdpeng.github.io/Biostat776/lecture-literate-statistical-programming.html</a></li>
 <li><a href="https://statsandr.com/blog/tips-and-tricks-in-rstudio-and-r-markdown" class="uri">https://statsandr.com/blog/tips-and-tricks-in-rstudio-and-r-markdown</a></li>
-</ul>
-</section>
-</section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
+</ul></section></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -342,9 +325,7 @@ Learning objectives
 </ul>
 </div>
 </div>
-</section>
-<section id="literate-programming" class="level1">
-<h1>Literate Programming</h1>
+</section><section id="literate-programming" class="level1"><h1>Literate Programming</h1>
 <p>Before there was widespread concern about “Reproducible Research”, the term <strong>literate programming</strong> was coined by <a href="https://www-cs-faculty.stanford.edu/~knuth/">Donald Knuth</a>, one of the true geniuses of computing, the author/inventor of TeX, and the notion of structured programming, among other things. He wrote a book about it in 1984!</p>
 <blockquote class="blockquote">
 <p>Literate programming is a methodology that combines a programming language with a documentation language, thereby making programs more robust, more portable, more easily maintained, and arguably more fun to write than programs that are written only in a high-level language.</p>
@@ -370,24 +351,19 @@ Additional Reading
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Knuthʻs Webpage about his <a href="https://www-cs-faculty.stanford.edu/~knuth/lp.html">book on Literate Programming</a></li>
+<li>Knuthʻs Webpage about his <a href="https://www-cs-faculty.stanford.edu/~knuth/lp.html">book on Literate Programming</a>
+</li>
 </ul>
 </div>
 </div>
-</section>
-<section id="the-data-science-pipeline" class="level1">
-<h1>The Data Science Pipeline</h1>
+</section><section id="the-data-science-pipeline" class="level1"><h1>The Data Science Pipeline</h1>
 <p>The basic issue is when you read a description of a data analysis, such as in an article or a technical report, for the most part, what you get is the report and nothing else.</p>
 <p>Of course, everyone knows that behind the scenes <strong>there’s a lot that went into this article</strong> and that is what I call the <strong>data science pipeline</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/dspipeline.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">The Data Science Pipeline</figcaption>
-</figure>
+<figure class="figure"><p><img src="../../images/dspipeline.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">The Data Science Pipeline</figcaption></figure>
 </div>
-</section>
-<section id="literate-programming-in-practice" class="level1">
-<h1>Literate Programming in Practice</h1>
+</section><section id="literate-programming-in-practice" class="level1"><h1>Literate Programming in Practice</h1>
 <p>One basic idea to make writing reproducible reports easier is what’s known as <em>literate statistical programming</em>. The idea is to <strong>think of a report or a publication as a stream of text and code</strong>.</p>
 <ul>
 <li><p>The text is readable by people and the code is readable by computers.</p></li>
@@ -397,14 +373,11 @@ Additional Reading
 <li><p><strong>The code and text remain together</strong> in a single source document. No more separate analysis files and word processing files. When code is edited, the report is automatically generated and updated.</p></li>
 </ul>
 <p>There might also be <strong>presentation code</strong> that formats tables and figures and there’s article text that explains what’s going on around all this code. This stream of text and code is a literate statistical program or a literate statistical analysis.</p>
-<section id="weaving-and-tangling" class="level2">
-<h2 class="anchored" data-anchor-id="weaving-and-tangling">Weaving and Tangling</h2>
+<section id="weaving-and-tangling" class="level2"><h2 class="anchored" data-anchor-id="weaving-and-tangling">Weaving and Tangling</h2>
 <p>Literate programs by themselves are a bit difficult to work with, but they can be processed in two important ways.</p>
 <p>Literate programs can be <strong>weaved</strong> to produce human readable documents like PDFs or HTML web pages, and they can <strong>tangled</strong> to produce machine-readable “documents”, or in other words, machine readable code.</p>
 <p>In order to use a system like this you need a documentational language, that’s human readable, and you need a programming language that’s machine readable (or can be compiled/interpreted into something that’s machine readable).</p>
-</section>
-<section id="sweave" class="level2">
-<h2 class="anchored" data-anchor-id="sweave">Sweave</h2>
+</section><section id="sweave" class="level2"><h2 class="anchored" data-anchor-id="sweave">Sweave</h2>
 <p>One of the original literate programming systems in R that was designed to do this was called Sweave written by <a href="https://documents.uow.edu.au/content/groups/public/@web/@commerce/documents/doc/uow012868.pdf">Friedrich Leisch</a>. Sweave enables users to combine R code with a documentation program called LaTeX. Sweave revolutionized coding, and has become part of the R base code. Leisch is on the R Core Development Team and the BioConductor Project.</p>
 <p><strong>Sweave files ends a <code>.Rnw</code></strong> and have R code weaved through the document:</p>
 <pre><code>&lt;&lt;plot1, height=4, width=5, eval=FALSE&gt;&gt;=
@@ -419,15 +392,11 @@ plot(airquality$Ozone ~ airquality$Wind)
 <li>Sweave also <strong>lacks a lot of features that people find useful</strong> like caching, and multiple plots per page and mixing programming languages.</li>
 </ul>
 <p>Instead, folks have moved towards using something called <strong>knitr</strong>, which offers everything Sweave does, plus it extends it to much simpler Markdown documents.</p>
-</section>
-<section id="rmarkdown" class="level2">
-<h2 class="anchored" data-anchor-id="rmarkdown">rmarkdown</h2>
+</section><section id="rmarkdown" class="level2"><h2 class="anchored" data-anchor-id="rmarkdown">rmarkdown</h2>
 <p>Another choice for literate programming is to build documents based on <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> language. A markdown file is a plain text file that is typically given the extension <code>.md</code>. The <a href="https://CRAN.R-project.org/package=rmarkdown"><code>rmarkdown</code></a> R package takes a R Markdown file (<code>.Rmd</code>) and weaves together R code chunks <a href="#fig-rmarkdown">Figure&nbsp;1</a>, producing a large number of user-specified outputs.</p>
 <div id="fig-rmarkdown" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="../../images/Rmarkdown.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;1: R markdown translates text and code to many different formats</figcaption>
-</figure>
+<figure class="figure"><p><img src="../../images/Rmarkdown.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: R markdown translates text and code to many different formats</figcaption></figure>
 </div>
 <p>R chunks surrounded by text looks like this:</p>
 <pre><code>```{r plot1, height=4, width=5, eval=FALSE, echo=TRUE}
@@ -460,8 +429,8 @@ Tip
 </div>
 <p>Because this is lecture is built in a <code>.qmd</code> file (which is very similar to a <code>.Rmd</code> file), let’s demonstrate how this work. I am going to change <code>eval=FALSE</code> to <code>eval=TRUE</code>.</p>
 <div class="cell" height="4" width="5">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(airquality)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(airquality<span class="sc">$</span>Ozone <span class="sc">~</span> airquality<span class="sc">$</span>Wind)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">airquality</span><span class="op">$</span><span class="va">Wind</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/plot2-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -484,10 +453,13 @@ Questions
 </div>
 <p>Before we leave this section, I find that there is quite a bit of terminology to understand the magic behind <code>rmarkdown</code> that can be confusing, so let’s break it down:</p>
 <ul>
-<li><a href="https://pandoc.org">Pandoc</a>. Pandoc is a command line tool with no GUI that converts documents (e.g.&nbsp;from number of different markup formats to many other formats, such as .doc, .pdf etc). It is completely independent from R (but does come bundled with RStudio). If you donʻt have Rstudio installed, you will have to install <code>pandoc</code>.</li>
-<li><a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> (<strong>markup language</strong>). Markdown is a lightweight <a href="https://en.wikipedia.org/wiki/Markup_language">markup language</a> with plain text formatting syntax designed so that it can be converted to HTML and many other formats. A markdown file is a plain text file that is typically given the extension <code>.md.</code> It is completely independent from R.</li>
+<li>
+<a href="https://pandoc.org">Pandoc</a>. Pandoc is a command line tool with no GUI that converts documents (e.g.&nbsp;from number of different markup formats to many other formats, such as .doc, .pdf etc). It is completely independent from R (but does come bundled with RStudio). If you donʻt have Rstudio installed, you will have to install <code>pandoc</code>.</li>
+<li>
+<a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> (<strong>markup language</strong>). Markdown is a lightweight <a href="https://en.wikipedia.org/wiki/Markup_language">markup language</a> with plain text formatting syntax designed so that it can be converted to HTML and many other formats. A markdown file is a plain text file that is typically given the extension <code>.md.</code> It is completely independent from R.</li>
 <li>R Markdown (<strong>markup language</strong>). R Markdown is an extension of the markdown syntax for weaving together text with R code. R Markdown files are plain text files that typically have the file extension <code>.Rmd</code>.</li>
-<li><a href="https://CRAN.R-project.org/package=rmarkdown"><code>rmarkdown</code></a> (<strong>R package</strong>). The R package <code>rmarkdown</code> is a library that uses pandoc to process and convert text and R code written in <code>.Rmd</code> files into a number of different formats. This core function is <code>rmarkdown::render()</code>. <strong>Note</strong>: this package only deals with the markdown language. If the input file is e.g.&nbsp;<code>.Rhtml</code> or <code>.Rnw</code>, then you need to use <code>knitr</code> prior to calling pandoc (see below).</li>
+<li>
+<a href="https://CRAN.R-project.org/package=rmarkdown"><code>rmarkdown</code></a> (<strong>R package</strong>). The R package <code>rmarkdown</code> is a library that uses pandoc to process and convert text and R code written in <code>.Rmd</code> files into a number of different formats. This core function is <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">rmarkdown::render()</a></code>. <strong>Note</strong>: this package only deals with the markdown language. If the input file is e.g.&nbsp;<code>.Rhtml</code> or <code>.Rnw</code>, then you need to use <code>knitr</code> prior to calling pandoc (see below).</li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -506,19 +478,18 @@ Tip
 </div>
 </div>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/rmarkdown_rockstar.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Artwork by Allison Horst on RMarkdown</figcaption>
-</figure>
+<figure class="figure"><p><img src="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/rmarkdown_rockstar.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Artwork by Allison Horst on RMarkdown</figcaption></figure>
 </div>
-<section id="knitr" class="level3">
-<h3 class="anchored" data-anchor-id="knitr">knitr</h3>
+<section id="knitr" class="level3"><h3 class="anchored" data-anchor-id="knitr">knitr</h3>
 <p>One of the alternative that has come up in recent times is something called <code>knitr</code>.</p>
 <ul>
 <li>The <code>knitr</code> package for R takes a lot of these ideas of literate programming and updates and improves upon them.</li>
-<li><code>knitr</code> still uses R as its programming language, but it allows you to mix other programming languages in.</li>
+<li>
+<code>knitr</code> still uses R as its programming language, but it allows you to mix other programming languages in.</li>
 <li>You can also use a variety of documentation languages now, such as LaTeX, markdown and HTML.</li>
-<li><code>knitr</code> was developed by Yihui Xie while he was a graduate student at Iowa State and it has become a very popular package for writing literate statistical programs.</li>
+<li>
+<code>knitr</code> was developed by Yihui Xie while he was a graduate student at Iowa State and it has become a very popular package for writing literate statistical programs.</li>
 </ul>
 <p>Knitr takes a plain text document with embedded code, executes the code and ‘knits’ the results back into the document.</p>
 <p>For for example, it converts</p>
@@ -527,7 +498,7 @@ Tip
 <li>An <code>.Rnw</code> (Sweave) file into to <code>.tex</code> format.</li>
 <li>An <code>.Rhtml</code> file into to <code>.html</code>.</li>
 </ul>
-<p>The core function is <code>knitr::knit()</code> and by default this will look at the input document and try and guess what type it is e.g.&nbsp;<code>Rnw</code>, <code>Rmd</code> etc.</p>
+<p>The core function is <code><a href="https://rdrr.io/pkg/knitr/man/knit.html">knitr::knit()</a></code> and by default this will look at the input document and try and guess what type it is e.g.&nbsp;<code>Rnw</code>, <code>Rmd</code> etc.</p>
 <p>This core function performs three roles:</p>
 <ul>
 <li>A <strong>source parser</strong>, which looks at the input document and detects which parts are code that the user wants to be evaluated.</li>
@@ -537,10 +508,8 @@ Tip
 <div class="cell" data-layout-align="center" data-preview="true">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://d33wubrfki0l68.cloudfront.net/61d189fd9cdf955058415d3e1b28dd60e1bd7c9b/9791d/images/rmarkdownflow.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<figcaption class="figure-caption">Converting a Rmd file to many outputs using knitr and pandoc</figcaption>
-</figure>
+<figure class="figure"><p><img src="https://d33wubrfki0l68.cloudfront.net/61d189fd9cdf955058415d3e1b28dd60e1bd7c9b/9791d/images/rmarkdownflow.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption class="figure-caption">Converting a Rmd file to many outputs using knitr and pandoc</figcaption></figure>
 </div>
 </div>
 </div>
@@ -551,11 +520,7 @@ Tip
 <p>“R Markdown stands on the shoulders of knitr and Pandoc. The former executes the computer code embedded in Markdown, and converts R Markdown to Markdown. The latter renders Markdown to the output format you want (such as PDF, HTML, Word, and so on).”</p>
 </blockquote>
 <p>[<a href="https://bookdown.org/yihui/rmarkdown/">Source</a>]</p>
-</section>
-</section>
-</section>
-<section id="in-comes-quarto" class="level1">
-<h1>In comes Quarto</h1>
+</section></section></section><section id="in-comes-quarto" class="level1"><h1>In comes Quarto</h1>
 <p>The folks who developed R Markdown have moved on to a new package called <a href="https://quarto.org">Quarto</a>. Quarto contains many of the features of R Markdown, but importantly, is now separate from Rstudio. It is intentionally developed as a cross-platform, cross-language markup language. It works with R, Python, Julia, and Observable. And is rapidly catching on with the statistical coding community.</p>
 <p>Quarto can render output to many formats of documents including html, pdf, docx, md. It can also layout websites, presentations, or even books. It supports interactive apps such as Rshiny among other things.</p>
 <p>We are going to learn using Quarto. Letʻs start by getting a simple webpage up. Conceptually, there are three tasks:</p>
@@ -564,17 +529,19 @@ Tip
 <li>Make your website folder into a GitHub repo</li>
 <li>Publish your website via GitHub</li>
 </ol>
-<section id="create-your-website-locally-with-quarto" class="level2">
-<h2 class="anchored" data-anchor-id="create-your-website-locally-with-quarto">Create your website locally with Quarto</h2>
+<section id="create-your-website-locally-with-quarto" class="level2"><h2 class="anchored" data-anchor-id="create-your-website-locally-with-quarto">Create your website locally with Quarto</h2>
 <p>In this section, I am adding a bit more explanation to the Quarto quickstart guide <em>up to and including Render</em>. If something is not clear, please consult <a href="https://quarto.org/docs/websites/" class="uri">https://quarto.org/docs/websites/</a></p>
 <p>There are three main quarto commands we will use:</p>
 <ul>
-<li><code>quarto create-project</code>: Make a website project template</li>
-<li><code>quarto preview</code>: Take a look at what the webite will look like</li>
-<li><code>quarto render</code>: Render your <code>qmd</code> to <code>html</code></li>
+<li>
+<code>quarto create-project</code>: Make a website project template</li>
+<li>
+<code>quarto preview</code>: Take a look at what the webite will look like</li>
+<li>
+<code>quarto render</code>: Render your <code>qmd</code> to <code>html</code>
+</li>
 </ul>
-<section id="make-your-website-directory-and-template" class="level3">
-<h3 class="anchored" data-anchor-id="make-your-website-directory-and-template">Make your website directory and template</h3>
+<section id="make-your-website-directory-and-template" class="level3"><h3 class="anchored" data-anchor-id="make-your-website-directory-and-template">Make your website directory and template</h3>
 <p>Create your website (here called <code>mysite</code>) using the following command. It will make a directory of the same name and put the website contents within it.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -584,10 +551,8 @@ Tip
 </div>
 <p>You should now see the following files in your <code>mysite</code> directory (<a href="#fig-webshell">Figure&nbsp;2</a>):</p>
 <div id="fig-webshell" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="../../images/quarto_web_shell_terminal.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;2: Website files from the Terminal view</figcaption>
-</figure>
+<figure class="figure"><p><img src="../../images/quarto_web_shell_terminal.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Website files from the Terminal view</figcaption></figure>
 </div>
 <p>This is the bare-bones version of your website. Check that the code is functional by looking at a preview:</p>
 <div class="code-with-filename">
@@ -608,15 +573,15 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><code>quarto preview</code> will refresh the preview every time you save your <code>index.qmd</code> (or any) website files. So itʻs a good idea to keep the preview open as you make edits and saves.</li>
+<li>
+<code>quarto preview</code> will refresh the preview every time you save your <code>index.qmd</code> (or any) website files. So itʻs a good idea to keep the preview open as you make edits and saves.</li>
 <li>Check every edit, it is easier to debug in small steps.</li>
-<li>Terminate <code>quarto preview</code> with <code>Control-c</code></li>
+<li>Terminate <code>quarto preview</code> with <code>Control-c</code>
+</li>
 </ul>
 </div>
 </div>
-</section>
-<section id="render-your-website-to-html" class="level3">
-<h3 class="anchored" data-anchor-id="render-your-website-to-html">Render your website to html</h3>
+</section><section id="render-your-website-to-html" class="level3"><h3 class="anchored" data-anchor-id="render-your-website-to-html">Render your website to html</h3>
 <p>Use quarto to render your content to html, the format used by browsers. First navigate into your website directory then render:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -627,17 +592,13 @@ Tip
 </div>
 <p>Take a look at the <code>mysite</code> contents after rendering, you should see a new directory <code>_site</code> (<a href="#fig-afterrender">Figure&nbsp;3</a>). The html was rendered and put in there (go ahead, open up the files and check it out):</p>
 <div id="fig-afterrender" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="../../images/quarto_web_rendered.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;3: Website files after rendering</figcaption>
-</figure>
+<figure class="figure"><p><img src="../../images/quarto_web_rendered.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Website files after rendering</figcaption></figure>
 </div>
-</section>
-<section id="personalize-your-content" class="level3">
-<h3 class="anchored" data-anchor-id="personalize-your-content">Personalize your content</h3>
+</section><section id="personalize-your-content" class="level3"><h3 class="anchored" data-anchor-id="personalize-your-content">Personalize your content</h3>
 <p>What is really nice is that you can personalize your website by simply editing the quarto markdown and yaml files.</p>
-<section id="web-content-goes-in-.qmd" class="level4">
-<h4 class="anchored" data-anchor-id="web-content-goes-in-.qmd">Web content goes in <code>.qmd</code></h4>
+<section id="web-content-goes-in-.qmd" class="level4"><h4 class="anchored" data-anchor-id="web-content-goes-in-.qmd">Web content goes in <code>.qmd</code>
+</h4>
 <p>Using any text editor, edit the <code>index.qmd</code> to personalize your website.</p>
 <p>The first section of your <code>index.qmd</code> is the header. You can change the title and add additional header information, including any cover images and website templates.</p>
 <p>For example this is what I have in my course website <code>index.qmd</code> header. Note that my cover image is in a folder called <code>images</code> within at the top level of my website directory. If you want to try this out substitute or remove the image line and change the twitter/github handles.</p>
@@ -676,13 +637,13 @@ Tip
 <ul>
 <li>When editing markdown, take care to note spaces and indents as they are interpreted for formatting.</li>
 <li>Indentations are really important for formatting lists.</li>
-<li>For example in a hyperlink, there is no space between the square brackets and parentheses. <code>[This is a cool link](http://mycoollink.com)</code></li>
+<li>For example in a hyperlink, there is no space between the square brackets and parentheses. <code>[This is a cool link](http://mycoollink.com)</code>
+</li>
 </ul>
 </div>
 </div>
-</section>
-<section id="website-wide-settings-go-in-_quarto.yml" class="level4">
-<h4 class="anchored" data-anchor-id="website-wide-settings-go-in-_quarto.yml">Website-wide settings go in <code>_quarto.yml</code></h4>
+</section><section id="website-wide-settings-go-in-_quarto.yml" class="level4"><h4 class="anchored" data-anchor-id="website-wide-settings-go-in-_quarto.yml">Website-wide settings go in <code>_quarto.yml</code>
+</h4>
 <p>All Quarto projects include a <code>_quarto.yml</code> configuration file that sets the global options that apply across the entire website.</p>
 <p><code>YAML</code> started off as “Yet Another Markup Language” 😜. It is clean, clear, and widely used. You can edit your YAML to add options or change the format of your website. Take a look at your <code>_quarto.yml</code>.</p>
 <p>Here is an example for a simple website. <code>title:</code> is the parameter to set the websiteʻs title. <code>navbar:</code> sets the menu, in this case on the left sidebar. By default tabs will be named based on the names of the <code>.qmd</code> files, but you can set them manually. There are many <a href="https://quarto.org/docs/output-formats/html-themes.html">themes</a> you can choose from too, check them out. For something different try <code>cyborg</code>.</p>
@@ -714,11 +675,7 @@ format:
 </div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-</section>
-</section>
-<section id="publishing-your-website-to-github" class="level2">
-<h2 class="anchored" data-anchor-id="publishing-your-website-to-github">Publishing your website to GitHub</h2>
+</section></section></section><section id="publishing-your-website-to-github" class="level2"><h2 class="anchored" data-anchor-id="publishing-your-website-to-github">Publishing your website to GitHub</h2>
 <p>You can publish your website for free on GitHub, which is a very cool feature. In his section I am adding a bit more explanation to the Quarto quickstart guide <em>up to and including Render to docs</em> <a href="https://quarto.org/docs/publishing/github-pages.html" class="uri">https://quarto.org/docs/publishing/github-pages.html</a>. I describe the most important stpes below:</p>
 <ol type="1">
 <li>Render your html to a <code>docs</code> directory</li>
@@ -726,8 +683,8 @@ format:
 <li>Make your website directory into a repo, and link it to a GitHub repo</li>
 <li>Edit the GitHub repo settings to publish your website</li>
 </ol>
-<section id="render-your-html-to-docs" class="level3">
-<h3 class="anchored" data-anchor-id="render-your-html-to-docs">Render your html to <code>docs</code></h3>
+<section id="render-your-html-to-docs" class="level3"><h3 class="anchored" data-anchor-id="render-your-html-to-docs">Render your html to <code>docs</code>
+</h3>
 <p>Edit the <code>_quarto.yml</code> file at the top level of your website to send output to <code>docs</code>. This will also create the <code>docs</code> folder.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -738,9 +695,7 @@ format:
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">output-dir:</span> docs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The next time you <code>quarto render</code> it will create <code>docs</code> and all of its contents.</p>
-</section>
-<section id="supress-github-jekyll-html-processing" class="level3">
-<h3 class="anchored" data-anchor-id="supress-github-jekyll-html-processing">Supress GitHub <code>jekyll</code> html processing</h3>
+</section><section id="supress-github-jekyll-html-processing" class="level3"><h3 class="anchored" data-anchor-id="supress-github-jekyll-html-processing">Supress GitHub <code>jekyll</code> html processing</h3>
 <p>GitHub uses a sofware called <code>jekyll</code> to render html from markdown. Since weʻre using <code>quarto</code>, we want to supress that. Create an empty file named <code>.nojekyll</code> at the top level of your website directory to supress default <code>jekyll</code> processing.</p>
 <table class="table">
 <colgroup>
@@ -767,10 +722,7 @@ format:
 </div></td>
 </tr>
 </tbody>
-</table>
-</section>
-<section id="setup-a-github-repo-for-your-website" class="level3">
-<h3 class="anchored" data-anchor-id="setup-a-github-repo-for-your-website">Setup a GitHub repo for your website</h3>
+</table></section><section id="setup-a-github-repo-for-your-website" class="level3"><h3 class="anchored" data-anchor-id="setup-a-github-repo-for-your-website">Setup a GitHub repo for your website</h3>
 <ol type="1">
 <li>Turn your website directory into a git repo:</li>
 </ol>
@@ -792,20 +744,14 @@ format:
 <p>If you forgot how to do this, <a href="https://mbutler808.github.io/rclass/posts/2023-01-24-intro-git-github/#make-a-github-repo-started-from-your-local-files">go back here</a></p>
 <ol start="4" type="1">
 <li>Check your GitHub repo. Are your files there?</li>
-</ol>
-</section>
-<section id="github-settings-to-serve-your-webpage" class="level3">
-<h3 class="anchored" data-anchor-id="github-settings-to-serve-your-webpage">GitHub settings to serve your webpage</h3>
+</ol></section><section id="github-settings-to-serve-your-webpage" class="level3"><h3 class="anchored" data-anchor-id="github-settings-to-serve-your-webpage">GitHub settings to serve your webpage</h3>
 <p>Almost there! A couple more steps.</p>
 <p>From your GitHub repo, click on <code>Settings</code> in the top menu, and <code>Pages</code> on the left menu.</p>
 <p>Your website should deploy from branch. Under <code>Select branch</code> choose <code>main</code> and under <code>Select folder</code> choose <code>docs</code>.</p>
 <p>After clicking <code>save</code> GitHub will trigger a deployment of your website. After a few minutes, your URL will appear near the top at <code>Your site is live at...</code>:</p>
 <p><img src="../../images/github_pages.png" class="img-fluid"></p>
 <p>Congratulations! ⚡️ Your website is now live 🎉🎊😍</p>
-</section>
-</section>
-<section id="now-make-more-changes" class="level2">
-<h2 class="anchored" data-anchor-id="now-make-more-changes">Now make more changes!</h2>
+</section></section><section id="now-make-more-changes" class="level2"><h2 class="anchored" data-anchor-id="now-make-more-changes">Now make more changes!</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -820,26 +766,28 @@ The Quarto Workflow is
 <li>Edit the content in .qmd</li>
 <li>From the Command line:
 <ul>
-<li><code>quarto preview</code> to check that edits are correct</li>
-<li><code>quarto render</code> to render <code>.qmd</code> to <code>.html</code></li>
+<li>
+<code>quarto preview</code> to check that edits are correct</li>
+<li>
+<code>quarto render</code> to render <code>.qmd</code> to <code>.html</code>
+</li>
 <li><code>git add .</code></li>
 <li><code>git commit -m "message"</code></li>
 <li><code>git push origin main</code></li>
-</ul></li>
+</ul>
+</li>
 <li>Check your website (this may take a beat)</li>
 </ul>
 </div>
 </div>
-</section>
-<section id="for-fun" class="level2">
-<h2 class="anchored" data-anchor-id="for-fun">For fun</h2>
+</section><section id="for-fun" class="level2"><h2 class="anchored" data-anchor-id="for-fun">For fun</h2>
 <p>You can have fun with emoji! Guangchuang Yu wrote the package <code>emojifont</code> (this is the same person who wrote the widely used <code>ggtree</code> package) and now you can bring your emoji out of your phone and into your quarto documents! Install the R package <code>emojifont</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"emojifont"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"emojifont"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then anywhere you want an emoji in the markdown file, you just type:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">r emojifont::emoji('palm_tree')</span><span class="st">`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">`r emojifont::emoji('palm_tree')`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>🌴</p>
 <p>Or if you want several, just line them up:</p>
@@ -848,9 +796,7 @@ The Quarto Workflow is
 </div>
 <p>🎈🎉😃</p>
 <p>There is a handy cheat sheet of emoji names here <a href="https://gist.github.com/rxaviers/7360908" class="uri">https://gist.github.com/rxaviers/7360908</a></p>
-</section>
-<section id="final-tips" class="level2">
-<h2 class="anchored" data-anchor-id="final-tips">Final tips</h2>
+</section><section id="final-tips" class="level2"><h2 class="anchored" data-anchor-id="final-tips">Final tips</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -862,32 +808,24 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><strong>Always always</strong> <code>quarto render</code> before you push up your changes to GitHub!</li>
+<li>
+<strong>Always always</strong> <code>quarto render</code> before you push up your changes to GitHub!</li>
 <li>If your changes are not appearing, try <code>quarto preview</code> and check that your changes appear in the preview. Then <code>quarto render</code> before you use git to add, commit, and push</li>
 <li>Note: It can take a few minutes to render on GitHub before your changes appear on your website</li>
 </ul>
 </div>
 </div>
 <p><strong>Please see <a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-01-literate-programming/#create-and-knit-your-first-r-markdown-document">Stephanie Hicksʻ lecture</a></strong> for more literate programming examples and tips.</p>
-</section>
-</section>
-<section id="post-lecture-materials" class="level1">
-<h1>Post-lecture materials</h1>
-<section id="final-questions" class="level3">
-<h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
+</section></section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
+<section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
 <p>Here are some post-lecture questions to help you think about the material discussed.</p>
-</section>
-<section id="questions-1" class="level3 questions">
-<h3 class="anchored" data-anchor-id="questions-1">Questions</h3>
+</section><section id="questions-1" class="level3 questions"><h3 class="anchored" data-anchor-id="questions-1">Questions</h3>
 <ol type="1">
 <li><p>What is literate programming?</p></li>
 <li><p>What was the first literate statistical programming tool to weave together a statistical language (R) with a markup language (LaTeX)?</p></li>
 <li><p>What is <code>knitr</code> and how is different than other literate statistical programming tools?</p></li>
 <li><p>Where can you find a list of other commands that help make your code writing more efficient when using Quarto?</p></li>
-</ol>
-</section>
-<section id="additional-resources" class="level3">
-<h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
+</ol></section><section id="additional-resources" class="level3"><h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -899,9 +837,12 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><a href="http://www.r-project.org/conferences/DSC-2001/Proceedings/Rossini.pdf">Literate statistical practice</a>)</li>
-<li>The introduction of Sweave by Friedrich Leisch in <a href="https://cran.r-project.org/doc/Rnews/Rnews_2002-3.pdf">2001 pg. 28</a></li>
-<li><a href="https://indrajeetpatil.github.io/RmarkdownTips/">RMarkdown Tips and Tricks</a> by Indrajeet Patil</li>
+<li>
+<a href="http://www.r-project.org/conferences/DSC-2001/Proceedings/Rossini.pdf">Literate statistical practice</a>)</li>
+<li>The introduction of Sweave by Friedrich Leisch in <a href="https://cran.r-project.org/doc/Rnews/Rnews_2002-3.pdf">2001 pg. 28</a>
+</li>
+<li>
+<a href="https://indrajeetpatil.github.io/RmarkdownTips/">RMarkdown Tips and Tricks</a> by Indrajeet Patil</li>
 <li><a href="https://bookdown.org/yihui/rmarkdown" class="uri">https://bookdown.org/yihui/rmarkdown</a></li>
 <li><a href="https://bookdown.org/yihui/rmarkdown-cookbook" class="uri">https://bookdown.org/yihui/rmarkdown-cookbook</a></li>
 </ul>
@@ -909,11 +850,7 @@ Tip
 </div>
 
 
-</section>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");

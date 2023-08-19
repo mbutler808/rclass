@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.333">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Marguerite Butler">
 <meta name="dcterms.date" content="2023-03-30">
 <meta name="description" content="Getting started with some issues in morphometrics">
-
 <title>ZOOL710 Data Science in R for Biologists - Intro to Morphometrics</title>
 <style>
 code{white-space: pre-wrap;}
@@ -78,7 +75,6 @@ div.csl-indent {
   margin-left: 2em;
 }</style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -94,8 +90,7 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -113,20 +108,12 @@ div.csl-indent {
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<link rel="stylesheet" href="../../styles.css">
+}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><link rel="stylesheet" href="../../styles.css">
 </head>
-
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">ZOOL710 Data Science in R for Biologists</span>
@@ -138,7 +125,7 @@ div.csl-indent {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
@@ -146,8 +133,8 @@ div.csl-indent {
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">General Information</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">
+<li>
     <a class="dropdown-item" href="../../syllabus.html" rel="" target="">
  <span class="dropdown-text">Syllabus</span></a>
   </li>  
@@ -156,13 +143,13 @@ div.csl-indent {
  <span class="dropdown-text">Schedule</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Course Materials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">
+<li>
     <a class="dropdown-item" href="../../lectures.html" rel="" target="">
  <span class="dropdown-text">Lectures</span></a>
   </li>  
@@ -175,14 +162,14 @@ div.csl-indent {
  <span class="dropdown-text">Resources</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/mbutler808" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/mbutler808" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -192,15 +179,11 @@ div.csl-indent {
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+<div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Intro to Morphometrics</h1>
                   <div>
@@ -249,52 +232,47 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link active" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link active" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#measurement-error-and-repeatability" id="toc-measurement-error-and-repeatability" class="nav-link" data-scroll-target="#measurement-error-and-repeatability">Measurement Error and Repeatability</a>
+  <li>
+<a href="#measurement-error-and-repeatability" id="toc-measurement-error-and-repeatability" class="nav-link" data-scroll-target="#measurement-error-and-repeatability">Measurement Error and Repeatability</a>
   <ul class="collapse">
-  <li><a href="#protocol-for-assessing-me" id="toc-protocol-for-assessing-me" class="nav-link" data-scroll-target="#protocol-for-assessing-me">Protocol for assessing ME</a></li>
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a>
+<li><a href="#protocol-for-assessing-me" id="toc-protocol-for-assessing-me" class="nav-link" data-scroll-target="#protocol-for-assessing-me">Protocol for assessing ME</a></li>
+  <li>
+<a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a>
   <ul class="collapse">
-  <li><a href="#simulated-example" id="toc-simulated-example" class="nav-link" data-scroll-target="#simulated-example">Simulated example:</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#calculating-morphometric-parameters" id="toc-calculating-morphometric-parameters" class="nav-link" data-scroll-target="#calculating-morphometric-parameters">Calculating morphometric parameters</a>
-  <ul class="collapse">
-  <li><a href="#calculating-distances" id="toc-calculating-distances" class="nav-link" data-scroll-target="#calculating-distances">Calculating distances</a></li>
-  <li><a href="#angle-between-two-vectors" id="toc-angle-between-two-vectors" class="nav-link" data-scroll-target="#angle-between-two-vectors">Angle between two vectors</a>
-  <ul class="collapse">
-  <li><a href="#calculating-the-angle-in-r" id="toc-calculating-the-angle-in-r" class="nav-link" data-scroll-target="#calculating-the-angle-in-r">Calculating the angle in R</a></li>
-  </ul></li>
-  </ul></li>
+<li><a href="#simulated-example" id="toc-simulated-example" class="nav-link" data-scroll-target="#simulated-example">Simulated example:</a></li>
   </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#calculating-morphometric-parameters" id="toc-calculating-morphometric-parameters" class="nav-link" data-scroll-target="#calculating-morphometric-parameters">Calculating morphometric parameters</a>
+  <ul class="collapse">
+<li><a href="#calculating-distances" id="toc-calculating-distances" class="nav-link" data-scroll-target="#calculating-distances">Calculating distances</a></li>
+  <li>
+<a href="#angle-between-two-vectors" id="toc-angle-between-two-vectors" class="nav-link" data-scroll-target="#angle-between-two-vectors">Angle between two vectors</a>
+  <ul class="collapse">
+<li><a href="#calculating-the-angle-in-r" id="toc-calculating-the-angle-in-r" class="nav-link" data-scroll-target="#calculating-the-angle-in-r">Calculating the angle in R</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<section id="acknowledgements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
 <li><a href="https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/" class="uri">https://www.r-bloggers.com/2015/04/tips-tricks-8-examining-replicate-error/</a></li>
-</ul>
-</section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
+</ul></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -311,12 +289,8 @@ Learning objectives
 </ul>
 </div>
 </div>
-</section>
-<section id="overview" class="level1">
-<h1>Overview</h1>
-</section>
-<section id="measurement-error-and-repeatability" class="level1">
-<h1>Measurement Error and Repeatability</h1>
+</section><section id="overview" class="level1"><h1>Overview</h1>
+</section><section id="measurement-error-and-repeatability" class="level1"><h1>Measurement Error and Repeatability</h1>
 <p>Morphometrics is all about assessing variability, within and between individuals. One of those sources of variability is measurement error.</p>
 <p>Measurement Error (ME) itself comes from many potential sources:</p>
 <ul>
@@ -328,8 +302,7 @@ Learning objectives
 <li>measurement protocol</li>
 </ul>
 <p>We try to minimize ME so that we can reveal the underlying patterns we are interested in, but there will always be some ME. So it is important to quantify at least once at the beginning of the study.</p>
-<section id="protocol-for-assessing-me" class="level2">
-<h2 class="anchored" data-anchor-id="protocol-for-assessing-me">Protocol for assessing ME</h2>
+<section id="protocol-for-assessing-me" class="level2"><h2 class="anchored" data-anchor-id="protocol-for-assessing-me">Protocol for assessing ME</h2>
 <p>The percentage of measurement error is defined as the within-group component of variance divided by the total (within + betwee group) variance <span class="citation" data-cites="Claude:2008">(<a href="#ref-Claude:2008" role="doc-biblioref">Claude 2008</a>)</span>:</p>
 <p><span class="math display">\[
 \%ME = \frac{s^{2}_{within}}{s^{2}_{within} + s^{2}_{among}} \times 100
@@ -342,24 +315,21 @@ s^{2}_{among} = \frac{MSS_{among} - MSS_{within}}{m}
 <p><span class="math display">\[
 s^{2}_{within} = MSS_{within}
 \]</span></p>
-</section>
-<section id="example" class="level2">
-<h2 class="anchored" data-anchor-id="example">Example</h2>
+</section><section id="example" class="level2"><h2 class="anchored" data-anchor-id="example">Example</h2>
 <p>Let’s say you are taking photographs of your specimens and you want to quantify the error assocated with placing your landmarks in the same place every time (i.e.&nbsp;is your criteria for the landmark robust enough that its obvious where it should be placed on each specimen, and if you came back to the data a month or year later?)</p>
 <p>To assess measurement error in this instance we could take two sets of pictures, each time removing and positioning the specimen. And we could digitize each image twice, preferably in different sessions (another day or week). This would give us 4 sets of landmark data for each specimen, allowing us to asses both error associated with the digitization as well as error in capturing the shapes via the photographs.</p>
 <p>Alternatively, if we were interested in inter-observer error vs.&nbsp;repeatability within observer, we could take one photograph and have it measured by two different people, each person taking two sets of measurements (preferably in different sessions).</p>
-<section id="simulated-example" class="level3">
-<h3 class="anchored" data-anchor-id="simulated-example">Simulated example:</h3>
+<section id="simulated-example" class="level3"><h3 class="anchored" data-anchor-id="simulated-example">Simulated example:</h3>
 <p>Repeat a set of five measurements, (measure twice), once in each of two sessions on different days. How repeatable are the measurements?</p>
 <p>Simulate the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>true_m <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">5</span>,<span class="dv">20</span>,<span class="dv">3</span>)  <span class="co"># true values</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> true_m <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">5</span>,<span class="dv">0</span>,<span class="dv">1</span>) <span class="co"># measurements set 1</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> true_m <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">5</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>session <span class="ot">&lt;-</span> <span class="fu">gl</span>(<span class="dv">2</span>, <span class="dv">5</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>individual <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">2</span>))</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>total_m <span class="ot">&lt;-</span> <span class="fu">c</span>(m1, m2)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(individual, total_m, session)  <span class="co"># the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">true_m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">20</span>,<span class="fl">3</span><span class="op">)</span>  <span class="co"># true values</span></span>
+<span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="va">true_m</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span> <span class="co"># measurements set 1</span></span>
+<span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="va">true_m</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">session</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/gl.html">gl</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">individual</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">total_m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">individual</span>, <span class="va">total_m</span>, <span class="va">session</span><span class="op">)</span>  <span class="co"># the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      individual  total_m session
  [1,]          1 20.44919       1
@@ -375,7 +345,7 @@ s^{2}_{within} = MSS_{within}
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(total_m <span class="sc">~</span> session))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">total_m</span> <span class="op">~</span> <span class="va">session</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
 session      1   0.47    0.47   0.035  0.857
@@ -384,8 +354,8 @@ Residuals    8 108.45   13.56               </code></pre>
 </div>
 <p>There is no difference between sessions (yay)!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">aov</span>(total_m <span class="sc">~</span> individual))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mod </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">total_m</span> <span class="op">~</span> <span class="va">individual</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">mod</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 individual   4 105.55  26.388   39.21 0.000574 ***
@@ -396,24 +366,19 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>The specimens measured (individuals) are significantly different.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>s2within <span class="ot">&lt;-</span> MSwithin <span class="ot">&lt;-</span> mod[[<span class="dv">1</span>]][<span class="dv">2</span>,<span class="dv">3</span>]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>MSamong <span class="ot">&lt;-</span> mod[[<span class="dv">1</span>]][<span class="dv">1</span>,<span class="dv">3</span>]</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>s2among <span class="ot">&lt;-</span> (MSamong<span class="sc">-</span>MSwithin)<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>pME <span class="ot">&lt;-</span> s2within<span class="sc">/</span>(s2within<span class="sc">+</span>s2among)<span class="sc">*</span><span class="dv">100</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>pME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">s2within</span> <span class="op">&lt;-</span> <span class="va">MSwithin</span> <span class="op">&lt;-</span> <span class="va">mod</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">]</span></span>
+<span><span class="va">MSamong</span> <span class="op">&lt;-</span> <span class="va">mod</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">]</span></span>
+<span><span class="va">s2among</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">MSamong</span><span class="op">-</span><span class="va">MSwithin</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span><span class="va">pME</span> <span class="op">&lt;-</span> <span class="va">s2within</span><span class="op">/</span><span class="op">(</span><span class="va">s2within</span><span class="op">+</span><span class="va">s2among</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span></span>
+<span><span class="va">pME</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4.974382</code></pre>
 </div>
 </div>
 <p>And the percent measurement error is represented by <code>pME</code>. As a rough rule of thumb we want this to be less than 5%. If it is very high, we either want to practice more, or take multiple measurements of each variable and average them.</p>
-</section>
-</section>
-</section>
-<section id="calculating-morphometric-parameters" class="level1">
-<h1>Calculating morphometric parameters</h1>
+</section></section></section><section id="calculating-morphometric-parameters" class="level1"><h1>Calculating morphometric parameters</h1>
 <p>Your raw data may be in lengths for linear morphometrics or coordinate for landmark-based morphometrics. You will often have to calcuate quantities from your raw data such as distances and angles.</p>
-<section id="calculating-distances" class="level2">
-<h2 class="anchored" data-anchor-id="calculating-distances">Calculating distances</h2>
+<section id="calculating-distances" class="level2"><h2 class="anchored" data-anchor-id="calculating-distances">Calculating distances</h2>
 <p>You may need to calculate distances between your landmarks, or you may have species centroids (the means in multiple dimensions), and you want to know the distance between species in morphospace.</p>
 <p>The distance between two points (in k dimensions) is given by the square root of the sum of the squared differences between the points.</p>
 <p><span class="math display">\[
@@ -422,55 +387,53 @@ d_{AB} = \sqrt{\sum_{i=1}^{k}} (A_i - B_i)^2
 <p>This is analogous to calcuating the length of the hypotenuse in a right triangle. If there is more than one dimension, these squared differences are computed dimension by dimension, summed, then the entire quantity is square rooted.</p>
 <p>A 2-D example in R is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">8</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( <span class="fu">c</span>(A[<span class="dv">1</span>], B[<span class="dv">1</span>]),<span class="fu">c</span>(A[<span class="dv">2</span>], B[<span class="dv">2</span>]), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>), </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab=</span><span class="st">"X"</span>, <span class="at">ylab=</span><span class="st">"Y"</span>, <span class="at">cex=</span><span class="dv">4</span>,  <span class="at">pch=</span><span class="dv">16</span>, <span class="at">col=</span><span class="st">"red"</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( <span class="fu">c</span>(A[<span class="dv">1</span>], B[<span class="dv">1</span>]),<span class="fu">c</span>(A[<span class="dv">2</span>], B[<span class="dv">2</span>]), <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">"red"</span> )</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( <span class="fu">c</span>(A[<span class="dv">1</span>], B[<span class="dv">1</span>]),<span class="fu">c</span>(A[<span class="dv">2</span>], A[<span class="dv">2</span>]), <span class="at">col=</span><span class="st">"grey"</span> )</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( <span class="fu">c</span>(B[<span class="dv">1</span>], B[<span class="dv">1</span>]),<span class="fu">c</span>(A[<span class="dv">2</span>], B[<span class="dv">2</span>]), <span class="at">col=</span><span class="st">"grey"</span> )</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(A[<span class="dv">1</span>], A[<span class="dv">2</span>], <span class="st">"A"</span>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(B[<span class="dv">1</span>], B[<span class="dv">2</span>], <span class="st">"B"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">8</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">B</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">B</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span><span class="op">)</span>, </span>
+<span>      xlab<span class="op">=</span><span class="st">"X"</span>, ylab<span class="op">=</span><span class="st">"Y"</span>, cex<span class="op">=</span><span class="fl">4</span>,  pch<span class="op">=</span><span class="fl">16</span>, col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">B</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">B</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>, lty<span class="op">=</span><span class="fl">2</span>, col<span class="op">=</span><span class="st">"red"</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">B</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">A</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>, col<span class="op">=</span><span class="st">"grey"</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">B</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">B</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">B</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>, col<span class="op">=</span><span class="st">"grey"</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">A</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="st">"A"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="va">B</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">B</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="st">"B"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Compute the distance:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>A<span class="sc">-</span>B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">A</span><span class="op">-</span><span class="va">B</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -5 -4</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>((A<span class="sc">-</span>B)<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">A</span><span class="op">-</span><span class="va">B</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 41</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>((A<span class="sc">-</span>B)<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">A</span><span class="op">-</span><span class="va">B</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6.403124</code></pre>
 </div>
 </div>
 <p>We can create a function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>distance <span class="ot">&lt;-</span> <span class="cf">function</span>( A, B ) { <span class="fu">sqrt</span>(<span class="fu">sum</span>((A<span class="sc">-</span>B)<span class="sc">^</span><span class="dv">2</span>)) }</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">distance</span>( A, B )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">distance</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span> <span class="va">A</span>, <span class="va">B</span> <span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">A</span><span class="op">-</span><span class="va">B</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">}</span></span>
+<span><span class="fu">distance</span><span class="op">(</span> <span class="va">A</span>, <span class="va">B</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6.403124</code></pre>
 </div>
 </div>
 <p>Try it on a 3-D set of coordinates. Does it work?</p>
-</section>
-<section id="angle-between-two-vectors" class="level2">
-<h2 class="anchored" data-anchor-id="angle-between-two-vectors">Angle between two vectors</h2>
+</section><section id="angle-between-two-vectors" class="level2"><h2 class="anchored" data-anchor-id="angle-between-two-vectors">Angle between two vectors</h2>
 <p>The angle <span class="math inline">\(\theta\)</span> between two vectors <span class="math inline">\(\overrightarrow{AB}\)</span> and <span class="math inline">\(\overrightarrow{CD}\)</span> can be calculated using the dot product and the rule of cosines.</p>
 <p>Suppose we have two vectors <span class="math inline">\(V_1 = (x_1,y_1)\)</span>, and <span class="math inline">\(V2 = (x_2,y_2)\)</span>. We can use our coordinates A, B above to calculate our first vector, and make up a second one. From geometry, we can think of vectors as originating at <code>(0,0)</code> with the vector coordinates indicating the head of the vector.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>V1 <span class="ot">&lt;-</span> AB <span class="ot">&lt;-</span> B <span class="sc">-</span> A  <span class="co"># using our A,B landmarks above</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>V1 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">V1</span> <span class="op">&lt;-</span> <span class="va">AB</span> <span class="op">&lt;-</span> <span class="va">B</span> <span class="op">-</span> <span class="va">A</span>  <span class="co"># using our A,B landmarks above</span></span>
+<span><span class="va">V1</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5 4</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>V2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>)  <span class="co"># another vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">V2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span>  <span class="co"># another vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The dot product is then:</p>
 <p><span class="math display">\[
@@ -484,28 +447,26 @@ cos(\theta) = \frac{ x_1x_2 + y_1y_2 } { |V_1| \cdot |V_2| }
 |V_1| = \sqrt{  x_1^2 + y_1^2}
 \]</span></p>
 <p>And similarly for <span class="math inline">\(V_2\)</span>.</p>
-<p>So all we have to do is take the inverse cosine, arc cosine, or <code>acos()</code> to solve for the angle theta (<span class="math inline">\(\theta\)</span>).</p>
-<section id="calculating-the-angle-in-r" class="level3">
-<h3 class="anchored" data-anchor-id="calculating-the-angle-in-r">Calculating the angle in R</h3>
+<p>So all we have to do is take the inverse cosine, arc cosine, or <code><a href="https://rdrr.io/r/base/Trig.html">acos()</a></code> to solve for the angle theta (<span class="math inline">\(\theta\)</span>).</p>
+<section id="calculating-the-angle-in-r" class="level3"><h3 class="anchored" data-anchor-id="calculating-the-angle-in-r">Calculating the angle in R</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>V1 <span class="sc">%*%</span> V2  <span class="co"># the dot product. what is the difference with V1 * V2?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">V1</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">V2</span>  <span class="co"># the dot product. what is the difference with V1 * V2?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1]
 [1,]   26</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>           <span class="co"># same as sum(V1*V2) </span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">acos</span>( (V1 <span class="sc">%*%</span> V2) <span class="sc">/</span> (<span class="fu">sqrt</span>( V1<span class="sc">%*%</span>V1) <span class="sc">*</span> <span class="fu">sqrt</span>(V2<span class="sc">%*%</span>V2)) )</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>theta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span>           <span class="co"># same as sum(V1*V2) </span></span>
+<span></span>
+<span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">acos</a></span><span class="op">(</span> <span class="op">(</span><span class="va">V1</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">V2</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span> <span class="va">V1</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">V1</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">V2</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">V2</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="va">theta</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          [,1]
 [1,] 0.4324078</code></pre>
 </div>
 </div>
-<p>Where the result is in radians, not degrees (see the help page <code>?acos</code>, all of Rʻs trig functions are in radians).</p>
+<p>Where the result is in radians, not degrees (see the help page <code><a href="https://rdrr.io/r/base/Trig.html">?acos</a></code>, all of Rʻs trig functions are in radians).</p>
 <p>Note: I should change this to using the arc tangent, to preserve the angle in case it is outside of 0,pi.</p>
-<section id="radians-to-degrees" class="level4">
-<h4 class="anchored" data-anchor-id="radians-to-degrees">Radians to degrees</h4>
+<section id="radians-to-degrees" class="level4"><h4 class="anchored" data-anchor-id="radians-to-degrees">Radians to degrees</h4>
 <p>Degrees and radians are different units of measure for an <strong>angle</strong>. To covert to degrees, remember that a <em>360 degree circle</em> is <em>2pi radians</em> (or a half circle 180 degrees is pi radians):</p>
 <p>To remember how to do this conversion, recall that the formula for the circumference of a circle is:</p>
 <p><span class="math display">\[
@@ -513,21 +474,24 @@ Circumference = 2 \pi r
 \]</span></p>
 <p>A few key facts:</p>
 <ul>
-<li><em>Arc length</em> : the distance along a curved line (the arc length of the entire circle is the circumference).</li>
-<li><em>Radian</em> : the angle measured in relation to the radius. If you take the radius and lay it along the circle, the <em>angle defined by the arc length of one radius</em> is <em>one radian</em>.<br>
+<li>
+<em>Arc length</em> : the distance along a curved line (the arc length of the entire circle is the circumference).</li>
+<li>
+<em>Radian</em> : the angle measured in relation to the radius. If you take the radius and lay it along the circle, the <em>angle defined by the arc length of one radius</em> is <em>one radian</em>.<br>
 </li>
 <li>To complete the circle, we need an arc length of <span class="math inline">\(2\pi r\)</span> (which is the circumferemce), or a little over 6 radians (because <span class="math inline">\(2\pi ~= 6\)</span>).</li>
-<li><em>Degrees</em> : another unit of measure for angles, defined by one circle having 360 degrees.</li>
-<li></li>
-</ul>
+<li>
+<em>Degrees</em> : another unit of measure for angles, defined by one circle having 360 degrees.</li>
+<li>
+</li></ul>
 <p>Therefore, the angle of a full circle is <span class="math inline">\(360^\circ\)</span>, or equivalently, <span class="math inline">\(2\pi\)</span> radians:</p>
 <p><span class="math inline">\(180^\circ = \pi\)</span> radians</p>
 <p>If we take a measurement M in radians: <span class="math display">\[
 M (rad)\frac{180^\circ}{\pi rad} = (M\frac{180}{\pi} )^\circ
 \]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>theta_degrees <span class="ot">&lt;-</span> theta<span class="sc">/</span> pi <span class="sc">*</span> <span class="dv">180</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>theta_degrees</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">theta_degrees</span> <span class="op">&lt;-</span> <span class="va">theta</span><span class="op">/</span> <span class="va">pi</span> <span class="op">*</span> <span class="fl">180</span></span>
+<span><span class="va">theta_degrees</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         [,1]
 [1,] 24.77514</code></pre>
@@ -536,17 +500,11 @@ M (rad)\frac{180^\circ}{\pi rad} = (M\frac{180}{\pi} )^\circ
 
 
 
-</section>
-</section>
-</section>
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+</section></section></section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-Claude:2008" class="csl-entry" role="listitem">
 Claude, Julien. 2008. <em>Morphometrics with r</em>. 1. Aufl. New York, NY: Springer-Verlag.
 </div>
-</div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");

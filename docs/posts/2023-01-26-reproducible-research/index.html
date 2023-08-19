@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.333">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Marguerite Butler">
 <meta name="dcterms.date" content="2023-01-26">
 <meta name="description" content="Introduction to reproducible research">
-
 <title>ZOOL710 Data Science in R for Biologists - Reproducible Research</title>
 <style>
 code{white-space: pre-wrap;}
@@ -24,7 +21,6 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 </style>
-
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
@@ -41,8 +37,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -61,18 +56,16 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
-</head><body class="floating nav-fixed">\usepackage[font={small}]{caption}
+</head>
+<body class="floating nav-fixed">
+<p>
+\usepackage[font={small}]{caption}
 
 
-<link rel="stylesheet" href="../../styles.css">
-
-
-
+<link rel="stylesheet" href="../../styles.css"></p>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">ZOOL710 Data Science in R for Biologists</span>
@@ -84,7 +77,7 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
@@ -92,8 +85,8 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">General Information</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">
+<li>
     <a class="dropdown-item" href="../../syllabus.html" rel="" target="">
  <span class="dropdown-text">Syllabus</span></a>
   </li>  
@@ -102,13 +95,13 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Schedule</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Course Materials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">
+<li>
     <a class="dropdown-item" href="../../lectures.html" rel="" target="">
  <span class="dropdown-text">Lectures</span></a>
   </li>  
@@ -121,14 +114,14 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Resources</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/mbutler808" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/mbutler808" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -138,15 +131,11 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+<div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Reproducible Research</h1>
                   <div>
@@ -193,48 +182,43 @@ ul.task-list li input[type="checkbox"] {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#pre-lecture-materials" id="toc-pre-lecture-materials" class="nav-link active" data-scroll-target="#pre-lecture-materials">Pre-lecture materials</a>
+<li>
+<a href="#pre-lecture-materials" id="toc-pre-lecture-materials" class="nav-link active" data-scroll-target="#pre-lecture-materials">Pre-lecture materials</a>
   <ul class="collapse">
-  <li><a href="#read-ahead" id="toc-read-ahead" class="nav-link" data-scroll-target="#read-ahead">Read ahead</a></li>
+<li><a href="#read-ahead" id="toc-read-ahead" class="nav-link" data-scroll-target="#read-ahead">Read ahead</a></li>
   <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
-  </ul></li>
+  </ul>
+</li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#some-of-the-issues-from-a-statisticianʻs-perspective" id="toc-some-of-the-issues-from-a-statisticianʻs-perspective" class="nav-link" data-scroll-target="#some-of-the-issues-from-a-statisticianʻs-perspective">Some of the issues from a statisticianʻs perspective</a></li>
-  <li><a href="#recommendations" id="toc-recommendations" class="nav-link" data-scroll-target="#recommendations">Recommendations</a>
+  <li><a href="#some-of-the-issues-from-a-statistician%CA%BBs-perspective" id="toc-some-of-the-issues-from-a-statisticianʻs-perspective" class="nav-link" data-scroll-target="#some-of-the-issues-from-a-statistician%CA%BBs-perspective">Some of the issues from a statisticianʻs perspective</a></li>
+  <li>
+<a href="#recommendations" id="toc-recommendations" class="nav-link" data-scroll-target="#recommendations">Recommendations</a>
   <ul class="collapse">
-  <li><a href="#authors-and-readers" id="toc-authors-and-readers" class="nav-link" data-scroll-target="#authors-and-readers">Authors and Readers</a></li>
-  </ul></li>
-  <li><a href="#post-lecture-materials" id="toc-post-lecture-materials" class="nav-link" data-scroll-target="#post-lecture-materials">Post-lecture materials</a>
-  <ul class="collapse">
-  <li><a href="#final-questions" id="toc-final-questions" class="nav-link" data-scroll-target="#final-questions">Final Questions</a></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a></li>
-  </ul></li>
+<li><a href="#authors-and-readers" id="toc-authors-and-readers" class="nav-link" data-scroll-target="#authors-and-readers">Authors and Readers</a></li>
   </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</li>
+  <li>
+<a href="#post-lecture-materials" id="toc-post-lecture-materials" class="nav-link" data-scroll-target="#post-lecture-materials">Post-lecture materials</a>
+  <ul class="collapse">
+<li><a href="#final-questions" id="toc-final-questions" class="nav-link" data-scroll-target="#final-questions">Final Questions</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a></li>
+  </ul>
+</li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<blockquote class="blockquote">
+<main class="content quarto-banner-title-block" id="quarto-document-content"><blockquote class="blockquote">
 <p>The shocking assertion will be that most statistics in most scientific papers has errors. —<em>Charles Geyer</em></p>
 </blockquote>
-<section id="pre-lecture-materials" class="level1">
-<h1>Pre-lecture materials</h1>
-<section id="read-ahead" class="level3">
-<h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
+<section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
+<section id="read-ahead" class="level3"><h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -247,25 +231,22 @@ Read ahead
 <div class="callout-body-container callout-body">
 <p><strong>Before class, you can prepare by reading the following materials:</strong></p>
 <ol type="1">
-<li><a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522">Statistical programming, Small mistakes, big impacts</a> by Simon Schwab and Leonhard Held</li>
-<li><a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible Research: A Retrospective</a> by Roger Peng and Stephanie Hicks</li>
+<li>
+<a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522">Statistical programming, Small mistakes, big impacts</a> by Simon Schwab and Leonhard Held</li>
+<li>
+<a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible Research: A Retrospective</a> by Roger Peng and Stephanie Hicks</li>
 </ol>
 </div>
 </div>
-</section>
-<section id="acknowledgements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+</section><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
 <li><a href="http://users.stat.umn.edu/~geyer/Sweave/" class="uri">http://users.stat.umn.edu/~geyer/Sweave/</a></li>
 <li><a href="http://users.stat.umn.edu/~geyer/repro.pdf" class="uri">http://users.stat.umn.edu/~geyer/repro.pdf</a></li>
 <li><a href="https://rdpeng.github.io/Biostat776" class="uri">https://rdpeng.github.io/Biostat776</a></li>
-<li><a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible Research: A Retrospective</a> by Roger Peng and Stephanie Hicks</li>
-</ul>
-</section>
-</section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
+<li>
+<a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible Research: A Retrospective</a> by Roger Peng and Stephanie Hicks</li>
+</ul></section></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -285,9 +266,7 @@ Learning objectives
 </ul>
 </div>
 </div>
-</section>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
+</section><section id="introduction" class="level1"><h1>Introduction</h1>
 <p>From a young age, we have learned that scientific conclusions should be <strong>reproducible</strong>. After all, isnʻt that what the methods section is for? We are taught to write methods sections so that any scientist could, in theory, repeat the experiment with the idea that if the phenomenon is true, they should obtain comparable results and more often than not should come to the same conclusions.</p>
 <p><em>But how repeatable is modern science?</em> Many experiments are now so complex and so expensive that repeating them is not practical. However, it is even worse than that. As datasets get larger and analyses become ever more complex, there is a growing concern that even given the data, we still cannot necessarily repeat the analysis. This is called <strong>“the reproducbility crisis”</strong>.</p>
 <p>Recently, there has been a lot of discussion of reproducibility in the media and in the scientific literature. The journal <em>Science</em> had a special issue on reproducibility and data replication.</p>
@@ -309,9 +288,7 @@ Learning objectives
 </div>
 <p><a href="https://www.pnas.org/doi/10.1073/pnas.2203150119">Source: Breznau et al., 2022</a></p>
 <p>This should be very disturbing. It was very disturbing to me! <a href="http://users.stat.umn.edu/~geyer/repro-paper.pdf">Greyer</a> notes that the meta-analysis did not investigate how much of the variability of results was due to outright error. He furthermore notes that while the meta-analysis was done in a reproducibly, the original 73 analyses were not. What does he mean?</p>
-</section>
-<section id="some-of-the-issues-from-a-statisticianʻs-perspective" class="level1">
-<h1>Some of the issues from a statisticianʻs perspective</h1>
+</section><section id="some-of-the-issues-from-a-statisticianʻs-perspective" class="level1"><h1>Some of the issues from a statisticianʻs perspective</h1>
 <p>Greyer provides nine ideas worth considering:</p>
 <ol type="1">
 <li>Most scientific papers that need statistics have conclusions that are not actually supported by the statistical calculations done, because of
@@ -319,7 +296,8 @@ Learning objectives
 <li>mathematical or computational error,</li>
 <li>statistical procedures inappropriate for the data, or</li>
 <li>statistical procedures that do not lead to the inferences claimed.</li>
-</ol></li>
+</ol>
+</li>
 <li>Good computing practices — version control, well thought out testing, code reviews, literate programming — are essential to correct computing.</li>
 <li>Failure to do all calculations from raw data to conclusions (every number or figure shown in a paper) in a way that is fully reproducible and available in a permanent public repository is, by itself, a questionable research practice.</li>
 <li>Failure to do statistics as if it could have been pre-registered is a questionable research practice.</li>
@@ -333,13 +311,9 @@ Learning objectives
 <p>Some journals have specific policies to promote reproducibility in manuscripts that are published in their journals. For example, the Journal of American Statistical Association (JASA) requires authors to submit their code and data to reproduce their analyses and a set of Associate Editors of Reproducibility review those materials as part of the review process:</p>
 <ul>
 <li><a href="https://jasa-acs.github.io/repro-guide" class="uri">https://jasa-acs.github.io/repro-guide</a></li>
-</ul>
-</section>
-<section id="recommendations" class="level1">
-<h1>Recommendations</h1>
+</ul></section><section id="recommendations" class="level1"><h1>Recommendations</h1>
 <p><a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522">Discuss Table 1</a></p>
-<section id="authors-and-readers" class="level3">
-<h3 class="anchored" data-anchor-id="authors-and-readers">Authors and Readers</h3>
+<section id="authors-and-readers" class="level3"><h3 class="anchored" data-anchor-id="authors-and-readers">Authors and Readers</h3>
 <p>It is important to realize that there are multiple players when you talk about reproducibility–there are different types of parties that have different types of interests. There are <strong>authors</strong> who produce research and they want to make their research reproducible. There are also <strong>readers</strong> of research and they want to reproduce that work. Everyone needs tools to make their lives easier.</p>
 <p>One current <strong>challenge is that authors of research have to undergo considerable effort to make their results available to a wide audience</strong>.</p>
 <ul>
@@ -373,12 +347,8 @@ Summary
 </ul>
 </div>
 </div>
-</section>
-</section>
-<section id="post-lecture-materials" class="level1">
-<h1>Post-lecture materials</h1>
-<section id="final-questions" class="level3">
-<h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
+</section></section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
+<section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
 <p>Here are some post-lecture questions to help you think about the material discussed.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -396,9 +366,7 @@ Questions
 </ol>
 </div>
 </div>
-</section>
-<section id="additional-resources" class="level3">
-<h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
+</section><section id="additional-resources" class="level3"><h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -410,17 +378,14 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><a href="http://users.stat.umn.edu/~geyer/repro-paper.pdf">Reproducibility and Error</a> by Charles J. Geyer</li>
+<li>
+<a href="http://users.stat.umn.edu/~geyer/repro-paper.pdf">Reproducibility and Error</a> by Charles J. Geyer</li>
 </ul>
 </div>
 </div>
 
 
-</section>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -654,6 +619,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
+
 
 
 

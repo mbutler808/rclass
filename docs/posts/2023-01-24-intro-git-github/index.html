@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.333">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Marguerite Butler">
 <meta name="dcterms.date" content="2023-01-24">
 <meta name="description" content="Version control is a game changer; or how I learned to love git/GitHub">
-
 <title>ZOOL710 Data Science in R for Biologists - Introduction to git/GitHub</title>
 <style>
 code{white-space: pre-wrap;}
@@ -59,7 +56,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -75,8 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -95,18 +90,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit"
   }
 }</script>
-</head><body class="floating nav-fixed">\usepackage[font={small}]{caption}
+</head>
+<body class="floating nav-fixed">
+<p>
+\usepackage[font={small}]{caption}
 
 
-<link rel="stylesheet" href="../../styles.css">
-
-
-
+<link rel="stylesheet" href="../../styles.css"></p>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">ZOOL710 Data Science in R for Biologists</span>
@@ -118,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
@@ -126,8 +119,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">General Information</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">
+<li>
     <a class="dropdown-item" href="../../syllabus.html" rel="" target="">
  <span class="dropdown-text">Syllabus</span></a>
   </li>  
@@ -136,13 +129,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Schedule</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Course Materials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">
+<li>
     <a class="dropdown-item" href="../../lectures.html" rel="" target="">
  <span class="dropdown-text">Lectures</span></a>
   </li>  
@@ -155,14 +148,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Resources</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/mbutler808" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/mbutler808" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -172,15 +165,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+<div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Introduction to git/GitHub</h1>
                   <div>
@@ -229,55 +218,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#lecture-materials" id="toc-lecture-materials" class="nav-link active" data-scroll-target="#lecture-materials">Lecture materials</a>
+<li>
+<a href="#lecture-materials" id="toc-lecture-materials" class="nav-link active" data-scroll-target="#lecture-materials">Lecture materials</a>
   <ul class="collapse">
-  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
-  </ul></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  </ul>
+</li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
-  <li><a href="#introduction-to-gitgithub" id="toc-introduction-to-gitgithub" class="nav-link" data-scroll-target="#introduction-to-gitgithub">Introduction to git/GitHub</a>
+  <li>
+<a href="#introduction-to-gitgithub" id="toc-introduction-to-gitgithub" class="nav-link" data-scroll-target="#introduction-to-gitgithub">Introduction to git/GitHub</a>
   <ul class="collapse">
-  <li><a href="#git" id="toc-git" class="nav-link" data-scroll-target="#git">git</a></li>
+<li><a href="#git" id="toc-git" class="nav-link" data-scroll-target="#git">git</a></li>
   <li><a href="#what-to-not-use-gitgithub-for" id="toc-what-to-not-use-gitgithub-for" class="nav-link" data-scroll-target="#what-to-not-use-gitgithub-for">What to (not) use Git/GitHub for</a></li>
   <li><a href="#why-use-gitgithub" id="toc-why-use-gitgithub" class="nav-link" data-scroll-target="#why-use-gitgithub">Why use git/GitHub?</a></li>
   <li><a href="#how-to-use-gitgithub" id="toc-how-to-use-gitgithub" class="nav-link" data-scroll-target="#how-to-use-gitgithub">How to use Git/GitHub</a></li>
-  </ul></li>
-  <li><a href="#getting-started-with-git" id="toc-getting-started-with-git" class="nav-link" data-scroll-target="#getting-started-with-git">Getting Started with git</a>
+  </ul>
+</li>
+  <li>
+<a href="#getting-started-with-git" id="toc-getting-started-with-git" class="nav-link" data-scroll-target="#getting-started-with-git">Getting Started with git</a>
   <ul class="collapse">
-  <li><a href="#sec-profile" id="toc-sec-profile" class="nav-link" data-scroll-target="#sec-profile">Set up your profile in git on your computer</a></li>
+<li><a href="#sec-profile" id="toc-sec-profile" class="nav-link" data-scroll-target="#sec-profile">Set up your profile in git on your computer</a></li>
   <li><a href="#sec-token" id="toc-sec-token" class="nav-link" data-scroll-target="#sec-token">Set up your Personal Authentication Token on your computer</a></li>
   <li><a href="#configuring-your-default-git-editor" id="toc-configuring-your-default-git-editor" class="nav-link" data-scroll-target="#configuring-your-default-git-editor">Configuring your default git editor</a></li>
-  </ul></li>
+  </ul>
+</li>
   <li><a href="#using-gitgithub-in-our-course" id="toc-using-gitgithub-in-our-course" class="nav-link" data-scroll-target="#using-gitgithub-in-our-course">Using git/GitHub in our course</a></li>
   <li><a href="#clone-a-repo-to-your-local-directory---easy" id="toc-clone-a-repo-to-your-local-directory---easy" class="nav-link" data-scroll-target="#clone-a-repo-to-your-local-directory---easy">Clone a repo to your local directory - Easy!</a></li>
   <li><a href="#make-a-github-repo-started-from-your-local-files" id="toc-make-a-github-repo-started-from-your-local-files" class="nav-link" data-scroll-target="#make-a-github-repo-started-from-your-local-files">Make a GitHub repo started from your local files</a></li>
   <li><a href="#a-word-about-merge-conflicts" id="toc-a-word-about-merge-conflicts" class="nav-link" data-scroll-target="#a-word-about-merge-conflicts">A word about merge conflicts</a></li>
   <li><a href="#forking-a-repo" id="toc-forking-a-repo" class="nav-link" data-scroll-target="#forking-a-repo">Forking a repo</a></li>
-  <li><a href="#post-lecture-materials" id="toc-post-lecture-materials" class="nav-link" data-scroll-target="#post-lecture-materials">Post-lecture materials</a>
+  <li>
+<a href="#post-lecture-materials" id="toc-post-lecture-materials" class="nav-link" data-scroll-target="#post-lecture-materials">Post-lecture materials</a>
   <ul class="collapse">
-  <li><a href="#final-questions" id="toc-final-questions" class="nav-link" data-scroll-target="#final-questions">Final Questions</a></li>
+<li><a href="#final-questions" id="toc-final-questions" class="nav-link" data-scroll-target="#final-questions">Final Questions</a></li>
   <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a></li>
-  </ul></li>
   </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<!-- Add interesting quote -->
-<section id="lecture-materials" class="level1">
-<h1>Lecture materials</h1>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><!-- Add interesting quote --><section id="lecture-materials" class="level1"><h1>Lecture materials</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -289,23 +275,21 @@ Helpful references for this lecture
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li><a href="https://happygitwithr.com">Happy Git with R</a> from Jenny Bryan</li>
-<li><a href="https://rafalab.github.io/dsbook/git.html">Chapter on git and GitHub in <code>dsbook</code></a> from Rafael Irizarry</li>
-<li><a href="https://andreashandel.github.io/MADAcourse">GitHub introduction in module 1</a> from Andreas Handel</li>
+<li>
+<a href="https://happygitwithr.com">Happy Git with R</a> from Jenny Bryan</li>
+<li>
+<a href="https://rafalab.github.io/dsbook/git.html">Chapter on git and GitHub in <code>dsbook</code></a> from Rafael Irizarry</li>
+<li>
+<a href="https://andreashandel.github.io/MADAcourse">GitHub introduction in module 1</a> from Andreas Handel</li>
 </ol>
 </div>
 </div>
-<section id="acknowledgements" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<section id="acknowledgements" class="level2"><h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
 <li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/</a></li>
 <li><a href="https://andreashandel.github.io/MADAcourse/Tools_Github_Introduction.html" class="uri">https://andreashandel.github.io/MADAcourse/Tools_Github_Introduction.html</a></li>
-</ul>
-</section>
-</section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
+</ul></section></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -325,22 +309,17 @@ Learning objectives
 </ul>
 </div>
 </div>
-</section>
-<section id="introduction-to-gitgithub" class="level1">
-<h1>Introduction to git/GitHub</h1>
+</section><section id="introduction-to-gitgithub" class="level1"><h1>Introduction to git/GitHub</h1>
 <p>This document gives a brief explanation of GitHub and how we will use it for this course.</p>
-<section id="git" class="level2">
-<h2 class="anchored" data-anchor-id="git">git</h2>
+<section id="git" class="level2"><h2 class="anchored" data-anchor-id="git">git</h2>
 <p><strong>Git</strong> is software that implements what is called a <em>version control system</em> for a repository of files (also known as a <em>repo</em>). The main idea is that as you (and your collaborators) work on a project, the git software tracks, and records any changes made by anyone.</p>
 <p><strong>GitHub</strong> is an online server and user interface that provides powerful tools for distribution of your repository, bug tracking, collaboration, and also allows you to create easy websites for each repository.</p>
 <p><strong>Git</strong> and <strong>GitHub</strong> together provide an organized way to track your projects, and all of the tools you will need in this course are free.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/A-Solo-work-with-DIY-version-control-via-filename-B-Collaborative-work-with-DIY_W640.jpeg" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure 1. Whether working solo (A) or collaborating in a group (B) version tracking by naming files is a mess when you want to retrace the steps of the analysis (C). Git and GitHub track all changes and the complete branching tree of the project (D). The commit history is a powerful tool to retrace the development of the project or can be used to roll back to any prior version.</figcaption>
-</figure>
+<figure class="figure"><p><img src="../../images/A-Solo-work-with-DIY-version-control-via-filename-B-Collaborative-work-with-DIY_W640.jpeg" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure 1. Whether working solo (A) or collaborating in a group (B) version tracking by naming files is a mess when you want to retrace the steps of the analysis (C). Git and GitHub track all changes and the complete branching tree of the project (D). The commit history is a powerful tool to retrace the development of the project or can be used to roll back to any prior version.</figcaption></figure>
 </div>
 </div>
 </div>
@@ -348,9 +327,7 @@ Learning objectives
 <p>It is very well suited for collaborative work, as it was developed by Linus Torvalds (in about 10 days of coding!) for collaborative software development of the Linux kernel <a href="https://www.linuxfoundation.org/blog/blog/10-years-of-git-an-interview-with-git-creator-linus-torvalds">pretty interesting interview with Torvalds</a>. What it did really well was <em>distributed control</em>, and allowing everyone to have their <em>own copy of the repository</em>.</p>
 <p><em>Git</em>/<em>GitHub</em> is now the dominant version control system with <em>GitHub</em> hosting over 200 million repositories worldwide! It is used very broadly for all kinds of repos now including data science projects, book projects, courses, and anything that needs collaborative management of mostly text files.</p>
 <p>Another great and fun read about Git/GitHub and why it is a great tool for data analysis is in this article by <a href="https://peerj.com/preprints/3159/">Jenny Bryan</a>.</p>
-</section>
-<section id="what-to-not-use-gitgithub-for" class="level2">
-<h2 class="anchored" data-anchor-id="what-to-not-use-gitgithub-for">What to (not) use Git/GitHub for</h2>
+</section><section id="what-to-not-use-gitgithub-for" class="level2"><h2 class="anchored" data-anchor-id="what-to-not-use-gitgithub-for">What to (not) use Git/GitHub for</h2>
 <p><strong>GitHub is ideal if</strong> you have a project with (possibly many) smallish files, and most of those files are text files (such as R code, LaTeX, Quarto/(R)Markdown, etc.) and different people work on different parts of the project.</p>
 <p><strong>GitHub is less useful if</strong> you have a lot of non-text files (e.g.&nbsp;Word or PowerPoint) and different team members might want to edit the same document at the same time. In that instance, a solution like Google Docs, Word+Dropbox, Word+Onedrive, etc. might be better.</p>
 <p><strong>GitHub also has a problem with <em>large files</em></strong>. Anything above around 50MB can lead to very slow syncing and sometimes outright failure. Unfortunately, once GitHub has choked on a large file, it can be quite tricky to fix the repository to work again. <em>This is because the ENTIRE history is saved, including the addition of the huge file.</em> Therefore keep large (&gt;50MB) files out of your GitHub repositories. If you have to work with such files, try to reduce them first before placing into the GitHub repository. Or as alternative, place those files in another sync service (e.g.&nbsp;Dropbox, OneDrive, GoogleDrive) and load them from there.</p>
@@ -376,43 +353,34 @@ Tip
 </div>
 </div>
 <p>Note that other interfaces to <em>Git</em> exist, e.g., <em>Bitbucket</em>, but <em>GitHub</em> is the most widely used one.</p>
-</section>
-<section id="why-use-gitgithub" class="level2">
-<h2 class="anchored" data-anchor-id="why-use-gitgithub">Why use git/GitHub?</h2>
+</section><section id="why-use-gitgithub" class="level2"><h2 class="anchored" data-anchor-id="why-use-gitgithub">Why use git/GitHub?</h2>
 <p>You want to use <em>GitHub</em> to avoid this:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/phdversioncontrol.gif" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">How not to use GitHub <a href="http://phdcomics.com/comics/archive_print.php?comicid=1531">image from PhD Comics</a></figcaption>
-</figure>
+<figure class="figure"><p><img src="../../images/phdversioncontrol.gif" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">How not to use GitHub <a href="http://phdcomics.com/comics/archive_print.php?comicid=1531">image from PhD Comics</a></figcaption></figure>
 </div>
 </div>
 </div>
 <p>To learn a bit more about Git/GitHub and why you might want to use it, <a href="https://peerj.com/preprints/3159/">read this article by Jenny Bryan</a>.</p>
 <p><strong>Note her explanation of what’s special with the <code>README.md</code> file on GitHub.</strong></p>
-</section>
-<section id="how-to-use-gitgithub" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-use-gitgithub">How to use Git/GitHub</h2>
+</section><section id="how-to-use-gitgithub" class="level2"><h2 class="anchored" data-anchor-id="how-to-use-gitgithub">How to use Git/GitHub</h2>
 <p>Git/GitHub is fundamentally <strong>based on commands you type into the command line</strong>. Lots of online resources show you how to use the command line. This is the most powerful, and the way I almost always interact with git/GitHub. However, many folks find this the most confusing way to use git/GitHub. Alternatively, there are graphical interfaces.</p>
 <ul>
-<li><a href="https://desktop.github.com/">GitHub itself</a> provides a grapical interface with basic functionality.</li>
+<li>
+<a href="https://desktop.github.com/">GitHub itself</a> provides a grapical interface with basic functionality.</li>
 <li>RStudio also has <a href="https://happygitwithr.com/rstudio-git-github.html">Git/GitHub integration</a>. Of course this only works for R project GitHub integration.</li>
 <li>There are also third party GitHub clients with many advanced features, most of which you won’t need initially, but might eventually.</li>
 </ul>
 <p><strong>Note</strong>: As student, you can (and should) upgrade to the Pro version of GitHub for free (i.e.&nbsp;access to unlimited private repositories is one benefit), see the <a href="https://education.github.com/pack">GitHub student developer pack</a> on how to do this.</p>
-</section>
-</section>
-<section id="getting-started-with-git" class="level1">
-<h1>Getting Started with git</h1>
+</section></section><section id="getting-started-with-git" class="level1"><h1>Getting Started with git</h1>
 <p>One of my favorite resources for getting started with git/GitHub is the Happy Git with R from Jenny Bryan (especially for Rstudio users):</p>
 <ul>
 <li><a href="https://happygitwithr.com" class="uri">https://happygitwithr.com</a></li>
 </ul>
 <p>It is one of the <strong>most comprehensive resources</strong> out there for getting started with git/GitHub. I will encourage all of you to go read through the online book. Some of you may only need to skim it, others will need to spend some time reading through it. Either way, I hope you will agree it is a worthwhile investment to understand the basics as well as to know you can get help.</p>
-<section id="sec-profile" class="level2">
-<h2 class="anchored" data-anchor-id="sec-profile">Set up your profile in git on your computer</h2>
+<section id="sec-profile" class="level2"><h2 class="anchored" data-anchor-id="sec-profile">Set up your profile in git on your computer</h2>
 <p>Before making changes to your repository, GitHub will want to verify your identity.</p>
 <p>In order for your computer to talk to GitHub smoothly, you will need to set up your <strong>username</strong> and <strong>email</strong> in the <strong>git profile</strong> stored on your computer.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -438,9 +406,7 @@ Warning
 </div>
 <p>That last line will show all of your current <code>git config</code> settings.</p>
 <p>If you are using Rstudio, easy directions are provided here <a href="https://happygitwithr.com/hello-git.html" class="uri">https://happygitwithr.com/hello-git.html</a></p>
-</section>
-<section id="sec-token" class="level2">
-<h2 class="anchored" data-anchor-id="sec-token">Set up your Personal Authentication Token on your computer</h2>
+</section><section id="sec-token" class="level2"><h2 class="anchored" data-anchor-id="sec-token">Set up your Personal Authentication Token on your computer</h2>
 <p>GitHub will also want to check your credentials to authenticate you are really you before writing changes to your repo.</p>
 <p>There are several ways to do this, but the easiest is the protocol for HTTP authentication. You will generate a <em>Personal Access Token</em> for HTTPS from your GitHub account which will be stored on your personal machine.</p>
 <p>I prefer the GithHub command line interface or <code>gh</code> to do this. To install the CLI, follow <a href="https://github.com/cli/cli#installation">the instructions here for your operating system</a>. For Mac users, I suggest that you install <code>homebrew</code>, it is a command-line general software manager for many different software packages.</p>
@@ -457,9 +423,11 @@ Storing your Personal Access Token
 <ol type="1">
 <li>From GitHub: Generate your personal access token <a href="https://happygitwithr.com/https-pat.html#get-a-pat">instructions</a>
 <ol type="a">
-<li>Find the token generator on GitHub under your <em>User Icon &gt; settings &gt; developer settings (left side bar) &gt; Personal access tokens &gt; Tokens (classic) &gt; Generate new Token &gt; classic</em> <strong>note this menu may change</strong></li>
+<li>Find the token generator on GitHub under your <em>User Icon &gt; settings &gt; developer settings (left side bar) &gt; Personal access tokens &gt; Tokens (classic) &gt; Generate new Token &gt; classic</em> <strong>note this menu may change</strong>
+</li>
 <li>Select at least these scopes: “admin:org”,“repo”, “user”, “gist”, and “workflow”</li>
-</ol></li>
+</ol>
+</li>
 <li>From your Command Line: Use <code>gh auth login</code> to store your token and follow the prompts.
 <ol type="a">
 <li>select <code>HTTPS</code> for your preferred protocol</li>
@@ -471,15 +439,14 @@ Storing your Personal Access Token
 <pre><strong>Terminal</strong></pre>
 </div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gh</span> auth login <span class="at">--with-token</span> <span class="op">&lt;</span> mytoken.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></li>
+</div>
+</li>
 </ol>
 </div>
 </div>
 <p>Many more details are explained nicely here <a href="https://happygitwithr.com/https-pat.html" class="uri">https://happygitwithr.com/https-pat.html</a></p>
 <p>You only have to store your credentials once for each computer (or PAT expiration date), then you can push and pull from GitHub to your heartʻs content. It really is a nice way to do things securely.</p>
-</section>
-<section id="configuring-your-default-git-editor" class="level2">
-<h2 class="anchored" data-anchor-id="configuring-your-default-git-editor">Configuring your default git editor</h2>
+</section><section id="configuring-your-default-git-editor" class="level2"><h2 class="anchored" data-anchor-id="configuring-your-default-git-editor">Configuring your default git editor</h2>
 <p>You may want to set your default git editor to something you know how to use (it will come up when you have a merge conflict).</p>
 <p>For example the nano editor is easy to use on the command line for a Unix shell:</p>
 <div class="code-with-filename">
@@ -489,27 +456,20 @@ Storing your Personal Access Token
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git config <span class="at">--global</span> core.editor <span class="st">"nano -w"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><em>The Carpentries</em> provide a <a href="https://swcarpentry.github.io/git-novice/02-setup/#line-endings">full list of editors</a> by operating system, a great resource.</p>
-</section>
-</section>
-<section id="using-gitgithub-in-our-course" class="level1">
-<h1>Using git/GitHub in our course</h1>
+</section></section><section id="using-gitgithub-in-our-course" class="level1"><h1>Using git/GitHub in our course</h1>
 <p>In this course, you will use git/GitHub in the following ways:</p>
 <ol type="1">
 <li>Project 0 (optional) - You will create a website introducing yourself to folks in the course and deploy it on GitHub.</li>
 <li>Projects 1-4 - You can practice using git locally (on your compute environment) to track your changes over time and, if you wish (but highly suggested), you can practice pushing your project solutions to a private GitHub repository on your GitHub account (i.e.&nbsp;<code>git add</code>, <code>git commit</code>, <code>git push</code>, <code>git pull</code>, etc) .</li>
 </ol>
 <p>Learning these skills will be useful down the road if you ever work collaboratively on a project (i.e.&nbsp;writing code as a group). In this scenario, you will use the skills you have been practicing in your projects to work together as a team in a single GitHub repository.</p>
-</section>
-<section id="clone-a-repo-to-your-local-directory---easy" class="level1">
-<h1>Clone a repo to your local directory - Easy!</h1>
+</section><section id="clone-a-repo-to-your-local-directory---easy" class="level1"><h1>Clone a repo to your local directory - Easy!</h1>
 <p>Cloning an existing repo from GitHub is easy. Letʻs clone the <strong>rclassdata</strong> repo to our local git folder within your Documents folder. 1. Go to <a href="https://github.com/mbutler808/rclassdata" class="uri">https://github.com/mbutler808/rclassdata</a> and click on the green <strong>&lt;&gt;Code</strong> button and copy the URL.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/github_cloning.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Cloning from an existing repo</figcaption>
-</figure>
+<figure class="figure"><p><img src="../../images/github_cloning.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Cloning from an existing repo</figcaption></figure>
 </div>
 </div>
 </div>
@@ -533,9 +493,7 @@ Storing your Personal Access Token
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/mbutler808/rclassdata.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you set up your personal access token, it should appear on your computer! If not, go back to <a href="#sec-token">Section&nbsp;4.2</a> and try again.</p>
-</section>
-<section id="make-a-github-repo-started-from-your-local-files" class="level1">
-<h1>Make a GitHub repo started from your local files</h1>
+</section><section id="make-a-github-repo-started-from-your-local-files" class="level1"><h1>Make a GitHub repo started from your local files</h1>
 <p>Suppose you have some files on your computer and youʻd like to make them into a repo. For this example, weʻre going to make a repo called <strong>test</strong></p>
 <ol type="1">
 <li>Create a folder in your <code>Documents/git</code> directory called <code>test</code> and copy some files there.</li>
@@ -544,10 +502,8 @@ Storing your Personal Access Token
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/git_newrepo.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Create a new repo button</figcaption>
-</figure>
+<figure class="figure"><p><img src="../../images/git_newrepo.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Create a new repo button</figcaption></figure>
 </div>
 </div>
 </div>
@@ -557,10 +513,8 @@ Storing your Personal Access Token
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/git_create_new_repo.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Set up a blank repo</figcaption>
-</figure>
+<figure class="figure"><p><img src="../../images/git_create_new_repo.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Set up a blank repo</figcaption></figure>
 </div>
 </div>
 </div>
@@ -574,13 +528,20 @@ Storing your Personal Access Token
 </div>
 <p>Explantations for each line of code:</p>
 <ul>
-<li><code>echo "# test" &gt;&gt; README.md</code> Write <code># test</code> to <code>README.md</code> which will be created since it doesnʻt already exist</li>
-<li><code>git init</code> Intializes the local repo to set up git tracking (only need to to this once)</li>
-<li><code>git add .</code> Adds (. = all) our files and commits any changes to the repo</li>
-<li><code>git commit -m "first commit"</code> Commit message</li>
-<li><code>git branch -M main</code> Renames the local branch to main</li>
-<li><code>git remote add origin URL</code> Connect the remote repo (=“origin” on GitHub) to our local repo. Be sure to copy the appropriate URL for your own GitHub repo.</li>
-<li><code>git push -u origin main</code> Push our local changes (in main) up to the remote (to a parallel branch main on origin).</li>
+<li>
+<code>echo "# test" &gt;&gt; README.md</code> Write <code># test</code> to <code>README.md</code> which will be created since it doesnʻt already exist</li>
+<li>
+<code>git init</code> Intializes the local repo to set up git tracking (only need to to this once)</li>
+<li>
+<code>git add .</code> Adds (. = all) our files and commits any changes to the repo</li>
+<li>
+<code>git commit -m "first commit"</code> Commit message</li>
+<li>
+<code>git branch -M main</code> Renames the local branch to main</li>
+<li>
+<code>git remote add origin URL</code> Connect the remote repo (=“origin” on GitHub) to our local repo. Be sure to copy the appropriate URL for your own GitHub repo.</li>
+<li>
+<code>git push -u origin main</code> Push our local changes (in main) up to the remote (to a parallel branch main on origin).</li>
 </ul>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -632,10 +593,8 @@ GitHub requires authentication to overwrite your repository (this is a good thin
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/With-Git-all-contributors-have-a-copy-of-the-repo-with-all-files-and-the-full-history_W640.jpeg" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Everyone is one with the repo</figcaption>
-</figure>
+<figure class="figure"><p><img src="../../images/With-Git-all-contributors-have-a-copy-of-the-repo-with-all-files-and-the-full-history_W640.jpeg" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Everyone is one with the repo</figcaption></figure>
 </div>
 </div>
 </div>
@@ -664,9 +623,7 @@ NOTE: This will delete your local git history, and is not reversible.
 </div>
 </div>
 </div>
-</section>
-<section id="a-word-about-merge-conflicts" class="level1">
-<h1>A word about merge conflicts</h1>
+</section><section id="a-word-about-merge-conflicts" class="level1"><h1>A word about merge conflicts</h1>
 <p>Sooner or later, you will encounter a merge conflict. That happens if the same file(s) changed both locally and on GitHub.com. That can happen if multiple people work on the same files, or if you work on multiple computers and forget to always push/pull before and after you work on a project. Donʻt get discouraged, this is solvable!</p>
 <p>Sometimes you have to do it manually. Moving the offending files out of your local repository, then doing the merge and after that adding the updates again can help. If you know that one source is the definite one, you can force a push or pull. A more advanced approach is to use branches.</p>
 <div class="code-with-filename">
@@ -693,18 +650,13 @@ Warning
 </ul>
 </div>
 </div>
-</section>
-<section id="forking-a-repo" class="level1">
-<h1>Forking a repo</h1>
+</section><section id="forking-a-repo" class="level1"><h1>Forking a repo</h1>
 <p>When you want to build on someone elseʻs repo, that is a great time to <strong>fork</strong> a repo. This happens when you donʻt have write permission to the repo, but you want provide suggestions (for example if you want to fix a bug). Or if you want to use that repo as a template or a launching off point for your own project.</p>
 <p>After you fork and clone the repo to your computer, you can edit, add, and commit the changes. When you are ready to submit the suggestions to the repo owner, start a <strong>pull request</strong>. They will then read over your suggested edits, and if they approve they can merge the changes into the working repo.</p>
 <p><strong>Forks</strong> are nice because they remain connected to the parent repo in GitHub. So you can seamlessly work on your own private copy and send it back to the original project when you are ready.</p>
 <p><strong>Branches</strong> work in a similar way. The idea is simple. If you have a working repo, you donʻt want to made edits or experimental changes to <strong>main</strong> that may break the functionality. Branches are a way to make a “development branch” where you can work on your ideas in private without breaking anything. When youʻre sure you have everything ironed out and working, you can merge your branch back to <strong>main</strong>, and delete your branch. They are meant to be an ephemeral scratch copy to keep the project clean, organized, and working perfectly.</p>
-</section>
-<section id="post-lecture-materials" class="level1">
-<h1>Post-lecture materials</h1>
-<section id="final-questions" class="level3">
-<h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
+</section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
+<section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
 <p>Here are some post-lecture questions to help you think about the material discussed.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -723,9 +675,7 @@ Questions
 </ol>
 </div>
 </div>
-</section>
-<section id="additional-resources" class="level3">
-<h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
+</section><section id="additional-resources" class="level3"><h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -737,17 +687,14 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><a href="https://rafalab.github.io/dsbook/git.html">git and GitHub in the <code>dsbook</code></a> by Rafael Irizarry</li>
+<li>
+<a href="https://rafalab.github.io/dsbook/git.html">git and GitHub in the <code>dsbook</code></a> by Rafael Irizarry</li>
 </ul>
 </div>
 </div>
 
 
-</section>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -981,6 +928,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
+
 
 
 

@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.333">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Marguerite Butler">
 <meta name="dcterms.date" content="2023-02-28">
 <meta name="description" content="Add">
-
 <title>ZOOL710 Data Science in R for Biologists - Getting data in shape with dplyr</title>
 <style>
 code{white-space: pre-wrap;}
@@ -59,7 +56,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -75,8 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -94,18 +89,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-
-<link rel="stylesheet" href="../../styles.css">
+}</script><link rel="stylesheet" href="../../styles.css">
 </head>
-
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">ZOOL710 Data Science in R for Biologists</span>
@@ -117,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
@@ -125,8 +114,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">General Information</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">
+<li>
     <a class="dropdown-item" href="../../syllabus.html" rel="" target="">
  <span class="dropdown-text">Syllabus</span></a>
   </li>  
@@ -135,13 +124,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Schedule</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Course Materials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">
+<li>
     <a class="dropdown-item" href="../../lectures.html" rel="" target="">
  <span class="dropdown-text">Lectures</span></a>
   </li>  
@@ -154,14 +143,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Resources</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/mbutler808" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/mbutler808" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -171,15 +160,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+<div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Getting data in shape with dplyr</h1>
                   <div>
@@ -229,29 +214,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#pre-lecture-materials" id="toc-pre-lecture-materials" class="nav-link active" data-scroll-target="#pre-lecture-materials">Pre-lecture materials</a>
+<li>
+<a href="#pre-lecture-materials" id="toc-pre-lecture-materials" class="nav-link active" data-scroll-target="#pre-lecture-materials">Pre-lecture materials</a>
   <ul class="collapse">
-  <li><a href="#read-ahead" id="toc-read-ahead" class="nav-link" data-scroll-target="#read-ahead">Read ahead</a></li>
+<li><a href="#read-ahead" id="toc-read-ahead" class="nav-link" data-scroll-target="#read-ahead">Read ahead</a></li>
   <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
-  </ul></li>
+  </ul>
+</li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#tidy-data" id="toc-tidy-data" class="nav-link" data-scroll-target="#tidy-data">Tidy data</a></li>
   <li><a href="#what-shapes-does-the-data-need-to-be-in" id="toc-what-shapes-does-the-data-need-to-be-in" class="nav-link" data-scroll-target="#what-shapes-does-the-data-need-to-be-in">What shapes does the data need to be in?</a></li>
-  <li><a href="#tibbles" id="toc-tibbles" class="nav-link" data-scroll-target="#tibbles">Tibbles</a>
+  <li>
+<a href="#tibbles" id="toc-tibbles" class="nav-link" data-scroll-target="#tibbles">Tibbles</a>
   <ul class="collapse">
-  <li><a href="#tibble-constructor" id="toc-tibble-constructor" class="nav-link" data-scroll-target="#tibble-constructor"><code>tibble()</code> constructor</a></li>
+<li><a href="#tibble-constructor" id="toc-tibble-constructor" class="nav-link" data-scroll-target="#tibble-constructor"><code>tibble()</code> constructor</a></li>
   <li><a href="#as_tibble-coersion" id="toc-as_tibble-coersion" class="nav-link" data-scroll-target="#as_tibble-coersion"><code>as_tibble()</code> coersion</a></li>
   <li><a href="#as-output" id="toc-as-output" class="nav-link" data-scroll-target="#as-output">As output</a></li>
-  </ul></li>
-  <li><a href="#the-dplyr-package" id="toc-the-dplyr-package" class="nav-link" data-scroll-target="#the-dplyr-package">The <strong>dplyr</strong> package</a>
+  </ul>
+</li>
+  <li>
+<a href="#the-dplyr-package" id="toc-the-dplyr-package" class="nav-link" data-scroll-target="#the-dplyr-package">The <strong>dplyr</strong> package</a>
   <ul class="collapse">
-  <li><a href="#dplyr-functions" id="toc-dplyr-functions" class="nav-link" data-scroll-target="#dplyr-functions"><code>dplyr</code> functions</a></li>
+<li><a href="#dplyr-functions" id="toc-dplyr-functions" class="nav-link" data-scroll-target="#dplyr-functions"><code>dplyr</code> functions</a></li>
   <li><a href="#starwars-dataset" id="toc-starwars-dataset" class="nav-link" data-scroll-target="#starwars-dataset"><code>starwars</code> dataset</a></li>
   <li><a href="#selecting-columns-with-select" id="toc-selecting-columns-with-select" class="nav-link" data-scroll-target="#selecting-columns-with-select">Selecting columns with <code>select()</code></a></li>
   <li><a href="#subsetting-with-filter" id="toc-subsetting-with-filter" class="nav-link" data-scroll-target="#subsetting-with-filter">Subsetting with <code>filter()</code></a></li>
@@ -262,33 +250,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#perform-functions-on-groups-using-group_by" id="toc-perform-functions-on-groups-using-group_by" class="nav-link" data-scroll-target="#perform-functions-on-groups-using-group_by">Perform functions on groups using <code>group_by()</code></a></li>
   <li><a href="#piping-multiple-functions-using" id="toc-piping-multiple-functions-using" class="nav-link" data-scroll-target="#piping-multiple-functions-using">Piping multiple functions using <code>%&gt;%</code></a></li>
   <li><a href="#sample-rows-of-data-with-slice_" id="toc-sample-rows-of-data-with-slice_" class="nav-link" data-scroll-target="#sample-rows-of-data-with-slice_">Sample rows of data with <code>slice_*()</code></a></li>
-  </ul></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
-  <li><a href="#post-lecture-materials" id="toc-post-lecture-materials" class="nav-link" data-scroll-target="#post-lecture-materials">Post-lecture materials</a>
-  <ul class="collapse">
-  <li><a href="#final-questions" id="toc-final-questions" class="nav-link" data-scroll-target="#final-questions">Final Questions</a></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a></li>
-  </ul></li>
   </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li>
+<a href="#post-lecture-materials" id="toc-post-lecture-materials" class="nav-link" data-scroll-target="#post-lecture-materials">Post-lecture materials</a>
+  <ul class="collapse">
+<li><a href="#final-questions" id="toc-final-questions" class="nav-link" data-scroll-target="#final-questions">Final Questions</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a></li>
+  </ul>
+</li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<!-- Add interesting quote -->
-<section id="pre-lecture-materials" class="level1">
-<h1>Pre-lecture materials</h1>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><!-- Add interesting quote --><section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
 <!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
 <p>🌴</p>
-<section id="read-ahead" class="level3">
-<h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
+<section id="read-ahead" class="level3"><h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -307,19 +288,13 @@ Read ahead
 </ol>
 </div>
 </div>
-</section>
-<section id="acknowledgements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+</section><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
 <li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-06-managing-data-frames-with-tidyverse/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-06-managing-data-frames-with-tidyverse/</a></li>
 <li><a href="https://rdpeng.github.io/Biostat776/lecture-managing-data-frames-with-the-tidyverse" class="uri">https://rdpeng.github.io/Biostat776/lecture-managing-data-frames-with-the-tidyverse</a></li>
 <li><a href="https://jhudatascience.org/tidyversecourse/get-data.html#tibbles" class="uri">https://jhudatascience.org/tidyversecourse/get-data.html#tibbles</a></li>
-</ul>
-</section>
-</section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
+</ul></section></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -339,13 +314,9 @@ Learning objectives
 </ul>
 </div>
 </div>
-</section>
-<section id="overview" class="level1">
-<h1>Overview</h1>
+</section><section id="overview" class="level1"><h1>Overview</h1>
 <p>It is still important to understand base R manipulations, particularly for things such as cleaning raw data, troubleshooting, and writing custom functions. But the tidyverse provides many useful tools for data manipuation and analysis of cleaned data. In this session we will learn about <strong>dplyr</strong> and friends.</p>
-</section>
-<section id="tidy-data" class="level1">
-<h1>Tidy data</h1>
+</section><section id="tidy-data" class="level1"><h1>Tidy data</h1>
 <p>The tidyverse has many slogans. A particularly good one for all data analysis is the notion of <strong>tidy data</strong>.</p>
 <p>As defined by Hadley Wickham in his 2014 paper published in the <em>Journal of Statistical Software</em>, a <a href="https://www.jstatsoft.org/article/view/v059i10">tidy dataset</a> has the following properties:</p>
 <ol type="1">
@@ -354,15 +325,11 @@ Learning objectives
 <li><p>Each type of observational unit forms a table.</p></li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/tidydata_1.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Artwork by Allison Horst on tidy data</figcaption>
-</figure>
+<figure class="figure"><p><img src="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/tidydata_1.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Artwork by Allison Horst on tidy data</figcaption></figure>
 </div>
 <p>[<strong>Source</strong>: <a href="https://github.com/allisonhorst/stats-illustrations">Artwork by Allison Horst</a>]</p>
-</section>
-<section id="what-shapes-does-the-data-need-to-be-in" class="level1">
-<h1>What shapes does the data need to be in?</h1>
+</section><section id="what-shapes-does-the-data-need-to-be-in" class="level1"><h1>What shapes does the data need to be in?</h1>
 <p>Beyond the data being tidy, however, we also need to think about what shape it needs to be in. Weʻll review concepts and tools in the next two lessons.</p>
 <p>Now that we have had some experience plotting our data, we can see the value of having rectangular dataframes. We can also see that for particular graphics and analyses, we need to have the data arranged in particular ways.</p>
 <p>For example, take a look at this elegant graphic below. This single graphic is packed with information on fat, BMR, TEE, and activity levels, all for mulitple species. Is it more effective that individual bar plots? This arrangement is so helpful because you can imagine questions that can be answered with it by comparing the different aspects of the data.</p>
@@ -376,7 +343,7 @@ A very informative figure!
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><img src="../../images/humanTEE.png" class="img-fluid" alt="Human total energy expenditure compared with other primates."> <a href="https://www.science.org/content/article/scientist-busts-myths-about-how-humans-burn-calories-and-why?fbclid=IwAR3fzOwd09LBUOR9ely2t4om0-CtYcuT8ux_f46OopQnpiAVENgX_24bWpY">Source: Gibbons, 2022 based on data of H. Ponzer et al., NATURE, 533:90, 2016</a></p>
+<p><img src="../../images/humanTEE.png" class="img-fluid" alt="Human total energy expenditure compared with other primates."><a href="https://www.science.org/content/article/scientist-busts-myths-about-how-humans-burn-calories-and-why?fbclid=IwAR3fzOwd09LBUOR9ely2t4om0-CtYcuT8ux_f46OopQnpiAVENgX_24bWpY">Source: Gibbons, 2022 based on data of H. Ponzer et al., NATURE, 533:90, 2016</a></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -397,33 +364,31 @@ Can you imagine what this dataset looks like in terms of organization?
 </div>
 </div>
 <p>We often do not know exactly what we need at the start of a data analysis. We have to play around with different data structures, rearrange the data, look for interesting plots to try, rerrange to fit the input requirements of new functions weʻve discovered, and so on.</p>
-</section>
-<section id="tibbles" class="level1">
-<h1>Tibbles</h1>
+</section><section id="tibbles" class="level1"><h1>Tibbles</h1>
 <p>The <strong>tidyverse</strong> uses as its central data structure, the <strong>tibble</strong> or <strong>tbl_df</strong>. Tibbles are a variation on data frames, claimed to be <em>lazy</em> and <em>surly</em>:</p>
 <ul>
 <li>They don’t change variable names or types when you construct the tibble.</li>
-<li>Don’t convert strings to factors (the default behavior in <code>data.frame()</code>).</li>
+<li>Don’t convert strings to factors (the default behavior in <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>).</li>
 <li>Complain more when a variable doesnʻt exist.</li>
-<li>No <code>row.names()</code> in a tibble. Instead, you must create a new variable.</li>
-<li>Display a different summary style for its <code>print()</code> method.</li>
+<li>No <code><a href="https://rdrr.io/r/base/row.names.html">row.names()</a></code> in a tibble. Instead, you must create a new variable.</li>
+<li>Display a different summary style for its <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method.</li>
 <li>Allows non-standard R names for variables</li>
 <li>Allows columns to be lists.</li>
 </ul>
 <p>However, most tidyverse functions also work on data frames. Itʻs up to you.</p>
-<section id="tibble-constructor" class="level3">
-<h3 class="anchored" data-anchor-id="tibble-constructor"><code>tibble()</code> constructor</h3>
-<p>Just as with data frames, there is a <code>tibble()</code> constructor function, which functions in many ways with similar syntax as the <code>data.frame()</code> constructor.</p>
+<section id="tibble-constructor" class="level3"><h3 class="anchored" data-anchor-id="tibble-constructor">
+<code>tibble()</code> constructor</h3>
+<p>Just as with data frames, there is a <code><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble()</a></code> constructor function, which functions in many ways with similar syntax as the <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> constructor.</p>
 <p>If you havenʻt already done so, install the tidyverse:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(tibble)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: tibble</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>( iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,] )  <span class="co"># the first few rows of iris</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="op">]</span> <span class="op">)</span>  <span class="co"># the first few rows of iris</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
@@ -433,8 +398,8 @@ Can you imagine what this dataset looks like in terms of organization?
 3          4.7         3.2          1.3         0.2 setosa 
 4          4.6         3.1          1.5         0.2 setosa </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>( x, x <span class="sc">*</span> <span class="dv">2</span> )  <span class="co"># name assigned at construction</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span> <span class="va">x</span>, <span class="va">x</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">)</span>  <span class="co"># name assigned at construction</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
       x `x * 2`
@@ -443,12 +408,12 @@ Can you imagine what this dataset looks like in terms of organization?
 2     2       4
 3     3       6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>silly <span class="ot">&lt;-</span> <span class="fu">tibble</span>(      <span class="co"># an example of a non-standard names</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">one - 3</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,  <span class="co"># name = value syntax</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">12</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"numeric"</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">:)</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"smile"</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>silly</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">silly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>      <span class="co"># an example of a non-standard names</span></span>
+<span>  `one - 3` <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,  <span class="co"># name = value syntax</span></span>
+<span>  `12` <span class="op">=</span> <span class="st">"numeric"</span>,</span>
+<span>  `:)` <span class="op">=</span> <span class="st">"smile"</span>,</span>
+<span><span class="op">)</span></span>
+<span><span class="va">silly</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   `one - 3` `12`    `:)` 
@@ -458,12 +423,11 @@ Can you imagine what this dataset looks like in terms of organization?
 3         3 numeric smile</code></pre>
 </div>
 </div>
-</section>
-<section id="as_tibble-coersion" class="level3">
-<h3 class="anchored" data-anchor-id="as_tibble-coersion"><code>as_tibble()</code> coersion</h3>
-<p><code>as_tibble()</code> converts an existing object, such as a data frame or matrix, into a tibble.</p>
+</section><section id="as_tibble-coersion" class="level3"><h3 class="anchored" data-anchor-id="as_tibble-coersion">
+<code>as_tibble()</code> coersion</h3>
+<p><code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> converts an existing object, such as a data frame or matrix, into a tibble.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>( iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,] )  <span class="co"># coercing a dataframe to tibble</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="op">]</span> <span class="op">)</span>  <span class="co"># coercing a dataframe to tibble</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
@@ -474,44 +438,36 @@ Can you imagine what this dataset looks like in terms of organization?
 4          4.6         3.1          1.5         0.2 setosa </code></pre>
 </div>
 </div>
-</section>
-<section id="as-output" class="level3">
-<h3 class="anchored" data-anchor-id="as-output">As output</h3>
+</section><section id="as-output" class="level3"><h3 class="anchored" data-anchor-id="as-output">As output</h3>
 <p>Most often we will get tibbles returned from tidyverse functions such as <code>read_csv()</code> from the <code>readr</code> package.</p>
-</section>
-</section>
-<section id="the-dplyr-package" class="level1">
-<h1>The <strong>dplyr</strong> package</h1>
+</section></section><section id="the-dplyr-package" class="level1"><h1>The <strong>dplyr</strong> package</h1>
 <p>The <strong>dplyr</strong> package, which is part of the <strong>tidyverse</strong> was written to supply a <em>grammar for data manipulation</em>, with verbs for the most common data manipulation tasks.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/dplyr_wrangling.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Artwork by Allison Horst on the dplyr package</figcaption>
-</figure>
+<figure class="figure"><p><img src="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/dplyr_wrangling.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Artwork by Allison Horst on the dplyr package</figcaption></figure>
 </div>
 <p>[<strong>Source</strong>: <a href="https://github.com/allisonhorst/stats-illustrations">Artwork by Allison Horst</a>]</p>
-<section id="dplyr-functions" class="level3">
-<h3 class="anchored" data-anchor-id="dplyr-functions"><code>dplyr</code> functions</h3>
+<section id="dplyr-functions" class="level3"><h3 class="anchored" data-anchor-id="dplyr-functions">
+<code>dplyr</code> functions</h3>
 <ul>
-<li><p><code>select()</code>: return a subset of the data frame, using a flexible notation</p></li>
-<li><p><code>filter()</code>: extract a subset of rows from a data frame using logical conditions</p></li>
-<li><p><code>arrange()</code>: reorder rows of a data frame</p></li>
-<li><p><code>relocate()</code>: rearrange the columns of a data frame</p></li>
-<li><p><code>rename()</code>: rename columns in a data frame</p></li>
-<li><p><code>mutate()</code>: add new columns or transform existing variables</p></li>
-<li><p><code>summarize()</code>: generate summary statistics of the variables in the data frame, by strata if data are hierarchical</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>: return a subset of the data frame, using a flexible notation</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>: extract a subset of rows from a data frame using logical conditions</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>: reorder rows of a data frame</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate()</a></code>: rearrange the columns of a data frame</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code>: rename columns in a data frame</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>: add new columns or transform existing variables</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>: generate summary statistics of the variables in the data frame, by strata if data are hierarchical</p></li>
 <li><p><code>%&gt;%</code>: the “pipe” operator (from <strong>magrittr</strong>) connects multiple verbs together into a data wrangling pipeline (kind of like making a compound sentence)</p></li>
 </ul>
 <p>Note: Everything <code>dplyr</code> does could already be done with base R. What is different is a new syntax, which allows for more clarity of the data manipulations and the order, and perhaps makes the code more readable.</p>
 <p>Instead of the nested syntax, or typing the dataframe name over and over, we can pipe one operation into the next.</p>
 <p>Another useful contribution is that <code>dplyr</code> functions are <strong>very</strong> fast, as many key operations are coded in C++. This will be important for very large datasets or repeated manipulations (say in a simulation study).</p>
-</section>
-<section id="starwars-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="starwars-dataset"><code>starwars</code> dataset</h3>
-<p>We will use the <code>starwars</code> dataset included with <code>dplyr</code>. You should check out the help page for this dataset <code>?starwars</code>.</p>
+</section><section id="starwars-dataset" class="level3"><h3 class="anchored" data-anchor-id="starwars-dataset">
+<code>starwars</code> dataset</h3>
+<p>We will use the <code>starwars</code> dataset included with <code>dplyr</code>. You should check out the help page for this dataset <code><a href="https://dplyr.tidyverse.org/reference/starwars.html">?starwars</a></code>.</p>
 <p>Letʻs start by using the <code>skim()</code> function to check out the dataset:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: dplyr</code></pre>
 </div>
@@ -529,11 +485,11 @@ Attaching package: 'dplyr'</code></pre>
 
     intersect, setdiff, setequal, union</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(starwars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">starwars</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>skimr<span class="sc">::</span><span class="fu">skim</span>(starwars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">skimr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="va">starwars</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Data summary</caption>
@@ -592,8 +548,7 @@ Attaching package: 'dplyr'</code></pre>
 <col style="width: 12%">
 <col style="width: 15%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">skim_variable</th>
 <th style="text-align: right;">n_missing</th>
 <th style="text-align: right;">complete_rate</th>
@@ -602,8 +557,7 @@ Attaching package: 'dplyr'</code></pre>
 <th style="text-align: right;">empty</th>
 <th style="text-align: right;">n_unique</th>
 <th style="text-align: right;">whitespace</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">name</td>
@@ -697,16 +651,14 @@ Attaching package: 'dplyr'</code></pre>
 <col style="width: 15%">
 <col style="width: 15%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">skim_variable</th>
 <th style="text-align: right;">n_missing</th>
 <th style="text-align: right;">complete_rate</th>
 <th style="text-align: right;">n_unique</th>
 <th style="text-align: right;">min_length</th>
 <th style="text-align: right;">max_length</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">films</td>
@@ -749,8 +701,7 @@ Attaching package: 'dplyr'</code></pre>
 <col style="width: 6%">
 <col style="width: 7%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">skim_variable</th>
 <th style="text-align: right;">n_missing</th>
 <th style="text-align: right;">complete_rate</th>
@@ -762,8 +713,7 @@ Attaching package: 'dplyr'</code></pre>
 <th style="text-align: right;">p75</th>
 <th style="text-align: right;">p100</th>
 <th style="text-align: left;">hist</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">height</td>
@@ -808,9 +758,8 @@ Attaching package: 'dplyr'</code></pre>
 </table>
 </div>
 </div>
-</section>
-<section id="selecting-columns-with-select" class="level3">
-<h3 class="anchored" data-anchor-id="selecting-columns-with-select">Selecting columns with <code>select()</code></h3>
+</section><section id="selecting-columns-with-select" class="level3"><h3 class="anchored" data-anchor-id="selecting-columns-with-select">Selecting columns with <code>select()</code>
+</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -824,15 +773,15 @@ Example
 <p>Suppose we wanted to take the first 3 columns only. There are a few ways to do this.</p>
 <p>We could for example use numerical indices:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(starwars)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">starwars</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "name"   "height" "mass"  </code></pre>
 </div>
 </div>
 <p>But we can also use the names directly:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>subset <span class="ot">&lt;-</span> <span class="fu">select</span>(starwars, <span class="fu">c</span>(name, sex<span class="sc">:</span>species))</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">subset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">sex</span><span class="op">:</span><span class="va">species</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">subset</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
   name           sex    gender    homeworld species
@@ -857,19 +806,18 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <code>:</code> normally cannot be used with names or strings, but inside the <code>select()</code> function you can use it to specify a range of variable names.</p>
+<p>The <code>:</code> normally cannot be used with names or strings, but inside the <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> function you can use it to specify a range of variable names.</p>
 </div>
 </div>
-<section id="by-exclusion" class="level4">
-<h4 class="anchored" data-anchor-id="by-exclusion">By exclusion</h4>
-<p>Variables can be <strong>omited</strong> using the negative sign withing <code>select()</code>:</p>
+<section id="by-exclusion" class="level4"><h4 class="anchored" data-anchor-id="by-exclusion">By exclusion</h4>
+<p>Variables can be <strong>omited</strong> using the negative sign withing <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>( starwars, <span class="sc">-</span>(sex<span class="sc">:</span>species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span> <span class="va">starwars</span>, <span class="op">-</span><span class="op">(</span><span class="va">sex</span><span class="op">:</span><span class="va">species</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The <code>select()</code> function also has several helper functions that allow matching on patterns. So, for example, if you wanted to keep every variable that ends with “color”:</p>
+<p>The <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> function also has several helper functions that allow matching on patterns. So, for example, if you wanted to keep every variable that ends with “color”:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>subset <span class="ot">&lt;-</span> <span class="fu">select</span>(starwars, <span class="fu">ends_with</span>(<span class="st">"color"</span>))</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(subset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">subset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"color"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">subset</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [87 × 3] (S3: tbl_df/tbl/data.frame)
  $ hair_color: chr [1:87] "blond" NA NA "none" ...
@@ -879,25 +827,21 @@ Note
 </div>
 <p>Or all variables that start with n or m:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>subset <span class="ot">&lt;-</span> <span class="fu">select</span>(starwars, <span class="fu">starts_with</span>(<span class="st">"n"</span>) <span class="sc">|</span> <span class="fu">starts_with</span>(<span class="st">"m"</span>))</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(subset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">subset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"n"</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">subset</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [87 × 2] (S3: tbl_df/tbl/data.frame)
  $ name: chr [1:87] "Luke Skywalker" "C-3PO" "R2-D2" "Darth Vader" ...
  $ mass: num [1:87] 77 75 32 136 49 120 75 32 84 77 ...</code></pre>
 </div>
 </div>
-<p>You can also use more general <strong>regular expressions</strong>. See the help page (<code>?select</code>) for more details.</p>
-</section>
-</section>
-<section id="subsetting-with-filter" class="level3">
-<h3 class="anchored" data-anchor-id="subsetting-with-filter">Subsetting with <code>filter()</code></h3>
-<p>The <code>filter()</code> function is used to <strong>extract subsets of rows</strong> or observations from a data frame. This function is similar to the existing <code>subset()</code> function in base R, or indexing by logical comparisons.</p>
+<p>You can also use more general <strong>regular expressions</strong>. See the help page (<code><a href="https://dplyr.tidyverse.org/reference/select.html">?select</a></code>) for more details.</p>
+</section></section><section id="subsetting-with-filter" class="level3"><h3 class="anchored" data-anchor-id="subsetting-with-filter">Subsetting with <code>filter()</code>
+</h3>
+<p>The <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function is used to <strong>extract subsets of rows</strong> or observations from a data frame. This function is similar to the existing <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> function in base R, or indexing by logical comparisons.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/dplyr_filter.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Artwork by Allison Horst on filter() function</figcaption>
-</figure>
+<figure class="figure"><p><img src="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/dplyr_filter.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Artwork by Allison Horst on filter() function</figcaption></figure>
 </div>
 <p>[<strong>Source</strong>: <a href="https://github.com/allisonhorst/stats-illustrations">Artwork by Allison Horst</a>]</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -912,8 +856,8 @@ Example
 <div class="callout-body-container callout-body">
 <p>Suppose we wanted to extract the rows of the <code>starwars</code> data frame where the birthyear is greater than 100:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>age100 <span class="ot">&lt;-</span> <span class="fu">filter</span>(starwars, birth_year <span class="sc">&gt;</span> <span class="dv">100</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(age100)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">age100</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="va">birth_year</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">age100</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
@@ -931,7 +875,7 @@ Example
 </div>
 <p>You can see that there are now only 5 rows in the data frame and the distribution of the <code>birth_year</code> values is.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(age100<span class="sc">$</span>birth_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">age100</span><span class="op">$</span><span class="va">birth_year</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
     102     112     200     382     600     896 </code></pre>
@@ -939,8 +883,8 @@ Example
 </div>
 <p>We can also filter on multiple conditions: <em>and</em> requires both conditions to be true, whereas <em>or</em> requires only one to be true. This time letʻs choose <code>birth_year &lt; 100</code> and <code>homeworld == "Tatooine</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>age_tat <span class="ot">&lt;-</span> <span class="fu">filter</span>(starwars, birth_year <span class="sc">&lt;</span> <span class="dv">100</span> <span class="sc">&amp;</span> homeworld <span class="sc">==</span> <span class="st">"Tatooine"</span>)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(age_tat, name, height, mass, birth_year, sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">age_tat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="va">birth_year</span> <span class="op">&lt;</span> <span class="fl">100</span> <span class="op">&amp;</span> <span class="va">homeworld</span> <span class="op">==</span> <span class="st">"Tatooine"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age_tat</span>, <span class="va">name</span>, <span class="va">height</span>, <span class="va">mass</span>, <span class="va">birth_year</span>, <span class="va">sex</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 5
   name               height  mass birth_year sex   
@@ -962,13 +906,11 @@ Example
 <col style="width: 37%">
 <col style="width: 46%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: right;">Operator</th>
 <th style="text-align: right;">Meaning</th>
 <th style="text-align: right;">Example</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;"><code>==</code></td>
@@ -1006,7 +948,7 @@ Example
 <td style="text-align: right;"><code>homeworld %in% c("Tatooine", "Naboo")</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: right;"><code>is.na()</code></td>
+<td style="text-align: right;"><code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code></td>
 <td style="text-align: right;">Is a missing value</td>
 <td style="text-align: right;"><code>is.na(mass)</code></td>
 </tr>
@@ -1026,17 +968,16 @@ Note
 <p>A common use of this is to identify observations with non-missing data (e.g., <code>!(is.na(homweworld))</code>).</p>
 </div>
 </div>
-</section>
-<section id="sorting-data-with-arrange" class="level3">
-<h3 class="anchored" data-anchor-id="sorting-data-with-arrange">Sorting data with <code>arrange()</code></h3>
-<p><code>arrange()</code> is like the sort function in a spreadsheet, or <code>order()</code> in base R. <code>arrange()</code> <strong>reorders rows</strong> of a data frame according to one of the columns. Think of this as sorting your rows on the value of a column.</p>
+</section><section id="sorting-data-with-arrange" class="level3"><h3 class="anchored" data-anchor-id="sorting-data-with-arrange">Sorting data with <code>arrange()</code>
+</h3>
+<p><code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> is like the sort function in a spreadsheet, or <code><a href="https://rdrr.io/r/base/order.html">order()</a></code> in base R. <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> <strong>reorders rows</strong> of a data frame according to one of the columns. Think of this as sorting your rows on the value of a column.</p>
 <p>Here we can order the rows of the data frame by birth_year, so that the first row is the earliest (oldest) observation and the last row is the latest (most recent) observation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="ot">&lt;-</span> <span class="fu">arrange</span>(starwars, birth_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="va">birth_year</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now check the first few rows</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">select</span>(starwars, name, birth_year), <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="va">name</span>, <span class="va">birth_year</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   name                  birth_year
@@ -1048,7 +989,7 @@ Note
 </div>
 <p>and the last few rows.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(<span class="fu">select</span>(starwars, name, birth_year), <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="va">name</span>, <span class="va">birth_year</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   name           birth_year
@@ -1058,13 +999,13 @@ Note
 3 Captain Phasma         NA</code></pre>
 </div>
 </div>
-<p>Columns can be arranged in descending order using the helper function <code>desc()</code>.</p>
+<p>Columns can be arranged in descending order using the helper function <code><a href="https://dplyr.tidyverse.org/reference/desc.html">desc()</a></code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="ot">&lt;-</span> <span class="fu">arrange</span>(starwars, <span class="fu">desc</span>(birth_year))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">birth_year</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Looking at the first three and last three rows shows the dates in descending order.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">select</span>(starwars, name, birth_year), <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="va">name</span>, <span class="va">birth_year</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   name                  birth_year
@@ -1073,7 +1014,7 @@ Note
 2 Jabba Desilijic Tiure        600
 3 Chewbacca                    200</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(<span class="fu">select</span>(starwars, name, birth_year), <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="va">name</span>, <span class="va">birth_year</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   name           birth_year
@@ -1083,18 +1024,16 @@ Note
 3 Captain Phasma         NA</code></pre>
 </div>
 </div>
-</section>
-<section id="rearranging-columns-with-relocate" class="level3">
-<h3 class="anchored" data-anchor-id="rearranging-columns-with-relocate">Rearranging columns with <code>relocate()</code></h3>
+</section><section id="rearranging-columns-with-relocate" class="level3"><h3 class="anchored" data-anchor-id="rearranging-columns-with-relocate">Rearranging columns with <code>relocate()</code>
+</h3>
 <p><strong>Moving a column to a new location</strong> is done by specifying the column names, and indicating where they go with the <code>.before=</code> or <code>.after=</code> arguments specifing a location (another column).</p>
 <p><code>relocate(.data, ..., .before = NULL, .after = NULL)</code></p>
-</section>
-<section id="renaming-columns-with-rename" class="level3">
-<h3 class="anchored" data-anchor-id="renaming-columns-with-rename">Renaming columns with <code>rename()</code></h3>
-<p><strong>Renaming a variable</strong> in a data frame in R is accomplished using the <code>names()</code> function. The <code>rename()</code> function is designed to make this process easier.</p>
+</section><section id="renaming-columns-with-rename" class="level3"><h3 class="anchored" data-anchor-id="renaming-columns-with-rename">Renaming columns with <code>rename()</code>
+</h3>
+<p><strong>Renaming a variable</strong> in a data frame in R is accomplished using the <code><a href="https://rdrr.io/r/base/names.html">names()</a></code> function. The <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> function is designed to make this process easier.</p>
 <p>Here you can see the names of the first six variables in the <code>starwars</code> data frame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(starwars[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>], <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">starwars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 6
   name                  height  mass hair_color skin_color       eye_color
@@ -1106,8 +1045,8 @@ Note
 </div>
 <p>Suppose we wanted to drop the <code>_color</code>. The syntax is <code>newname = oldname</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="ot">&lt;-</span> <span class="fu">rename</span>(starwars, <span class="at">hair =</span> hair_color, <span class="at">skin =</span> skin_color, <span class="at">eye =</span> eye_color)</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(starwars[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>], <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">starwars</span>, hair <span class="op">=</span> <span class="va">hair_color</span>, skin <span class="op">=</span> <span class="va">skin_color</span>, eye <span class="op">=</span> <span class="va">eye_color</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">starwars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 6
   name                  height  mass hair  skin             eye   
@@ -1130,21 +1069,18 @@ Question
 <p>How would you do the equivalent in base R without <code>dplyr</code>?</p>
 </div>
 </div>
-</section>
-<section id="adding-columns-with-mutate" class="level3">
-<h3 class="anchored" data-anchor-id="adding-columns-with-mutate">Adding columns with <code>mutate()</code></h3>
-<p>The <code>mutate()</code> function <strong>computes transformations of variables</strong> in a data frame.</p>
+</section><section id="adding-columns-with-mutate" class="level3"><h3 class="anchored" data-anchor-id="adding-columns-with-mutate">Adding columns with <code>mutate()</code>
+</h3>
+<p>The <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> function <strong>computes transformations of variables</strong> in a data frame.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/dplyr_mutate.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Artwork by Allison Horst on mutate() function</figcaption>
-</figure>
+<figure class="figure"><p><img src="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/dplyr_mutate.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Artwork by Allison Horst on mutate() function</figcaption></figure>
 </div>
 <p>[<strong>Source</strong>: <a href="https://github.com/allisonhorst/stats-illustrations">Artwork by Allison Horst</a>]</p>
 <p>For example, we may want to adjust height for mass:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="ot">&lt;-</span> <span class="fu">mutate</span>(starwars, <span class="at">heightsize =</span> height <span class="sc">/</span> mass )</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(starwars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">starwars</span>, heightsize <span class="op">=</span> <span class="va">height</span> <span class="op">/</span> <span class="va">mass</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">starwars</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 15
   name  height  mass hair  skin  eye   birth_year sex   gender homeworld species
@@ -1159,13 +1095,12 @@ Question
 #   heightsize &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<p>There is also the related <code>transmute()</code> function, which <code>mutate()</code>s and <em>keeps only the transformed variables</em>. Therefore, the result is only two columns in the transmuted data frame.</p>
-</section>
-<section id="perform-functions-on-groups-using-group_by" class="level3">
-<h3 class="anchored" data-anchor-id="perform-functions-on-groups-using-group_by">Perform functions on groups using <code>group_by()</code></h3>
-<p>The <code>group_by()</code> function is used to <strong>indicate groups within the data</strong>.</p>
+<p>There is also the related <code><a href="https://dplyr.tidyverse.org/reference/transmute.html">transmute()</a></code> function, which <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>s and <em>keeps only the transformed variables</em>. Therefore, the result is only two columns in the transmuted data frame.</p>
+</section><section id="perform-functions-on-groups-using-group_by" class="level3"><h3 class="anchored" data-anchor-id="perform-functions-on-groups-using-group_by">Perform functions on groups using <code>group_by()</code>
+</h3>
+<p>The <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function is used to <strong>indicate groups within the data</strong>.</p>
 <p>For example, what is the average height by homeworld?</p>
-<p><strong>In conjunction</strong> with the <code>group_by()</code> function, we often use the <code>summarize()</code> function.</p>
+<p><strong>In conjunction</strong> with the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function, we often use the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> function.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1178,8 +1113,9 @@ Note
 <div class="callout-body-container callout-body">
 <p>The <strong>general operation</strong> here is a combination of</p>
 <ol type="1">
-<li>Splitting a data frame by group defined by a variable or group of variables (<code>group_by()</code>)</li>
-<li><code>summarize()</code> across those subsets</li>
+<li>Splitting a data frame by group defined by a variable or group of variables (<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>)</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> across those subsets</li>
 </ol>
 </div>
 </div>
@@ -1195,13 +1131,13 @@ Example
 <div class="callout-body-container callout-body">
 <p>We can create a separate data frame that splits the original data frame by <code>homeworld</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>worlds <span class="ot">&lt;-</span> <span class="fu">group_by</span>(starwars, homeworld)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">worlds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="va">homeworld</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Compute summary statistics by planet (just showing mean and median here, almost any summary stat is available):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(worlds, <span class="at">height =</span> <span class="fu">mean</span>(height, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">maxheight =</span> <span class="fu">max</span>(height, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">mass =</span> <span class="fu">median</span>(mass, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span><span class="va">worlds</span>, height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">height</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>          maxheight <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">height</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>          mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">mass</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 49 × 4
    homeworld      height maxheight  mass
@@ -1221,7 +1157,7 @@ Example
 </div>
 </div>
 </div>
-<p><code>summarize()</code> returns a data frame with <code>homeworld</code> as the first column, followed by the requested summary statistics. This is similar to the base R function <code>aggregate()</code>.</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> returns a data frame with <code>homeworld</code> as the first column, followed by the requested summary statistics. This is similar to the base R function <code><a href="https://rdrr.io/r/stats/aggregate.html">aggregate()</a></code>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1235,16 +1171,16 @@ More complicated example
 <p>In a slightly more complicated example, we might want to know what are the average masses within quintiles of <code>height</code>:</p>
 <p>First, we can create a categorical variable of <code>height5</code> divided into quintiles</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>qq <span class="ot">&lt;-</span> <span class="fu">quantile</span>(starwars<span class="sc">$</span>height, <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.2</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>starwars <span class="ot">&lt;-</span> <span class="fu">mutate</span>(starwars, <span class="at">height.quint =</span> <span class="fu">cut</span>(height, qq))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">qq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">starwars</span><span class="op">$</span><span class="va">height</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.2</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">starwars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">starwars</span>, height.quint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>, <span class="va">qq</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we can group the data frame by the <code>height.quint</code> variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>quint <span class="ot">&lt;-</span> <span class="fu">group_by</span>(starwars, height.quint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">quint</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="va">height.quint</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, we can compute the mean of <code>mass</code> within quintiles of <code>height</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(quint, <span class="at">mquint =</span> <span class="fu">mean</span>(mass, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span><span class="va">quint</span>, mquint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mass</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
   height.quint mquint
@@ -1260,19 +1196,18 @@ More complicated example
 </div>
 </div>
 <p>Oddly enough there is a maximum mass in the second height quintile of Starwars characters. The biologist in me thinks maybe outliers?</p>
-</section>
-<section id="piping-multiple-functions-using" class="level3">
-<h3 class="anchored" data-anchor-id="piping-multiple-functions-using">Piping multiple functions using <code>%&gt;%</code></h3>
+</section><section id="piping-multiple-functions-using" class="level3"><h3 class="anchored" data-anchor-id="piping-multiple-functions-using">Piping multiple functions using <code>%&gt;%</code>
+</h3>
 <p>The pipe operator <code>%&gt;%</code> is very handy for <strong>stringing together multiple <code>dplyr</code> functions in a sequence of operations</strong>. It comes from the <strong>magritter</strong> package.</p>
-<p><img src="https://s3-us-west-2.amazonaws.com/collections.lacma.org-images/remote_images/ma-150089-WEB.jpg?AIhOIuuCkaqUYKpVvGmkLe995PGXVHxg" class="img-fluid"> <a href="https://collections.lacma.org/node/239578">Source:</a></p>
+<p><img src="https://s3-us-west-2.amazonaws.com/collections.lacma.org-images/remote_images/ma-150089-WEB.jpg?AIhOIuuCkaqUYKpVvGmkLe995PGXVHxg" class="img-fluid"><a href="https://collections.lacma.org/node/239578">Source:</a></p>
 <p>In base R, there are two styles of applying multiple functions. The first is the resave the object after each operation.</p>
 <p>The second is to nest functions, with the first at the deepest level (the heart of the onion), then working our way out:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">third</span>(<span class="fu">second</span>(<span class="fu">first</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">third</span><span class="op">(</span><span class="fu">second</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The <code>%&gt;%</code> operator allows you to string operations in a left-to-right fashion, where the output of one flows into the next, i.e.:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">first</span>(x) <span class="sc">%&gt;%</span> second <span class="sc">%&gt;%</span> third</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">second</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">third</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1287,11 +1222,11 @@ Example
 <p>Take the example that we just did in the last section.</p>
 <p>That can be done with the following sequence:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(homeworld) <span class="sc">%&gt;%</span> </span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">height =</span> <span class="fu">mean</span>(height, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">maxheight =</span> <span class="fu">max</span>(height, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">mass =</span> <span class="fu">median</span>(mass, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">homeworld</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">height</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>          maxheight <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">height</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>          mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">mass</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 49 × 4
    homeworld      height maxheight  mass
@@ -1311,22 +1246,19 @@ Example
 </div>
 </div>
 </div>
-<section id="data-masking" class="level4">
-<h4 class="anchored" data-anchor-id="data-masking">Data masking</h4>
+<section id="data-masking" class="level4"><h4 class="anchored" data-anchor-id="data-masking">Data masking</h4>
 <p>Notice that we did not have to specify the dataframe. This is because dplyr functions are built on a data masking syntax. From the dplyr data-masking help page:</p>
 <blockquote class="blockquote">
 <p>Data masking allows you to refer to variables in the “current” data frame (usually supplied in the .data argument), without any other prefix. It’s what allows you to type (e.g.) <code>filter(diamonds, x == 0 &amp; y == 0 &amp; z == 0)</code> instead of <code>diamonds[diamonds$x == 0 &amp; diamonds$y == 0 &amp; diamonds$z == 0, ]</code></p>
 </blockquote>
-<p>When you look at the help page for <code>?mutate</code> for example, you will see a function definition like so:</p>
+<p>When you look at the help page for <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">?mutate</a></code> for example, you will see a function definition like so:</p>
 <blockquote class="blockquote">
 <p><code>mutate(.data, ...)</code></p>
 </blockquote>
 <p>Note the <code>.data</code>, Which means that the data can be supplied as usual, or it can be inherited from the “current” data frame which is passed to it via a pipe.</p>
-</section>
-</section>
-<section id="sample-rows-of-data-with-slice_" class="level3">
-<h3 class="anchored" data-anchor-id="sample-rows-of-data-with-slice_">Sample rows of data with <code>slice_*()</code></h3>
-<p>The <code>slice_sample()</code> function will <strong>randomly sample rows</strong> of data.</p>
+</section></section><section id="sample-rows-of-data-with-slice_" class="level3"><h3 class="anchored" data-anchor-id="sample-rows-of-data-with-slice_">Sample rows of data with <code>slice_*()</code>
+</h3>
+<p>The <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample()</a></code> function will <strong>randomly sample rows</strong> of data.</p>
 <p>The number of rows to show is specified by the <code>n</code> argument.</p>
 <ul>
 <li>This can be useful if you <strong>do not want to print the entire tibble</strong>, but you want to get a greater sense of the variation.</li>
@@ -1342,7 +1274,7 @@ Example
 </div>
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_sample</span>(starwars, <span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span><span class="va">starwars</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 16
    name         height  mass hair  skin  eye   birth_year sex   gender homeworld
@@ -1363,10 +1295,10 @@ Example
 </div>
 </div>
 </div>
-<p>You can also use <code>slice_head()</code> or <code>slice_tail()</code> to take a look at the top rows or bottom rows of your tibble. Again the number of rows can be specified with the <code>n</code> argument.</p>
+<p>You can also use <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_tail()</a></code> to take a look at the top rows or bottom rows of your tibble. Again the number of rows can be specified with the <code>n</code> argument.</p>
 <p>This will show the first 5 rows.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_head</span>(starwars, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span><span class="va">starwars</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 16
   name  height  mass hair  skin  eye   birth_year sex   gender homeworld species
@@ -1382,7 +1314,7 @@ Example
 </div>
 <p>This will show the last 5 rows.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_tail</span>(starwars, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_tail</a></span><span class="op">(</span><span class="va">starwars</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 16
   name  height  mass hair  skin  eye   birth_year sex   gender homeworld species
@@ -1396,22 +1328,15 @@ Example
 #   heightsize &lt;dbl&gt;, height.quint &lt;fct&gt;</code></pre>
 </div>
 </div>
-</section>
-</section>
-<section id="summary" class="level1">
-<h1>Summary</h1>
-<p>The <code>dplyr</code> package provides an alternative syntax for manipulating data frames. In particular, we can often conduct the beginnings of an exploratory analysis with the powerful combination of <code>group_by()</code> and <code>summarize()</code>.</p>
+</section></section><section id="summary" class="level1"><h1>Summary</h1>
+<p>The <code>dplyr</code> package provides an alternative syntax for manipulating data frames. In particular, we can often conduct the beginnings of an exploratory analysis with the powerful combination of <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>.</p>
 <p>Once you learn the <code>dplyr</code> grammar there are a few additional benefits</p>
 <ul>
 <li><p><code>dplyr</code> can work with other data frame “back ends” such as SQL databases. There is an SQL interface for relational databases via the DBI package</p></li>
 <li><p><code>dplyr</code> can be integrated with the <code>data.table</code> package for large fast tables</p></li>
 <li><p>Many people like the piping syntax for readability and clarity</p></li>
-</ul>
-</section>
-<section id="post-lecture-materials" class="level1">
-<h1>Post-lecture materials</h1>
-<section id="final-questions" class="level3">
-<h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
+</ul></section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
+<section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1429,10 +1354,11 @@ Questions
 <li>convert the <code>data.frame</code> to a tibble.</li>
 <li>filter for rows with a tree height of greater than 70, and</li>
 <li>order rows by <code>Volume</code> (smallest to largest).</li>
-</ol></li>
+</ol>
+</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trees)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">trees</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Girth Height Volume
 1   8.3     70   10.3
@@ -1445,9 +1371,7 @@ Questions
 </div>
 </div>
 </div>
-</section>
-<section id="additional-resources" class="level3">
-<h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
+</section><section id="additional-resources" class="level3"><h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1466,11 +1390,7 @@ Tip
 </div>
 
 
-</section>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");

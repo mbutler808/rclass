@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.333">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Marguerite Butler">
 <meta name="dcterms.date" content="2023-04-27">
 <meta name="description" content="Comparative analyses with Ornstein-Uhlenbeck models">
-
 <title>ZOOL710 Data Science in R for Biologists - Introduction to OU Models</title>
 <style>
 code{white-space: pre-wrap;}
@@ -78,7 +75,6 @@ div.csl-indent {
   margin-left: 2em;
 }</style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -94,8 +90,7 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -113,20 +108,12 @@ div.csl-indent {
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<link rel="stylesheet" href="../../styles.css">
+}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><link rel="stylesheet" href="../../styles.css">
 </head>
-
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">ZOOL710 Data Science in R for Biologists</span>
@@ -138,7 +125,7 @@ div.csl-indent {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
@@ -146,8 +133,8 @@ div.csl-indent {
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">General Information</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">
+<li>
     <a class="dropdown-item" href="../../syllabus.html" rel="" target="">
  <span class="dropdown-text">Syllabus</span></a>
   </li>  
@@ -156,13 +143,13 @@ div.csl-indent {
  <span class="dropdown-text">Schedule</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Course Materials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">
+<li>
     <a class="dropdown-item" href="../../lectures.html" rel="" target="">
  <span class="dropdown-text">Lectures</span></a>
   </li>  
@@ -175,14 +162,14 @@ div.csl-indent {
  <span class="dropdown-text">Resources</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/mbutler808" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/mbutler808" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -192,15 +179,11 @@ div.csl-indent {
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+<div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Introduction to OU Models</h1>
                   <div>
@@ -249,41 +232,35 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning objectives</a></li>
-  <li><a href="#introduction-to-ou-models" id="toc-introduction-to-ou-models" class="nav-link" data-scroll-target="#introduction-to-ou-models">Introduction to OU Models</a>
+<li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li>
+<a href="#introduction-to-ou-models" id="toc-introduction-to-ou-models" class="nav-link" data-scroll-target="#introduction-to-ou-models">Introduction to OU Models</a>
   <ul class="collapse">
-  <li><a href="#the-ou-model-for-comparative-analysis" id="toc-the-ou-model-for-comparative-analysis" class="nav-link" data-scroll-target="#the-ou-model-for-comparative-analysis">The OU Model for Comparative Analysis</a></li>
-  <li><a href="#ouch-package" id="toc-ouch-package" class="nav-link" data-scroll-target="#ouch-package"><code>ouch</code> package</a>
+<li><a href="#the-ou-model-for-comparative-analysis" id="toc-the-ou-model-for-comparative-analysis" class="nav-link" data-scroll-target="#the-ou-model-for-comparative-analysis">The OU Model for Comparative Analysis</a></li>
+  <li>
+<a href="#ouch-package" id="toc-ouch-package" class="nav-link" data-scroll-target="#ouch-package"><code>ouch</code> package</a>
   <ul class="collapse">
-  <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data">The Data</a></li>
+<li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data">The Data</a></li>
   <li><a href="#the-hypotheses" id="toc-the-hypotheses" class="nav-link" data-scroll-target="#the-hypotheses">The hypotheses</a></li>
   <li><a href="#plotting-ouchtrees" id="toc-plotting-ouchtrees" class="nav-link" data-scroll-target="#plotting-ouchtrees">Plotting <code>ouchtree</code>s</a></li>
   <li><a href="#fitting-models" id="toc-fitting-models" class="nav-link" data-scroll-target="#fitting-models">Fitting models</a></li>
   <li><a href="#hansentree-and-ouchtree-methods" id="toc-hansentree-and-ouchtree-methods" class="nav-link" data-scroll-target="#hansentree-and-ouchtree-methods"><code>hansentree</code> and <code>ouchtree</code> methods</a></li>
   <li><a href="#simulation-and-bootstrap-methods" id="toc-simulation-and-bootstrap-methods" class="nav-link" data-scroll-target="#simulation-and-bootstrap-methods">Simulation and bootstrap methods:</a></li>
   <li><a href="#painting-regimes-on-trees" id="toc-painting-regimes-on-trees" class="nav-link" data-scroll-target="#painting-regimes-on-trees"><code>paint</code>ing regimes on trees</a></li>
-  </ul></li>
-  </ul></li>
   </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</li>
+  </ul>
+</li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -298,11 +275,8 @@ Learning Objectives
 <p><strong>Concepts:</strong> - Model comparison tools in R - Process-based models</p>
 </div>
 </div>
-</section>
-<section id="introduction-to-ou-models" class="level1">
-<h1>Introduction to OU Models</h1>
-<section id="the-ou-model-for-comparative-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="the-ou-model-for-comparative-analysis">The OU Model for Comparative Analysis</h2>
+</section><section id="introduction-to-ou-models" class="level1"><h1>Introduction to OU Models</h1>
+<section id="the-ou-model-for-comparative-analysis" class="level2"><h2 class="anchored" data-anchor-id="the-ou-model-for-comparative-analysis">The OU Model for Comparative Analysis</h2>
 <p>A Brownian motion process can be described using the following differential equation:</p>
 <p><span id="eq-bm"><span class="math display">\[
   dX(t) = \sigma\,dB(t).
@@ -313,21 +287,19 @@ Learning Objectives
   dX(t) = \alpha\,(\theta - X(t))\,dt + \sigma\,dB(t).
 \tag{2}\]</span></span></p>
 <p>Eq. <a href="#eq-basic_ou">Equation&nbsp;2</a> expresses the amount of change in character <span class="math inline">\(X\)</span> over the course of a small increment of time: specifically, <span class="math inline">\(dX(t)\)</span> is the infinitesimal change in the character <span class="math inline">\(X\)</span> over the infinitesimal interval from time <span class="math inline">\(t\)</span> to time <span class="math inline">\(t+dt\)</span>. The term <span class="math inline">\(dB(t)\)</span> is <em>white noise</em>; that is, the random variables <span class="math inline">\(dB(t)\)</span> are independent and identically-distributed normal random variables, each with mean zero and variance <span class="math inline">\(dt\)</span>. The parameter <span class="math inline">\(\alpha\)</span> measures the strength of selection. When <span class="math inline">\(\alpha = 0\)</span>, the deterministic part of the OU model is diminished and <a href="#eq-basic_ou">Equation&nbsp;2</a> approaches the familiar BM model of pure drift,</p>
-</section>
-<section id="ouch-package" class="level2">
-<h2 class="anchored" data-anchor-id="ouch-package"><code>ouch</code> package</h2>
+</section><section id="ouch-package" class="level2"><h2 class="anchored" data-anchor-id="ouch-package">
+<code>ouch</code> package</h2>
 <p>See <code>ouch</code> lecture.</p>
 <p>Good starting points available in package <code>ouch</code>:<br>
-- <code>?bimac</code> help page for <em>Bimaculatus</em> character displacement dataset<br>
-- <code>example(bimac)</code> example of bimac analysis - <code>?anolis.ssd</code> help page for <em>Anolis</em> sexual size dimorphism dataset</p>
+- <code><a href="https://rdrr.io/pkg/ouch/man/bimac.html">?bimac</a></code> help page for <em>Bimaculatus</em> character displacement dataset<br>
+- <code>example(bimac)</code> example of bimac analysis - <code><a href="https://rdrr.io/pkg/ouch/man/anolis_ssd.html">?anolis.ssd</a></code> help page for <em>Anolis</em> sexual size dimorphism dataset</p>
 <p><code>ouch</code> is a package designed to test adaptive hypotheses using variations of the OU process, including BM <span class="citation" data-cites="Butler:2004 King:2022">(<a href="#ref-Butler:2004" role="doc-biblioref">Butler and King 2004</a>; <a href="#ref-King:2022" role="doc-biblioref">King and Butler 2022</a>)</span>. OUCH implements a model that fits <em>alpha</em> and <em>sigma</em> parameters to the entire phylogeny, but allows the user to specify which branches belong to different selective regimes. The location of the optima are also fit.</p>
-<section id="the-data" class="level3">
-<h3 class="anchored" data-anchor-id="the-data">The Data</h3>
+<section id="the-data" class="level3"><h3 class="anchored" data-anchor-id="the-data">The Data</h3>
 <p>The data in OUCH are most easily assembled as a data frame. Load the built in example from ouch and then print it to the screen (I only printed the head of the dataset here):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ouch)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(bimac)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bimac</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://kingaa.github.io/ouch/">ouch</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">)</span></span>
+<span><span class="va">bimac</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
@@ -345,41 +317,35 @@ Learning Objectives
 </div>
 <p>NOTE: a very important detail about <code>ouch</code> is that it matches trees with data and regimes using the node labels stored in the rownames of the objects you pass to the <code>ouch</code> functions. So it is important to make sure that your dataframes and vectors are appropriately named. <em>The dataframe bimac already has the correct row names</em>, but we do so here just to illustrate.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(bimac) <span class="ot">&lt;-</span> bimac<span class="sc">$</span>node</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">bimac</span><span class="op">$</span><span class="va">node</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>ouch</code> was designed around a rectangular data model, so although the tree object is not a dataframe internally, it still helps us to build the data as a dataframe before making the <code>ouchtree</code> objects. The central organizing element is the <code>node</code>: it has a node number (usually an integer but it is actually a unique character string), an <code>ancestor</code> to which it is joined by a branch, a <code>time</code> since the root of the tree, and optional <code>label</code> such as a species name.</p>
-</section>
-<section id="the-hypotheses" class="level3">
-<h3 class="anchored" data-anchor-id="the-hypotheses">The hypotheses</h3>
+</section><section id="the-hypotheses" class="level3"><h3 class="anchored" data-anchor-id="the-hypotheses">The hypotheses</h3>
 <p><em>The hypotheses which we use are assigned by painting particular regimes on branches</em>. It is convenient to represent each model or hypothesis as a column on the dataframe, with the regime assigned to the node (that is, it is assigned to the branch connecting the node to its ancestor).</p>
 <p>Make an <code>ouchtree</code> object using the <code>ouchtree</code> constructor. <code>with</code> is a very nice function to create a small local environment so that you can use a dataframe’s elements directly without using the <code>bimac$</code> prefix.</p>
 <p>It is similar to an <code>attach</code> but it is temporary – only lasting as long as the call itself. I like it much better than <code>attach</code> because I sometimes forget what I’ve attached and run into problems later. Also, with <code>attach</code>, you are actually working with a copy of the original dataframe object, so updating values is tricky. With <code>with</code>, it is more clear what’s going on, and I don’t tend to make those mistakes.</p>
 <div class="cell" data-fig="true">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">with</span>(bimac, <span class="fu">ouchtree</span>(node,ancestor,time<span class="sc">/</span><span class="fu">max</span>(time),species))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">bimac</span>, <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/ouchtree.html">ouchtree</a></span><span class="op">(</span><span class="va">node</span>,<span class="va">ancestor</span>,<span class="va">time</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span>,<span class="va">species</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><code>ouch</code> fits the OU model Eq. <a href="#eq-basic_ou">Equation&nbsp;2</a> along each branch of the phylogeny. While <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\sigma\)</span> are held constant across the entire tree, the optima along each branch <span class="math inline">\(\theta\)</span> are allowed to vary. Users can then paint various combinations of optima on the tree to reflect various biological scenarios.</p>
 <p>For example, the dataset <code>bimac</code> was used to test the hypothesis of character displacement using an interspecific daaset of body sizes and sympatry/allopatry <span class="citation" data-cites="Butler:2004">Butler and King (<a href="#ref-Butler:2004" role="doc-biblioref">2004</a>)</span>. The analysis tested several different models, which are included with <code>bimac</code>. They are: OU.1 or global optimum, OU.3 or small, medium, and large regimes depending on the body size of the observed species (terminal branches only, internal branches painted medium, OU.4 or the same as OU.3 but with internal branches given their own unique regime called ancestral, and OU.LP based on a linear parsimony reconstruction of the colonization events (i.e., that as species came into sympatry, they diverged in body size).</p>
-</section>
-<section id="plotting-ouchtrees" class="level3">
-<h3 class="anchored" data-anchor-id="plotting-ouchtrees">Plotting <code>ouchtree</code>s</h3>
+</section><section id="plotting-ouchtrees" class="level3"><h3 class="anchored" data-anchor-id="plotting-ouchtrees">Plotting <code>ouchtree</code>s</h3>
 <p>You can plot the regime paintings on the tree, and set options such as line widths for prettier plots. <code>ouch</code> has a very nice feature which allows plotting of the alternative models on one plot.</p>
 <div class="cell" data-fig="true">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree, <span class="at">regimes=</span>bimac[<span class="fu">c</span>(<span class="st">"OU.1"</span>, <span class="st">"OU.3"</span>, <span class="st">"OU.4"</span>, <span class="st">"OU.LP"</span>)], <span class="at">lwd=</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">tree</span>, regimes<span class="op">=</span><span class="va">bimac</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"OU.1"</span>, <span class="st">"OU.3"</span>, <span class="st">"OU.4"</span>, <span class="st">"OU.LP"</span><span class="op">)</span><span class="op">]</span>, lwd<span class="op">=</span><span class="fl">6</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Remember that you can pass a single vector or a data frame to the regimes parameter, but it must have the appropriate row names or names in the case of a vector. The regimes are not part of the ouchtree object, because they represent our hypothesis of evolution along the tree, rather than the tree itself. It is part of the original dataframe from which we derived the tree, so remember to refer to <code>bimac</code> when passing the regimes to the <code>plot</code> function.</p>
-</section>
-<section id="fitting-models" class="level3">
-<h3 class="anchored" data-anchor-id="fitting-models">Fitting models</h3>
+</section><section id="fitting-models" class="level3"><h3 class="anchored" data-anchor-id="fitting-models">Fitting models</h3>
 <p>There are two main model fitting functions in <code>ouch</code>, <code>brown</code>, which fits Brownian motion models, and <code>hansen</code>, which fits OU models to comparative data. The call to <code>brown</code> is particularly simple, as it takes only the data and the tree:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">brown</span>(<span class="fu">log</span>(bimac[<span class="st">'size'</span>]),tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ouch/man/brown.html">brown</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">[</span><span class="st">'size'</span><span class="op">]</span><span class="op">)</span>,<span class="va">tree</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 call:
@@ -444,38 +410,37 @@ NULL
 <p>What is returned is an object of class <code>browntree</code>. It contains all input including the function call, the tree and data), as well as the parameter estimate for <span class="math inline">\(\sigma\)</span> and the model fit statistics including: the log-likelihood, the deviance (<span class="math inline">\(-2*log(L)\)</span>), the information criteria <span class="math inline">\(AIC\)</span>, <span class="math inline">\(AIC_c\)</span> (corrected for small sample size), and <span class="math inline">\(SIC\)</span>, and the model degrees of freedom.</p>
 <p>It is a good practice to save this, as it encapsulates the analysis. From this, we can rerun the model fit.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>h1 <span class="ot">&lt;-</span> <span class="fu">brown</span>(<span class="fu">log</span>(bimac[<span class="st">'size'</span>]),tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/brown.html">brown</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">[</span><span class="st">'size'</span><span class="op">]</span><span class="op">)</span>,<span class="va">tree</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>hansen</code> models are slightly more complex. In addition to <span class="math inline">\(\sigma\)</span>, we are now fitting <span class="math inline">\(\alpha\)</span>, the strength of selection, and all of the optima <span class="math inline">\(\theta\)</span> specified by our model. This maximum-likelihood search now requires an initial guess. If you have no idea, a good starting guess is 1. If you want to be sure, you can intiate searches with different starting guesses. You can also specify alternative optimization algorithms and increase or decrease the relative tolerance, which is the stringency by which convergence is assessed. Typically, the default is roughly <code>reltol=1e-8</code>, and the limit of machine precision is in the neighborhood of <code>reltol=1e-15</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>h2 <span class="ot">&lt;-</span> <span class="fu">hansen</span>(<span class="fu">log</span>(bimac[<span class="st">'size'</span>]),</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>             tree,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>             bimac[<span class="st">'OU.1'</span>],</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">sqrt.alpha=</span><span class="dv">1</span>,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">sigma=</span><span class="dv">1</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>h3 <span class="ot">&lt;-</span> <span class="fu">hansen</span>(<span class="fu">log</span>(bimac[<span class="st">'size'</span>]),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>             tree,bimac[<span class="st">'OU.3'</span>], </span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">sqrt.alpha=</span><span class="dv">1</span>,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">sigma=</span><span class="dv">1</span>)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>h4 <span class="ot">&lt;-</span> <span class="fu">hansen</span>(<span class="fu">log</span>(bimac[<span class="st">'size'</span>]),</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>             tree,</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>             bimac[<span class="st">'OU.4'</span>], </span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">sqrt.alpha=</span><span class="dv">1</span>,</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">sigma=</span><span class="dv">1</span>)</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>h5 <span class="ot">&lt;-</span> <span class="fu">hansen</span>(<span class="fu">log</span>(bimac[<span class="st">'size'</span>]),</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>             tree,</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>             bimac[<span class="st">'OU.LP'</span>], </span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">sqrt.alpha=</span><span class="dv">1</span>,</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">sigma=</span><span class="dv">1</span>,</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">reltol=</span><span class="fl">1e-5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">[</span><span class="st">'size'</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>             <span class="va">tree</span>,</span>
+<span>             <span class="va">bimac</span><span class="op">[</span><span class="st">'OU.1'</span><span class="op">]</span>,</span>
+<span>             sqrt.alpha<span class="op">=</span><span class="fl">1</span>,</span>
+<span>             sigma<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">h3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">[</span><span class="st">'size'</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>             <span class="va">tree</span>,<span class="va">bimac</span><span class="op">[</span><span class="st">'OU.3'</span><span class="op">]</span>, </span>
+<span>             sqrt.alpha<span class="op">=</span><span class="fl">1</span>,</span>
+<span>             sigma<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">h4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">[</span><span class="st">'size'</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>             <span class="va">tree</span>,</span>
+<span>             <span class="va">bimac</span><span class="op">[</span><span class="st">'OU.4'</span><span class="op">]</span>, </span>
+<span>             sqrt.alpha<span class="op">=</span><span class="fl">1</span>,</span>
+<span>             sigma<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">h5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">[</span><span class="st">'size'</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>             <span class="va">tree</span>,</span>
+<span>             <span class="va">bimac</span><span class="op">[</span><span class="st">'OU.LP'</span><span class="op">]</span>, </span>
+<span>             sqrt.alpha<span class="op">=</span><span class="fl">1</span>,</span>
+<span>             sigma<span class="op">=</span><span class="fl">1</span>,</span>
+<span>             reltol<span class="op">=</span><span class="fl">1e-5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="hansentree-and-ouchtree-methods" class="level3">
-<h3 class="anchored" data-anchor-id="hansentree-and-ouchtree-methods"><code>hansentree</code> and <code>ouchtree</code> methods</h3>
+</section><section id="hansentree-and-ouchtree-methods" class="level3"><h3 class="anchored" data-anchor-id="hansentree-and-ouchtree-methods">
+<code>hansentree</code> and <code>ouchtree</code> methods</h3>
 <p>We can see the model results by typing <code>h5</code>, which will execute the <code>print</code> method for this class. You could also use the <code>attributes</code> function, but this will dump too much information. <code>ouchtree</code> objects and the classes derived from them contain information that is used in internal calculations of the algorithms, not of general interest to users.</p>
 <p>Additional accessor functions include:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(h5)    <span class="co"># the coefficients of the fitted model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">h5</span><span class="op">)</span>    <span class="co"># the coefficients of the fitted model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$sqrt.alpha
 [1] 1.61658
@@ -497,29 +462,29 @@ $sigma.sq.matrix
            [,1]
 [1,] 0.05059232</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(h5)   <span class="co"># the log-likelihood value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html">logLik</a></span><span class="op">(</span><span class="va">h5</span><span class="op">)</span>   <span class="co"># the log-likelihood value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 24.81823</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(h5) <span class="co"># (not printed) everything except the tree+data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op">(</span><span class="va">h5</span><span class="op">)</span> <span class="co"># (not printed) everything except the tree+data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now generate a table of our model fits:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># just the model fit statistics on a single line</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unlist</span>(<span class="fu">summary</span>(h5)[<span class="fu">c</span>(<span class="st">'aic'</span>, <span class="st">'aic.c'</span>, <span class="st">'sic'</span>, <span class="st">'dof'</span>)])  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span>    <span class="co"># just the model fit statistics on a single line</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op">(</span><span class="va">h5</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'aic'</span>, <span class="st">'aic.c'</span>, <span class="st">'sic'</span>, <span class="st">'dof'</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      aic     aic.c       sic       dof 
 -39.63645 -36.10704 -33.95898   5.00000 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">list</span>(h1, h2, h3, h4, h5)   <span class="co"># store fitted models in a list</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(h) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'BM'</span>, <span class="st">'OU.1'</span>, <span class="st">'OU.3'</span>, <span class="st">'OU.4'</span>, <span class="st">'OU.LP'</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>( h, <span class="cf">function</span>(x)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">unlist</span>(</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">summary</span>(x)[<span class="fu">c</span>(<span class="st">'aic'</span>, <span class="st">'aic.c'</span>, <span class="st">'sic'</span>, <span class="st">'dof'</span>)]</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>             ) </span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>      )                         <span class="co"># table with all models</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">h1</span>, <span class="va">h2</span>, <span class="va">h3</span>, <span class="va">h4</span>, <span class="va">h5</span><span class="op">)</span>   <span class="co"># store fitted models in a list</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">h</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'BM'</span>, <span class="st">'OU.1'</span>, <span class="st">'OU.3'</span>, <span class="st">'OU.4'</span>, <span class="st">'OU.LP'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span> <span class="va">h</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>             <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span></span>
+<span>                <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'aic'</span>, <span class="st">'aic.c'</span>, <span class="st">'sic'</span>, <span class="st">'dof'</span><span class="op">)</span><span class="op">]</span></span>
+<span>             <span class="op">)</span> </span>
+<span>      <span class="op">)</span>                         <span class="co"># table with all models</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             BM      OU.1      OU.3      OU.4     OU.LP
 aic   -30.66257 -25.39364 -29.15573 -35.22319 -39.63645
@@ -530,12 +495,12 @@ dof     2.00000   3.00000   5.00000   6.00000   5.00000</code></pre>
 </div>
 <p>By storing the model fits in a list, we can use apply methods to get the statistics from all the models at once. <code>sapply</code> returns a matrix if possible.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>h.ic <span class="ot">&lt;-</span> <span class="fu">sapply</span>( h, <span class="cf">function</span>(x) </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">unlist</span>(</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">summary</span>(x)[<span class="fu">c</span>(<span class="st">'aic'</span>, <span class="st">'aic.c'</span>, <span class="st">'sic'</span>, <span class="st">'dof'</span>)]</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                     ) </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>               )  </span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>( h.ic, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h.ic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span> <span class="va">h</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> </span>
+<span>                     <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span></span>
+<span>                      <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'aic'</span>, <span class="st">'aic.c'</span>, <span class="st">'sic'</span>, <span class="st">'dof'</span><span class="op">)</span><span class="op">]</span></span>
+<span>                     <span class="op">)</span> </span>
+<span>               <span class="op">)</span>  </span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ouch/man/print.html">print</a></span><span class="op">(</span> <span class="va">h.ic</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         BM  OU.1  OU.3  OU.4 OU.LP
 aic   -30.7 -25.4 -29.2 -35.2 -39.6
@@ -544,20 +509,18 @@ sic   -28.4 -22.0 -23.5 -28.4 -34.0
 dof     2.0   3.0   5.0   6.0   5.0</code></pre>
 </div>
 </div>
-</section>
-<section id="simulation-and-bootstrap-methods" class="level3">
-<h3 class="anchored" data-anchor-id="simulation-and-bootstrap-methods">Simulation and bootstrap methods:</h3>
+</section><section id="simulation-and-bootstrap-methods" class="level3"><h3 class="anchored" data-anchor-id="simulation-and-bootstrap-methods">Simulation and bootstrap methods:</h3>
 <p><code>simulate</code> generates random deviates or sets of simulated tip data based on the fitted model. The input is a fitted model <code>hansentree</code> or <code>browntree</code>, and the output is a list of dataframes, each comparable to the original data. These can then be used to refit the model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>h5.sim <span class="ot">&lt;-</span> <span class="fu">simulate</span>(<span class="at">object =</span> h5, <span class="at">nsim=</span><span class="dv">10</span>)   <span class="co"># saves 10 sets of simulated data</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="co">#  based on OU.LP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h5.sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html">simulate</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">h5</span>, nsim<span class="op">=</span><span class="fl">10</span><span class="op">)</span>   <span class="co"># saves 10 sets of simulated data</span></span>
+<span>                                  <span class="co">#  based on OU.LP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>update</code> refits the model, with one or more parameters changed.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( <span class="fu">update</span>( <span class="at">object =</span> h5, </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> h5.sim[[<span class="dv">1</span>]] </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                )  <span class="co"># fit the first dataset</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>        )   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span> object <span class="op">=</span> <span class="va">h5</span>, </span>
+<span>                 data <span class="op">=</span> <span class="va">h5.sim</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> </span>
+<span>                <span class="op">)</span>  <span class="co"># fit the first dataset</span></span>
+<span>        <span class="op">)</span>   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$call
 hansen(data = data, tree = object, regimes = regimes, sqrt.alpha = sqrt.alpha, 
@@ -601,13 +564,13 @@ $sic
 $dof
 [1] 5</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>h5.sim.fit <span class="ot">&lt;-</span> <span class="fu">lapply</span>( h5.sim, </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                      <span class="cf">function</span>(x) <span class="fu">update</span>(h5, x)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                    ) <span class="co"># fit all 10 simulations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h5.sim.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span> <span class="va">h5.sim</span>, </span>
+<span>                      <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">h5</span>, <span class="va">x</span><span class="op">)</span></span>
+<span>                    <span class="op">)</span> <span class="co"># fit all 10 simulations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>bootstrap</code> is a convenience function for generating parametric bootstraps of the parameter estimates. It takes the fitted model, performs the simulations, refits, and outputs a dataframe of parameter estimates.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bootstrap</span>( <span class="at">object =</span> h5, <span class="at">nboot=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ouch/man/bootstrap.html">bootstrap</a></span><span class="op">(</span> object <span class="op">=</span> <span class="va">h5</span>, nboot<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      alpha sigma.squared optima.size.large optima.size.medium
 1  3.927412    0.03738445          3.323732           3.037843
@@ -633,81 +596,80 @@ $dof
 10          2.586874 20.59745 -31.19490 -27.66548 -25.51742   5</code></pre>
 </div>
 </div>
-</section>
-<section id="painting-regimes-on-trees" class="level3">
-<h3 class="anchored" data-anchor-id="painting-regimes-on-trees"><code>paint</code>ing regimes on trees</h3>
+</section><section id="painting-regimes-on-trees" class="level3"><h3 class="anchored" data-anchor-id="painting-regimes-on-trees">
+<code>paint</code>ing regimes on trees</h3>
 <p>A new function in <code>ouch</code> is <code>paint</code>. Previously, it was up to users to set up regimes manually by editing spreadsheets. <code>paint</code> helps with this task by specifying the regimes on particular species, subtrees, or particular branches.</p>
 <p>There are two parameters to <code>paint</code>, <code>subtrees</code>, which paints the entire subtree which descends from the node, and <code>branch</code>, which paints the branch connecting the node to it’s ancestor. For either, you specify the node label (remember it’s a character and needs to be quoted), and set it equal to the name of the regime you want to specify.</p>
 <p>Let’s try it on the <code>bimac</code> tree and try to recreate the OU.LP regime:</p>
 <div class="cell" data-fig="true">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree, <span class="at">node.names=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">tree</span>, node.names<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Paint the subtrees first, take a look:</p>
 <div class="cell" data-fig="true">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>ou.lp <span class="ot">&lt;-</span> <span class="fu">paint</span>( tree, </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">subtree=</span><span class="fu">c</span>(<span class="st">"1"</span><span class="ot">=</span><span class="st">"medium"</span>,<span class="st">"9"</span><span class="ot">=</span><span class="st">"large"</span>,<span class="st">"2"</span><span class="ot">=</span><span class="st">"small"</span>) </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>               )</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree, <span class="at">regimes=</span>ou.lp, <span class="at">node.names=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ou.lp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/paint.html">paint</a></span><span class="op">(</span> <span class="va">tree</span>, </span>
+<span>                subtree<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span><span class="op">=</span><span class="st">"medium"</span>,<span class="st">"9"</span><span class="op">=</span><span class="st">"large"</span>,<span class="st">"2"</span><span class="op">=</span><span class="st">"small"</span><span class="op">)</span> </span>
+<span>               <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">tree</span>, regimes<span class="op">=</span><span class="va">ou.lp</span>, node.names<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>But there was an independent switch from medium to large at species gm, or node 38, and the node connecting 9 to its ancestor:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>ou.lp <span class="ot">&lt;-</span> <span class="fu">paint</span>( tree, </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">subtree=</span><span class="fu">c</span>(<span class="st">"1"</span><span class="ot">=</span><span class="st">'medium'</span>,<span class="st">"9"</span><span class="ot">=</span><span class="st">'large'</span>,<span class="st">"2"</span><span class="ot">=</span><span class="st">'small'</span>),</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">branch=</span><span class="fu">c</span>(<span class="st">"38"</span><span class="ot">=</span><span class="st">'large'</span>,<span class="st">"2"</span><span class="ot">=</span><span class="st">'medium'</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>              )  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ou.lp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/paint.html">paint</a></span><span class="op">(</span> <span class="va">tree</span>, </span>
+<span>                subtree<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span><span class="op">=</span><span class="st">'medium'</span>,<span class="st">"9"</span><span class="op">=</span><span class="st">'large'</span>,<span class="st">"2"</span><span class="op">=</span><span class="st">'small'</span><span class="op">)</span>,</span>
+<span>                branch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"38"</span><span class="op">=</span><span class="st">'large'</span>,<span class="st">"2"</span><span class="op">=</span><span class="st">'medium'</span><span class="op">)</span></span>
+<span>              <span class="op">)</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Compare it to the original OU.LP from above.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree, <span class="at">regimes=</span>ou.lp, <span class="at">node.names=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">tree</span>, regimes<span class="op">=</span><span class="va">ou.lp</span>, node.names<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We can create alternative paintings of the regimes to test against the data. Suppose we wanted to add a clade specific hypothesis that diverged in a similar time period (this is a completely made-up hypothesis, just for example):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>ou.clades <span class="ot">&lt;-</span> <span class="fu">paint</span>( tree, </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">subtree=</span><span class="fu">c</span>(<span class="st">"1"</span><span class="ot">=</span><span class="st">"A"</span>,<span class="st">"7"</span><span class="ot">=</span><span class="st">"B"</span>, <span class="st">"8"</span><span class="ot">=</span><span class="st">"C"</span>), </span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">branch=</span><span class="fu">c</span>(<span class="st">"8"</span><span class="ot">=</span><span class="st">"C"</span>, <span class="st">"7"</span><span class="ot">=</span><span class="st">"C"</span>, <span class="st">"1"</span><span class="ot">=</span><span class="st">"A"</span>)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>                   )</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree, <span class="at">regimes=</span>ou.clades, <span class="at">node.names=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ou.clades</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/paint.html">paint</a></span><span class="op">(</span> <span class="va">tree</span>, </span>
+<span>                    subtree<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span><span class="op">=</span><span class="st">"A"</span>,<span class="st">"7"</span><span class="op">=</span><span class="st">"B"</span>, <span class="st">"8"</span><span class="op">=</span><span class="st">"C"</span><span class="op">)</span>, </span>
+<span>                    branch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"8"</span><span class="op">=</span><span class="st">"C"</span>, <span class="st">"7"</span><span class="op">=</span><span class="st">"C"</span>, <span class="st">"1"</span><span class="op">=</span><span class="st">"A"</span><span class="op">)</span></span>
+<span>                   <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">tree</span>, regimes<span class="op">=</span><span class="va">ou.clades</span>, node.names<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Run the model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>h6 <span class="ot">&lt;-</span> <span class="fu">hansen</span>( </span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">log</span>(bimac[<span class="st">'size'</span>]),</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>              tree, </span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">regimes=</span>ou.clades, </span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">sqrt.alpha=</span><span class="dv">1</span>,</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">sigma=</span><span class="dv">1</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>            )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op">(</span> </span>
+<span>              <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">[</span><span class="st">'size'</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>              <span class="va">tree</span>, </span>
+<span>              regimes<span class="op">=</span><span class="va">ou.clades</span>, </span>
+<span>              sqrt.alpha<span class="op">=</span><span class="fl">1</span>,</span>
+<span>              sigma<span class="op">=</span><span class="fl">1</span></span>
+<span>            <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Rebuild our table and compare models:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">append</span>(h, h6)         <span class="co"># append (add on) new model results to our list h</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(h)[<span class="fu">length</span>(h)] <span class="ot">&lt;-</span> ou.clades    <span class="co"># add the name of the new model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op">(</span><span class="va">h</span>, <span class="va">h6</span><span class="op">)</span>         <span class="co"># append (add on) new model results to our list h</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">h</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">h</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">ou.clades</span>    <span class="co"># add the name of the new model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in names(h)[length(h)] &lt;- ou.clades: number of items to replace is not
 a multiple of replacement length</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(h)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">h</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "BM"    "OU.1"  "OU.3"  "OU.4"  "OU.LP" "1"    </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>h.ic <span class="ot">&lt;-</span> <span class="fu">sapply</span>( h, <span class="cf">function</span>(x) </span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">unlist</span>(</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">summary</span>(x)[<span class="fu">c</span>(<span class="st">'aic'</span>, <span class="st">'aic.c'</span>, <span class="st">'sic'</span>, <span class="st">'dof'</span>)]</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                     ) </span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>               )  </span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>( h.ic, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h.ic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span> <span class="va">h</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> </span>
+<span>                     <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span></span>
+<span>                        <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'aic'</span>, <span class="st">'aic.c'</span>, <span class="st">'sic'</span>, <span class="st">'dof'</span><span class="op">)</span><span class="op">]</span></span>
+<span>                     <span class="op">)</span> </span>
+<span>               <span class="op">)</span>  </span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ouch/man/print.html">print</a></span><span class="op">(</span> <span class="va">h.ic</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         BM  OU.1  OU.3  OU.4 OU.LP     1
 aic   -30.7 -25.4 -29.2 -35.2 -39.6 -30.7
@@ -719,19 +681,14 @@ dof     2.0   3.0   5.0   6.0   5.0   5.0</code></pre>
 
 
 
-</section>
-</section>
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+</section></section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-Butler:2004" class="csl-entry" role="listitem">
 Butler, Marguerite A., and Aaron A. King. 2004. <span>“Phylogenetic Comparative Analysis: A Modeling Approach for Adaptive Evolution.”</span> <em>American Naturalist</em> 164: 683–95. <a href="https://doi.org/10.1086/426002">https://doi.org/10.1086/426002</a>.
 </div>
 <div id="ref-King:2022" class="csl-entry" role="listitem">
 King, Aaron A., and Marguerite A. Butler. 2022. <em>Ouch: Ornstein-Uhlenbeck Models for Phylogenetic Comparative Hypotheses</em>. <a href="https://kingaa.github.io/ouch/">https://kingaa.github.io/ouch/</a>.
 </div>
-</div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");

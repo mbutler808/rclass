@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.333">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Marguerite Butler">
 <meta name="dcterms.date" content="2023-01-31">
 <meta name="description" content="How to use citations and include your bibliography in R Quarto.">
-
 <title>ZOOL710 Data Science in R for Biologists - Reference management</title>
 <style>
 code{white-space: pre-wrap;}
@@ -78,7 +75,6 @@ div.csl-indent {
   margin-left: 2em;
 }</style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -94,8 +90,7 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -113,18 +108,12 @@ div.csl-indent {
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-
-<link rel="stylesheet" href="../../styles.css">
+}</script><link rel="stylesheet" href="../../styles.css">
 </head>
-
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">ZOOL710 Data Science in R for Biologists</span>
@@ -136,7 +125,7 @@ div.csl-indent {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
@@ -144,8 +133,8 @@ div.csl-indent {
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">General Information</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">
+<li>
     <a class="dropdown-item" href="../../syllabus.html" rel="" target="">
  <span class="dropdown-text">Syllabus</span></a>
   </li>  
@@ -154,13 +143,13 @@ div.csl-indent {
  <span class="dropdown-text">Schedule</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Course Materials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">
+<li>
     <a class="dropdown-item" href="../../lectures.html" rel="" target="">
  <span class="dropdown-text">Lectures</span></a>
   </li>  
@@ -173,14 +162,14 @@ div.csl-indent {
  <span class="dropdown-text">Resources</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/mbutler808" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/mbutler808" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -190,15 +179,11 @@ div.csl-indent {
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+<div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Reference management</h1>
                   <div>
@@ -247,53 +232,49 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#pre-lecture-materials" id="toc-pre-lecture-materials" class="nav-link active" data-scroll-target="#pre-lecture-materials">Pre-lecture materials</a>
+<li>
+<a href="#pre-lecture-materials" id="toc-pre-lecture-materials" class="nav-link active" data-scroll-target="#pre-lecture-materials">Pre-lecture materials</a>
   <ul class="collapse">
-  <li><a href="#read-ahead" id="toc-read-ahead" class="nav-link" data-scroll-target="#read-ahead">Read ahead</a></li>
+<li><a href="#read-ahead" id="toc-read-ahead" class="nav-link" data-scroll-target="#read-ahead">Read ahead</a></li>
   <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
-  </ul></li>
+  </ul>
+</li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a>
+  <li>
+<a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
-  <li><a href="#the-parts" id="toc-the-parts" class="nav-link" data-scroll-target="#the-parts">The Parts</a></li>
-  </ul></li>
+<li><a href="#the-parts" id="toc-the-parts" class="nav-link" data-scroll-target="#the-parts">The Parts</a></li>
+  </ul>
+</li>
   <li><a href="#sec-bib" id="toc-sec-bib" class="nav-link" data-scroll-target="#sec-bib">The Bibliography is in <code>.bib</code> files</a></li>
-  <li><a href="#sec-manager" id="toc-sec-manager" class="nav-link" data-scroll-target="#sec-manager">Reference Managers</a>
+  <li>
+<a href="#sec-manager" id="toc-sec-manager" class="nav-link" data-scroll-target="#sec-manager">Reference Managers</a>
   <ul class="collapse">
-  <li><a href="#citation-management-software" id="toc-citation-management-software" class="nav-link" data-scroll-target="#citation-management-software">Citation management software</a></li>
-  </ul></li>
+<li><a href="#citation-management-software" id="toc-citation-management-software" class="nav-link" data-scroll-target="#citation-management-software">Citation management software</a></li>
+  </ul>
+</li>
   <li><a href="#sec-linking" id="toc-sec-linking" class="nav-link" data-scroll-target="#sec-linking">Linking <code>.bib</code> file with <code>.rmd</code> or <code>.qmd</code> files</a></li>
   <li><a href="#sec-inline" id="toc-sec-inline" class="nav-link" data-scroll-target="#sec-inline">Inline citation</a></li>
   <li><a href="#sec-style" id="toc-sec-style" class="nav-link" data-scroll-target="#sec-style">Citation styles</a></li>
   <li><a href="#sec-options" id="toc-sec-options" class="nav-link" data-scroll-target="#sec-options">Other cool features</a></li>
   <li><a href="#a-comment" id="toc-a-comment" class="nav-link" data-scroll-target="#a-comment">A Comment</a></li>
-  <li><a href="#post-lecture-materials" id="toc-post-lecture-materials" class="nav-link" data-scroll-target="#post-lecture-materials">Post-lecture materials</a>
+  <li>
+<a href="#post-lecture-materials" id="toc-post-lecture-materials" class="nav-link" data-scroll-target="#post-lecture-materials">Post-lecture materials</a>
   <ul class="collapse">
-  <li><a href="#practice" id="toc-practice" class="nav-link" data-scroll-target="#practice">Practice</a></li>
-  </ul></li>
+<li><a href="#practice" id="toc-practice" class="nav-link" data-scroll-target="#practice">Practice</a></li>
   </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<!-- Add interesting quote -->
-<section id="pre-lecture-materials" class="level1">
-<h1>Pre-lecture materials</h1>
-<section id="read-ahead" class="level3">
-<h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><!-- Add interesting quote --><section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
+<section id="read-ahead" class="level3"><h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -306,15 +287,15 @@ Read ahead
 <div class="callout-body-container callout-body">
 <p><strong>Before class, you can prepare by reading the following materials:</strong></p>
 <ol type="1">
-<li>Authoring in <a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html">R Markdown from RStudio</a></li>
+<li>Authoring in <a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html">R Markdown from RStudio</a>
+</li>
 <li>Citations from <a href="https://monashdatafluency.github.io/r-rep-res/citations.html">Reproducible Research in R</a> from the <a href="https://monashdatafluency.github.io">Monash Data Fluency</a> initiative</li>
-<li>Bibliography from <a href="https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html">R Markdown Cookbook</a></li>
+<li>Bibliography from <a href="https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html">R Markdown Cookbook</a>
+</li>
 </ol>
 </div>
 </div>
-</section>
-<section id="acknowledgements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+</section><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
 <li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/</a></li>
@@ -322,11 +303,7 @@ Read ahead
 <li><a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html" class="uri">https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html</a></li>
 <li><a href="https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html" class="uri">https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html</a></li>
 <li><a href="https://monashdatafluency.github.io/r-rep-res/citations.html" class="uri">https://monashdatafluency.github.io/r-rep-res/citations.html</a></li>
-</ul>
-</section>
-</section>
-<section id="learning-objectives" class="level1">
-<h1>Learning objectives</h1>
+</ul></section></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -345,14 +322,11 @@ Learning objectives
 </ul>
 </div>
 </div>
-</section>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
+</section><section id="introduction" class="level1"><h1>Introduction</h1>
 <p>Your citation list is a critical aspect of research, as all research is built on the contribution in prior work. One of the most tedious tasks of science is hand-editing bibiolographies — and one of the great benefits of the LaTeX environment is the automated <em>formatting references for bibliographies</em>. 🎊</p>
 <p>Itʻs worth taking a little time to learn how to use these tools, as citations are critical for every paper, project report, or academic website, and is often even required in paper assignments. Since R markdown and Quarto work nicely with LaTeX (and BibTeX, the associated reference management software), we get a bonus in having access to the power of BibTeX without writing any LaTeX, maing it easy to add citations to our Quarto markdown projects.</p>
 <p>Quarto documentation currently doesnʻt include citations, but seems to support all the features presnt in R markdown. We will be using <code>.bib</code> format references in this tutorial, but R markdown (and presumably Quarto) supports other citation formats as well (<a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html">for more info see</a>).</p>
-<section id="the-parts" class="level2">
-<h2 class="anchored" data-anchor-id="the-parts">The Parts</h2>
+<section id="the-parts" class="level2"><h2 class="anchored" data-anchor-id="the-parts">The Parts</h2>
 <p>There are three basic parts:</p>
 <ol type="1">
 <li>The citation data which is stored in the <code>.bib</code> file <a href="#sec-bib">Section&nbsp;4</a>, and</li>
@@ -362,14 +336,11 @@ Learning objectives
 <p>From this, both the <em>in-text citations</em> as well as the <em>citation list</em> at the end of the document will be rendered.</p>
 <p>There are additional customization options. You can change the <em>style</em> of the bibliography using style and class files <a href="#sec-style">Section&nbsp;8</a>. This is at the level of the entire document, it is easy to switch. Within the document, there are also many options for in-text citation styles <a href="#sec-options">Section&nbsp;9</a>. You can also customize the style file by editing the LaTeX.</p>
 <p><em>Reference managers</em> are helper software (independent of BibTeX) that are wonderful tools to help you collect and organize your citation data <a href="#sec-manager">Section&nbsp;5</a>.</p>
-</section>
-</section>
-<section id="sec-bib" class="level1">
-<h1>The Bibliography is in <code>.bib</code> files</h1>
+</section></section><section id="sec-bib" class="level1"><h1>The Bibliography is in <code>.bib</code> files</h1>
 <p>The citation data are stored in a <code>.bib</code> file which is a text file. Most people donʻt type these entries themselves (unless itʻs for a new publication!) but rather download these through journal databases such as <em>Web of Science</em>, <em>PubMed</em>, directly from jornal websites, etc.</p>
-<p>R provides nice function <code>citation()</code> that generating the citation blob for R packages. Let’s try generating citation text for the R environment by using the following command</p>
+<p>R provides nice function <code><a href="https://rdrr.io/r/utils/citation.html">citation()</a></code> that generating the citation blob for R packages. Let’s try generating citation text for the R environment by using the following command</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>(<span class="st">"base"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span><span class="op">(</span><span class="st">"base"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 To cite R in publications use:
@@ -396,25 +367,22 @@ citing R packages.</code></pre>
 </div>
 <p>You can replace “base” with any R package name, such as “rmarkdown” or my package “ouch”. You can see that the format is simple, the information is in a key = value format, and the various parts have tags.</p>
 <p>Multiple citations are stored in your <code>.bib</code> file, with each citation separated by a blank line.</p>
-</section>
-<section id="sec-manager" class="level1">
-<h1>Reference Managers</h1>
+</section><section id="sec-manager" class="level1"><h1>Reference Managers</h1>
 <p>Personally, I really like [BibDesk]<a href="https://bibdesk.sourceforge.io" class="uri">https://bibdesk.sourceforge.io</a> for Mac OS to manage my citations. It is easy to use and has all the features I need. A cross-platform option that is popular now is JabRef <a href="https://github.com/JabRef/jabref" class="uri">https://github.com/JabRef/jabref</a>. <a href="https://en.wikipedia.org/wiki/JabRef">JabRef</a> is written in Java, is open source and has support for Linux, Windows, and MacOS.</p>
-<section id="citation-management-software" class="level2">
-<h2 class="anchored" data-anchor-id="citation-management-software">Citation management software</h2>
+<section id="citation-management-software" class="level2"><h2 class="anchored" data-anchor-id="citation-management-software">Citation management software</h2>
 <p>In addition to <code>.bib</code> (BibTeX) there are a lot of file formats in use including <code>.medline</code> (MEDLINE), <code>.ris</code> (RIS), and <code>.enl</code> (EndNote), among others. You can generally download the results of your literature search in the format of your choice (some citation manager software can convert formats as well).</p>
 <p>If you recall the output from <code>citation("rmarkdown")</code> above, one option is to copy and paste the BibTeX output into a text file labeled <code>.bib</code> or into citation management software, but instead we can use Rʻs <code>write_bib()</code> function from the <code>knitr</code> package to create a bibliography file.</p>
 <p>Let’s run the following code in order to generate a <code>my-refs.bib</code> file</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">write_bib</span>(<span class="st">"rmarkdown"</span>, <span class="at">file =</span> <span class="st">"my-refs.bib"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/write_bib.html">write_bib</a></span><span class="op">(</span><span class="st">"rmarkdown"</span>, file <span class="op">=</span> <span class="st">"my-refs.bib"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can output multiple citations by passing a vector of package names:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">write_bib</span>(<span class="fu">c</span>(<span class="st">"rmarkdown"</span>,<span class="st">"base"</span>), <span class="at">file =</span> <span class="st">"my-refs.bib"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/write_bib.html">write_bib</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"rmarkdown"</span>,<span class="st">"base"</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"my-refs.bib"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we can see we have the file saved locally.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "ButlerPapers.bib" "evolution.csl"    "index 2.html"     "index.qmd"       
 [5] "index.rmarkdown"  "my-refs.bib"     </code></pre>
@@ -465,10 +433,7 @@ citing R packages.</code></pre>
 <li><code>rmarkdown2020</code></li>
 </ul>
 </div>
-</section>
-</section>
-<section id="sec-linking" class="level1">
-<h1>Linking <code>.bib</code> file with <code>.rmd</code> or <code>.qmd</code> files</h1>
+</section></section><section id="sec-linking" class="level1"><h1>Linking <code>.bib</code> file with <code>.rmd</code> or <code>.qmd</code> files</h1>
 <p>In order to use references within a R Markdown file, you will need to specify the name and a location of a bibliography file using the bibliography metadata field in a YAML metadata section. For example:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My top ten favorite R packages"</span></span>
@@ -479,24 +444,24 @@ citing R packages.</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"my-refs1.bib"</span><span class="kw">,</span><span class="at"> </span><span class="st">"my-refs2.bib"</span><span class="kw">]</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="sec-inline" class="level1">
-<h1>Inline citation</h1>
+</section><section id="sec-inline" class="level1"><h1>Inline citation</h1>
 <p>Now we can start using those bib keys that we have learned just before, using the following syntax</p>
 <ul>
-<li><code>[@key]</code> for single citation</li>
-<li><code>[@key1; @key2]</code> multiple citation can be separated by semi-colon</li>
-<li><code>[-@key]</code> in order to suppress author name, and just display the year</li>
-<li><code>[see @key1 p 12; also this ref @key2]</code> is also a valid syntax</li>
+<li>
+<code>[@key]</code> for single citation</li>
+<li>
+<code>[@key1; @key2]</code> multiple citation can be separated by semi-colon</li>
+<li>
+<code>[-@key]</code> in order to suppress author name, and just display the year</li>
+<li>
+<code>[see @key1 p 12; also this ref @key2]</code> is also a valid syntax</li>
 </ul>
 <p>Let’s start by citing the <code>rmarkdown</code> package using the following code and press <code>Knit</code> button:</p>
 <hr>
 <p>I have been using the amazing Rmarkdown package <span class="citation" data-cites="R-rmarkdown">(<a href="#ref-R-rmarkdown" role="doc-biblioref">Allaire et al. 2022</a>)</span>! These look like great books to read <span class="citation" data-cites="rmarkdown2018 rmarkdown2020">(<a href="#ref-rmarkdown2018" role="doc-biblioref">Xie, Allaire, and Grolemund 2018</a>; and <a href="#ref-rmarkdown2020" role="doc-biblioref">Xie, Dervieux, and Riederer 2020</a>)</span>.</p>
 <hr>
 <p>Pretty cool, huh??</p>
-</section>
-<section id="sec-style" class="level1">
-<h1>Citation styles</h1>
+</section><section id="sec-style" class="level1"><h1>Citation styles</h1>
 <p>By default, Pandoc will use a Chicago author-date format for citations and references.</p>
 <p>To use another style, for example, in ecology and evolution, we often use the <code>evolution.csl</code> style. You will need to specify a CSL (Citation Style Language) file in the <code>csl</code> metadata field, e.g.,</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
@@ -519,19 +484,14 @@ Resources
 </div>
 </div>
 <p>CSL files also can be tweaked to meet custom formatting requirements. For example, we can change the number of authors required before “et al.” is used to abbreviate them. This can be simplified through the use of visual editors such as the one available at <a href="https://editor.citationstyles.org" class="uri">https://editor.citationstyles.org</a>.</p>
-</section>
-<section id="sec-options" class="level1">
-<h1>Other cool features</h1>
-<section id="add-an-item-to-a-bibliography-without-using-it" class="level4">
-<h4 class="anchored" data-anchor-id="add-an-item-to-a-bibliography-without-using-it">Add an item to a bibliography without using it</h4>
+</section><section id="sec-options" class="level1"><h1>Other cool features</h1>
+<section id="add-an-item-to-a-bibliography-without-using-it" class="level4"><h4 class="anchored" data-anchor-id="add-an-item-to-a-bibliography-without-using-it">Add an item to a bibliography without using it</h4>
 <p>By default, the bibliography will only display items that are directly referenced in the document. If you want to include items in the bibliography without actually citing them in the body text, you can define a dummy nocite metadata field and put the citations there. They will be included in the references cited at the end, even though there is no in-text citation.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nocite</span><span class="kw">: </span><span class="ch">|</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  @item1, @item2</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="add-all-items-to-the-bibliography" class="level4">
-<h4 class="anchored" data-anchor-id="add-all-items-to-the-bibliography">Add all items to the bibliography</h4>
+</section><section id="add-all-items-to-the-bibliography" class="level4"><h4 class="anchored" data-anchor-id="add-all-items-to-the-bibliography">Add all items to the bibliography</h4>
 <p>If we do not wish to explicitly state all of the items within the bibliography but would still like to show them in our references, we can use the following syntax:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nocite</span><span class="kw">:</span><span class="at"> </span><span class="st">'@*'</span></span>
@@ -553,20 +513,14 @@ Resources
 </ul>
 </div>
 </div>
-</section>
-</section>
-<section id="a-comment" class="level1">
-<h1>A Comment</h1>
+</section></section><section id="a-comment" class="level1"><h1>A Comment</h1>
 <p>We have learned that within your bibliography file (e.g.&nbsp;<code>my-refs.bib</code>), each reference gets a key, which is a shorthand that is generated by the reference manager or by yourself.</p>
 <p>For instance, I use a format of <code>author:year</code> for example <code>Butler:2023</code> because itʻs easy for me to remember the literature that I want to cite that way. It makes it easier to write the content.</p>
 <p>When there are multiple citations in a year by the same author last name, my BibDesk software adds two unique letters after the year (I usually manually change it to one letter, i.e., <code>Butler:2023a</code>) so that each citation has a unique key.</p>
 <p>You can choose any format you wish, just pick one and use it <em>forever</em>. As you write more papers, you can easily copy citations into your different bibliographies. You are building a database that is <em>reusable</em>.</p>
 <p>In your R Markdown document, you can then cite the reference by adding the key, such as <code>...in the paper by Butler et al. [@Butler:2022]...</code>.</p>
-</section>
-<section id="post-lecture-materials" class="level1">
-<h1>Post-lecture materials</h1>
-<section id="practice" class="level3">
-<h3 class="anchored" data-anchor-id="practice">Practice</h3>
+</section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
+<section id="practice" class="level3"><h3 class="anchored" data-anchor-id="practice">Practice</h3>
 <p>Here are some post-lecture tasks to practice some of the material discussed.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -595,10 +549,7 @@ Questions
 
 
 
-</section>
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+</section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-R-rmarkdown" class="csl-entry" role="listitem">
 Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2022. <em>Rmarkdown: Dynamic Documents for r</em>. <a href="https://CRAN.R-project.org/package=rmarkdown">https://CRAN.R-project.org/package=rmarkdown</a>.
 </div>
@@ -608,8 +559,7 @@ Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. <em>R Markdown: The Defi
 <div id="ref-rmarkdown2020" class="csl-entry" role="listitem">
 Xie, Yihui, Christophe Dervieux, and Emily Riederer. 2020. <em>R Markdown Cookbook</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/rmarkdown-cookbook">https://bookdown.org/yihui/rmarkdown-cookbook</a>.
 </div>
-</div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");

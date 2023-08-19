@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.333">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Marguerite Butler">
 <meta name="dcterms.date" content="2023-02-16">
 <meta name="description" content="Showing you base plotting, lattice, and ggplot2">
-
 <title>ZOOL710 Data Science in R for Biologists - Plotting Systems</title>
 <style>
 code{white-space: pre-wrap;}
@@ -59,7 +56,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -75,8 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -94,18 +89,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-
-<link rel="stylesheet" href="../../styles.css">
+}</script><link rel="stylesheet" href="../../styles.css">
 </head>
-
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">ZOOL710 Data Science in R for Biologists</span>
@@ -117,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
@@ -125,8 +114,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">General Information</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">
+<li>
     <a class="dropdown-item" href="../../syllabus.html" rel="" target="">
  <span class="dropdown-text">Syllabus</span></a>
   </li>  
@@ -135,13 +124,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Schedule</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Course Materials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">
+<li>
     <a class="dropdown-item" href="../../lectures.html" rel="" target="">
  <span class="dropdown-text">Lectures</span></a>
   </li>  
@@ -154,14 +143,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Resources</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/mbutler808" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/mbutler808" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -171,15 +160,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+<div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Plotting Systems</h1>
                   <div>
@@ -228,44 +213,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#addtional-resources" id="toc-addtional-resources" class="nav-link active" data-scroll-target="#addtional-resources">Addtional Resources</a>
+<li>
+<a href="#addtional-resources" id="toc-addtional-resources" class="nav-link active" data-scroll-target="#addtional-resources">Addtional Resources</a>
   <ul class="collapse">
-  <li><a href="#excellent-references" id="toc-excellent-references" class="nav-link" data-scroll-target="#excellent-references">Excellent references</a></li>
+<li><a href="#excellent-references" id="toc-excellent-references" class="nav-link" data-scroll-target="#excellent-references">Excellent references</a></li>
   <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
-  </ul></li>
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a>
+  </ul>
+</li>
+  <li>
+<a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a>
   <ul class="collapse">
-  <li><a href="#the-base-plotting-system" id="toc-the-base-plotting-system" class="nav-link" data-scroll-target="#the-base-plotting-system">The Base Plotting System</a></li>
+<li><a href="#the-base-plotting-system" id="toc-the-base-plotting-system" class="nav-link" data-scroll-target="#the-base-plotting-system">The Base Plotting System</a></li>
   <li><a href="#the-lattice-system" id="toc-the-lattice-system" class="nav-link" data-scroll-target="#the-lattice-system">The Lattice System</a></li>
   <li><a href="#the-ggplot2-system" id="toc-the-ggplot2-system" class="nav-link" data-scroll-target="#the-ggplot2-system">The ggplot2 System</a></li>
-  </ul></li>
   </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<blockquote class="blockquote">
+<main class="content quarto-banner-title-block" id="quarto-document-content"><blockquote class="blockquote">
 <p>The data may not contain the answer. And, if you torture the data long enough, it will tell you anything. —<em>John W. Tukey</em></p>
 </blockquote>
 <!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
 <p>#✏️</p>
-<section id="addtional-resources" class="level1">
-<h1>Addtional Resources</h1>
-<section id="excellent-references" class="level3">
-<h3 class="anchored" data-anchor-id="excellent-references">Excellent references</h3>
+<section id="addtional-resources" class="level1"><h1>Addtional Resources</h1>
+<section id="excellent-references" class="level3"><h3 class="anchored" data-anchor-id="excellent-references">Excellent references</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -284,9 +262,7 @@ For more details see
 </ol>
 </div>
 </div>
-</section>
-<section id="acknowledgements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+</section><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
 <li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-13-plotting-systems/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-13-plotting-systems/</a></li>
@@ -296,11 +272,7 @@ For more details see
 <ul>
 <li>Be able to identify and describe the three plotting systems in R</li>
 <li>Be able to implement simple plots in each :::</li>
-</ul>
-</section>
-</section>
-<section id="overview" class="level1">
-<h1>Overview</h1>
+</ul></section></section><section id="overview" class="level1"><h1>Overview</h1>
 <p>There are <strong>three different plotting systems in R</strong> and they each have different characteristics and modes of operation.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -321,16 +293,15 @@ Important
 <p><strong>This course will focus primarily on the base and ggplot2 plotting systems</strong>. Lattice is presented for context.</p>
 </div>
 </div>
-<section id="the-base-plotting-system" class="level2">
-<h2 class="anchored" data-anchor-id="the-base-plotting-system">The Base Plotting System</h2>
+<section id="the-base-plotting-system" class="level2"><h2 class="anchored" data-anchor-id="the-base-plotting-system">The Base Plotting System</h2>
 <p>The <strong>base plotting system</strong> is the original plotting system for R. The basic model is sometimes <strong>referred to as the “artist’s palette” model</strong>, because you start with a blank canvas and add to it, element by element.</p>
-<p>We begin with an R plotting function that <em>creates a new plot window</em> <strong>typically the <code>plot()</code> function</strong>, and we can add <em>annotations</em> to the plot with functions such as (<code>text</code>, <code>lines</code>, <code>points</code>, <code>axis</code>).</p>
+<p>We begin with an R plotting function that <em>creates a new plot window</em> <strong>typically the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function</strong>, and we can add <em>annotations</em> to the plot with functions such as (<code>text</code>, <code>lines</code>, <code>points</code>, <code>axis</code>).</p>
 <p>If you get an error</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Error</span> in plot.xy<span class="er">(</span><span class="ex">xy.coords</span><span class="er">(</span><span class="ex">x,</span> y<span class="kw">)</span><span class="ex">,</span> type = type, ...<span class="kw">)</span> <span class="bu">:</span> </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">plot.new</span> has not been called yet</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>It is probably because you tried to add an annotation before you created a plot first.</p>
 <p>The base plotting system is <strong>often the most convenient plotting system</strong> to because it mirrors the cartesian coordinate (X,Y) syntax that we sometimes think of when building plots and analyzing data.</p>
-<p>It is also the most customizablbe because there are many options that users can specify. See the help page for <code>?plot.default</code> and <code>?par</code> for graphical parameters that once can set. It does take some learning, but it is possible to make multi-figure plots while precisely controlling their placement, margins, and any annotations including points, lines, text etc.</p>
+<p>It is also the most customizablbe because there are many options that users can specify. See the help page for <code><a href="https://rdrr.io/r/graphics/plot.default.html">?plot.default</a></code> and <code><a href="https://rdrr.io/r/graphics/par.html">?par</a></code> for graphical parameters that once can set. It does take some learning, but it is possible to make multi-figure plots while precisely controlling their placement, margins, and any annotations including points, lines, text etc.</p>
 <p>The plot system is also very useful at the very beginning of a data analysis When we donʻt precisely know what we want to plot. We can start by “throwing some data on the page” and then slowly modifying or adding more information to it as our thought process evolves.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -344,17 +315,15 @@ Example
 <div class="callout-body-container callout-body">
 <p>We might look at a simple scatterplot and then decide to add a linear regression line or a smoother to it to highlight the trends.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(airquality)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(airquality, {</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">plot</span>(Temp, Ozone)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">lines</span>(<span class="fu">loess.smooth</span>(Temp, Ozone))</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">airquality</span>, <span class="op">{</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Ozone</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/scatter.smooth.html">loess.smooth</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Ozone</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="480"></p>
-<figcaption class="figure-caption">Scatterplot with loess curve</figcaption>
-</figure>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="480"></p>
+<figcaption class="figure-caption">Scatterplot with loess curve</figcaption></figure>
 </div>
 </div>
 </div>
@@ -362,23 +331,21 @@ Example
 </div>
 <p>In the code above:</p>
 <ul>
-<li>The <code>plot()</code> function creates the initial plot and draws the points on the canvas.</li>
+<li>The <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function creates the initial plot and draws the points on the canvas.</li>
 <li>The <code>lines</code> function is used to annotate or add to the plot (in this case it adds a loess smoother to the scatterplot).</li>
 <li>R has many other types of <a href="https://blog.revolutionanalytics.com/2015/09/interpolation-and-smoothing-functions-in-base-r.html">smoothing functions</a> as well.</li>
 </ul>
-<p>Next, we use the <code>plot()</code> function to draw the points on the scatterplot and then use the <code>main</code> argument to add a main title to the plot.</p>
+<p>Next, we use the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function to draw the points on the scatterplot and then use the <code>main</code> argument to add a main title to the plot.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(airquality)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(airquality, {</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">plot</span>(Temp, Ozone, <span class="at">main =</span> <span class="st">"my plot"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">lines</span>(<span class="fu">loess.smooth</span>(Temp, Ozone))</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">airquality</span>, <span class="op">{</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Ozone</span>, main <span class="op">=</span> <span class="st">"my plot"</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/scatter.smooth.html">loess.smooth</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Ozone</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="480"></p>
-<figcaption class="figure-caption">Scatterplot with loess curve</figcaption>
-</figure>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="480"></p>
+<figcaption class="figure-caption">Scatterplot with loess curve</figcaption></figure>
 </div>
 </div>
 </div>
@@ -398,49 +365,45 @@ Example
 <div class="callout-body-container callout-body">
 <p>Another typical base plot for a linear regression is constructed with the following code. Here we are using <em>formula representation</em>. Instead of <code>plot(x,y)</code> we use <code>plot(y~x)</code> which is read “plot y as a function of x”. These styles are equivalent, but formula is in the style of regression models.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(cars)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Create the plot / draw canvas</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(cars, <span class="fu">plot</span>(dist <span class="sc">~</span> speed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Create the plot / draw canvas</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">cars</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="480"></p>
-<figcaption class="figure-caption">Base plot with title</figcaption>
-</figure>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="480"></p>
+<figcaption class="figure-caption">Base plot with title</figcaption></figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit a linear model and save it</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">with</span>(cars, <span class="fu">lm</span>( dist <span class="sc">~</span> speed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Fit a linear model and save it</span></span>
+<span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">cars</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span> <span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We can add annotations as before. This time, to add the regression line to the plot, we use the <code>abline()</code> function which adds straight lines, specified by slope and intercept.</p>
+<p>We can add annotations as before. This time, to add the regression line to the plot, we use the <code><a href="https://rdrr.io/r/graphics/abline.html">abline()</a></code> function which adds straight lines, specified by slope and intercept.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(cars, <span class="fu">plot</span>(dist <span class="sc">~</span> speed))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Add annotations</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Linear model of speed vs. stopping distance"</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lm.fit, <span class="at">col=</span><span class="st">"red"</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">7</span>, <span class="dv">120</span>, <span class="fu">paste</span>(<span class="st">"slope ="</span>, <span class="fu">round</span>(<span class="fu">coef</span>(lm.fit)[<span class="dv">2</span>], <span class="at">digits=</span><span class="dv">2</span>)))</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">7</span>, <span class="dv">110</span>, <span class="fu">paste</span>(<span class="st">"intercept ="</span>, <span class="fu">round</span>(<span class="fu">coef</span>(lm.fit)[<span class="dv">1</span>], <span class="at">digits=</span><span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">cars</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Add annotations</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/title.html">title</a></span><span class="op">(</span><span class="st">"Linear model of speed vs. stopping distance"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="va">lm.fit</span>, col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">120</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"slope ="</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">110</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"intercept ="</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Using <code>text()</code> we added the slope and intercept from the linear model fit. That information is returned by the <code>coef()</code> function. We used <code>round()</code> to make it prettier (8 decimal places is not necessary!)</p>
+<p>Using <code><a href="https://rdrr.io/r/graphics/text.html">text()</a></code> we added the slope and intercept from the linear model fit. That information is returned by the <code><a href="https://rdrr.io/r/stats/coef.html">coef()</a></code> function. We used <code><a href="https://rdrr.io/r/base/Round.html">round()</a></code> to make it prettier (8 decimal places is not necessary!)</p>
 </div>
 </div>
-</section>
-<section id="the-lattice-system" class="level2">
-<h2 class="anchored" data-anchor-id="the-lattice-system">The Lattice System</h2>
+</section><section id="the-lattice-system" class="level2"><h2 class="anchored" data-anchor-id="the-lattice-system">The Lattice System</h2>
 <p>The <strong>lattice plotting system</strong> is ideal for visualization of multivariate data, and is implemented in the <code>lattice</code> R package which comes with every installation of R (although it is not loaded by default).</p>
 <p>To <strong>use the lattice plotting functions</strong>, you must first load the <code>lattice</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(lattice)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://lattice.r-forge.r-project.org/">lattice</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: lattice</code></pre>
 </div>
 </div>
-<p>With the lattice system, <strong>plots are created with a single function call</strong>, such as <code>xyplot()</code> or <code>bwplot()</code>, and the plot is delivered in a predefined format.</p>
+<p>With the lattice system, <strong>plots are created with a single function call</strong>, such as <code><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">xyplot()</a></code> or <code><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">bwplot()</a></code>, and the plot is delivered in a predefined format.</p>
 <p>There is <strong>no real distinction between functions that create or initiate plots</strong> and <strong>functions that annotate plots</strong> because it all happens at once.</p>
 <p>Lattice plots tend to be <strong>most useful for conditioning types of plots</strong>, i.e.&nbsp;looking at how <code>y</code> changes with <code>x</code> across levels of <code>z</code>.</p>
 <ul>
@@ -459,8 +422,8 @@ Example
 <div class="callout-body-container callout-body">
 <p>Here is a lattice plot that looks at the relationship between life expectancy and income and how that relationship varies by region in the United States.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>state <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(state.x77, <span class="at">region =</span> state.region)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(state)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">state</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">state.x77</span>, region <span class="op">=</span> <span class="va">state.region</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">state</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Population Income Illiteracy Life.Exp Murder HS.Grad Frost   Area
 Alabama          3615   3624        2.1    69.05   15.1    41.3    20  50708
@@ -477,19 +440,17 @@ Arkansas    South
 California   West
 Colorado     West</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(Life.Exp <span class="sc">~</span> Income <span class="sc">|</span> region, <span class="at">data =</span> state, <span class="at">layout =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">xyplot</a></span><span class="op">(</span><span class="va">Life.Exp</span> <span class="op">~</span> <span class="va">Income</span> <span class="op">|</span> <span class="va">region</span>, data <span class="op">=</span> <span class="va">state</span>, layout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="768"></p>
-<figcaption class="figure-caption">Lattice plot</figcaption>
-</figure>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption class="figure-caption">Lattice plot</figcaption></figure>
 </div>
 </div>
 </div>
 </div>
 </div>
-<p>You can see that the entire plot was generated by the call to <code>xyplot()</code> and all of the data for the plot were specified to come from the <code>state</code> data frame.</p>
+<p>You can see that the entire plot was generated by the call to <code><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">xyplot()</a></code> and all of the data for the plot were specified to come from the <code>state</code> data frame.</p>
 <p>The <strong>layout</strong> specifies four panels —one for each region— <strong>within each panel is a scatterplot</strong> of life expectancy and income. Note that in this case, layout is columns, rows. Try changing the numbers or leaving out the layout argument and see what happens.</p>
 <p>The notion of <em>panels</em> comes up a lot with lattice plots because you typically have many panels in a lattice plot (each panel typically represents a <em>factor level</em>, like “region”).</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -505,13 +466,12 @@ Note
 <p>Downsides with the lattice system</p>
 <ul>
 <li>It can sometimes be very <strong>awkward to specify an entire plot</strong> in a single function call (you end up with functions with many many arguments).</li>
-<li><strong>Annotation in panels in plots is not especially intuitive</strong> and can be difficult to explain. In particular, the use of custom panel functions and subscripts can be difficult to wield and requires a lot of trial and error.</li>
+<li>
+<strong>Annotation in panels in plots is not especially intuitive</strong> and can be difficult to explain. In particular, the use of custom panel functions and subscripts can be difficult to wield and requires a lot of trial and error.</li>
 </ul>
 </div>
 </div>
-</section>
-<section id="the-ggplot2-system" class="level2">
-<h2 class="anchored" data-anchor-id="the-ggplot2-system">The ggplot2 System</h2>
+</section><section id="the-ggplot2-system" class="level2"><h2 class="anchored" data-anchor-id="the-ggplot2-system">The ggplot2 System</h2>
 <p>The <strong>ggplot2 plotting system</strong> attempts to split the difference between base and lattice in a number of ways.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -529,11 +489,11 @@ Note
 <p>The ggplot2 system is implemented in the <code>ggplot2</code> package (part of the <code>tidyverse</code> package), which is available from CRAN (it does not come with R).</p>
 <p>You can install it from CRAN via</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>and then load it into R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: ggplot2</code></pre>
 </div>
@@ -553,17 +513,15 @@ Example
 <p>A typical plot with the <code>ggplot2</code> package looks like the code below.</p>
 <p>Note the use of the pipe operator <code>%&gt;%</code> from the <code>magrittr</code> package in the tidyverse, which sends the dataframe <code>mpg</code> as input into the function ggplot. People love the pipe operator because you can just pass output along from one function to the next (as long as the function is written for piping). All of the tidyverse allows piping, and some base R functions do as well.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mpg)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span> </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span></span>
+<span><span class="va">mpg</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="576"></p>
-<figcaption class="figure-caption">ggplot2 plot</figcaption>
-</figure>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="576"></p>
+<figcaption class="figure-caption">ggplot2 plot</figcaption></figure>
 </div>
 </div>
 </div>
@@ -574,11 +532,7 @@ Example
 <p>We will discuss more about this in the next lecture.</p>
 
 
-</section>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
